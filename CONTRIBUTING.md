@@ -4,7 +4,7 @@ We love contributions from everyone.
 By participating in this project,
 you agree to abide by the [code of conduct] adopted by xFAANG.
 
-  [code of conduct]: https://github.com/xfaang/askql/CODE_OF_CONDUCT.md
+  [code of conduct]: https://github.com/xFAANG/askql/blob/master/CODE_OF_CONDUCT.md
 
 We expect everyone to follow the code of conduct
 anywhere in xFAANG's project codebases, issue trackers, pull request comments, 
@@ -27,7 +27,7 @@ Make your change, with new passing tests. Check out `prettierrc.js`
 Mention how your changes affect the project to other developers and users in the
 `NEWS.md` file.
 
-  [news]: https://github.com/xfaang/askql/CODE_OF_CONDUCT.md
+  [news]: https://github.com/xFAANG/askql/blob/master/NEWS.md
 
 Push to your fork. Write a [good commit message][commit]. Submit a pull request.
 

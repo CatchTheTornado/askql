@@ -19,7 +19,7 @@ AskQL is a query language that can express every data request
 
 
 ## Contributing
-[Contributing guidelines](https://github.com/xfaang/askql/master/CONTRIBUTING.md)
+[Contributing guidelines](https://github.com/xFAANG/askql/blob/master/CONTRIBUTING.md)
 
 ## License
 

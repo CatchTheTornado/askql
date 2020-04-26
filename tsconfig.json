@@ -1,0 +1,13 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2016",
+    "jsx": "react",
+    "jsxFactory": "compile",
+    "strict": true,
+    "sourceMap": true,
+    "outDir": "dist"
+  },
+  "exclude": ["node_modules", "**/node_modules/*", "drafts"]
+}

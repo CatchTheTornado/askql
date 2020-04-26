@@ -4,7 +4,8 @@
   "description": "AskQL is a query language that can express every data request",
   "main": "dist/index.js",
   "scripts": {
-    "test": "npm test"
+    "build": "rm -rf dist && tsc",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,15 @@
     "url": "https://github.com/xFAANG/askql/issues"
   },
   "homepage": "https://askql.org/",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/jest": "^25.2.1",
+    "babel-jest": "^25.4.0",
+    "jest": "^25.4.0",
+    "prettier": "^2.0.5"
+  }
 }

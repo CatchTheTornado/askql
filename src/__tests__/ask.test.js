@@ -1,5 +1,8 @@
-import { ask } from "..";
+import { ask, ref, string } from '..';
 
-test("ask", () => {
-  expect(ask()).toBe();
+test('returns context', () => {
+  const context = ask(ref(string('context')), {
+    logging: true,
+  });
+  expect(context).toHaveProperty('context', context);
 });

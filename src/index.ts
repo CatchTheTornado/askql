@@ -1,2 +1,3 @@
 export * from './ask';
-export * from './compiler';
+export { c };
+import * as c from './compiler';

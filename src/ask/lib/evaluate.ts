@@ -1,50 +1,8 @@
-interface Scope extends Record<string, any> {}
-interface Context extends Record<string, any> {}
+import type { Context } from '..';
+import { fun } from './fun';
+import { ref } from './ref';
 
-type source = string;
-type fun = ((context: Context, ...args: any[]) => any) & {
-  userSpace: boolean;
-  scope: Scope;
-  block: boolean;
-};
-
-interface Options {
-  logging?: boolean;
-}
-
-export function ask(source: source, { logging = false }: Options = {}): any {
-  const stack: any[] = [];
-  const context: Context = {
-    s: set,
-    r: ref,
-    f: fun,
-    ask: evaluate,
-    if: $if,
-    stack,
-    options: {
-      logging,
-    },
-  };
-  stack.push({
-    scope: {
-      '[[Prototype]]': context,
-      context,
-    },
-  });
-  context.stack[0].scope.frame = stack[stack.length - 1]; // getter
-
-  if (logging) {
-    console.log(`ask ${source}`);
-  }
-  try {
-    const result = evaluate(source, { context });
-    return result;
-  } finally {
-    if (logging) {
-      console.log('context', context);
-    }
-  }
-}
+export type source = string;
 
 interface EvaluateOptions {
   context: Record<string, any>;
@@ -154,69 +112,4 @@ function call(context: Context, [$fun, ...$args]: source[]): any {
   }
 
   return result;
-}
-
-function set(context: Context, value: any, ...keys: string[]): void {
-  const key = keys.pop()!;
-  ref(context, ...keys)[key] = value;
-}
-
-function ref(context: Context, ...keys: string[]): any {
-  let scope = context.stack[context.stack.length - 1].scope;
-  if (keys.length === 0) {
-    return scope;
-  }
-
-  let key = keys[0];
-  while (scope && !(key in scope)) {
-    scope = scope['[[Prototype]]'];
-  }
-  if (!scope) {
-    throw new Error(`Missing "${key}" in the scope chain`);
-  }
-
-  let value = scope[key];
-  for (let i = 1; i < keys.length; i += 1) {
-    key = keys[i];
-    if (!(key in value)) {
-      throw new Error(`Missing "${key}" in the value referenced from scope`);
-    }
-    value = value[key];
-  }
-
-  return value;
-}
-
-function fun(context: Context, ...expressions: source[]): fun {
-  return Object.assign(
-    (context: Context) => {
-      let result;
-      for (let i = 0; i < expressions.length; i += 1) {
-        const expr = expressions[i];
-
-        result = evaluate(expr, {
-          operation: 'function call',
-          context,
-        });
-
-        if (context.stack[context.stack.length - 1].returnedValue) {
-          return context.stack[context.stack.length - 1].returnedValue;
-        }
-      }
-      return result;
-    },
-    {
-      userSpace: true,
-      scope: {
-        '[[Prototype]]': context.stack[context.stack.length - 1].scope,
-      },
-      block: false,
-    }
-  );
-}
-
-function $if(context: Context, condition: any, $then: fun, $else: fun) {
-  $then.block = true;
-  $else.block = true;
-  return condition ? $then(context) : $else(context);
 }

@@ -1,48 +1,38 @@
-import {
-  $if,
-  ask,
-  call,
-  fun,
-  funUnsafe,
-  ref,
-  returnUnsafe,
-  set,
-  string,
-} from '..';
+import { ask, c } from '..';
 
 test('returns context', () => {
-  const context = ask(ref('context'));
+  const context = ask(c.ref('context'));
   expect(context).toHaveProperty('stack');
 });
 
 test('creates the basic function', () => {
-  const f = funUnsafe(returnUnsafe(string('Hello world!')));
+  const f = c.funUnsafe(c.returnUnsafe(c.string('Hello world!')));
   expect(ask(f)).toBeInstanceOf(Function);
-  expect(ask(call(f))).toBe('Hello world!');
+  expect(ask(c.call(f))).toBe('Hello world!');
 });
 
 test('creates function with arguments', () => {
-  const f = fun(['a'], ref('a'));
+  const f = c.fun(['a'], c.ref('a'));
   expect(ask(f)).toBeInstanceOf(Function);
-  expect(ask(call(f, string('Hello world!')))).toBe('Hello world!');
+  expect(ask(c.call(f, c.string('Hello world!')))).toBe('Hello world!');
 });
 
 test('closure', () => {
-  const f = fun(
+  const f = c.fun(
     [],
-    set(string('a'), 'myvar'),
-    call(fun([], set(string('b'), 'myvar'))),
-    ref('myvar')
+    c.set(c.string('a'), 'myvar'),
+    c.call(c.fun([], c.set(c.string('b'), 'myvar'))),
+    c.ref('myvar')
   );
-  expect(ask(call(f))).toBe('a');
+  expect(ask(c.call(f))).toBe('a');
 });
 
 test('if', () => {
   const expr = (cond: string) =>
-    $if(cond, {
-      $then: [string('yes')],
-      $else: [string('no')],
+    c.if(cond, {
+      $then: [c.string('yes')],
+      $else: [c.string('no')],
     });
-  expect(ask(expr(string('Y')))).toBe('yes');
-  expect(ask(expr(string('')))).toBe('no');
+  expect(ask(expr(c.string('Y')))).toBe('yes');
+  expect(ask(expr(c.string('')))).toBe('no');
 });

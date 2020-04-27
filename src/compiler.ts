@@ -16,8 +16,8 @@ export function ref(...keys: string[]): value {
   return call(string('r'), ...keys.map(string));
 }
 
-export function set(key: string, value: value) {
-  return call(string('s'), string(key), value);
+export function set(value: value, ...keys: string[]) {
+  return call(string('s'), value, ...keys.map(string));
 }
 
 /** evaluate */
@@ -30,9 +30,18 @@ export function funUnsafe(...expressions: value[]): fun {
   return call(string('f'), ...expressions.map(string));
 }
 
-export function fun(body: string, ...args: string[]): fun {
+export function returnUnsafe(expression: value): value {
+  return set(expression, 'frame', 'returnedValue');
+}
+
+export function fun(args: string[], ...expressions: value[]): fun {
+  if (expressions.length === 0) {
+    throw new Error('Functions need to have at least one expression');
+  }
+  const lastExpression = expressions.pop()!;
   return funUnsafe(
-    ...args.map((arg, index) => set(arg, ref('args', String(index)))),
-    body
+    ...args.map((arg, index) => set(ref('args', String(index)), arg)),
+    ...expressions,
+    returnUnsafe(lastExpression) // implicit return
   );
 }

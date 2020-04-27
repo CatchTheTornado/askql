@@ -116,24 +116,27 @@ function call(context: Context, [$fun, ...$args]: source[]): any {
     evaluate($arg, { operation: `arg#${index}`, context })
   );
 
-  const frame = {
-    args,
-  };
-  context.stack.push(frame);
-  context.frame = frame;
-
-  if ('args' in fun) {
+  if ('userSpace' in fun) {
+    const frame = {
+      args,
+    };
+    context.stack.push(frame);
+    context.frame = frame;
     context.args = args;
   }
 
   const result = fun.call(null, context, ...args);
 
-  context.stack.pop();
+  if ('userSpace' in fun) {
+    context.stack.pop();
+  }
+
   return result;
 }
 
-function set(context: Context, key: string, value: any): void {
-  context[key] = value;
+function set(context: Context, value: any, ...keys: string[]): void {
+  const key = keys.pop()!;
+  ref(context, ...keys)[key] = value;
 }
 
 function ref(context: Context, ...keys: string[]): any {
@@ -151,14 +154,21 @@ function ref(context: Context, ...keys: string[]): any {
 function fun(context: Context, ...expressions: source[]): () => any {
   return Object.assign(
     () => {
-      let result;
-      expressions.forEach((expr) => {
-        result = evaluate(expr, { operation: 'function call', context });
-      });
-      return result;
+      for (let i = 0; i < expressions.length; i += 1) {
+        const expr = expressions[i];
+
+        evaluate(expr, {
+          operation: 'function call',
+          context,
+        });
+
+        if (context.frame.returnedValue) {
+          return context.frame.returnedValue;
+        }
+      }
     },
     {
-      args: true,
+      userSpace: true,
     }
   );
 }

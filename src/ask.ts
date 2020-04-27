@@ -7,16 +7,24 @@ interface Options {
 }
 
 export function ask(source: source, { logging = false }: Options = {}): any {
+  const stack: any[] = [];
   const context: Context = {
     s: set,
     r: ref,
     f: fun,
     ask: evaluate,
-    stack: [],
+    stack,
     options: {
       logging,
     },
   };
+  stack.push({
+    scope: {
+      '[[Prototype]]': context,
+      context,
+    },
+  });
+  context.stack[0].scope.frame = stack[stack.length - 1]; // getter
 
   if (logging) {
     console.log(`ask ${source}`);
@@ -36,7 +44,7 @@ interface EvaluateOptions {
   operation?: string;
 }
 
-/** ask program is a function call */
+/** ask program is a function call or string literal */
 export function evaluate(
   source: source,
   { context, operation = 'call' }: EvaluateOptions
@@ -116,19 +124,21 @@ function call(context: Context, [$fun, ...$args]: source[]): any {
     evaluate($arg, { operation: `arg#${index}`, context })
   );
 
+  const stack = context.stack;
   if ('userSpace' in fun) {
-    const frame = {
+    stack.push({
+      fun,
       args,
-    };
-    context.stack.push(frame);
-    context.frame = frame;
-    context.args = args;
+      scope: (fun as any).scope,
+    });
+    context.stack[0].scope.frame = stack[stack.length - 1]; // getter
   }
 
   const result = fun.call(null, context, ...args);
 
   if ('userSpace' in fun) {
-    context.stack.pop();
+    stack.pop();
+    context.stack[0].scope.frame = stack[stack.length - 1]; // getter
   }
 
   return result;
@@ -140,15 +150,29 @@ function set(context: Context, value: any, ...keys: string[]): void {
 }
 
 function ref(context: Context, ...keys: string[]): any {
-  if (keys.length === 0 || keys[0] === 'context') {
-    return context;
+  let scope = context.stack[context.stack.length - 1].scope;
+  if (keys.length === 0) {
+    return scope;
   }
-  const key = keys.pop()!;
-  const object = ref(context, ...keys);
-  if (!(key in object)) {
-    throw new Error(`Missing "${key}" in the object`);
+
+  let key = keys[0];
+  while (scope && !(key in scope)) {
+    scope = scope['[[Prototype]]'];
   }
-  return object[key];
+  if (!scope) {
+    throw new Error(`Missing "${key}" in the scope chain`);
+  }
+
+  let value = scope[key];
+  for (let i = 1; i < keys.length; i += 1) {
+    key = keys[i];
+    if (!(key in value)) {
+      throw new Error(`Missing "${key}" in the value referenced from scope`);
+    }
+    value = value[key];
+  }
+
+  return value;
 }
 
 function fun(context: Context, ...expressions: source[]): () => any {
@@ -162,13 +186,16 @@ function fun(context: Context, ...expressions: source[]): () => any {
           context,
         });
 
-        if (context.frame.returnedValue) {
-          return context.frame.returnedValue;
+        if (context.stack[context.stack.length - 1].returnedValue) {
+          return context.stack[context.stack.length - 1].returnedValue;
         }
       }
     },
     {
       userSpace: true,
+      scope: {
+        '[[Prototype]]': context.stack[context.stack.length - 1].scope,
+      },
     }
   );
 }

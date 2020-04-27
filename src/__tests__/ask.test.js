@@ -1,4 +1,4 @@
-import { ask, call, fun, funUnsafe, ref, returnUnsafe, string } from '..';
+import { ask, call, fun, funUnsafe, ref, returnUnsafe, set, string } from '..';
 
 test('returns context', () => {
   const context = ask(ref('context'));
@@ -14,7 +14,15 @@ test('creates the basic function', () => {
 test('creates function with arguments', () => {
   const f = fun(['a'], ref('a'));
   expect(ask(f)).toBeInstanceOf(Function);
-  expect(ask(call(f, string('Hello world!')), { logging: true })).toBe(
-    'Hello world!'
+  expect(ask(call(f, string('Hello world!')))).toBe('Hello world!');
+});
+
+test('closure', () => {
+  const f = fun(
+    [],
+    set(string('a'), 'myvar'),
+    call(fun([], set(string('b'), 'myvar'))),
+    ref('myvar')
   );
+  expect(ask(call(f))).toBe('a');
 });

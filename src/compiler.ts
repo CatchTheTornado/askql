@@ -40,7 +40,7 @@ export function fun(args: string[], ...expressions: value[]): fun {
   }
   const lastExpression = expressions.pop()!;
   return funUnsafe(
-    ...args.map((arg, index) => set(ref('args', String(index)), arg)),
+    ...args.map((arg, index) => set(ref('frame', 'args', String(index)), arg)),
     ...expressions,
     returnUnsafe(lastExpression) // implicit return
   );

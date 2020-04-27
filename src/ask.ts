@@ -1,31 +1,50 @@
 type source = string;
 
-const context: Record<string, any> = {
-  s: string,
-  r: ref,
-  c: call,
-  ask: evaluate,
-  options: {},
-};
-context.context = context;
+interface Context extends Record<string, any> {}
 
 interface Options {
-  logging: boolean;
+  logging?: boolean;
 }
 
-export function ask(
-  source: source,
-  { logging = false }: Partial<Options> = {}
-): any {
-  context.options = { logging };
+export function ask(source: source, { logging = false }: Options = {}): any {
+  const context: Context = {
+    s: set,
+    r: ref,
+    f: fun,
+    ask: evaluate,
+    stack: [],
+    options: {
+      logging,
+    },
+  };
+
   if (logging) {
     console.log(`ask ${source}`);
   }
-  return evaluate(source);
+  try {
+    const result = evaluate(source, { context });
+    return result;
+  } finally {
+    if (logging) {
+      console.log('context', context);
+    }
+  }
+}
+
+interface EvaluateOptions {
+  context: Record<string, any>;
+  operation?: string;
 }
 
 /** ask program is a function call */
-export function evaluate(source: source, operation: string = 'call'): any {
+export function evaluate(
+  source: source,
+  { context, operation = 'call' }: EvaluateOptions
+): any {
+  if (source[0] !== '(') {
+    return JSON.parse(source);
+  }
+
   let level = 0;
   let buffer = [];
   let name: string = '';
@@ -57,51 +76,89 @@ export function evaluate(source: source, operation: string = 'call'): any {
     buffer.push(c);
   }
 
-  // TODO place new frame on stack in context
   const description = `${operation} ${name}(${args.join(', ')})`;
   try {
-    const result = context[name].call(null, ...args);
+    if (context.options.logging) {
+      console.log(`${description} -> ...`);
+    }
+    const result = call(context, args);
     if (context.options.logging) {
       console.log(`${description} -> ${result}`);
     }
     return result;
   } catch (error) {
-    console.error(description, error);
+    console.error(description, error.message, context.stack);
     throw error;
   }
 }
 
-function string(raw: source): string {
-  const value = JSON.parse(raw);
-  if (typeof value !== 'string') {
-    throw new Error('Invalid string');
+function call(context: Context, [$fun, ...$args]: source[]): any {
+  let fun: string | Function = evaluate($fun, {
+    operation: 'function',
+    context,
+  });
+
+  if (typeof fun === 'string') {
+    const key = fun;
+    fun = ref(context, key);
+    if (typeof fun !== 'function') {
+      throw new Error(
+        `Key "${key}" in context has type "${typeof fun}" which is not callable`
+      );
+    }
   }
-  return value;
+
+  if (typeof fun !== 'function') {
+    throw new Error(`Expression "${typeof fun}" is not callable`);
+  }
+
+  const args = $args.map(($arg, index) =>
+    evaluate($arg, { operation: `arg#${index}`, context })
+  );
+
+  const frame = {
+    args,
+  };
+  context.stack.push(frame);
+  context.frame = frame;
+
+  if ('args' in fun) {
+    context.args = args;
+  }
+
+  const result = fun.call(null, context, ...args);
+
+  context.stack.pop();
+  return result;
 }
 
-// TODO support more keys for deep lookup
-function ref(key: source): any {
-  if (key === 'context') {
+function set(context: Context, key: string, value: any): void {
+  context[key] = value;
+}
+
+function ref(context: Context, ...keys: string[]): any {
+  if (keys.length === 0 || keys[0] === 'context') {
     return context;
   }
-  const name = evaluate(key, 'reference');
-  if (!(name in context)) {
-    throw new Error(`Missing "${name}" in the context`);
+  const key = keys.pop()!;
+  const object = ref(context, ...keys);
+  if (!(key in object)) {
+    throw new Error(`Missing "${key}" in the object`);
   }
-  return context[name];
+  return object[key];
 }
 
-function call(name: source, ...args: source[]): any {
-  const value = ref(name);
-  if (typeof value !== 'function') {
-    const key = evaluate(name, 'function name');
-    throw new Error(
-      `Key "${key}" in context has type "${typeof value}" which is not callable`
-    );
-  }
-
-  return value.call(
-    null,
-    ...args.map((arg, index) => evaluate(arg, `arg at index ${index}`))
+function fun(context: Context, ...expressions: source[]): () => any {
+  return Object.assign(
+    () => {
+      let result;
+      expressions.forEach((expr) => {
+        result = evaluate(expr, { operation: 'function call', context });
+      });
+      return result;
+    },
+    {
+      args: true,
+    }
   );
 }

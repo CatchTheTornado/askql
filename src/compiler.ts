@@ -1,27 +1,38 @@
-type value = string;
 type fun = string;
+type value = fun | string;
 type type = fun;
 
-export function string(raw: string): string {
-  return `s(${JSON.stringify(raw)})`; // escaping?
+export function string(raw: string): value {
+  return JSON.stringify(raw);
 }
 
 /** calls function by name and pass arguments */
-export function call(name: string, ...args: value[]): value {
-  return `c(${[string(name), ...args].join(',')})`;
-}
-
-/** evaluate */
-function ask(source: string): string {
-  return call('ask', string(source));
+export function call(fun: fun, ...args: value[]): value {
+  return `(${[fun, ...args].join(',')})`;
 }
 
 /** reference value (possibly nested) */
-export function ref(...keys: value[]): value {
-  return call('r', ...keys);
+export function ref(...keys: string[]): value {
+  return call(string('r'), ...keys.map(string));
+}
+
+export function set(key: string, value: value) {
+  return call(string('s'), string(key), value);
+}
+
+/** evaluate */
+function ask(source: string): value {
+  return call(string('ask'), string(source));
 }
 
 /** create function which has no type checking */
-export function funUnsafe(body: string, ...args: value[]): fun {
-  return call('f', string(body), ...args);
+export function funUnsafe(...expressions: value[]): fun {
+  return call(string('f'), ...expressions.map(string));
+}
+
+export function fun(body: string, ...args: string[]): fun {
+  return funUnsafe(
+    ...args.map((arg, index) => set(arg, ref('args', String(index)))),
+    body
+  );
 }

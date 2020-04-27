@@ -38,10 +38,26 @@ export function fun(args: string[], ...expressions: value[]): fun {
   if (expressions.length === 0) {
     throw new Error('Functions need to have at least one expression');
   }
-  const lastExpression = expressions.pop()!;
   return funUnsafe(
     ...args.map((arg, index) => set(ref('frame', 'args', String(index)), arg)),
-    ...expressions,
-    returnUnsafe(lastExpression) // implicit return
+    ...expressions
+  );
+}
+
+export function $if(
+  condition: value,
+  {
+    $then,
+    $else = [],
+  }: {
+    $then: value[];
+    $else?: value[];
+  }
+) {
+  return call(
+    string('if'),
+    condition,
+    funUnsafe(...$then),
+    funUnsafe(...$else)
   );
 }

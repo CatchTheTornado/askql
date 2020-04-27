@@ -1,4 +1,14 @@
-import { ask, call, fun, funUnsafe, ref, returnUnsafe, set, string } from '..';
+import {
+  $if,
+  ask,
+  call,
+  fun,
+  funUnsafe,
+  ref,
+  returnUnsafe,
+  set,
+  string,
+} from '..';
 
 test('returns context', () => {
   const context = ask(ref('context'));
@@ -25,4 +35,14 @@ test('closure', () => {
     ref('myvar')
   );
   expect(ask(call(f))).toBe('a');
+});
+
+test('if', () => {
+  const expr = (cond: string) =>
+    $if(cond, {
+      $then: [string('yes')],
+      $else: [string('no')],
+    });
+  expect(ask(expr(string('Y')))).toBe('yes');
+  expect(ask(expr(string('')))).toBe('no');
 });

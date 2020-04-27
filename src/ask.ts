@@ -1,6 +1,12 @@
-type source = string;
-
+interface Scope extends Record<string, any> {}
 interface Context extends Record<string, any> {}
+
+type source = string;
+type fun = ((context: Context, ...args: any[]) => any) & {
+  userSpace: boolean;
+  scope: Scope;
+  block: boolean;
+};
 
 interface Options {
   logging?: boolean;
@@ -13,6 +19,7 @@ export function ask(source: source, { logging = false }: Options = {}): any {
     r: ref,
     f: fun,
     ask: evaluate,
+    if: $if,
     stack,
     options: {
       logging,
@@ -101,7 +108,7 @@ export function evaluate(
 }
 
 function call(context: Context, [$fun, ...$args]: source[]): any {
-  let fun: string | Function = evaluate($fun, {
+  let fun: string | fun = evaluate($fun, {
     operation: 'function',
     context,
   });
@@ -129,7 +136,7 @@ function call(context: Context, [$fun, ...$args]: source[]): any {
     stack.push({
       fun,
       args,
-      scope: (fun as any).scope,
+      scope: fun.scope,
     });
     context.stack[0].scope.frame = stack[stack.length - 1]; // getter
   }
@@ -137,8 +144,13 @@ function call(context: Context, [$fun, ...$args]: source[]): any {
   const result = fun.call(null, context, ...args);
 
   if ('userSpace' in fun) {
-    stack.pop();
+    const frame = stack.pop();
     context.stack[0].scope.frame = stack[stack.length - 1]; // getter
+
+    if (fun.block) {
+      // if this was just a scoped block then carry on the returned value if any
+      stack[stack.length - 1].returnedValue = frame.returnedValue;
+    }
   }
 
   return result;
@@ -175,13 +187,14 @@ function ref(context: Context, ...keys: string[]): any {
   return value;
 }
 
-function fun(context: Context, ...expressions: source[]): () => any {
+function fun(context: Context, ...expressions: source[]): fun {
   return Object.assign(
-    () => {
+    (context: Context) => {
+      let result;
       for (let i = 0; i < expressions.length; i += 1) {
         const expr = expressions[i];
 
-        evaluate(expr, {
+        result = evaluate(expr, {
           operation: 'function call',
           context,
         });
@@ -190,12 +203,20 @@ function fun(context: Context, ...expressions: source[]): () => any {
           return context.stack[context.stack.length - 1].returnedValue;
         }
       }
+      return result;
     },
     {
       userSpace: true,
       scope: {
         '[[Prototype]]': context.stack[context.stack.length - 1].scope,
       },
+      block: false,
     }
   );
+}
+
+function $if(context: Context, condition: any, $then: fun, $else: fun) {
+  $then.block = true;
+  $else.block = true;
+  return condition ? $then(context) : $else(context);
 }

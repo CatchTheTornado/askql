@@ -38,59 +38,21 @@ test('if', () => {
 });
 
 test('jsx', () => {
-  expect(<return value={<string>OK</string>} />).toBe(
-    c.returnUnsafe(c.string('OK'))
-  );
-
-  expect(
-    <if condition={<ref id="a" />}>
-      <return value={<string>OK</string>} />
-    </if>
-  ).toBe(c.if(c.ref('a'), { $then: [c.returnUnsafe(c.string('OK'))] }));
-
-  expect(
-    <call>
-      <fun>
-        <set id="test">
-          <fun args={['a']}>
-            <if condition={<ref id="a" />}>
-              <return value={<string>OK</string>} />
-            </if>
-          </fun>
-        </set>
-        <call fun={<ref id="test" />} args={[<string>Y</string>]} />
-      </fun>
-    </call>
-  ).toBe(
-    c.call(
-      c.fun(
-        [],
-        c.set(
-          c.fun(
-            ['a'],
-            c.if(c.ref('a'), { $then: [c.returnUnsafe(c.string('OK'))] })
-          ),
-          'test'
-        ),
-        c.call(c.ref('test'), c.string('Y'))
-      )
-    )
-  );
-
-  expect(
-    ask(
-      <call>
-        <fun>
-          <set id="test">
-            <fun args={['a']}>
-              <if condition={<ref id="a" />}>
-                <return value={<string>OK</string>} />
-              </if>
-            </fun>
-          </set>
-          <call fun={<ref id="test" />} args={[<string>Y</string>]} />
+  const call = (arg: string) =>
+    c.render(
+      <program>
+        <fun name="test" args={['a']}>
+          <if condition={<ref id="a" />}>
+            <return value="OK" />
+          </if>
+          <else>
+            <return value="NO" />
+          </else>
         </fun>
-      </call>
-    )
-  ).toBe('OK');
+        <call id="test" args={[arg]} />
+      </program>
+    );
+
+  expect(ask(call('Y'))).toBe('OK');
+  expect(ask(call(''))).toBe('NO');
 });

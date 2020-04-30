@@ -1,3 +1,3 @@
-export * from './ask';
+export * from './vm';
 export { c };
-import * as c from './compiler';
+import * as c from './jsx';

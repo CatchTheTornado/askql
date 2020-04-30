@@ -1,13 +1,13 @@
 import { Context, Scope } from '..';
 import { evaluate, source } from './evaluate';
 
-export type fun = ((context: Context, ...args: any[]) => any) & {
+export type funtype = ((context: Context, ...args: any[]) => any) & {
   userSpace: boolean;
   scope: Scope;
   block: boolean;
 };
 
-export function fun(context: Context, ...expressions: source[]): fun {
+export function fun(context: Context, ...expressions: source[]): funtype {
   return Object.assign(
     (context: Context) => {
       let result;

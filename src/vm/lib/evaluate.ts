@@ -1,5 +1,5 @@
 import type { Context } from '..';
-import { fun } from './fun';
+import { funtype } from './fun';
 import { ref } from './ref';
 
 export type source = string;
@@ -66,7 +66,7 @@ export function evaluate(
 }
 
 function call(context: Context, [$fun, ...$args]: source[]): any {
-  let fun: string | fun = evaluate($fun, {
+  let fun: string | funtype = evaluate($fun, {
     operation: 'function',
     context,
   });

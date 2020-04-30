@@ -9,12 +9,17 @@ type JSONable =
   | Array<any /* JSONable */>;
 type AskNode = AskElement | JSONable;
 
+export interface AskElementOptions {
+  readonly props: Record<string, AskNode>;
+  readonly children: AskNode[];
+}
+
 class AskElement {
-  constructor(
-    readonly name: string,
-    readonly props: Record<string, AskNode>,
-    readonly children: AskNode[]
-  ) {}
+  constructor(readonly name: string, readonly options: AskElementOptions) {}
+
+  get children() {
+    return this.options.children;
+  }
 
   renderChildren(): string[] {
     return this.children.map((child, index) =>
@@ -33,7 +38,8 @@ export function jsx(
   ...children: AskNode[]
 ): AskElement {
   const props = propsOrNull || {};
-  return new AskElement(name, props, children);
+
+  return new AskElement(name, { props, children });
 }
 
 export function render(
@@ -52,7 +58,10 @@ export function render(
     return JSON.stringify(element);
   }
 
-  const { name, props, children } = element;
+  const {
+    name,
+    options: { props, children },
+  } = element;
 
   switch (name) {
     case 'call': {

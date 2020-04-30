@@ -65,14 +65,17 @@ export function render(
 
   switch (name) {
     case 'call': {
-      const { id = '', args = [] } = props;
-      assert(isString(id), 'id');
+      const { name = '', args = [] } = props;
+      assert(isString(name), 'name');
       assert(isStringArray(args), 'args');
       return c.call(
-        render(id ? <ref id={id} /> : children[0]),
+        render(name ? <ref name={name} /> : children[0]),
         ...args.map((arg) => render(arg))
       );
     }
+
+    case 'fragment':
+      return element.renderChildren().join('');
 
     case 'fun': {
       const { name = '', args = [] } = props;
@@ -100,9 +103,9 @@ export function render(
       return c.call(c.fun([], ...element.renderChildren()));
 
     case 'ref': {
-      const { id } = props;
-      assert(isString(id), 'id');
-      return c.ref(...id.split('.'));
+      const { name } = props;
+      assert(isString(name), 'name');
+      return c.ref(...name.split('.'));
     }
 
     case 'return': {
@@ -111,9 +114,9 @@ export function render(
     }
 
     case 'set': {
-      const { id } = props;
-      assert(isString(id), 'id');
-      return c.set(render(children[0]), ...id.split('.'));
+      const { name, value } = props;
+      assert(isString(name), 'name');
+      return c.set(render(value), name);
     }
 
     default:

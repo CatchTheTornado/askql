@@ -3,11 +3,13 @@ import * as jsx from './jsx';
 import { AskElement, render } from './jsx';
 jsx;
 
-export function If(element: any, next: any) {
-  const { condition } = element.props;
-  const $then = element.renderChildren();
+export function If(
+  { condition, children = [] }: { condition: string; children?: jsx.AskNode[] },
+  { next }: jsx.AskJSXRenderOptions
+) {
+  const $then = children;
   const $else =
-    next instanceof AskElement && (next.name as any) === Else
+    next instanceof AskElement && next.type === Else
       ? next.renderChildren()
       : [];
 

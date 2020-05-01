@@ -1,3 +1,6 @@
-export function Else(element: any) {
-  return element.renderChildren();
+import * as jsx from './jsx';
+jsx;
+
+export function Else({ children = [] }: { children?: jsx.AskNode[] }) {
+  return children;
 }

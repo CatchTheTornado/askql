@@ -1,9 +1,10 @@
+import { assert, isString } from '../../utils';
 import * as jsx from './jsx';
-import { assert, isString, render } from './jsx';
+import { render } from './jsx';
+
 jsx;
 
-export function Set(element: any) {
-  const { name, value } = element.props;
+export function Set({ name, value }: { name: string; value: string }) {
   assert(isString(name), 'name');
   return (
     <set>

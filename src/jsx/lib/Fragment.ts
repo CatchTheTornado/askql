@@ -1,3 +1,6 @@
-export function Fragment(element: any) {
-  return element.renderChildren().join('');
+import * as jsx from './jsx';
+jsx;
+
+export function Fragment({ children = [] }: { children?: jsx.AskNode[] }) {
+  return children.join('');
 }

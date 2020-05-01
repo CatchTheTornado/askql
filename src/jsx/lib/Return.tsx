@@ -2,8 +2,7 @@ import * as jsx from './jsx';
 import { render } from './jsx';
 jsx;
 
-export function Return(element: any) {
-  const { value } = element.props;
+export function Return({ value }: { value: string }) {
   return (
     <set>
       {render(value)}

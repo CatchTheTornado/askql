@@ -1,4 +1,5 @@
 import * as code from '../../code';
+import { assert } from '../../utils';
 
 type JSONable =
   | string
@@ -7,22 +8,24 @@ type JSONable =
   | null
   | Record<string, any /* JSONable */>
   | Array<any /* JSONable */>;
-type AskNode = AskElement | JSONable;
-
-export interface AskElementOptions {
-  readonly props: Record<string, AskNode>;
-  readonly children: AskNode[];
-}
+export type AskNode = AskElement | JSONable;
 
 export class AskElement {
-  constructor(readonly name: string, readonly options: AskElementOptions) {}
+  constructor(
+    readonly type: Function,
+    readonly props: Record<string, AskNode>,
+    readonly children: AskNode[]
+  ) {}
 
-  get props() {
-    return this.options.props;
-  }
-
-  get children() {
-    return this.options.children;
+  render(options: AskJSXRenderOptions): string {
+    return this.type.call(
+      null,
+      {
+        ...this.props,
+        children: this.renderChildren(),
+      },
+      options
+    );
   }
 
   renderChildren(): string[] {
@@ -55,50 +58,21 @@ export function jsx(
     return (code as any)[name](...flatChildren);
   }
 
-  return new AskElement(name, { props, children });
+  return new AskElement(name, props, children);
+}
+
+export interface AskJSXRenderOptions {
+  parent?: AskElement;
+  prev?: AskNode;
+  next?: AskNode;
 }
 
 export function render(
   element: AskNode,
-  {
-    parent,
-    prev,
-    next,
-  }: {
-    parent?: AskElement;
-    prev?: AskNode;
-    next?: AskNode;
-  } = {}
+  options: AskJSXRenderOptions = {}
 ): string {
   if (!(element instanceof AskElement)) {
     return JSON.stringify(element);
   }
-
-  const { name } = element;
-
-  if (typeof name === 'function') {
-    return (name as Function).call(null, element, next /* if */);
-  }
-
-  switch (name) {
-    default:
-      throw new Error(`Unknown function "${name}" to compile in JSX`);
-  }
-}
-
-export function assert(condition: boolean, message: string): asserts condition {
-  if (!condition) {
-    throw new Error(`Assertion error: ${message}`);
-  }
-}
-
-export function isString(value: any): value is string {
-  return typeof value === 'string';
-}
-
-export function isStringArray(value: any): value is string[] {
-  if (!Array.isArray(value)) {
-    return false;
-  }
-  return value.every(isString);
+  return element.render(options);
 }

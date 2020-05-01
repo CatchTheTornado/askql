@@ -1,13 +1,20 @@
+import { assert, isString, isStringArray } from '../../utils';
 import * as jsx from './';
-import { assert, isString, isStringArray } from './jsx';
 jsx;
 
-export function Fun(element: any) {
-  const { name = '', args = [] } = element.props;
+export function Fun({
+  name = '',
+  args = [],
+  children = [],
+}: {
+  name?: string;
+  args?: string[];
+  children?: jsx.AskNode[];
+}) {
   assert(isString(name), 'name');
   assert(isStringArray(args), 'args');
 
-  const expressions = element.renderChildren();
+  const expressions = children;
   if (expressions.length === 0) {
     throw new Error('Functions need to have at least one expression');
   }

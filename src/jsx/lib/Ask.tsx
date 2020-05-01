@@ -1,10 +1,10 @@
-import * as jsx from '../../jsx';
+import * as jsx from './jsx';
 jsx;
 
-export function Ask(element: any) {
+export function Ask({ children = [] }: { children?: jsx.AskNode[] }) {
   return (
     <call>
-      <fun>{element.renderChildren()}</fun>
+      <fun>{children}</fun>
     </call>
   );
 }

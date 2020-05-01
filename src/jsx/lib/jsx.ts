@@ -1,4 +1,4 @@
-import * as c from '.';
+import { call, funUnsafe, ref, set, string } from '../../code';
 
 type JSONable =
   | string
@@ -64,12 +64,15 @@ export function render(
   } = element;
 
   switch (name) {
+    case 'ask':
+      return call(funUnsafe(...element.renderChildren()));
+
     case 'call': {
       const { name = '', args = [] } = props;
       assert(isString(name), 'name');
       assert(isStringArray(args), 'args');
-      return c.call(
-        render(name ? <ref name={name} /> : children[0]),
+      return call(
+        name ? ref(...name.split('.')) : render(children[0]),
         ...args.map((arg) => render(arg))
       );
     }
@@ -81,42 +84,54 @@ export function render(
       const { name = '', args = [] } = props;
       assert(isString(name), 'name');
       assert(isStringArray(args), 'args');
-      const fun = c.fun(args, ...element.renderChildren());
-      return name ? c.set(fun, name) : fun;
+
+      const expressions = element.renderChildren();
+      if (expressions.length === 0) {
+        throw new Error('Functions need to have at least one expression');
+      }
+      const fun = funUnsafe(
+        ...args.map((arg, index) =>
+          set(ref('frame', 'args', String(index)), arg)
+        ),
+        ...expressions
+      );
+      return name ? set(fun, name) : fun;
     }
 
     case 'if': {
       const { condition } = props;
-      return c.if(render(condition), {
-        $then: element.renderChildren(),
-        $else:
-          next instanceof AskElement && next.name === 'else'
-            ? next.renderChildren()
-            : undefined,
-      });
+      const $then = element.renderChildren();
+      const $else =
+        next instanceof AskElement && next.name === 'else'
+          ? next.renderChildren()
+          : [];
+
+      return call(
+        string('if'),
+        render(condition),
+        funUnsafe(...$then),
+        funUnsafe(...$else)
+      );
     }
 
     case 'else': // handled in if
       return '';
 
-    case 'program':
-      return c.call(c.fun([], ...element.renderChildren()));
-
     case 'ref': {
       const { name } = props;
       assert(isString(name), 'name');
-      return c.ref(...name.split('.'));
+      return ref(...name.split('.'));
     }
 
     case 'return': {
       const { value } = props;
-      return c.returnUnsafe(render(value));
+      return set(render(value), 'frame', 'returnedValue');
     }
 
     case 'set': {
       const { name, value } = props;
       assert(isString(name), 'name');
-      return c.set(render(value), name);
+      return set(render(value), ...name.split('.'));
     }
 
     default:

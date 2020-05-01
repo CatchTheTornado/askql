@@ -58,7 +58,7 @@ test('if', () => {
 test('jsx', () => {
   const call = (arg: string) =>
     c.render(
-      <program>
+      <ask>
         <fun name="test" args={['a']}>
           <if condition={<ref name="a" />}>
             <return value="OK" />
@@ -68,7 +68,7 @@ test('jsx', () => {
           </else>
         </fun>
         <call name="test" args={[arg]} />
-      </program>
+      </ask>
     );
 
   expect(ask(call('Y'))).toBe('OK');

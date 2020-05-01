@@ -1,43 +1,43 @@
-import { ask, c } from '..';
+import { ask, jsx } from '..';
 
 test('returns context', () => {
-  const context = ask(c.render(<ref name="context" />));
+  const context = ask(jsx.render(<jsx.Ref name="context" />));
   expect(context).toHaveProperty('stack');
 });
 
 test('creates the basic function', () => {
-  const f = <fun>Hello world!</fun>;
-  expect(ask(c.render(f))).toBeInstanceOf(Function);
-  expect(ask(c.render(<call>{f}</call>))).toBe('Hello world!');
+  const f = <jsx.Fun>Hello world!</jsx.Fun>;
+  expect(ask(jsx.render(f))).toBeInstanceOf(Function);
+  expect(ask(jsx.render(<jsx.Call>{f}</jsx.Call>))).toBe('Hello world!');
 });
 
 test('creates function with arguments', () => {
   const f = (
-    <fun args={['a']}>
-      <ref name="a" />
-    </fun>
+    <jsx.Fun args={['a']}>
+      <jsx.Ref name="a" />
+    </jsx.Fun>
   );
-  expect(ask(c.render(f))).toBeInstanceOf(Function);
-  expect(ask(c.render(<call args={['Hello world!']}>{f}</call>))).toBe(
-    'Hello world!'
-  );
+  expect(ask(jsx.render(f))).toBeInstanceOf(Function);
+  expect(
+    ask(jsx.render(<jsx.Call args={['Hello world!']}>{f}</jsx.Call>))
+  ).toBe('Hello world!');
 });
 
 test('closure', () => {
   expect(
     ask(
-      c.render(
-        <call>
-          <fun>
-            <set name="myvar" value="a" />
-            <call>
-              <fun>
-                <set name="myvar" value="b" />
-              </fun>
-            </call>
-            <ref name="myvar" />
-          </fun>
-        </call>
+      jsx.render(
+        <jsx.Call>
+          <jsx.Fun>
+            <jsx.Set name="myvar" value="a" />
+            <jsx.Call>
+              <jsx.Fun>
+                <jsx.Set name="myvar" value="b" />
+              </jsx.Fun>
+            </jsx.Call>
+            <jsx.Ref name="myvar" />
+          </jsx.Fun>
+        </jsx.Call>
       )
     )
   ).toBe('a');
@@ -45,11 +45,11 @@ test('closure', () => {
 
 test('if', () => {
   const expr = (cond: string) =>
-    c.render(
-      <fragment>
-        <if condition={cond}>yes</if>
-        <else>no</else>
-      </fragment>
+    jsx.render(
+      <jsx.Fragment>
+        <jsx.If condition={cond}>yes</jsx.If>
+        <jsx.Else>no</jsx.Else>
+      </jsx.Fragment>
     );
   expect(ask(expr('Y'))).toBe('yes');
   expect(ask(expr(''))).toBe('no');
@@ -57,18 +57,18 @@ test('if', () => {
 
 test('jsx', () => {
   const call = (arg: string) =>
-    c.render(
-      <ask>
-        <fun name="test" args={['a']}>
-          <if condition={<ref name="a" />}>
-            <return value="OK" />
-          </if>
-          <else>
-            <return value="NO" />
-          </else>
-        </fun>
-        <call name="test" args={[arg]} />
-      </ask>
+    jsx.render(
+      <jsx.Ask>
+        <jsx.Fun name="test" args={['a']}>
+          <jsx.If condition={<jsx.Ref name="a" />}>
+            <jsx.Return value="OK" />
+          </jsx.If>
+          <jsx.Else>
+            <jsx.Return value="NO" />
+          </jsx.Else>
+        </jsx.Fun>
+        <jsx.Call name="test" args={[arg]} />
+      </jsx.Ask>
     );
 
   expect(ask(call('Y'))).toBe('OK');

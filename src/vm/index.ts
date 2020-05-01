@@ -5,11 +5,12 @@ export interface Context extends Record<string, any> {}
 
 interface Options {
   logging?: boolean;
+  resources?: Record<string, any>;
 }
 
 export function ask(
   source: lib.source,
-  { logging = false }: Options = {}
+  { logging = false, resources = {} }: Options = {}
 ): any {
   const stack: any[] = [];
   const context: Context = {
@@ -20,7 +21,8 @@ export function ask(
   };
   stack.push({
     scope: {
-      '[[Prototype]]': lib,
+      '[[Prototype]]': resources,
+      ...lib,
       context,
     },
   });

@@ -86,3 +86,25 @@ test('jsx', () => {
   expect(ask(call('Y'))).toBe('OK');
   expect(ask(call(''))).toBe('NO');
 });
+
+test('host concat', () => {
+  const call = (...args: string[]) =>
+    jsx.render(
+      <jsx.Ask>
+        <jsx.Call
+          name="concat"
+          args={args.map((arg) => (
+            <string>{arg}</string>
+          ))}
+        />
+      </jsx.Ask>
+    );
+
+  const resources = {
+    concat({}, ...args: string[]): string {
+      return ''.concat(...args);
+    },
+  };
+
+  expect(ask(call('A', 'B', 'C'), { resources })).toBe('ABC');
+});

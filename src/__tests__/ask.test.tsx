@@ -6,7 +6,11 @@ test('returns context', () => {
 });
 
 test('creates the basic function', () => {
-  const f = <jsx.Fun>Hello world!</jsx.Fun>;
+  const f = (
+    <jsx.Fun>
+      <string>Hello world!</string>
+    </jsx.Fun>
+  );
   expect(ask(jsx.render(f))).toBeInstanceOf(Function);
   expect(ask(jsx.render(<jsx.Call>{f}</jsx.Call>))).toBe('Hello world!');
 });
@@ -19,7 +23,11 @@ test('creates function with arguments', () => {
   );
   expect(ask(jsx.render(f))).toBeInstanceOf(Function);
   expect(
-    ask(jsx.render(<jsx.Call args={['Hello world!']}>{f}</jsx.Call>))
+    ask(
+      jsx.render(
+        <jsx.Call args={[<string>Hello world!</string>]}>{f}</jsx.Call>
+      )
+    )
   ).toBe('Hello world!');
 });
 
@@ -29,10 +37,10 @@ test('closure', () => {
       jsx.render(
         <jsx.Call>
           <jsx.Fun>
-            <jsx.Set name="myvar" value="a" />
+            <jsx.Set name="myvar" value={<string>a</string>} />
             <jsx.Call>
               <jsx.Fun>
-                <jsx.Set name="myvar" value="b" />
+                <jsx.Set name="myvar" value={<string>b</string>} />
               </jsx.Fun>
             </jsx.Call>
             <jsx.Ref name="myvar" />
@@ -46,10 +54,14 @@ test('closure', () => {
 test('if', () => {
   const expr = (cond: string) =>
     jsx.render(
-      <jsx.Fragment>
-        <jsx.If condition={cond}>yes</jsx.If>
-        <jsx.Else>no</jsx.Else>
-      </jsx.Fragment>
+      <fragment>
+        <jsx.If condition={<string>{cond}</string>}>
+          <string>yes</string>
+        </jsx.If>
+        <jsx.Else>
+          <string>no</string>
+        </jsx.Else>
+      </fragment>
     );
   expect(ask(expr('Y'))).toBe('yes');
   expect(ask(expr(''))).toBe('no');
@@ -61,13 +73,13 @@ test('jsx', () => {
       <jsx.Ask>
         <jsx.Fun name="test" args={['a']}>
           <jsx.If condition={<jsx.Ref name="a" />}>
-            <jsx.Return value="OK" />
+            <jsx.Return value={<string>OK</string>} />
           </jsx.If>
           <jsx.Else>
-            <jsx.Return value="NO" />
+            <jsx.Return value={<string>NO</string>} />
           </jsx.Else>
         </jsx.Fun>
-        <jsx.Call name="test" args={[arg]} />
+        <jsx.Call name="test" args={[<string>{arg}</string>]} />
       </jsx.Ask>
     );
 

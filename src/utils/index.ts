@@ -14,3 +14,10 @@ export function isStringArray(value: any): value is string[] {
   }
   return value.every(isString);
 }
+
+export function flatten<T>(arr: (T | T[])[]): T[] {
+  return arr.reduce<T[]>(
+    (result, item) => result.concat(Array.isArray(item) ? flatten(item) : item),
+    []
+  );
+}

@@ -1,13 +1,11 @@
 import * as jsx from './jsx';
-import { render } from './jsx';
+import { Set } from './Set';
 jsx;
 
 export function Return({ value }: { value: string }) {
   return (
-    <set>
-      {render(value)}
-      {'frame'}
-      {'returnedValue'}
-    </set>
+    <fragment>
+      <Set name="frame.returnedValue" value={value} />
+    </fragment>
   );
 }

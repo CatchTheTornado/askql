@@ -1,6 +1,6 @@
 import { Else } from './Else';
 import * as jsx from './jsx';
-import { AskElement, render } from './jsx';
+import { AskElement } from './jsx';
 jsx;
 
 export function If(
@@ -16,7 +16,7 @@ export function If(
   return (
     <call>
       <string>if</string>
-      {render(condition)}
+      {condition}
       <fun>{$then}</fun>
       <fun>{$else}</fun>
     </call>

@@ -1,5 +1,5 @@
 import * as code from '../../code';
-import { assert } from '../../utils';
+import { assert, flatten } from '../../utils';
 
 type JSONable =
   | string
@@ -17,17 +17,6 @@ export class AskElement {
     readonly children: AskNode[]
   ) {}
 
-  render(options: AskJSXRenderOptions): string {
-    return this.type.call(
-      null,
-      {
-        ...this.props,
-        children: this.renderChildren(),
-      },
-      options
-    );
-  }
-
   renderChildren(): string[] {
     return this.children.map((child, index) =>
       render(child, {
@@ -43,7 +32,7 @@ export function jsx(
   name: string,
   propsOrNull: Record<string, AskNode> | null,
   ...children: AskNode[]
-): AskElement {
+): AskElement | string {
   const props = propsOrNull || {};
 
   if (typeof name === 'string') {
@@ -54,8 +43,16 @@ export function jsx(
     );
 
     // AskCode functions accept simple arguments only, so it's okay to flatten
-    const flatChildren = ([] as AskNode[]).concat.apply([], children);
-    return (code as any)[name](...flatChildren);
+    // also render children if necessary
+    const flatChildren = flatten(children);
+    return (code as any)[name](
+      ...flatten(children).map((node, index) =>
+        render(node, {
+          prev: flatChildren[index - 1],
+          next: flatChildren[index + 1],
+        })
+      )
+    );
   }
 
   return new AskElement(name, props, children);
@@ -71,8 +68,16 @@ export function render(
   element: AskNode,
   options: AskJSXRenderOptions = {}
 ): string {
-  if (!(element instanceof AskElement)) {
-    return JSON.stringify(element);
+  if (typeof element === 'string') {
+    return element;
   }
-  return element.render(options);
+
+  assert(
+    element instanceof AskElement,
+    'You can only render AskElements or string values'
+  );
+
+  const { type, props, children } = element;
+  const result = type.call(null, { ...props, children }, options);
+  return jsx('fragment', null, flatten([result])) as string;
 }

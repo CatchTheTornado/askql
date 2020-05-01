@@ -1,5 +1,7 @@
 import { assert, isString, isStringArray } from '../../utils';
 import * as jsx from './';
+import { Ref } from './Ref';
+import { Set } from './Set';
 jsx;
 
 export function Fun({
@@ -21,14 +23,7 @@ export function Fun({
   const f = (
     <fun>
       {args.map((arg, index) => (
-        <set>
-          <ref>
-            {'frame'}
-            {'args'}
-            {index}
-          </ref>
-          {arg}
-        </set>
+        <Set name={arg} value={<Ref name={`frame.args.${index}`} />} />
       ))}
       {expressions}
     </fun>
@@ -38,10 +33,5 @@ export function Fun({
     return f;
   }
 
-  return (
-    <set>
-      {f}
-      {name}
-    </set>
-  );
+  return <Set name={name} value={f} />;
 }

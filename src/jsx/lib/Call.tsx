@@ -1,11 +1,12 @@
 import { assert, isString, isStringArray } from '../../utils';
 import * as jsx from './jsx';
+import { Ref } from './Ref';
 jsx;
 
 export function Call({
   name = '',
   args = [],
-  children = [],
+  children: fun = [],
 }: {
   name?: string;
   args?: string[];
@@ -15,8 +16,8 @@ export function Call({
   assert(isStringArray(args), 'args');
   return (
     <call>
-      {name ? <ref>{name.split('.')}</ref> : children}
-      {args.map((arg) => jsx.render(arg))}
+      {name ? <Ref name={name} /> : fun}
+      {args}
     </call>
   );
 }

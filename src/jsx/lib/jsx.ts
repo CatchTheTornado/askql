@@ -1,3 +1,5 @@
+import * as code from '../../code';
+
 type JSONable =
   | string
   | boolean
@@ -40,6 +42,19 @@ export function jsx(
   ...children: AskNode[]
 ): AskElement {
   const props = propsOrNull || {};
+
+  if (typeof name === 'string') {
+    // direct reference to AskCode
+    assert(
+      Object.keys(props).length === 0,
+      'AskCode element props should be empty'
+    );
+
+    // AskCode functions accept simple arguments only, so it's okay to flatten
+    const flatChildren = ([] as AskNode[]).concat.apply([], children);
+    return (code as any)[name](...flatChildren);
+  }
+
   return new AskElement(name, { props, children });
 }
 
@@ -59,10 +74,7 @@ export function render(
     return JSON.stringify(element);
   }
 
-  const {
-    name,
-    options: { props, children },
-  } = element;
+  const { name } = element;
 
   if (typeof name === 'function') {
     return (name as Function).call(null, element, next /* if */);

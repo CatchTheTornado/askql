@@ -1,6 +1,7 @@
-import * as code from '../../code';
-import { AskElement, render } from './jsx';
 import { Else } from './Else';
+import * as jsx from './jsx';
+import { AskElement, render } from './jsx';
+jsx;
 
 export function If(element: any, next: any) {
   const { condition } = element.props;
@@ -10,10 +11,12 @@ export function If(element: any, next: any) {
       ? next.renderChildren()
       : [];
 
-  return code.call(
-    code.string('if'),
-    render(condition),
-    code.fun(...$then),
-    code.fun(...$else)
+  return (
+    <call>
+      <string>if</string>
+      {render(condition)}
+      <fun>{$then}</fun>
+      <fun>{$else}</fun>
+    </call>
   );
 }

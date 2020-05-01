@@ -1,8 +1,14 @@
-import * as code from '../../code';
+import * as jsx from './jsx';
 import { assert, isString, render } from './jsx';
+jsx;
 
 export function Set(element: any) {
   const { name, value } = element.props;
   assert(isString(name), 'name');
-  return code.set(render(value), ...name.split('.'));
+  return (
+    <set>
+      {render(value)}
+      {name.split('.')}
+    </set>
+  );
 }

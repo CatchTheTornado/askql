@@ -1,5 +1,6 @@
-import * as code from '../../code';
+import * as jsx from './';
 import { assert, isString, isStringArray } from './jsx';
+jsx;
 
 export function Fun(element: any) {
   const { name = '', args = [] } = element.props;
@@ -10,11 +11,30 @@ export function Fun(element: any) {
   if (expressions.length === 0) {
     throw new Error('Functions need to have at least one expression');
   }
-  const f = code.fun(
-    ...args.map((arg, index) =>
-      code.set(code.ref('frame', 'args', String(index)), arg)
-    ),
-    ...expressions
+  const f = (
+    <fun>
+      {args.map((arg, index) => (
+        <set>
+          <ref>
+            {'frame'}
+            {'args'}
+            {index}
+          </ref>
+          {arg}
+        </set>
+      ))}
+      {expressions}
+    </fun>
   );
-  return name ? code.set(f, name) : f;
+
+  if (!name) {
+    return f;
+  }
+
+  return (
+    <set>
+      {f}
+      {name}
+    </set>
+  );
 }

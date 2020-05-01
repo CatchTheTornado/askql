@@ -1,8 +1,8 @@
-export type value = fun | string;
-export type fun = string;
-export type type = fun;
+export type tvalue = tfun | string;
+export type tfun = string;
+export type ttype = tfun;
 
 /** calls function by name and pass arguments */
-export function call(fun: fun, ...args: value[]): value {
+export function call(fun: tfun, ...args: tvalue[]): tvalue {
   return `(${[fun, ...args].join(',')})`;
 }

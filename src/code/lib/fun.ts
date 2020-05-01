@@ -1,8 +1,8 @@
-import { call, value } from './call';
-import type { fun as func } from './call';
+import { call } from './call';
+import type { tfun, tvalue } from './call';
 import { string } from './string';
 
 /** create function which has no type checking */
-export function funUnsafe(...expressions: value[]): func {
+export function fun(...expressions: tvalue[]): tfun {
   return call(string('f'), ...expressions.map(string));
 }

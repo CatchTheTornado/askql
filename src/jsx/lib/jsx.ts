@@ -1,4 +1,4 @@
-import { call, funUnsafe, ref, set, string } from '../../code';
+import { call, fun, ref, set, string } from '../../code';
 
 type JSONable =
   | string
@@ -16,6 +16,10 @@ export interface AskElementOptions {
 
 class AskElement {
   constructor(readonly name: string, readonly options: AskElementOptions) {}
+
+  get props() {
+    return this.options.props;
+  }
 
   get children() {
     return this.options.children;
@@ -65,7 +69,7 @@ export function render(
 
   switch (name) {
     case 'ask':
-      return call(funUnsafe(...element.renderChildren()));
+      return call(fun(...element.renderChildren()));
 
     case 'call': {
       const { name = '', args = [] } = props;
@@ -89,13 +93,13 @@ export function render(
       if (expressions.length === 0) {
         throw new Error('Functions need to have at least one expression');
       }
-      const fun = funUnsafe(
+      const f = fun(
         ...args.map((arg, index) =>
           set(ref('frame', 'args', String(index)), arg)
         ),
         ...expressions
       );
-      return name ? set(fun, name) : fun;
+      return name ? set(f, name) : f;
     }
 
     case 'if': {
@@ -109,8 +113,8 @@ export function render(
       return call(
         string('if'),
         render(condition),
-        funUnsafe(...$then),
-        funUnsafe(...$else)
+        fun(...$then),
+        fun(...$else)
       );
     }
 

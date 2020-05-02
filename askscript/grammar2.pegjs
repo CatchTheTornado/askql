@@ -1,19 +1,19 @@
 
-query = queryHeader queryBody queryFooter
+query = queryHeader nl+ queryBody nl+ queryFooter
 
-queryHeader = ws* 'ask' ws* ('(' argList ')')? ws* '{'
-queryFooter = '}'
+queryHeader = ws* 'ask' ws* ('(' argList ')')? ws* '{' ws*
+queryFooter = ws* '}' (ws / nl)* eof
 
-queryBody = topStatementList // top level can contain function definitions but the inner levels can't
+queryBody = statementList
 
-topStatementList = ((statement / function) (nl+ (!.)?) )*
-statementList = (statement (nl+ (!.)?) )*
+statementList = nl* / nl* statement nl* / statement nl+ statementList
 
 statement = 
-      variableDefinition
+      functionDefinition
+    / variableDefinition
     / if
     / while
-    / functionCall
+    / value
 
 // variables other than of function type
 variableDefinition = 
@@ -22,33 +22,57 @@ variableDefinition =
 
 value = 
       functionCall
+    / methodCall
     / valueLiteral
+
+
+
+functionDefinition = functionHeader codeBlock functionFooter
+
+functionHeader = ''
+functionFooter = '}'
+
+// a block of code 
+codeBlock = statementList
+
+argList = arg / arg ',' argList
+arg = ws* identifier ws* ':' ws* type ws* 
+
+callArgList = valueList
+valueList = value / value ',' valueList
+
+if =       'if' ws* '(' value ')' ws* '{' nl+ codeBlock nl* '}'
+while = 'while' ws* '(' value ')' ws* '{' nl+ codeBlock nl* '}'
+functionCall = identifier ws* '(' callArgList ')'
+methodCall   = identifier ws* ':' ws* identifier ws* ('(' callArgList ')')?
+
+// === simple elements ===
+type = identifier
 
 valueLiteral = 
       int
     / float
     / string
     / array
-    / object
+    / map
 
 
-function = functionHeader codeBlock functionFooter
+string = '"' ch*  '"'
 
-functionHeader = ''
-functionFooter = '}'
+array = '[' valueList ']'
+map = '{' mapEntryList '}'
 
-// a block of code 
-codeBlock = 'axxx'
-argList = 'bxxx'
-identifier = 'cxxx'
-type = 'dxxx'
-statement = 'sxxx'
+mapEntryList = mapEntry / mapEntry ',' mapEntryList
+mapEntry = identifier ':' value
 
 
-// === value literals ===
+
+
+
+// === literals ===
+identifier = [_$a-zA-Z][-_$a-zA-Z0-9]* // TODO: add Unicode here
 int = [-]?[0-9]+                // TODO: yes, multiple leading zeros possible, I might fix one day
 float = [-]?[0-9]+ '.' [0-9]+   // TODO: yes, multiple leading zeros possible, I might fix one day
-string = '"' ch*  '"'
 
 // === character classes ===
 
@@ -72,4 +96,7 @@ onenine = [1-9]
 ws = ' ' / '\t'
 
 // new line
-nl = '\n' / '\r'
+nl = '\n' / '\r' / eof
+
+// end of file
+eof = (!.)?

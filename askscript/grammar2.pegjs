@@ -20,11 +20,11 @@
     }
 
     print() {
-      var output = ''
-      output += '<ask>\n';
-      output += this.askBody.print('  ');
-      output += '\n';
-      output += '</ask>';
+      let output = {
+        name: 'ask',
+        props: this.askHeader.print(),
+        children: this.askBody.print()
+      }
       return output;
     }
   }
@@ -33,6 +33,13 @@
     constructor(argList) {
       this.argList = argList;
     }
+
+    print() {
+      let output = {
+        args: this.argList.map(arg => arg.print())
+      }
+      return output
+    }
   }
 
   class AskBody {
@@ -40,8 +47,8 @@
       this.statementList = statementList;
     }
 
-    print(indent) {
-      return this.statementList.map(statement => statement.print(indent)).join('\n')
+    print() {
+      return this.statementList.map(statement => statement.print())
     }
   }
 
@@ -50,9 +57,8 @@
       this.statement = statement;
     }
 
-    // returns output string with the first indent
-    print(indent) {
-      return indent + this.statement.print(indent);
+    print() {
+      return this.statement.print();
     }
   }
 
@@ -64,10 +70,15 @@
       this.value = value
     }
 
-    // returns string without the first indent
-    print(indent) {
-      var output = ''
-      output += `<${this.modifier.print()} name="${this.identifier.print()}" type={${this.type.print()}} value={${this.type.print(indent)}} />`
+    print() {
+      let output = {
+        name: this.modifier.print(),
+        props: {
+          name: this.identifier.print(),
+          type: this.type.print(),
+          value: this.value.print()
+        }
+      }
       return output
     }
   }
@@ -78,9 +89,6 @@
       this.expression = expression
       this.methodCallAppliedList = methodCallAppliedList
       
-      console.log('methodCallAppliedList')
-      console.log(methodCallAppliedList)
-
       // If there are methods applied (which are a syntactic sugar for functions), convert them to functions
       if (methodCallAppliedList.length == 0) {
         this.expressionToPrint = expression
@@ -92,8 +100,6 @@
         //     methodn(method(....(method2(method1(expression, arg1, arg2), arg3, arg4), .....),....), argn1, argn2)
         
         for(const methodCall of methodCallAppliedList) {
-          console.log('methodCall.callArgList')
-          console.log(methodCall.callArgList)
           const callArgListShallowCopy = methodCall.callArgList.slice()
           callArgListShallowCopy.unshift(expression)
           expression = new FunctionCall(methodCall.identifier, callArgListShallowCopy)
@@ -102,18 +108,8 @@
       }
     }
 
-    // returns string without the first indent
-    // 
-    print(indent) {
-      var output = ''
-      switch(typeof this.expressionToPrint) {
-        case 'ValueLiteral':
-          output += this.expressionToPrint.print()
-          break
-        default:
-          // If the value is complex (identifier or function call), we want to write it in new line with an indent.
-          output += '\n' + indent + '  ' + this.expressionToPrint.print(indent + '  ')
-      }
+    print() {
+      let output = this.expressionToPrint.print()
       return output
     }
   }
@@ -124,15 +120,11 @@
       this.statementList = statementList;
     }
 
-    // returns string without the first indent
     print(indent) {
-      var output = '';
-      output += this.functionHeader.print(indent);
-      for(const statement of this.statementList) {
-        output += statement.print(indent + '  ') + '\n'
-      }
-      output += indent + '</fun>';
-      return output;
+      let output = this.functionHeader.print()
+      output.children = this.statementList.map(statement => statement.print())
+
+      return output
     }
   }
 
@@ -145,14 +137,15 @@
       this.returnType = returnType
     }
 
-    // returns string without the first indent
     print(indent) {
-      var output = '';
-      output += '<fun\n'
-      output += indent + '  ' + `name="${this.identifier.text}"\n` // Yes, we print function identifier without "<ref name='' ... />"
-      output += indent + '  ' + `args="{${this.argumentList.print(indent)}}"\n`
-      output += indent + '  ' + `returns="{${this.returnType.print(indent)}}"\n`
-      output += indent + '>\n'
+      let output = {
+        name: 'fun',
+        props: {
+          name: this.identifier.text,
+          args: this.argumentList.print(),
+          returns: this.returnType.print()
+        }
+      }
       return output
     }
   }
@@ -164,8 +157,8 @@
     }
 
     print(indent) {
-      // We print identifier with "<ref name='' />"
-      return `["${this.identifier.text}", ${this.type.print()}]`
+      let output = [this.identifier.text, this.type.print()]
+      return output
     }
   }
 
@@ -175,14 +168,14 @@
       this.statementList = statementList
     }
 
-    // returns string without the first indent
     print(indent) {
-      var output = '';
-      output += `<if condition={${this.value.print(indent)}}>\n`
-      for(const statement of this.statementList) {
-        output += statement.print(indent + '  ') + '\n'
+      let output = {
+        name: 'if',
+        props: {
+          condition: this.value.print(),
+        },
+        children: this.statementList.map(statement => statement.print())
       }
-      output += indent + '</if>\n'
       return output
     }
   }
@@ -193,14 +186,14 @@
       this.statementList = statementList
     }
 
-    // returns string without the first indent
     print(indent) {
-      var output = '';
-      output += '<while condition={}>\n'
-      for(const statement of this.statementList) {
-        output += statement.print(indent + '  ') + '\n'
+      let output = {
+        name: 'while',
+        props: {
+          condition: this.value.print(),
+        },
+        children: this.statementList.map(statement => statement.print())
       }
-      output += indent + '</while>\n'
       return output
     }
   }
@@ -210,10 +203,13 @@
       this.value = value
     }
 
-    // returns string without the first indent
     print(indent) {
-      var output = '';
-      output += `<return value={${this.value.print(indent)}} />\n`
+      let output = {
+        name: 'return',
+        props: {
+          value: this.value.print()
+        }
+      }
       return output
     }
   }
@@ -224,11 +220,14 @@
       this.callArgList = new CallArgumentList(callArgList)
     }
 
-    // returns string without the first indent
     print(indent) {
-      var output = ''
-      // Yes, print function name without <ref name='' />
-      output += `<call name="${this.identifier.text}" args={${this.callArgList.print(indent)}} />`
+      let output = {
+        name: 'call',
+        props: {
+          name: this.identifier.text,
+          args: this.callArgList.print()
+        }
+      }
       return output
     }
   }
@@ -246,8 +245,10 @@
     }
 
     print() {
-      // We print identifier with "<ref name='' />"
-      return `<${this.identifier.text} />`
+      let output = {
+        name: this.identifier.text
+      }
+      return output
     }
   }
 
@@ -267,7 +268,8 @@
     }
 
     print() {
-      return `{"${this.text}"}`
+      // return `{"${this.text}"}`
+      return this.text
     }
   }
 
@@ -277,10 +279,7 @@
     }
 
     print() {
-      var output = ''
-      output += '['
-      output += this.valueList.forEach(value => value.print()).join(',')
-      output += ']'
+      let output = this.valueList.map(value => value.print())
       return output
     }
   }
@@ -291,10 +290,8 @@
     }
 
     print() {
-      var output = ''
-      output += '{'
-      output += this.mapEntryList.forEach(mapEntry => mapEntry.print()).join(',')
-      output += '}'
+      let output = {}
+      this.mapEntryList.forEach(mapEntry => output[mapEntry.identifier.text] = mapEntry.value.print())
       return output
     }
   }
@@ -305,11 +302,7 @@
       this.value = value
     }
 
-    print() {
-      var output = ''
-      output += `"${this.identifier}":${this.value.print(indent)}`
-      return output
-    }
+    // print not needed as Map handles it
   }
 
   class Const {
@@ -330,7 +323,13 @@
     }
 
     print() {
-      return `<ref name="${this.text}" />`
+      let output = {
+        name: 'ref',
+        props: {
+          name: this.text
+        }
+      }
+      return output
     }
   }
 
@@ -380,10 +379,7 @@
     }
 
     print(indent) {
-      var output = '';
-      output += '[';
-      output += this.argList.map(arg => arg.print(indent)).join(',')
-      output += ']';
+      let output = this.argList.map(arg => arg.print())
       return output;
     }
   }
@@ -395,10 +391,7 @@
     }
 
     print(indent) {
-      var output = '';
-      output += '[';
-      output += this.callArgList.map(value => value.print(indent)).join(',')
-      output += ']';
+      let output = this.callArgList.map(value => value.print())
       return output;
     }
   }
@@ -412,7 +405,7 @@ ask = aH:askHeader aB:askBody askFooter {
 }
 
 askHeader = ws* 'ask' ws* aL:askHeader_argList? ws* '{' ws* nl { //TODO: add return type
-  return new AskHeader(typeof aL === 'undefined' ? [] : aL);
+  return new AskHeader(aL === null ? [] : aL);
 }
 askHeader_argList = ('(' aL:argList ')') { return aL }
 
@@ -441,7 +434,7 @@ statement_NoWs =
 
 // variables other than of function type
 variableDefinition = 
-      m:modifier ws+ i:identifier t:variableDefinition_type? ws+ '=' ws+ v:value { return new VariableDefinition(m, i, typeof t === 'undefined' ? anyType : t, v)}
+      m:modifier ws+ i:identifier t:variableDefinition_type? ws+ '=' ws+ v:value { return new VariableDefinition(m, i, t === null ? anyType : t, v)}
 variableDefinition_type = ws+ ':' ws+ t:type { return t }
 
 value = 
@@ -454,7 +447,7 @@ value =
 
 functionDefinition = fH:functionHeader cB:codeBlock functionFooter { return new FunctionDefinition(fH, cB) }
 
-functionHeader = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? ws* '=' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* nl { return new FunctionHeader(m, i, typeof tD === 'undefined' ? null : tD, aL, typeof rTD === 'undefined' ? anyType : rTD) }
+functionHeader = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? ws* '=' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* nl { return new FunctionHeader(m, i, tD, aL, rTD === null ? anyType : rTD) }
 functionHeader_typeDecl = ws* ':' ws* t1:type { return t1 } // this is the optional variable type declaration
 functionHeader_returnTypeDecl = ws* ':' ws* t2:type { return t2 } // this is the optional return type declaration
 
@@ -469,10 +462,10 @@ argList =
 
 arg = ws* i:identifier ws* ':' ws* t:type ws* { return new Arg(i, t) }
 
-callArgList = v:valueList { console.log('valueList: ' + v); return v }
+callArgList = v:valueList { return v }
 valueList = 
-    v:value ',' vL:valueList { console.log(',v: ' + v.print('')); vL.unshift(v); return vL }
-  / v:value { console.log('v: ' + v.print('')); return [v] }
+    v:value ',' vL:valueList { vL.unshift(v); return vL }
+  / v:value { return [v] }
 
 if =        'if' ws* '(' v:value ')' ws* '{' nl+ cB:codeBlock nlws* '}' {       return new If(v, cB) }
 while  = 'while' ws* '(' v:value ')' ws* '{' nl+ cB:codeBlock nlws* '}' {       return new While(v, cB) }
@@ -481,8 +474,8 @@ return =
   / 'return' {                                                                  return new Return(nullValue) }
 
 functionCall = i:identifier ws* '(' cAL:callArgList ')' {                       return new FunctionCall(i, cAL) }
-methodCallApplied   = ws* ':' ws* i:identifier ws* cAL:methodCallAppliedArgList?  { console.log('i: ' + i.print() + ', typeof cAL: ' + (typeof cAL)); if (typeof cAL !== 'undefined') console.log('JSON: ' + JSON.stringify(cAL)); return new MethodCallApplied(i, cAL === null ? [] : cAL)}
-methodCallAppliedArgList = '(' cAL:callArgList ')' { console.log('cAL: ' + (typeof cAL) + ' : ' + JSON.stringify(cAL) + ' ' + cAL.toString()); return cAL }
+methodCallApplied   = ws* ':' ws* i:identifier ws* cAL:methodCallAppliedArgList?  { return new MethodCallApplied(i, cAL === null ? [] : cAL)}
+methodCallAppliedArgList = '(' cAL:callArgList ')' { return cAL }
 
 // === simple elements ===
 type = i:identifier { return new Type(i) }
@@ -504,7 +497,9 @@ stringContents = ch* { return new String(text()) }
 array = '[' vL:valueList ']' { return new Array(vL) }
 map = '{' mEL:mapEntryList '}' { return new Map(mEL) }
 
-mapEntryList = mE:mapEntry / mE:mapEntry ',' mEL:mapEntryList { return typeof mEL === 'undefined' ? [mE] : mEL.unshift(mE), mEL }
+mapEntryList = 
+    mE:mapEntry ',' mEL:mapEntryList {  return mEL.unshift(mE), mEL }
+  / mE:mapEntry {                       return [mE] }
 mapEntry = i:identifier ':' v:value { return new MapEntry(i, v) }
 
 

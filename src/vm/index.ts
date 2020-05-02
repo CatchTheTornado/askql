@@ -32,11 +32,11 @@ export function ask(
     console.log(`ask ${source}`);
   }
   try {
-    const result = lib.ask(source, { context });
-    return result;
+    return lib.ask(source, { context });
   } finally {
     if (logging) {
       console.log('context', context);
+      console.log('scope', context.stack[context.stack.length - 1]?.scope);
     }
   }
 }

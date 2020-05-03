@@ -8,7 +8,10 @@ const testFiles = {
     'empty ask file': 'program01-empty.ask',
     'variable':       'program02-variable.ask',
     'string literal': 'program03-string.ask',
-
+    
+    // here will come 3 examples for graphql
+    
+    // here will come an example for call() with a lambda function
 }
 
 describe('AskScript parser', () => {
@@ -29,11 +32,15 @@ describe('AskScript parser', () => {
     const tests = [
         'empty ask file',
         'variable',
-        'string literal'
+        'string literal',
+        // here will come 3 examples for graphql
+
+        // here will come an example for call() with a lambda function
     ];
 
     for (const testName of tests) {
         const testFilePath = testFiles[testName];
+
         test(`parses ${testName}`, () => {
             checkIfParsesFile(testFilePath);
         });

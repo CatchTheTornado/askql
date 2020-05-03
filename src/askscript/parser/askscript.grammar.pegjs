@@ -6,6 +6,7 @@
 // - unions
 // - records
 // - tuples
+// - call() with a lambda function
 
 {
   const ask = require('./askscript.grammar.pegjs.classes')

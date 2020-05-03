@@ -142,44 +142,44 @@ function peg$parse(input, options) {
       peg$startRuleFunction  = peg$parseask,
 
       peg$c0 = function(aH, aB) {
-        return new Ask(aH, aB);
+        return new ask.Ask(aH, aB);
       },
       peg$c1 = "ask",
       peg$c2 = peg$literalExpectation("ask", false),
       peg$c3 = "{",
       peg$c4 = peg$literalExpectation("{", false),
       peg$c5 = function(aL) { //TODO: add return type
-        return new AskHeader(aL === null ? [] : aL);
+        return new ask.AskHeader(aL === null ? [] : aL);
       },
       peg$c6 = "(",
       peg$c7 = peg$literalExpectation("(", false),
       peg$c8 = ")",
       peg$c9 = peg$literalExpectation(")", false),
       peg$c10 = function() { return aL },
-      peg$c11 = function(sL) { return new AskBody(sL) },
+      peg$c11 = function(sL) { return new ask.AskBody(sL) },
       peg$c12 = function(sL) { return sL },
       peg$c13 = function(s, sL) { return sL.unshift(s), sL },
       peg$c14 = function(s) { return [s] },
       peg$c15 = "",
       peg$c16 = function() { return [] },
       peg$c17 = function(s) { return s },
-      peg$c18 = function(s) { return new Statement(s) },
+      peg$c18 = function(s) { return new ask.Statement(s) },
       peg$c19 = "=",
       peg$c20 = peg$literalExpectation("=", false),
-      peg$c21 = function(m, i, t, v) { return new VariableDefinition(m, i, t === null ? anyType : t, v)},
+      peg$c21 = function(m, i, t, v) { return new ask.VariableDefinition(m, i, t === null ? anyType : t, v)},
       peg$c22 = ":",
       peg$c23 = peg$literalExpectation(":", false),
       peg$c24 = function(t) { return t },
-      peg$c25 = function(e, mCAs) { return new Value(e, mCAs) },
-      peg$c26 = function(fH, cB) { return new FunctionDefinition(fH, cB) },
-      peg$c27 = function(m, i, tD, aL, rTD) { return new FunctionHeader(m, i, tD, aL, rTD === null ? anyType : rTD) },
+      peg$c25 = function(e, mCAs) { return new ask.Value(e, mCAs) },
+      peg$c26 = function(fH, cB) { return new ask.FunctionDefinition(fH, cB) },
+      peg$c27 = function(m, i, tD, aL, rTD) { return new ask.FunctionHeader(m, i, tD, aL, rTD === null ? anyType : rTD) },
       peg$c28 = function(t1) { return t1 },
       peg$c29 = function(t2) { return t2 },
       peg$c30 = ",",
       peg$c31 = peg$literalExpectation(",", false),
       peg$c32 = function(a, aL) { return aL.unshift(a), aL },
       peg$c33 = function(a) { return [a] },
-      peg$c34 = function(i, t) { return new Arg(i, t) },
+      peg$c34 = function(i, t) { return new ask.Arg(i, t) },
       peg$c35 = function(v) { return v },
       peg$c36 = function(v, vL) { vL.unshift(v); return vL },
       peg$c37 = function(v) { return [v] },
@@ -187,60 +187,60 @@ function peg$parse(input, options) {
       peg$c39 = peg$literalExpectation("if", false),
       peg$c40 = "}",
       peg$c41 = peg$literalExpectation("}", false),
-      peg$c42 = function(v, cB) {       return new If(v, cB) },
+      peg$c42 = function(v, cB) {       return new ask.If(v, cB) },
       peg$c43 = "while",
       peg$c44 = peg$literalExpectation("while", false),
-      peg$c45 = function(v, cB) {       return new While(v, cB) },
+      peg$c45 = function(v, cB) {       return new ask.While(v, cB) },
       peg$c46 = "return",
       peg$c47 = peg$literalExpectation("return", false),
-      peg$c48 = function(v) {                                                        return new Return(v) },
-      peg$c49 = function() {                                                                  return new Return(nullValue) },
-      peg$c50 = function(i, cAL) {                       return new FunctionCall(i, cAL) },
-      peg$c51 = function(i, cAL) { return new MethodCallApplied(i, cAL === null ? [] : cAL)},
+      peg$c48 = function(v) {                                                        return new ask.Return(v) },
+      peg$c49 = function() {                                                                  return new ask.Return(nullValue) },
+      peg$c50 = function(i, cAL) {                       return new ask.FunctionCall(i, cAL) },
+      peg$c51 = function(i, cAL) { return new ask.MethodCallApplied(i, cAL === null ? [] : cAL)},
       peg$c52 = function(cAL) { return cAL },
-      peg$c53 = function(i) { return new Type(i) },
-      peg$c54 = function(v) { return new ValueLiteral(v) },
+      peg$c53 = function(i) { return new ask.Type(i) },
+      peg$c54 = function(v) { return new ask.ValueLiteral(v) },
       peg$c55 = "\"",
       peg$c56 = peg$literalExpectation("\"", false),
       peg$c57 = function(sC) { return sC },
-      peg$c58 = function() { return new String(text()) },
+      peg$c58 = function() { return new ask.String(text()) },
       peg$c59 = "[",
       peg$c60 = peg$literalExpectation("[", false),
       peg$c61 = "]",
       peg$c62 = peg$literalExpectation("]", false),
-      peg$c63 = function(vL) { return new Array(vL) },
-      peg$c64 = function(mEL) { return new Map(mEL) },
+      peg$c63 = function(vL) { return new ask.Array(vL) },
+      peg$c64 = function(mEL) { return new ask.Map(mEL) },
       peg$c65 = function(mE, mEL) {  return mEL.unshift(mE), mEL },
       peg$c66 = function(mE) {                       return [mE] },
-      peg$c67 = function(i, v) { return new MapEntry(i, v) },
+      peg$c67 = function(i, v) { return new ask.MapEntry(i, v) },
       peg$c68 = "const",
       peg$c69 = peg$literalExpectation("const", false),
-      peg$c70 = function() { return new Const() },
+      peg$c70 = function() { return new ask.Const() },
       peg$c71 = "let",
       peg$c72 = peg$literalExpectation("let", false),
-      peg$c73 = function() { return new Let() },
+      peg$c73 = function() { return new ask.Let() },
       peg$c74 = /^[_$a-zA-Z]/,
       peg$c75 = peg$classExpectation(["_", "$", ["a", "z"], ["A", "Z"]], false, false),
       peg$c76 = /^[\-_$a-zA-Z0-9]/,
       peg$c77 = peg$classExpectation(["-", "_", "$", ["a", "z"], ["A", "Z"], ["0", "9"]], false, false),
-      peg$c78 = function() { return new Identifier(text()) },
+      peg$c78 = function() { return new ask.Identifier(text()) },
       peg$c79 = "null",
       peg$c80 = peg$literalExpectation("null", false),
-      peg$c81 = function() { return new Null() },
+      peg$c81 = function() { return new ask.Null() },
       peg$c82 = "true",
       peg$c83 = peg$literalExpectation("true", false),
-      peg$c84 = function() { return new True() },
+      peg$c84 = function() { return new ask.True() },
       peg$c85 = "false",
       peg$c86 = peg$literalExpectation("false", false),
-      peg$c87 = function() { return new False() },
+      peg$c87 = function() { return new ask.False() },
       peg$c88 = /^[\-]/,
       peg$c89 = peg$classExpectation(["-"], false, false),
       peg$c90 = /^[0-9]/,
       peg$c91 = peg$classExpectation([["0", "9"]], false, false),
-      peg$c92 = function() { return new Int(text()) },
+      peg$c92 = function() { return new ask.Int(text()) },
       peg$c93 = ".",
       peg$c94 = peg$literalExpectation(".", false),
-      peg$c95 = function() { return new Float(text()) },
+      peg$c95 = function() { return new ask.Float(text()) },
       peg$c96 = /^[ !#-[\]-\xFF]/,
       peg$c97 = peg$classExpectation([" ", "!", ["#", "["], ["]", "\xFF"]], false, false),
       peg$c98 = "\\",
@@ -2802,396 +2802,7 @@ function peg$parse(input, options) {
   }
 
 
-
-    // In the following classes arguments to all the constructors have the same name as the class they are type of.
-    // If an argument ends with *List, it means it's a list of elements of type *. In some cases it's converted to an object of a class *List in the constructor to make printing AskJSX easier.
-    //
-    // Except for one instance (typeNullable argument), all values are non-null.
-    class Ask {
-      constructor(askHeader, askBody) {
-        this.askHeader = askHeader;
-        this.askBody = askBody;
-      }
-
-      print() {
-        let output = {
-          name: 'ask',
-          props: this.askHeader.print(),
-          children: this.askBody.print()
-        }
-        return output;
-      }
-    }
-
-    class AskHeader {
-      constructor(argList) {
-        this.argList = argList;
-      }
-
-      print() {
-        let output = {
-          args: this.argList.map(arg => arg.print())
-        }
-        return output
-      }
-    }
-
-    class AskBody {
-      constructor(statementList) {
-        this.statementList = statementList;
-      }
-
-      print() {
-        return this.statementList.map(statement => statement.print())
-      }
-    }
-
-    class Statement {
-      constructor(statement) {
-        this.statement = statement;
-      }
-
-      print() {
-        return this.statement.print();
-      }
-    }
-
-    class VariableDefinition {
-      constructor(modifier, identifier, type, value) {
-        this.modifier = modifier
-        this.identifier = identifier
-        this.type = type
-        this.value = value
-      }
-
-      print() {
-        let output = {
-          name: this.modifier.print(),
-          props: {
-            name: this.identifier.print(),
-            type: this.type.print(),
-            value: this.value.print()
-          }
-        }
-        return output
-      }
-    }
-
-    class Value {
-      constructor(expression, methodCallAppliedList) {
-        
-        this.expression = expression
-        this.methodCallAppliedList = methodCallAppliedList
-        
-        // If there are methods applied (which are a syntactic sugar for functions), convert them to functions
-        if (methodCallAppliedList.length == 0) {
-          this.expressionToPrint = expression
-        } else {
-
-          // We need to convert here from:
-          //     expression:method1(arg1, arg2):method2(arg3, arg4):...:methodn(argn1, argn2)
-          // to:
-          //     methodn(method(....(method2(method1(expression, arg1, arg2), arg3, arg4), .....),....), argn1, argn2)
-          
-          for(const methodCall of methodCallAppliedList) {
-            const callArgListShallowCopy = methodCall.callArgList.slice()
-            callArgListShallowCopy.unshift(expression)
-            expression = new FunctionCall(methodCall.identifier, callArgListShallowCopy)
-          }
-          this.expressionToPrint = expression
-        }
-      }
-
-      print() {
-        let output = this.expressionToPrint.print()
-        return output
-      }
-    }
-
-    class FunctionDefinition {
-      constructor(functionHeader, statementList) {
-        this.functionHeader = functionHeader;
-        this.statementList = statementList;
-      }
-
-      print(indent) {
-        let output = this.functionHeader.print()
-        output.children = this.statementList.map(statement => statement.print())
-
-        return output
-      }
-    }
-
-    class FunctionHeader {
-      constructor(modifier, identifier, typeNullable, argumentList, returnType) {
-        this.modifier = modifier
-        this.identifier = identifier
-        this.typeNullable = typeNullable
-        this.argumentList = new ArgumentList(argumentList)
-        this.returnType = returnType
-      }
-
-      print(indent) {
-        let output = {
-          name: 'fun',
-          props: {
-            name: this.identifier.text,
-            args: this.argumentList.print(),
-            returns: this.returnType.print()
-          }
-        }
-        return output
-      }
-    }
-
-    class Arg {
-      constructor(identifier, type) {
-        this.identifier = identifier;
-        this.type = type;
-      }
-
-      print(indent) {
-        let output = [this.identifier.text, this.type.print()]
-        return output
-      }
-    }
-
-    class If {
-      constructor(value, statementList) {
-        this.value = value
-        this.statementList = statementList
-      }
-
-      print(indent) {
-        let output = {
-          name: 'if',
-          props: {
-            condition: this.value.print(),
-          },
-          children: this.statementList.map(statement => statement.print())
-        }
-        return output
-      }
-    }
-
-    class While {
-      constructor(value, statementList) {
-        this.value = value
-        this.statementList = statementList
-      }
-
-      print(indent) {
-        let output = {
-          name: 'while',
-          props: {
-            condition: this.value.print(),
-          },
-          children: this.statementList.map(statement => statement.print())
-        }
-        return output
-      }
-    }
-
-    class Return {
-      constructor(value) {
-        this.value = value
-      }
-
-      print(indent) {
-        let output = {
-          name: 'return',
-          props: {
-            value: this.value.print()
-          }
-        }
-        return output
-      }
-    }
-
-    class FunctionCall {
-      constructor(identifier, callArgList) {
-        this.identifier = identifier
-        this.callArgList = new CallArgumentList(callArgList)
-      }
-
-      print(indent) {
-        let output = {
-          name: 'call',
-          props: {
-            name: this.identifier.text,
-            args: this.callArgList.print()
-          }
-        }
-        return output
-      }
-    }
-
-    class MethodCallApplied {
-      constructor(identifier, callArgList) {
-        this.identifier = identifier
-        this.callArgList = callArgList
-      }
-    }
-
-    class Type {
-      constructor(identifier) {
-        this.identifier = identifier
-      }
-
-      print() {
-        let output = {
-          name: this.identifier.text
-        }
-        return output
-      }
-    }
-
-    class ValueLiteral {
-      constructor(value) {
-        this.value = value
-      }
-
-      print() {
-        return this.value.print()
-      }
-    }
-
-    class String {
-      constructor(text) {
-        this.text = text
-      }
-
-      print() {
-        // return `{"${this.text}"}`
-        return this.text
-      }
-    }
-
-    class Array {
-      constructor(valueList) {
-        this.valueList = valueList
-      }
-
-      print() {
-        let output = this.valueList.map(value => value.print())
-        return output
-      }
-    }
-
-    class Map {
-      constructor(mapEntryList) {
-        this.mapEntryList = mapEntryList
-      }
-
-      print() {
-        let output = {}
-        this.mapEntryList.forEach(mapEntry => output[mapEntry.identifier.text] = mapEntry.value.print())
-        return output
-      }
-    }
-
-    class MapEntry {
-      constructor(identifier, value) {
-        this.identifier = identifier
-        this.value = value
-      }
-
-      // print not needed as Map handles it
-    }
-
-    class Const {
-      print() {
-        return 'const'
-      }
-    }
-
-    class Let {
-      print() {
-        return 'let'
-      }
-    }
-
-    class Identifier {
-      constructor(text) {
-        this.text = text
-      }
-
-      print() {
-        let output = {
-          name: 'ref',
-          props: {
-            name: this.text
-          }
-        }
-        return output
-      }
-    }
-
-    class Null {
-      print() {
-        return 'null';
-      }
-    }
-
-    class True {
-      print() {
-        return 'true';
-      }
-    }
-
-    class False {
-      print() {
-        return 'false';
-      }
-    }
-
-    class Int {
-      constructor(text) {
-        this.text = text
-      }
-
-      print() {
-        return this.text
-      }
-    }
-
-    class Float {
-      constructor(text) {
-        this.text = text
-      }
-
-      print() {
-        return this.text
-      }
-    }
-
-  // ---
-
-    class ArgumentList {
-      constructor(argList) {
-        this.argList = argList
-      }
-
-      print(indent) {
-        let output = this.argList.map(arg => arg.print())
-        return output;
-      }
-    }
-
-
-    class CallArgumentList {
-      constructor(callArgList) {
-        this.callArgList = callArgList
-      }
-
-      print(indent) {
-        let output = this.callArgList.map(value => value.print())
-        return output;
-      }
-    }
-
-    const nullValue = new Value(new ValueLiteral(new Null()), [])
-    const anyType = new Type(new Identifier('any'))
+    const ask = require('./askscript.grammar.pegjs.classes')
 
 
   peg$result = peg$startRuleFunction();

@@ -1,8 +1,8 @@
 import { call } from './call';
 import type { tvalue } from './call';
-import { string } from './string';
+import { json } from './json';
 
 /** reference value (possibly nested) */
 export function ref(...keys: string[]): tvalue {
-  return call(string('r'), ...keys.map(string));
+  return call(json('r'), ...keys.map(json));
 }

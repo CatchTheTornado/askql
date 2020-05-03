@@ -1,8 +1,8 @@
 import { call } from './call';
 import type { tvalue } from './call';
-import { string } from './string';
+import { json } from './json';
 
 /** evaluate */
 export function ask(source: string): tvalue {
-  return call(string('ask'), string(source));
+  return call(json('ask'), json(source));
 }

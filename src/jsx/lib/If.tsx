@@ -15,7 +15,7 @@ export function If(
 
   return (
     <call>
-      <string>if</string>
+      <v>if</v>
       {condition}
       <fun>{$then}</fun>
       <fun>{$else}</fun>

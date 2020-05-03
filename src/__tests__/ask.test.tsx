@@ -8,7 +8,7 @@ test('returns context', () => {
 test('creates the basic function', () => {
   const f = (
     <jsx.Fun>
-      <string>Hello world!</string>
+      <v>Hello world!</v>
     </jsx.Fun>
   );
   expect(ask(jsx.render(f))).toBeInstanceOf(Function);
@@ -23,11 +23,7 @@ test('creates function with arguments', () => {
   );
   expect(ask(jsx.render(f))).toBeInstanceOf(Function);
   expect(
-    ask(
-      jsx.render(
-        <jsx.Call args={[<string>Hello world!</string>]}>{f}</jsx.Call>
-      )
-    )
+    ask(jsx.render(<jsx.Call args={[<v>Hello world!</v>]}>{f}</jsx.Call>))
   ).toBe('Hello world!');
 });
 
@@ -37,10 +33,10 @@ test('closure', () => {
       jsx.render(
         <jsx.Call>
           <jsx.Fun>
-            <jsx.Set name="myvar" value={<string>a</string>} />
+            <jsx.Set name="myvar" value={<v>a</v>} />
             <jsx.Call>
               <jsx.Fun>
-                <jsx.Set name="myvar" value={<string>b</string>} />
+                <jsx.Set name="myvar" value={<v>b</v>} />
               </jsx.Fun>
             </jsx.Call>
             <jsx.Ref name="myvar" />
@@ -55,11 +51,11 @@ test('if', () => {
   const expr = (cond: string) =>
     jsx.render(
       <fragment>
-        <jsx.If condition={<string>{cond}</string>}>
-          <string>yes</string>
+        <jsx.If condition={<v>{cond}</v>}>
+          <v>yes</v>
         </jsx.If>
         <jsx.Else>
-          <string>no</string>
+          <v>no</v>
         </jsx.Else>
       </fragment>
     );
@@ -73,13 +69,13 @@ test('jsx', () => {
       <jsx.Ask>
         <jsx.Fun name="test" args={['a']}>
           <jsx.If condition={<jsx.Ref name="a" />}>
-            <jsx.Return value={<string>OK</string>} />
+            <jsx.Return value={<v>OK</v>} />
           </jsx.If>
           <jsx.Else>
-            <jsx.Return value={<string>NO</string>} />
+            <jsx.Return value={<v>NO</v>} />
           </jsx.Else>
         </jsx.Fun>
-        <jsx.Call name="test" args={[<string>{arg}</string>]} />
+        <jsx.Call name="test" args={[<v>{arg}</v>]} />
       </jsx.Ask>
     );
 
@@ -94,7 +90,7 @@ test('host concat', () => {
         <jsx.Call
           name="concat"
           args={args.map((arg) => (
-            <string>{arg}</string>
+            <v>{arg}</v>
           ))}
         />
       </jsx.Ask>

@@ -1,2 +1,0 @@
-## Run tests
-`npm test`

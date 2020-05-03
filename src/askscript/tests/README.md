@@ -1,0 +1,2 @@
+## Run tests
+`npm test`

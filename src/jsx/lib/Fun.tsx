@@ -21,12 +21,12 @@ export function Fun({
     throw new Error('Functions need to have at least one expression');
   }
   const f = (
-    <fun>
+    <code fun>
       {args.map((arg, index) => (
         <Set name={arg} value={<Ref name={`frame.args.${index}`} />} />
       ))}
       {expressions}
-    </fun>
+    </code>
   );
 
   if (!name) {

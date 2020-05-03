@@ -1,5 +1,6 @@
 import * as code from '../../code';
-import { assert, flatten } from '../../utils';
+import { assert, flatten, titleCase } from '../../utils';
+import * as components from './';
 
 type JSONable =
   | string
@@ -8,12 +9,14 @@ type JSONable =
   | null
   | Record<string, any /* JSONable */>
   | Array<any /* JSONable */>;
-export type AskNode = AskElement | JSONable;
+export type AskNode = AskElement;
+
+export type Props = Record<string, AskNode | JSONable>;
 
 export class AskElement {
   constructor(
     readonly type: Function,
-    readonly props: Record<string, AskNode>,
+    readonly props: Props,
     readonly children: AskNode[]
   ) {}
 
@@ -29,22 +32,26 @@ export class AskElement {
 }
 
 export function jsx(
-  name: string,
-  propsOrNull: Record<string, AskNode> | null,
+  name: string | Function,
+  propsOrNull: Props | null,
   ...children: AskNode[]
 ): AskElement | string {
   const props = propsOrNull || {};
 
-  if (typeof name === 'string') {
-    // direct reference to AskCode
-    assert(
-      Object.keys(props).length === 0,
-      'AskCode element props should be empty'
-    );
+  if (typeof name === 'function') {
+    return new AskElement(name, props, children);
+  }
 
-    // AskCode functions accept simple arguments only, so it's okay to flatten
-    // also render children if necessary
-    const flatChildren = flatten(children);
+  if (name !== 'code' && name !== 'v') {
+    return new AskElement(
+      (components as any)[titleCase(name)],
+      props,
+      children
+    );
+  }
+
+  function callCode(name: string) {
+    const flatChildren = flatten(children); // codes always have flat argument list
     return (code as any)[name](
       ...flatten(children).map((node, index) =>
         render(node, {
@@ -55,7 +62,17 @@ export function jsx(
     );
   }
 
-  return new AskElement(name, props, children);
+  if (name === 'v') {
+    return callCode('json');
+  }
+
+  // direct reference to AskCode
+  const keys = Object.keys(props);
+  assert(
+    keys.length === 1 && props[keys[0]] === true,
+    'AskCode element should contain exactly one prop - the name of the code and its arguments in children'
+  );
+  return callCode(keys[0]);
 }
 
 export interface AskJSXRenderOptions {
@@ -79,5 +96,5 @@ export function render(
 
   const { type, props, children } = element;
   const result = type.call(null, { ...props, children }, options);
-  return jsx('fragment', null, flatten([result])) as string;
+  return jsx('code', { fragment: true }, ...flatten([result])) as string;
 }

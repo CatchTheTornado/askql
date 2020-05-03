@@ -4,7 +4,10 @@ import { AskElement } from './jsx';
 jsx;
 
 export function If(
-  { condition, children = [] }: { condition: string; children?: jsx.AskNode[] },
+  {
+    condition,
+    children = [],
+  }: { condition: string; children?: jsx.AskNode | jsx.AskNode[] },
   { next }: jsx.AskJSXRenderOptions
 ) {
   const $then = children;
@@ -14,11 +17,11 @@ export function If(
       : [];
 
   return (
-    <call>
-      <v>if</v>
+    <code call>
+      <code json>if</code>
       {condition}
-      <fun>{$then}</fun>
-      <fun>{$else}</fun>
-    </call>
+      <code fun>{$then}</code>
+      <code fun>{$else}</code>
+    </code>
   );
 }

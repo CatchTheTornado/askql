@@ -15,9 +15,9 @@ export function Call({
   assert(isString(name), 'name');
   assert(isStringArray(args), 'args');
   return (
-    <call>
+    <code call>
       {name ? <Ref name={name} /> : fun}
       {args}
-    </call>
+    </code>
   );
 }

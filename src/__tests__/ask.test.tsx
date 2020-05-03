@@ -1,51 +1,47 @@
 import { ask, jsx } from '..';
 
 test('returns context', () => {
-  const context = ask(jsx.render(<jsx.Ref name="context" />));
+  const context = ask(jsx.render(<ref name="context" />));
   expect(context).toHaveProperty('stack');
 });
 
 test('creates the basic function', () => {
   const f = (
-    <jsx.Fun>
-      <string>Hello world!</string>
-    </jsx.Fun>
+    <fun>
+      <v>Hello world!</v>
+    </fun>
   );
   expect(ask(jsx.render(f))).toBeInstanceOf(Function);
-  expect(ask(jsx.render(<jsx.Call>{f}</jsx.Call>))).toBe('Hello world!');
+  expect(ask(jsx.render(<call>{f}</call>))).toBe('Hello world!');
 });
 
 test('creates function with arguments', () => {
   const f = (
-    <jsx.Fun args={['a']}>
-      <jsx.Ref name="a" />
-    </jsx.Fun>
+    <fun args={['a']}>
+      <ref name="a" />
+    </fun>
   );
   expect(ask(jsx.render(f))).toBeInstanceOf(Function);
-  expect(
-    ask(
-      jsx.render(
-        <jsx.Call args={[<string>Hello world!</string>]}>{f}</jsx.Call>
-      )
-    )
-  ).toBe('Hello world!');
+  expect(ask(jsx.render(<call args={[<v>Hello world!</v>]}>{f}</call>))).toBe(
+    'Hello world!'
+  );
 });
 
 test('closure', () => {
   expect(
     ask(
       jsx.render(
-        <jsx.Call>
-          <jsx.Fun>
-            <jsx.Set name="myvar" value={<string>a</string>} />
-            <jsx.Call>
-              <jsx.Fun>
-                <jsx.Set name="myvar" value={<string>b</string>} />
-              </jsx.Fun>
-            </jsx.Call>
-            <jsx.Ref name="myvar" />
-          </jsx.Fun>
-        </jsx.Call>
+        <call>
+          <fun>
+            <set name="myvar" value={<v>a</v>} />
+            <call>
+              <fun>
+                <set name="myvar" value={<v>b</v>} />
+              </fun>
+            </call>
+            <ref name="myvar" />
+          </fun>
+        </call>
       )
     )
   ).toBe('a');
@@ -55,12 +51,12 @@ test('if', () => {
   const expr = (cond: string) =>
     jsx.render(
       <fragment>
-        <jsx.If condition={<string>{cond}</string>}>
-          <string>yes</string>
-        </jsx.If>
-        <jsx.Else>
-          <string>no</string>
-        </jsx.Else>
+        <if condition={<v>{cond}</v>}>
+          <v>yes</v>
+        </if>
+        <else>
+          <v>no</v>
+        </else>
       </fragment>
     );
   expect(ask(expr('Y'))).toBe('yes');
@@ -70,17 +66,17 @@ test('if', () => {
 test('jsx', () => {
   const call = (arg: string) =>
     jsx.render(
-      <jsx.Ask>
-        <jsx.Fun name="test" args={['a']}>
-          <jsx.If condition={<jsx.Ref name="a" />}>
-            <jsx.Return value={<string>OK</string>} />
-          </jsx.If>
-          <jsx.Else>
-            <jsx.Return value={<string>NO</string>} />
-          </jsx.Else>
-        </jsx.Fun>
-        <jsx.Call name="test" args={[<string>{arg}</string>]} />
-      </jsx.Ask>
+      <ask>
+        <fun name="test" args={['a']}>
+          <if condition={<ref name="a" />}>
+            <return value={<v>OK</v>} />
+          </if>
+          <else>
+            <return value={<v>NO</v>} />
+          </else>
+        </fun>
+        <call name="test" args={[<v>{arg}</v>]} />
+      </ask>
     );
 
   expect(ask(call('Y'))).toBe('OK');
@@ -90,14 +86,14 @@ test('jsx', () => {
 test('host concat', () => {
   const call = (...args: string[]) =>
     jsx.render(
-      <jsx.Ask>
-        <jsx.Call
+      <ask>
+        <call
           name="concat"
           args={args.map((arg) => (
-            <string>{arg}</string>
+            <v>{arg}</v>
           ))}
         />
-      </jsx.Ask>
+      </ask>
     );
 
   const resources = {
@@ -107,4 +103,8 @@ test('host concat', () => {
   };
 
   expect(ask(call('A', 'B', 'C'), { resources })).toBe('ABC');
+});
+
+test('multival', () => {
+  expect(ask(jsx.render(<v>{[1, 2, 3]}</v>))).toStrictEqual([1, 2, 3]);
 });

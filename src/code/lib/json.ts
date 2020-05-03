@@ -1,5 +1,5 @@
 import type { tvalue } from './call';
 
-export function string(raw: string): tvalue {
+export function json(raw: any): tvalue {
   return JSON.stringify(raw);
 }

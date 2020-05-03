@@ -21,3 +21,7 @@ export function flatten<T>(arr: (T | T[])[]): T[] {
     []
   );
 }
+
+export function titleCase(s: string): string {
+  return `${s[0].toUpperCase()}${s.slice(1)}`;
+}

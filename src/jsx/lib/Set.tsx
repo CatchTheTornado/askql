@@ -5,9 +5,9 @@ jsx;
 export function Set({ name, value }: { name: string; value: string }) {
   assert(isString(name), 'name');
   return (
-    <set>
+    <code set>
       {value}
       {name.split('.')}
-    </set>
+    </code>
   );
 }

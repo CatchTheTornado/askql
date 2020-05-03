@@ -63,7 +63,11 @@ export function jsx(
   }
 
   if (name === 'v') {
-    return callCode('json');
+    assert(
+      children.length === 1,
+      '<v /> should have exactly one child - value to transfer to VM'
+    );
+    return code.json(children[0]);
   }
 
   // direct reference to AskCode
@@ -87,6 +91,10 @@ export function render(
 ): string {
   if (typeof element === 'string') {
     return element;
+  }
+
+  if (!(element instanceof AskElement)) {
+    console.log('!', element, options);
   }
 
   assert(

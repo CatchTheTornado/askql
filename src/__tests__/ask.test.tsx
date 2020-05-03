@@ -104,3 +104,7 @@ test('host concat', () => {
 
   expect(ask(call('A', 'B', 'C'), { resources })).toBe('ABC');
 });
+
+test('multival', () => {
+  expect(ask(jsx.render(<v>{[1, 2, 3]}</v>))).toStrictEqual([1, 2, 3]);
+});

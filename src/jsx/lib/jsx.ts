@@ -31,7 +31,7 @@ export class AskElement {
   }
 }
 
-export function jsx(
+export function jsx( // TODO rename to createElement
   name: string | Function,
   propsOrNull: Props | null,
   ...children: AskNode[]

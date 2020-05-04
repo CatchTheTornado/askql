@@ -9,6 +9,17 @@ interface EvaluateOptions {
   operation?: string;
 }
 
+// Custom grammer for AskCode; AskCode - purely functional
+//
+// Id = (a-z)+
+// Fun = \{ Expr, Expr, ... \}
+// Call = (Id | Fun) (\( Expr, Expr, .... \))? <- strong left application, optional call
+// Str = \' .+ \'
+// Expr = Str | Call
+
+// concat('a', 'b')
+// {v('"hello!"')}()
+
 /** ask program is a function call or string literal */
 export function evaluate(
   source: source,

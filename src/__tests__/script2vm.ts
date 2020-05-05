@@ -7,8 +7,11 @@ import { run } from '../askvm';
 
 function e2e(code: string): any {
   const ast = script.parser.parse(code).print();
+  // console.log(1, ast.children[0]);
   const program = jsx.load(ast);
+  // console.log(program.children[0].props);
   const rendered = jsx.render(program);
+  // console.log(3, rendered);
   const parsed = parse(rendered);
   const result = run(parsed);
   return result;
@@ -31,6 +34,10 @@ test('long', () => {
   expect(result).toBe('Hello world!');
 });
 
-test('e2e', () => {
-  expect(e2e('ask { "Hello world!"}')).toBe('"Hello world!"');
-});
+// test('e2e', () => {
+//   expect(
+//     e2e(`ask {
+//     2 :toString
+// }`)
+//   ).toBe('Hello world!');
+// });

@@ -118,6 +118,7 @@ type AstExpression = string | AstNode;
 
 export function load(ast: AstExpression): string | AskElement {
   if (typeof ast === 'string') {
+    // TODO literals should be encapsulated
     return JSON.stringify(ast);
   }
   if (Array.isArray(ast)) {
@@ -127,5 +128,5 @@ export function load(ast: AstExpression): string | AskElement {
   for (let k in ast.props) {
     props[k] = load(ast.props[k]);
   }
-  return jsx(ast.name, props, ...ast.children?.map(load));
+  return jsx(ast.name, props, ...(ast.children?.map(load) ?? []));
 }

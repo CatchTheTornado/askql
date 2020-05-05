@@ -13,25 +13,25 @@
 }
 
 
-ask = aH:askHeader aB:askBody askFooter {
+ask = lineWithoutCode* aH:askHeader aB:askBody askFooter lineWithoutCode* eof {
   return new ask.Ask(aH, aB);
 }
 
-askHeader = ws* 'ask' aL:askHeader_argList? aRT:askHeader_retType? ws* '{' ws* nl { //TODO: add return type
+askHeader = ws* 'ask' aL:askHeader_argList? aRT:askHeader_retType? ws* '{' ws* lineComment? nl {
   return new ask.AskHeader(aL === null ? [] : aL, aRT);
 }
 askHeader_argList = ws* '(' aL:argList ')' { return aL }
 askHeader_retType = ws* ':' ws* t:type { return t }
 
-askFooter = blockFooter (ws / nl)* eof
+askFooter = blockFooter ws*
 
 askBody = sL:statementList { return new ask.AskBody(sL) }
 
-statementList = emptyLine* sL:statementList_NoEmptyLines emptyLine* { return sL }
+statementList = lineWithoutCode* sL:statementList_NoEmptyLines lineWithoutCode* { return sL }
 statementList_NoEmptyLines = 
-      s:statement nl emptyLine* sL:statementList { return sL.unshift(s), sL }
-    / s:statement { return [s] }
-    / '' { return [] }
+      s:statement ws* lineComment? nl lineWithoutCode* sL:statementList { return sL.unshift(s), sL }
+    / s:statement ws* lineComment? {                                      return [s] }
+    / '' {                                                                return [] }
 
 // statement is at least one full line
 // statement does NOT include the trailing newline
@@ -61,7 +61,7 @@ value =
 
 functionDefinition = fH:functionHeader cB:codeBlock functionFooter { return new ask.FunctionDefinition(fH, cB) }
 
-functionHeader = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? ws* '=' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* nl { return new ask.FunctionHeader(m, i, tD, aL, rTD === null ? anyType : rTD) }
+functionHeader = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? ws* '=' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? nl { return new ask.FunctionHeader(m, i, tD, aL, rTD === null ? anyType : rTD) }
 functionHeader_typeDecl = ws* ':' ws* t1:type { return t1 } // this is the optional variable type declaration
 functionHeader_returnTypeDecl = ws* ':' ws* t2:type { return t2 } // this is the optional return type declaration
 
@@ -89,8 +89,8 @@ nonEmptyValueList =
     ws* v:value ws* ',' vL:nonEmptyValueList { vL.unshift(v); return vL }
   / ws* v:value ws* { return [v] }
 
-if =        'if' ws* '(' v:value ')' ws* '{' nl+ cB:codeBlock nlws* '}' {       return new ask.If(v, cB) }
-while  = 'while' ws* '(' v:value ')' ws* '{' nl+ cB:codeBlock nlws* '}' {       return new ask.While(v, cB) }
+if =        'if' ws* '(' v:value ')' ws* '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' {       return new ask.If(v, cB) }
+while  = 'while' ws* '(' v:value ')' ws* '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' {       return new ask.While(v, cB) }
 return = 
   'return' ws+ v:value {                                                        return new ask.Return(v) }
   / 'return' {                                                                  return new ask.Return(nullValue) }
@@ -131,6 +131,13 @@ let = 'let' { return new ask.Let() }
 
 blockFooter = ws* '}'
 
+lineWithoutCode = 
+    lineWithComment
+  / emptyLine
+
+lineWithComment = lineComment
+
+lineComment = ws* '//' (!nl .)* (&nl / eof)
 
 emptyLine = ws* nl
 nlws = nl / ws
@@ -150,7 +157,7 @@ float = [-]?[0-9]+ '.' [0-9]+ { return new ask.Float(text()) }  // TODO: yes, mu
 ch = 
       [\x20\x21\x23-\x5B\x5D-\xff] // all printable characters except " and \
     / '\\' escape
-    
+
 escape =
       '"'
     / '\\'  // this is one backslash
@@ -170,4 +177,4 @@ ws = ' ' / '\t'
 nl = '\n' / '\r' 
 
 // end of file
-eof = (!.)?
+eof = (!.)

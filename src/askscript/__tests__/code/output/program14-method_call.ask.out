@@ -1,0 +1,22 @@
+{
+  name: "ask",
+  props: {
+    args: []
+  },
+  children: [
+    {
+      name: "call",
+      props: {
+        name: "square",
+        args: [
+          {
+            name: "ref",
+            props: {
+              name: "a"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

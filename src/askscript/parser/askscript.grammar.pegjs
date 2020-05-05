@@ -70,7 +70,7 @@ functionFooter = blockFooter
 // a block of code 
 codeBlock = statementList
 
-argList = 
+argList = // TODO: check all the *List constructs for handling empty lists
     a:arg ',' aL:argList { return aL.unshift(a), aL }
   / a:arg { return [a] }
 
@@ -78,8 +78,12 @@ arg = ws* i:identifier ws* ':' ws* t:type ws* { return new ask.Arg(i, t) }
 
 callArgList = v:valueList { return v }
 valueList = 
-    v:value ',' vL:valueList { vL.unshift(v); return vL }
-  / v:value { return [v] }
+    vL:nonEmptyValueList { return vL}
+  / ws* { return [] }
+
+nonEmptyValueList = 
+    ws* v:value ws* ',' vL:nonEmptyValueList { vL.unshift(v); return vL }
+  / ws* v:value ws* { return [v] }
 
 if =        'if' ws* '(' v:value ')' ws* '{' nl+ cB:codeBlock nlws* '}' {       return new ask.If(v, cB) }
 while  = 'while' ws* '(' v:value ')' ws* '{' nl+ cB:codeBlock nlws* '}' {       return new ask.While(v, cB) }
@@ -98,8 +102,8 @@ valueLiteral =
     v:(
       null
       / boolean
+      / float // float needs to go before int
       / int
-      / float
       / string
       / array
       / map

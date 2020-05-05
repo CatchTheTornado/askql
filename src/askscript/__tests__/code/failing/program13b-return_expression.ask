@@ -1,5 +1,5 @@
 ask {
     "Hello world!"
-    exit n
+    return n+1
     hello
 }

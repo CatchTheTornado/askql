@@ -75,14 +75,22 @@ test('program', () => {
     argType: Type<A>;
   }
 
+  const lambdaAny: LambdaType<any, any> = {
+    name: 'lambda',
+    retType: any,
+    argType: any,
+    prototype: any,
+    validate: any.validate,
+  };
+
   function lambda<T, A>(retType: Type<T>, argType: Type<A>): LambdaType<T, A> {
-    return {
+    return Object.assign(Object.create(lambdaAny), {
       name: 'lambda',
       retType,
       argType,
       prototype: any,
       validate: (value): value is (arg: A) => T => typeof value === 'function',
-    };
+    } as LambdaType<T, A>);
   }
 
   type Typed<T> = { type: any; value: T };
@@ -119,7 +127,9 @@ test('program', () => {
     },
     not: {
       type: lambda(boolean, boolean),
-      resolver: (a: boolean): boolean => !a,
+      resolver(a: boolean): boolean {
+        return !a;
+      },
     },
   };
 
@@ -136,10 +146,10 @@ test('program', () => {
   }
 
   const options: Options<
-    | 'any'
     | 'empty'
     | 'true'
-    | 'boolean'
+    | 'list'
+    | 'map'
     | 'typed'
     | 'call'
     | 'fun'
@@ -151,14 +161,22 @@ test('program', () => {
       empty() {
         return typed(null);
       },
-      any() {
-        return typed(any);
-      },
-      boolean() {
-        return typed(boolean);
-      },
       true() {
         return typed(true);
+      },
+      list({ node, run }) {
+        return typed([...node.children!.map((child) => run(child))]);
+      },
+      map({ node, run }) {
+        const map = new Map();
+        if (!node.children || node.children.length % 2 === 1) {
+          throw new Error('Maps need to have an even number of children');
+        }
+        const values = node.children!.map((child) => run(child));
+        for (let i = 0; i < values.length; i += 2) {
+          map.set(values[i], values[i + 1]);
+        }
+        return typed(map);
       },
       typed({ node, run }) {
         const [valueChild, typeChild] = node.children!;
@@ -199,8 +217,6 @@ test('program', () => {
             return false;
           }
 
-          const res = scope[key.value];
-
           return true;
         }
 
@@ -219,7 +235,17 @@ test('program', () => {
 
         if (scope === resources) {
           const res = resources[key.value as keyof typeof resources];
-          return typed(res.resolver, res.type).value(...(options.args ?? []));
+
+          // typedCall
+          if (!Object.prototype.isPrototypeOf.call(lambdaAny, res.type)) {
+            throw new Error('Given resource is not callable');
+          }
+
+          const args = (options.args ?? []).map((arg) =>
+            typed(arg, res.type.argType)
+          );
+          const result = res.resolver(...args);
+          return typed(result, res.type.retType);
         }
 
         const result = scope[key.value];
@@ -297,7 +323,10 @@ test('program', () => {
           type: 'get',
           children: ['not'],
         },
-        '10',
+        {
+          type: 'list',
+          children: ['1', '2', '3'],
+        },
       ],
     })
   ).toStrictEqual(typed(false));

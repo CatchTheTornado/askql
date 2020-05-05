@@ -71,6 +71,10 @@ functionFooter = blockFooter
 codeBlock = statementList
 
 argList = // TODO: check all the *List constructs for handling empty lists
+    aL:nonEmptyArgList { return aL }
+  / '' {                 return [] }
+
+nonEmptyArgList =
     a:arg ',' aL:argList { return aL.unshift(a), aL }
   / a:arg { return [a] }
 

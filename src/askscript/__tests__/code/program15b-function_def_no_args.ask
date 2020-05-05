@@ -1,0 +1,6 @@
+ask {
+    const three = (): int {
+		return 3
+	}
+	three()
+}

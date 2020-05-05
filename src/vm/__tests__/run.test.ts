@@ -152,7 +152,7 @@ test('program', () => {
       },
       fun({ node, run, options }) {
         if (!options.args) {
-          return typed(false); // function
+          return typed(node); // function
         }
 
         // create scope for this function
@@ -167,15 +167,15 @@ test('program', () => {
         }
         return typed(result);
       },
-      get({ node, run }) {
+      get({ node, run, options }) {
         const { children = [] } = node;
         const key = run(children[0]);
 
         // get value of key from scope
         // visit nodes up to root to check scopes.
         let parent = node.parent;
-        while (parent && parent.scope && !(key.value in parent.scope)) {
-          parent = node.parent;
+        while (parent && (!parent.scope || !(key.value in parent.scope))) {
+          parent = parent.parent;
         }
         const scope = parent?.scope ?? resources;
         if (!(key.value in scope)) {
@@ -187,7 +187,11 @@ test('program', () => {
           return typed(res.resolver(), res.type);
         }
 
-        return scope[key.value];
+        const result = scope[key.value];
+        if (result.type === 'fun' && options.args) {
+          return run(result, options.args);
+        }
+        return result;
       },
       let({ node, run }) {
         const { children = [] } = node;
@@ -222,18 +226,33 @@ test('program', () => {
               type: 'let',
               children: ['test', '5'],
             },
+            {
+              type: 'let',
+              children: [
+                'myFun',
+                {
+                  type: 'fun',
+                  children: ['10'],
+                },
+              ],
+            },
             '1',
             '2',
             '3',
             {
-              type: 'get',
-              children: ['test'],
+              type: 'call',
+              children: [
+                {
+                  type: 'get',
+                  children: ['myFun'],
+                },
+              ],
             },
           ],
         },
       ],
     })
-  ).toStrictEqual(typed('5'));
+  ).toStrictEqual(typed('10'));
 });
 
 function addParentInfo<Key extends keyof any>(

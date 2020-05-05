@@ -1,3 +1,2 @@
 ask(n:int, thisIsFloat:float, thisIsString:string):float {
-    return n+1
 }

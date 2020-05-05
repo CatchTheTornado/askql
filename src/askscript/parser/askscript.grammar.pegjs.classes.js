@@ -21,14 +21,17 @@ class Ask {
 
 
 class AskHeader {
-  constructor(argList) {
+  constructor(argList, returnTypeOrNull) {
     this.argList = argList;
+    this.returnTypeOrNull = returnTypeOrNull;
   }
 
   print() {
     let output = {
       args: this.argList.map(arg => arg.print())
     }
+    if (this.returnTypeOrNull !== null)
+      output.returns = this.returnTypeOrNull.print();
     return output
   }
 }
@@ -237,9 +240,7 @@ class Type {
   }
 
   print() {
-    let output = {
-      name: this.identifier.text
-    }
+    let output = this.identifier.text;
     return output
   }
 }

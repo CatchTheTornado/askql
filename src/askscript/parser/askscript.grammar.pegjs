@@ -17,10 +17,11 @@ ask = aH:askHeader aB:askBody askFooter {
   return new ask.Ask(aH, aB);
 }
 
-askHeader = ws* 'ask' ws* aL:askHeader_argList? ws* '{' ws* nl { //TODO: add return type
-  return new ask.AskHeader(aL === null ? [] : aL);
+askHeader = ws* 'ask' aL:askHeader_argList? aRT:askHeader_retType? ws* '{' ws* nl { //TODO: add return type
+  return new ask.AskHeader(aL === null ? [] : aL, aRT);
 }
-askHeader_argList = ('(' aL:argList ')') { return aL }
+askHeader_argList = ws* '(' aL:argList ')' { return aL }
+askHeader_retType = ws* ':' ws* t:type { return t }
 
 askFooter = blockFooter (ws / nl)* eof
 
@@ -48,7 +49,7 @@ statement_NoWs =
 // variables other than of function type
 variableDefinition = 
       m:modifier ws+ i:identifier t:variableDefinition_type? ws+ '=' ws+ v:value { return new ask.VariableDefinition(m, i, t === null ? anyType : t, v)}
-variableDefinition_type = ws+ ':' ws+ t:type { return t }
+variableDefinition_type = ws+ ':' ws+ t:type { return t }  // TODO: 2x ws+ -> ws* ?
 
 value = 
     e:(

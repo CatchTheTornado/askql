@@ -1,25 +1,15 @@
 export interface Reducer<Value> {
-  call(fun: Value, ...args: Value[]): Value;
-  function(...expressions: string[]): Value;
-  number(serialized: string): Value;
-  reference(name: string): Value;
-  string(serialized: string): Value;
+  node(name: string, ...children: Value[]): Value;
+  id(name: string): Value;
+  string(value: string): Value;
 }
 
-export const askCodeReducer: Reducer<string> = {
-  call: (fun, ...args) => `${fun}(${args.join(',')})`,
-  function: (...expressions) => `{${expressions.join(',')}}`,
-  number: (serialized) => `${serialized}`,
-  reference: (name) => name,
-  string: (serialized) => `"${serialized}"`,
-};
-
 const regexp = {
-  digit: /[0-9]/,
   idChar: /[_a-zA-Z0-9]/,
 };
 
-interface Options {
+interface Options<T> {
+  reducer: Reducer<T>;
   logging: boolean;
   stopAfterSteps: number;
 }
@@ -29,10 +19,10 @@ interface Options {
  * @param reducer
  * @param code
  */
-export function reduceAskCode<T = any>(
+export function reduce<T = any>(
   reducer: Reducer<T>,
   code: string,
-  { logging = false, stopAfterSteps }: Partial<Options> = {}
+  { logging = false, stopAfterSteps }: Partial<Options<T>> = {}
 ): T {
   if (code === '') {
     throw new Error('Empty program');
@@ -111,8 +101,23 @@ export function reduceAskCode<T = any>(
     return values;
   }
 
+  function id(): string {
+    whitespace();
+    step('id');
+    const start = index;
+    for (
+      index = start;
+      index < code.length && isAtRegExp(regexp.idChar);
+      index += 1
+    );
+    if (index === start) {
+      throw new Error('Expeciting an identifier');
+    }
+    return code.slice(start, index);
+  }
+
   const reducers: Record<
-    'call' | 'expression' | 'function' | 'id' | 'number' | 'program' | 'string',
+    'call' | 'expression' | 'program' | 'string',
     <U>(reducer: Reducer<U>) => U
   > = {
     program(r) {
@@ -131,20 +136,7 @@ export function reduceAskCode<T = any>(
       if (isAt('"')) {
         return this.string(r);
       }
-      if (isAtRegExp(regexp.digit)) {
-        return this.number(r);
-      }
       return this.call(r);
-    },
-    number(r) {
-      step('number');
-      const start = index;
-      for (
-        index = start;
-        index < code.length && isAtRegExp(regexp.digit);
-        index += 1
-      );
-      return r.number(code.slice(start, index));
     },
     string(r) {
       process('"');
@@ -164,40 +156,18 @@ export function reduceAskCode<T = any>(
     },
     call<U>(r: Reducer<U>) {
       whitespace();
-      const fun = isAt('{') ? this.function(r) : this.id(r);
+      const name = id();
       whitespace();
       if (!isAt('(')) {
-        return fun;
+        return r.id(name);
       }
       whitespace();
-      step('args for', fun);
+      step('args for', name);
       const args = expressionList.call(this, {
         chars: ['(', ')'],
         reducer: r,
       }) as U[];
-      return r.call(fun, ...args);
-    },
-    function(r) {
-      step('function');
-      const statements = expressionList.call(this, {
-        chars: ['{', '}'],
-        reducer: askCodeReducer,
-      }) as string[];
-      return r.function(...statements);
-    },
-    id(r) {
-      whitespace();
-      step('id');
-      const start = index;
-      for (
-        index = start;
-        index < code.length && isAtRegExp(regexp.idChar);
-        index += 1
-      );
-      if (index === start) {
-        throw new Error('Expeciting an identifier');
-      }
-      return r.reference(code.slice(start, index));
+      return r.node(name, ...args);
     },
   };
 

@@ -115,7 +115,7 @@ class FunctionDefinition {
     this.statementList = statementList;
   }
 
-  print(indent) {
+  print() {
     let output = this.functionHeader.print()
     output.children = this.statementList.map(statement => statement.print())
 
@@ -132,7 +132,7 @@ class FunctionHeader {
     this.returnType = returnType
   }
 
-  print(indent) {
+  print() {
     let output = {
       name: 'fun',
       props: {
@@ -151,27 +151,46 @@ class Arg {
     this.type = type;
   }
 
-  print(indent) {
+  print() {
     let output = [this.identifier.text, this.type.print()]
     return output
   }
 }
 
 class If {
-  constructor(value, statementList) {
+  constructor(value, statementList, elseBlockOrNull) {
     this.value = value
     this.statementList = statementList
+    this.elseBlockOrNull = elseBlockOrNull
   }
 
-  print(indent) {
+  print() {
     let output = {
       name: 'if',
       props: {
-        condition: this.value.print(),
+        condition: this.value.print()
       },
       children: this.statementList.map(statement => statement.print())
-    }
+    };
+
+    if (this.elseBlockOrNull !== null)
+      output.props.else = this.elseBlockOrNull.print();
+    
     return output
+  }
+}
+
+class Else {
+  constructor(statementList) {
+    this.statementList = statementList
+  }
+
+  print() {
+    let output = {
+      name: 'else',
+      children: this.statementList.map(statement => statement.print())
+    };
+    return output;
   }
 }
 
@@ -181,7 +200,7 @@ class While {
     this.statementList = statementList
   }
 
-  print(indent) {
+  print() {
     let output = {
       name: 'while',
       props: {
@@ -198,7 +217,7 @@ class Return {
     this.value = value
   }
 
-  print(indent) {
+  print() {
     let output = {
       name: 'return',
       props: {
@@ -215,7 +234,7 @@ class FunctionCall {
     this.callArgList = new CallArgumentList(callArgList)
   }
 
-  print(indent) {
+  print() {
     let output = {
       name: 'call',
       props: {
@@ -371,7 +390,7 @@ class ArgumentList {
     this.argList = argList
   }
 
-  print(indent) {
+  print() {
     let output = this.argList.map(arg => arg.print())
     return output;
   }
@@ -383,7 +402,7 @@ class CallArgumentList {
     this.callArgList = callArgList
   }
 
-  print(indent) {
+  print() {
     let output = this.callArgList.map(value => value.print())
     return output;
   }
@@ -404,6 +423,7 @@ module.exports = {
     FunctionHeader: FunctionHeader,
     Arg: Arg,
     If: If,
+    Else: Else,
     While: While,
     Return: Return,
     FunctionCall: FunctionCall,

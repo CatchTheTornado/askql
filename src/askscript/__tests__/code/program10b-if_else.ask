@@ -1,5 +1,5 @@
 ask {
-    if (n:lessThan(2)) {
+    if (5) {
         return n
     } else {
         return n

@@ -1,12 +1,12 @@
 // TODO:
-// - else
 // - array type definition
 // - object type definition
+// - graphql syntax
 //
-// - unions
 // - records
 // - tuples
 // - call() with a lambda function
+// - unions
 
 {
   const ask = require('./askscript.grammar.pegjs.classes')
@@ -89,8 +89,9 @@ nonEmptyValueList =
     ws* v:value ws* ',' vL:nonEmptyValueList { vL.unshift(v); return vL }
   / ws* v:value ws* { return [v] }
 
-if =        'if' ws* '(' v:value ')' ws* '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' {       return new ask.If(v, cB) }
+if =        'if' ws* '(' v:value ')' ws* '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' ws* eB:elseBlock? {       return new ask.If(v, cB, eB) }
 while  = 'while' ws* '(' v:value ')' ws* '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' {       return new ask.While(v, cB) }
+elseBlock = 'else' ws* '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' { return new ask.Else(cB) }
 return = 
   'return' ws+ v:value {                                                        return new ask.Return(v) }
   / 'return' {                                                                  return new ask.Return(nullValue) }

@@ -1,6 +1,6 @@
 ask {
     const square = (a: int): int {
-		a:times(a) // equivalent of times(n, n)
+		a:times(a)
 	}
 	a:square:plus(square(a))
 }

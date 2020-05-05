@@ -1,6 +1,12 @@
 export interface AskNode<Key extends keyof any> {
   type: Key;
   children?: AskNodeOrValue<Key>[];
+
+  /** added on parsing */
+  parent?: AskNode<Key>;
+
+  /** for functions */
+  scope?: Record<string, any>;
 }
 
 export type AskNodeOrValue<Key extends keyof any> = AskNode<Key> | string;

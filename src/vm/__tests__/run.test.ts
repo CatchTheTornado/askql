@@ -1,4 +1,4 @@
-import { Options, run, AskCode } from '../lib/run';
+import { Options, run, AskCode, AskNode } from '../lib/run';
 
 test('sum', () => {
   const options: Options<'number' | 'sum', number> = {
@@ -93,8 +93,35 @@ test('program', () => {
     return { value, type: any };
   }
 
+  const resources = {
+    false: {
+      type: boolean,
+      resolver: () => false,
+    },
+  };
+
+  function getScope<Key extends keyof any>(node?: AskNode<Key>): any {
+    if (!node) {
+      return resources;
+    }
+
+    if (node.type !== 'fun') {
+      return getScope(node.parent);
+    }
+
+    return node.scope!;
+  }
+
   const options: Options<
-    'any' | 'empty' | 'true' | 'boolean' | 'typed' | 'call' | 'fun',
+    | 'any'
+    | 'empty'
+    | 'true'
+    | 'boolean'
+    | 'typed'
+    | 'call'
+    | 'fun'
+    | 'get'
+    | 'let',
     Typed<any>
   > = {
     resolvers: {
@@ -119,7 +146,7 @@ test('program', () => {
       },
       call({ node, run }) {
         const [funChild, ...argChildren] = node.children!;
-        const args = argChildren!.map((child) => run(child)); // TODO run arg assert
+        const args = argChildren!.map((child) => run(child));
         const result = run(funChild, args);
         return typed(result); // TODO add result type
       },
@@ -128,7 +155,10 @@ test('program', () => {
           return typed(false); // function
         }
 
-        // TODO add arguments in scope
+        // create scope for this function
+        node.scope = {};
+
+        // TODO add arguments in scope with assertion
         let result;
         const { children = [] } = node;
         for (let i = 0; i < children.length; i += 1) {
@@ -137,11 +167,49 @@ test('program', () => {
         }
         return typed(result);
       },
+      get({ node, run }) {
+        const { children = [] } = node;
+        const key = run(children[0]);
+
+        // get value of key from scope
+        // visit nodes up to root to check scopes.
+        let parent = node.parent;
+        while (parent && parent.scope && !(key.value in parent.scope)) {
+          parent = node.parent;
+        }
+        const scope = parent?.scope ?? resources;
+        if (!(key.value in scope)) {
+          throw new Error(`Unknown resource ${key.value}`);
+        }
+
+        if (scope === resources) {
+          const res = resources[key.value as keyof typeof resources];
+          return typed(res.resolver(), res.type);
+        }
+
+        return scope[key.value];
+      },
+      let({ node, run }) {
+        const { children = [] } = node;
+        const value = run(children[1]);
+        const key = run(children[0]);
+
+        if (key.type !== string) {
+          throw new Error(`Expected set key to be string, got: ${key.type}`);
+        }
+
+        const scope = getScope(node);
+        if (key.value in scope) {
+          throw new Error(`Scope already has key ${key.value}`);
+        }
+        scope[key.value] = value;
+        return value;
+      },
     },
     valueResolver: 'typed',
   };
   const evaluate = (code: AskCode<keyof typeof options.resolvers>): any =>
-    run(options, code);
+    run(options, addParentInfo(code));
 
   expect(
     evaluate({
@@ -149,9 +217,34 @@ test('program', () => {
       children: [
         {
           type: 'fun',
-          children: ['1', '2', '3'],
+          children: [
+            {
+              type: 'let',
+              children: ['test', '5'],
+            },
+            '1',
+            '2',
+            '3',
+            {
+              type: 'get',
+              children: ['test'],
+            },
+          ],
         },
       ],
     })
-  ).toStrictEqual(typed('3'));
+  ).toStrictEqual(typed('5'));
 });
+
+function addParentInfo<Key extends keyof any>(
+  code: AskCode<Key>,
+  parent?: AskNode<Key>
+): AskCode<Key> {
+  if (typeof code === 'string') {
+    return code;
+  }
+
+  code.parent = parent;
+  code.children?.forEach((child) => addParentInfo(child, code));
+  return code;
+}

@@ -11,6 +11,7 @@ export interface ResolverOptions<Key extends keyof any, T> {
   node: AskNode<Key>;
   run: (code: AskCode<Key>, args?: T[]) => T;
   options: Options<Key, T>;
+  args?: T[];
 }
 
 export interface Options<Key extends keyof any, T> {
@@ -32,6 +33,7 @@ function tick<Key extends keyof any, T>(
     node,
     options,
     run: (code: AskCode<Key>, args?: T[]) => tick(code, args),
+    args,
   });
   return result;
 }

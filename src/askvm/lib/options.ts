@@ -54,8 +54,8 @@ export const options: Options<
       const result = run(funChild, args);
       return typed(result); // TODO add result type
     },
-    fun({ node, run, options }) {
-      if (!options.args) {
+    fun({ node, run, options, args }) {
+      if (!args) {
         return typed(node); // function
       }
 
@@ -71,7 +71,7 @@ export const options: Options<
       }
       return typed(result);
     },
-    get({ node, run, options }) {
+    get({ node, run, options, args }) {
       const { children = [] } = node;
       const key = run(children[0]);
 
@@ -104,16 +104,16 @@ export const options: Options<
           throw new Error('Given resource is not callable');
         }
 
-        const args = (options.args ?? []).map((arg) =>
+        const argValues = (args ?? []).map((arg) =>
           typed(arg, res.type.argType)
         );
-        const result = res.resolver(...args);
+        const result = res.resolver(...argValues);
         return typed(result, res.type.retType);
       }
 
       const result = scope[key.value];
-      if (result.type === 'fun' && options.args) {
-        return run(result, options.args);
+      if (result.type === 'fun' && args) {
+        return run(result, args);
       }
       return result;
     },

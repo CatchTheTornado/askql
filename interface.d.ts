@@ -16,7 +16,7 @@ declare namespace JSX {
       fragment?: true;
       fun?: true;
       json?: true;
-      ref?: true;
+      get?: true;
       set?: true;
     };
     else: FirstArg<typeof import('./src/jsx').Else>;

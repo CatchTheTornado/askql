@@ -1,4 +1,4 @@
-import { boolean, lambda } from './typed';
+import { boolean, string, lambda } from './typed';
 
 export const resources: Record<string, any> = {
   false: {
@@ -13,6 +13,12 @@ export const resources: Record<string, any> = {
     type: lambda(boolean, boolean),
     resolver(a: boolean): boolean {
       return !a;
+    },
+  },
+  sum: {
+    type: lambda(string, string),
+    resolver(a: any, b: any): any {
+      return String(Number(a.value) + Number(b.value));
     },
   },
 };

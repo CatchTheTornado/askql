@@ -8,7 +8,7 @@ type JSONable =
   | null
   | Record<string, any /* JSONable */>
   | Array<any /* JSONable */>;
-export type AskNode = AskElement;
+export type AskNode = AskElement | string;
 
 export type Props = Record<string, AskNode | JSONable>;
 
@@ -58,6 +58,9 @@ export function jsx( // TODO rename to createElement
         next: flatChildren[index + 1],
       })
     );
+    if (name === 'fragment') {
+      return args.join();
+    }
     return `${name}(${args.join(',')})`;
   }
 
@@ -93,10 +96,6 @@ export function render(
     return element;
   }
 
-  if (!(element instanceof AskElement)) {
-    console.log('!', element, options);
-  }
-
   assert(
     element instanceof AskElement,
     'You can only render AskElements or string values'
@@ -104,6 +103,29 @@ export function render(
 
   const { type, props, children } = element;
   const result = type.call(null, { ...props, children }, options);
-  // return jsx('code', { fragment: true }, ...flatten([result])) as string;
-  return result as string;
+
+  // TODO remove fragment
+  return jsx('code', { fragment: true }, ...flatten([result])) as string;
+}
+
+interface AstNode {
+  name: string;
+  props: Record<string, any>;
+  children: AstExpression[];
+}
+
+type AstExpression = string | AstNode;
+
+export function load(ast: AstExpression): string | AskElement {
+  if (typeof ast === 'string') {
+    return JSON.stringify(ast);
+  }
+  if (Array.isArray(ast)) {
+    return ast.map(load) as any;
+  }
+  const props: Record<string, any> = {};
+  for (let k in ast.props) {
+    props[k] = load(ast.props[k]);
+  }
+  return jsx(ast.name, props, ...ast.children?.map(load));
 }

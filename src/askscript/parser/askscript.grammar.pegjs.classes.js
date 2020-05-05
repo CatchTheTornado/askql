@@ -264,6 +264,18 @@ class Type {
   }
 }
 
+class ArrayType {
+  constructor(type) {
+    this.type = type
+  }
+
+  print() {
+    let output = 'array(' + this.type.print() + ')';
+    return output
+  }
+}
+
+
 class ValueLiteral {
   constructor(value) {
     this.value = value
@@ -429,6 +441,7 @@ module.exports = {
     FunctionCall: FunctionCall,
     MethodCallApplied: MethodCallApplied,
     Type: Type,
+    ArrayType: ArrayType,
     ValueLiteral: ValueLiteral,
     String: String,
     Array: Array,

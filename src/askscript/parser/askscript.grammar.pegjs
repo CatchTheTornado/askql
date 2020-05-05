@@ -48,8 +48,8 @@ statement_NoWs =
 
 // variables other than of function type
 variableDefinition = 
-      m:modifier ws+ i:identifier t:variableDefinition_type? ws+ '=' ws+ v:value { return new ask.VariableDefinition(m, i, t === null ? anyType : t, v)}
-variableDefinition_type = ws+ ':' ws+ t:type { return t }  // TODO: 2x ws+ -> ws* ?
+      m:modifier ws+ i:identifier t:variableDefinition_type? ws* '=' ws* v:value { return new ask.VariableDefinition(m, i, t === null ? ask.anyType : t, v)}
+variableDefinition_type = ws* ':' ws* t:type { return t }
 
 value = 
     e:(
@@ -61,7 +61,7 @@ value =
 
 functionDefinition = fH:functionHeader cB:codeBlock functionFooter { return new ask.FunctionDefinition(fH, cB) }
 
-functionHeader = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? ws* '=' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? nl { return new ask.FunctionHeader(m, i, tD, aL, rTD === null ? anyType : rTD) }
+functionHeader = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? ws* '=' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? nl { return new ask.FunctionHeader(m, i, tD, aL, rTD === null ? ask.anyType : rTD) }
 functionHeader_typeDecl = ws* ':' ws* t1:type { return t1 } // this is the optional variable type declaration
 functionHeader_returnTypeDecl = ws* ':' ws* t2:type { return t2 } // this is the optional return type declaration
 
@@ -94,14 +94,17 @@ while  = 'while' ws* '(' v:value ')' ws* '{' ws* lineComment? nl+ cB:codeBlock n
 elseBlock = 'else' ws* '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' { return new ask.Else(cB) }
 return = 
   'return' ws+ v:value {                                                        return new ask.Return(v) }
-  / 'return' {                                                                  return new ask.Return(nullValue) }
+  / 'return' {                                                                  return new ask.Return(ask.nullValue) }
 
 functionCall = i:identifier ws* '(' cAL:callArgList ')' {                       return new ask.FunctionCall(i, cAL) }
 methodCallApplied   = ws* ':' ws* i:identifier ws* cAL:methodCallAppliedArgList?  { return new ask.MethodCallApplied(i, cAL === null ? [] : cAL)}
 methodCallAppliedArgList = '(' cAL:callArgList ')' { return cAL }
 
 // === simple elements ===
-type = i:identifier { return new ask.Type(i) }
+type = 
+    'array(' t:type ')' { return new ask.ArrayType(t) }
+  / i:identifier {        return new ask.Type(i) }
+
 
 valueLiteral = 
     v:(

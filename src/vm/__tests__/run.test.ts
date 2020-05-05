@@ -70,6 +70,21 @@ test('program', () => {
     validate: (value): value is string => typeof value === 'string',
   };
 
+  interface LambdaType<R, A> extends Type<(arg: A) => R> {
+    retType: Type<R>;
+    argType: Type<A>;
+  }
+
+  function lambda<T, A>(retType: Type<T>, argType: Type<A>): LambdaType<T, A> {
+    return {
+      name: 'lambda',
+      retType,
+      argType,
+      prototype: any,
+      validate: (value): value is (arg: A) => T => typeof value === 'function',
+    };
+  }
+
   type Typed<T> = { type: any; value: T };
 
   const basicTypes = [empty, boolean, string];
@@ -93,10 +108,18 @@ test('program', () => {
     return { value, type: any };
   }
 
-  const resources = {
+  const resources: Record<string, any> = {
     false: {
       type: boolean,
       resolver: () => false,
+    },
+    myFun: {
+      type: boolean,
+      resolver: () => false,
+    },
+    not: {
+      type: lambda(boolean, boolean),
+      resolver: (a: boolean): boolean => !a,
     },
   };
 
@@ -171,20 +194,32 @@ test('program', () => {
         const { children = [] } = node;
         const key = run(children[0]);
 
+        function isInScope(scope: Record<string, any>): boolean {
+          if (!(key.value in scope)) {
+            return false;
+          }
+
+          const res = scope[key.value];
+
+          return true;
+        }
+
         // get value of key from scope
         // visit nodes up to root to check scopes.
+        // TODO if arguments are provided match with correct lambda
         let parent = node.parent;
-        while (parent && (!parent.scope || !(key.value in parent.scope))) {
+
+        while (parent && (!parent.scope || !isInScope(parent.scope))) {
           parent = parent.parent;
         }
         const scope = parent?.scope ?? resources;
-        if (!(key.value in scope)) {
+        if (!isInScope(scope)) {
           throw new Error(`Unknown resource ${key.value}`);
         }
 
         if (scope === resources) {
           const res = resources[key.value as keyof typeof resources];
-          return typed(res.resolver(), res.type);
+          return typed(res.resolver, res.type).value(...(options.args ?? []));
         }
 
         const result = scope[key.value];
@@ -253,6 +288,19 @@ test('program', () => {
       ],
     })
   ).toStrictEqual(typed('10'));
+
+  expect(
+    evaluate({
+      type: 'call',
+      children: [
+        {
+          type: 'get',
+          children: ['not'],
+        },
+        '10',
+      ],
+    })
+  ).toStrictEqual(typed(false));
 });
 
 function addParentInfo<Key extends keyof any>(

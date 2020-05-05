@@ -39,16 +39,10 @@ export interface Options<Key extends keyof any, T> {
 //   | JSONable[]
 //   | { [key: string]: JSONable };
 
-let count = 0;
-
 export function run<Key extends keyof any, T>(
   options: Options<Key, T>,
   code: AskCode<Key>
 ): T {
-  count += 1;
-  if (count > 100) {
-    throw new Error('stop!');
-  }
   const node: AskNode<Key> =
     typeof code === 'string'
       ? { type: options.valueResolver, children: [code] }

@@ -29,7 +29,7 @@ test('long', () => {
   const rendered = jsx.render(program);
   expect(rendered).toBe('call(fun("Hello world!"))');
   const parsed = parse(rendered);
-  expect(parsed).toHaveProperty('type');
+  expect(parsed).toHaveProperty('name');
   const result = run(parsed);
   expect(result).toBe('Hello world!');
 });

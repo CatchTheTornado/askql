@@ -1,54 +1,9 @@
-import { AskNode, AskCode } from '../../askcode';
-import { options as runOptions } from './options';
-
-export type Resolvers<Key extends keyof any, T> = Record<Key, Resolver<Key, T>>;
-
-export type Resolver<Key extends keyof any, T> = (
-  options: ResolverOptions<Key, T>
-) => T;
-
-export interface ResolverOptions<Key extends keyof any, T> {
-  node: AskNode<Key>;
-  run: (code: AskCode<Key>, args?: T[]) => T;
-  options: Options<Key, T>;
-  args?: T[];
-}
-
-export interface Options<Key extends keyof any, T> {
-  resolvers: Resolvers<Key, T>;
-  valueResolver: Key;
-}
-
-let counter = 0;
-
-function tick<Key extends keyof any, T>(
-  code: AskCode<Key>,
-  args?: undefined | T[]
-): T {
-  const options: Options<Key, T> = runOptions as any;
-
-  counter += 1;
-
-  if (counter === 20) {
-    throw new Error('stop');
-  }
-
-  let resolver: any;
-
-  if (typeof code === 'string') {
-    resolver = options.resolvers[options.valueResolver];
-  } else {
-    resolver = (options.resolvers as any).call;
-  }
-
-  const result = resolver({
-    node: code,
-    options,
-    run: (code: AskCode<Key>, args?: T[]) => tick(code, args),
-    args,
-  });
-  return result;
-}
+import { AskCode } from '../../askcode';
+import { evaluate } from './evaluate';
+import type { Options } from './evaluate';
+import { resources } from './resources';
+import { typed } from './typed';
+import type { Typed } from './typed';
 
 type JSONable =
   | null
@@ -85,7 +40,35 @@ function untyped(value: any): JSONable {
   return untyped(val);
 }
 
-export function run<Key extends keyof any>(code: AskCode<Key>): JSONable {
-  const result = tick(code);
+const options: Options<string, Typed<any>> = {
+  leaf({ value }) {
+    if (!value) {
+      throw new Error('Expected code to be a value');
+    }
+    return typed(value);
+  },
+  node({ node, evaluate, args }) {
+    if (!node) {
+      throw new Error('Expected code to be a node');
+    }
+    let res = resources[node.type];
+    if (!res) {
+      throw new Error(`Unknown resource ${node.type}!`);
+    }
+
+    function baseEvaluate({ args }: any) {
+      const { resolver = () => res } = res;
+      if (!args) {
+        return resolver();
+      }
+      return resolver(...args);
+    }
+    const { evaluate: resEvaluate = baseEvaluate } = res;
+    return resEvaluate.call(res, { node, evaluate, options, args });
+  },
+};
+
+export function run(code: AskCode<string>): JSONable {
+  const result = evaluate<string, Typed<any>>(options, code);
   return untyped(result);
 }

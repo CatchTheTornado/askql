@@ -1,10 +1,18 @@
-import { typed, boolean, string, lambda } from './typed';
+import { AskNode } from '../../askcode';
+import { boolean, lambda, string, typed } from './typed';
 
 function untyped(x: any) {
   return x.value; // TODO implement
 }
 
+const empty = {
+  type: boolean,
+  resolver: () => null,
+};
+
 export const resources: Record<string, any> = {
+  empty,
+  null: empty,
   false: {
     type: boolean,
     resolver: () => false,
@@ -12,10 +20,6 @@ export const resources: Record<string, any> = {
   true: {
     type: boolean,
     resolver: () => true,
-  },
-  myFun: {
-    type: boolean,
-    resolver: () => false,
   },
   not: {
     type: lambda(boolean, boolean),
@@ -25,21 +29,57 @@ export const resources: Record<string, any> = {
   },
   sum: {
     type: lambda(string, string),
-    // resolver works outside of the VM - doesn't accept any VM args?
     resolver(a: any, b: any): any {
       return String(Number(a.value) + Number(b.value));
     },
-    // custom run which computes arguments and runs resolver
-    // get VM args, process
   },
   // TODO list: typed(lambda(string, string), function() ...)
   list: {
     type: lambda(string, string),
     resolver(...args: any[]): any {
-      return typed([...args]);
+      return [...args]; // typed
     },
-    evaluate({ node, run, options }: any) {
-      return [...node.children.map((child: any) => run(child))];
+    evaluate({ node, evaluate, options }: any) {
+      return this.resolver(
+        ...node.children.map((child: any) => evaluate(child))
+      );
+    },
+  },
+  object: {
+    type: lambda(string, string),
+    resolver(...args: any[]): any {
+      const result: Record<string, any> = {};
+      for (let i = 0; i + 1 < args.length; i += 2) {
+        result[String(args[i])] = args[i + 1];
+      }
+      return result; // typed
+    },
+    evaluate({ node, evaluate, options }: any) {
+      // TODO allow bare identifiers instead of string (syntax sugar)
+      // TODO accept list of pairs from syntax sugar
+      return this.resolver(
+        ...node.children.map((child: any) => evaluate(child)).map(untyped)
+      );
+    },
+  },
+  map: {
+    type: lambda(string, string),
+    resolver(...values: any[]): any {
+      const map = new Map();
+      if (!values || values.length % 2 === 1) {
+        throw new Error('Maps need to have an even number of children');
+      }
+      for (let i = 0; i < values.length; i += 2) {
+        map.set(values[i], values[i + 1]);
+      }
+      return map; // typed
+    },
+    evaluate({ node, evaluate, options }: any) {
+      // TODO allow bare identifiers instead of string (syntax sugar)
+      // TODO accept list of pairs from syntax sugar
+      return this.resolver(
+        ...node.children.map((child: any) => evaluate(child)).map(untyped)
+      );
     },
   },
   fun: {
@@ -47,7 +87,7 @@ export const resources: Record<string, any> = {
     resolver(...args: any[]): any {
       return typed([...args]);
     },
-    evaluate({ node, run, options, args }: any) {
+    evaluate({ node, evaluate, options, args }: any) {
       if (!args) {
         return typed(node); // TODO typed musi rozumieć tę strukturę
       }
@@ -60,26 +100,57 @@ export const resources: Record<string, any> = {
       const { children = [] } = node;
       for (let i = 0; i < children.length; i += 1) {
         const child = children[i];
-        result = run(child);
+        result = evaluate(child);
       }
       return typed(result);
     },
   },
   call: {
     type: lambda(string, string),
-    evaluate({ node, run }: any) {
+    evaluate({ node, evaluate }: any) {
       const [funChild, ...argChildren] = node.children!;
-      const args = argChildren!.map((child: any) => run(child));
-      const result = run(funChild, args);
+      const args = argChildren!.map((child: any) => evaluate(child));
+      const result = evaluate(funChild, args);
       return typed(result); // TODO add result type
     },
   },
   get: {
     type: lambda(string, string),
-    evaluate({ node, run, args }: any) {
+    evaluate({ node, evaluate, args }: any) {
       const [child] = node.children!;
-      const name = run(child, args);
-      return run({ type: untyped(name) }, args);
+      const name = evaluate(child, args);
+      return evaluate({ type: untyped(name) }, args);
+    },
+  },
+  let: {
+    type: lambda(string, string),
+    evaluate({ node, evaluate }: any) {
+      const { children = [] } = node;
+      const value = evaluate(children[1]);
+      const key = evaluate(children[0]);
+
+      if (key.type !== string) {
+        throw new Error(`Expected set key to be string, got: ${key.type}`);
+      }
+
+      const scope = getScope(node);
+      if (key.value in scope) {
+        throw new Error(`Scope already has key ${key.value}`);
+      }
+      scope[key.value] = value;
+      return value;
     },
   },
 };
+
+export function getScope<Key extends keyof any>(node?: AskNode<Key>): any {
+  if (!node) {
+    return resources;
+  }
+
+  if (node.type !== 'fun') {
+    return getScope(node.parent);
+  }
+
+  return node.scope!;
+}

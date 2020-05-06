@@ -18,6 +18,7 @@ describe('reduce', () => {
     expect(reduce(reducer, 'f ( )')).toBe('f()');
     expect(reduce(reducer, 'f( a, b, c )')).toBe('f(a, b, c)');
     expect(reduce(reducer, '{ a: b, c: d }')).toBe('object(a, b, c, d)');
+    expect(reduce(reducer, '{ a: b }')).toBe('object(a, b)');
     expect(reduce(reducer, 'f(g())')).toBe('f(g())');
     expect(() => reduce(reducer, 'a,b,c')).toThrow();
     expect(() => reduce(reducer, '""0')).toThrow();

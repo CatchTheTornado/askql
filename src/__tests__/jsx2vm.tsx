@@ -1,11 +1,9 @@
-import * as jsx from '../askjsx';
 import { parse } from '../askcode';
+import * as jsx from '../askjsx';
 import { run } from '../askvm';
-import { AskElement } from '../jsx';
 
 test('jsx', () => {
   const program = <call name="sum" args={[<v>4</v>, <v>5</v>]} />;
   const sum = jsx.render(program);
-  console.log('!', sum);
   expect(run(parse(sum))).toBe('9');
 });

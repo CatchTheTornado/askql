@@ -1,2 +1,2 @@
-export type { AskCode, AskNode } from './AskCode';
+export type { AskCode, AskNode, AskValue } from './AskCode';
 export { parse } from './parse';

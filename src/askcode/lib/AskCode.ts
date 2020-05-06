@@ -9,6 +9,8 @@ export interface AskNode<Key extends keyof any> {
   parent?: AskNode<Key>;
 }
 
-export type AskNodeOrValue<Key extends keyof any> = AskNode<Key> | string;
+export type AskValue = null | string | number | boolean;
+
+export type AskNodeOrValue<Key extends keyof any> = AskNode<Key> | AskValue;
 
 export type AskCode<Key extends keyof any> = AskNodeOrValue<Key>;

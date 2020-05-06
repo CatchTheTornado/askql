@@ -127,6 +127,7 @@ export function reduce<T = any>(
       whitespace();
 
       const values: U[] = [];
+      const start = index;
       while (index < code.length && !isAt(closeChar)) {
         const value = this.expression(r);
         step('list item', value);
@@ -134,7 +135,7 @@ export function reduce<T = any>(
 
         whitespace();
         if (!isAt(closeChar)) {
-          process(index % 2 ? oddSeparator : separator);
+          process((index - start) % 2 ? oddSeparator : separator);
         }
       }
 

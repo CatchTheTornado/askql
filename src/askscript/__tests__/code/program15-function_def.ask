@@ -1,0 +1,6 @@
+ask {
+    const square = (a: int): int {
+		a:times(a)
+	}
+	a:square:plus(square(a))
+}

@@ -1,36 +1,38 @@
 // TODO:
-// - else
-// - array type definition
 // - object type definition
+// - graphql syntax
 //
-// - unions
 // - records
 // - tuples
 // - call() with a lambda function
+// - unions
+
+// convert " to ' in string literals
 
 {
   const ask = require('./askscript.grammar.pegjs.classes')
 }
 
 
-ask = aH:askHeader aB:askBody askFooter {
+ask = lineWithoutCode* aH:askHeader aB:askBody askFooter lineWithoutCode* eof {
   return new ask.Ask(aH, aB);
 }
 
-askHeader = ws* 'ask' ws* aL:askHeader_argList? ws* '{' ws* nl { //TODO: add return type
-  return new ask.AskHeader(aL === null ? [] : aL);
+askHeader = ws* 'ask' aL:askHeader_argList? aRT:askHeader_retType? ws* '{' ws* lineComment? nl {
+  return new ask.AskHeader(aL === null ? [] : aL, aRT);
 }
-askHeader_argList = ('(' aL:argList ')') { return aL }
+askHeader_argList = ws* '(' aL:argList ')' { return aL }
+askHeader_retType = ws* ':' ws* t:type { return t }
 
-askFooter = blockFooter (ws / nl)* eof
+askFooter = blockFooter ws*
 
 askBody = sL:statementList { return new ask.AskBody(sL) }
 
-statementList = emptyLine* sL:statementList_NoEmptyLines emptyLine* { return sL }
+statementList = lineWithoutCode* sL:statementList_NoEmptyLines lineWithoutCode* { return sL }
 statementList_NoEmptyLines = 
-      s:statement nl emptyLine* sL:statementList { return sL.unshift(s), sL }
-    / s:statement { return [s] }
-    / '' { return [] }
+      s:statement ws* lineComment? nl lineWithoutCode* sL:statementList { return sL.unshift(s), sL }
+    / s:statement ws* lineComment? {                                      return [s] }
+    / '' {                                                                return [] }
 
 // statement is at least one full line
 // statement does NOT include the trailing newline
@@ -47,20 +49,20 @@ statement_NoWs =
 
 // variables other than of function type
 variableDefinition = 
-      m:modifier ws+ i:identifier t:variableDefinition_type? ws+ '=' ws+ v:value { return new ask.VariableDefinition(m, i, t === null ? anyType : t, v)}
-variableDefinition_type = ws+ ':' ws+ t:type { return t }
+      m:modifier ws+ i:identifier t:variableDefinition_type? ws* '=' ws* v:value { return new ask.VariableDefinition(m, i, t === null ? ask.anyType : t, v)}
+variableDefinition_type = ws* ':' ws* t:type { return t }
 
 value = 
     e:(
       functionCall
+    / query
     / identifier
     / valueLiteral)
     mCAs:methodCallApplied* { return new ask.Value(e, mCAs) }
 
-
 functionDefinition = fH:functionHeader cB:codeBlock functionFooter { return new ask.FunctionDefinition(fH, cB) }
 
-functionHeader = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? ws* '=' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* nl { return new ask.FunctionHeader(m, i, tD, aL, rTD === null ? anyType : rTD) }
+functionHeader = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? ws* '=' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? nl { return new ask.FunctionHeader(m, i, tD, aL, rTD === null ? ask.anyType : rTD) }
 functionHeader_typeDecl = ws* ':' ws* t1:type { return t1 } // this is the optional variable type declaration
 functionHeader_returnTypeDecl = ws* ':' ws* t2:type { return t2 } // this is the optional return type declaration
 
@@ -69,7 +71,34 @@ functionFooter = blockFooter
 // a block of code 
 codeBlock = statementList
 
-argList = 
+
+query = queryHeader qFL:queryFieldList queryFooter { return new ask.Query(qFL) }
+
+queryHeader = 'query {' ws* lineComment? nl
+queryFieldList = 
+    lineWithoutCode* qF:queryField ws* lineComment? nl lineWithoutCode* qFL:queryFieldList {  return qFL.unshift(qF), qFL }
+  / lineWithoutCode* qF:queryField ws* lineComment? nl lineWithoutCode* {                     return [qF] }
+  / lineWithoutCode* {                                                                        return [] }
+
+queryField =
+    qFN:queryFieldNode { return qFN }
+  / qFL:queryFieldLeaf { return qFL }
+
+queryFieldNode = ws* i:identifier ws* '{' ws* lineComment? nl lineWithoutCode* qFL:queryFieldList ws* '}' { return new ask.QueryFieldNode(i, qFL) }
+
+queryFieldLeaf = 
+    ws* i:identifier ws* '=' ws* v:value {     return new ask.QueryFieldLeaf(i, v) }
+  / ws* i:identifier mCAs:methodCallApplied* { return new ask.QueryFieldLeaf(i, new ask.Value(i, mCAs)) }
+  / ws* i:identifier {                         return new ask.QueryFieldLeaf(i, new ask.Value(i, [])) }
+
+queryFooter = blockFooter
+
+
+argList = // TODO: check all the *List constructs for handling empty lists
+    aL:nonEmptyArgList { return aL }
+  / '' {                 return [] }
+
+nonEmptyArgList =
     a:arg ',' aL:argList { return aL.unshift(a), aL }
   / a:arg { return [a] }
 
@@ -77,28 +106,36 @@ arg = ws* i:identifier ws* ':' ws* t:type ws* { return new ask.Arg(i, t) }
 
 callArgList = v:valueList { return v }
 valueList = 
-    v:value ',' vL:valueList { vL.unshift(v); return vL }
-  / v:value { return [v] }
+    vL:nonEmptyValueList { return vL}
+  / ws* { return [] }
 
-if =        'if' ws* '(' v:value ')' ws* '{' nl+ cB:codeBlock nlws* '}' {       return new ask.If(v, cB) }
-while  = 'while' ws* '(' v:value ')' ws* '{' nl+ cB:codeBlock nlws* '}' {       return new ask.While(v, cB) }
+nonEmptyValueList = 
+    ws* v:value ws* ',' vL:nonEmptyValueList { vL.unshift(v); return vL }
+  / ws* v:value ws* { return [v] }
+
+if =        'if' ws* '(' v:value ')' ws* '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' ws* eB:elseBlock? {       return new ask.If(v, cB, eB) }
+while  = 'while' ws* '(' v:value ')' ws* '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' {       return new ask.While(v, cB) }
+elseBlock = 'else' ws* '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' { return new ask.Else(cB) }
 return = 
   'return' ws+ v:value {                                                        return new ask.Return(v) }
-  / 'return' {                                                                  return new ask.Return(nullValue) }
+  / 'return' {                                                                  return new ask.Return(ask.nullValue) }
 
 functionCall = i:identifier ws* '(' cAL:callArgList ')' {                       return new ask.FunctionCall(i, cAL) }
 methodCallApplied   = ws* ':' ws* i:identifier ws* cAL:methodCallAppliedArgList?  { return new ask.MethodCallApplied(i, cAL === null ? [] : cAL)}
 methodCallAppliedArgList = '(' cAL:callArgList ')' { return cAL }
 
 // === simple elements ===
-type = i:identifier { return new ask.Type(i) }
+type = 
+    'array(' t:type ')' { return new ask.ArrayType(t) }
+  / i:identifier {        return new ask.Type(i) }
+
 
 valueLiteral = 
     v:(
       null
       / boolean
+      / float // float needs to go before int
       / int
-      / float
       / string
       / array
       / map
@@ -122,6 +159,13 @@ let = 'let' { return new ask.Let() }
 
 blockFooter = ws* '}'
 
+lineWithoutCode = 
+    lineWithComment
+  / emptyLine
+
+lineWithComment = lineComment
+
+lineComment = ws* '//' (!nl .)* (&nl / eof)
 
 emptyLine = ws* nl
 nlws = nl / ws
@@ -141,7 +185,7 @@ float = [-]?[0-9]+ '.' [0-9]+ { return new ask.Float(text()) }  // TODO: yes, mu
 ch = 
       [\x20\x21\x23-\x5B\x5D-\xff] // all printable characters except " and \
     / '\\' escape
-    
+
 escape =
       '"'
     / '\\'  // this is one backslash
@@ -161,4 +205,4 @@ ws = ' ' / '\t'
 nl = '\n' / '\r' 
 
 // end of file
-eof = (!.)?
+eof = (!.)

@@ -1,0 +1,9 @@
+ask {
+    query {
+        firstName
+        lastName:upperCase:concat(" ")
+        friends {
+            id
+        }
+    }
+}

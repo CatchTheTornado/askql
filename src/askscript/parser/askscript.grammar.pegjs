@@ -1,5 +1,4 @@
 // TODO:
-// - array type definition
 // - object type definition
 // - graphql syntax
 //
@@ -7,6 +6,8 @@
 // - tuples
 // - call() with a lambda function
 // - unions
+
+// convert " to ' in string literals
 
 {
   const ask = require('./askscript.grammar.pegjs.classes')
@@ -54,10 +55,10 @@ variableDefinition_type = ws* ':' ws* t:type { return t }
 value = 
     e:(
       functionCall
+    / query
     / identifier
     / valueLiteral)
     mCAs:methodCallApplied* { return new ask.Value(e, mCAs) }
-
 
 functionDefinition = fH:functionHeader cB:codeBlock functionFooter { return new ask.FunctionDefinition(fH, cB) }
 
@@ -69,6 +70,29 @@ functionFooter = blockFooter
 
 // a block of code 
 codeBlock = statementList
+
+
+query = queryHeader qFL:queryFieldList queryFooter { return new ask.Query(qFL) }
+
+queryHeader = 'query {' ws* lineComment? nl
+queryFieldList = 
+    lineWithoutCode* qF:queryField ws* lineComment? nl lineWithoutCode* qFL:queryFieldList {  return qFL.unshift(qF), qFL }
+  / lineWithoutCode* qF:queryField ws* lineComment? nl lineWithoutCode* {                     return [qF] }
+  / lineWithoutCode* {                                                                        return [] }
+
+queryField =
+    qFN:queryFieldNode { return qFN }
+  / qFL:queryFieldLeaf { return qFL }
+
+queryFieldNode = ws* i:identifier ws* '{' ws* lineComment? nl lineWithoutCode* qFL:queryFieldList ws* '}' { return new ask.QueryFieldNode(i, qFL) }
+
+queryFieldLeaf = 
+    ws* i:identifier ws* '=' ws* v:value {     return new ask.QueryFieldLeaf(i, v) }
+  / ws* i:identifier mCAs:methodCallApplied* { return new ask.QueryFieldLeaf(i, new ask.Value(i, mCAs)) }
+  / ws* i:identifier {                         return new ask.QueryFieldLeaf(i, new ask.Value(i, [])) }
+
+queryFooter = blockFooter
+
 
 argList = // TODO: check all the *List constructs for handling empty lists
     aL:nonEmptyArgList { return aL }

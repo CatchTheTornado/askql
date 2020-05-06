@@ -420,6 +420,53 @@ class CallArgumentList {
   }
 }
 
+class Query {
+  constructor(queryFieldList) {
+    this.queryFieldList = queryFieldList
+  }
+
+  print() {
+    let output = {
+      name: 'query',
+      children: this.queryFieldList.map(queryField => queryField.print())
+    }
+    return output;
+  }
+}
+
+class QueryFieldLeaf {
+  constructor(identifier, value) {
+    this.identifier = identifier
+    this.value = value
+  }
+
+  print() {
+    let output = {
+      name: 'leaf',
+      props: {
+        name: this.identifier.text,
+        value: this.value.print()
+      }
+    }
+    return output
+  }
+}
+
+class QueryFieldNode {
+  constructor(identifier, queryFieldList) {
+    this.identifier = identifier
+    this.queryFieldList = queryFieldList
+  }
+
+  print() {
+    let output = {
+      name: 'node',
+      children: this.queryFieldList.map(queryField => queryField.print())
+    }
+    return output;
+  }
+}
+
 const nullValue = new Value(new ValueLiteral(new Null()), [])
 const anyType = new Type(new Identifier('any'))
 
@@ -457,7 +504,10 @@ module.exports = {
     Float: Float,
     ArgumentList: ArgumentList,
     CallArgumentList: CallArgumentList,
-  
+    Query: Query,
+    QueryFieldLeaf: QueryFieldLeaf,
+    QueryFieldNode: QueryFieldNode,
+
     nullValue: nullValue,
     anyType: anyType
 };

@@ -82,3 +82,38 @@ export function typed(value: any, type?: any): Typed<any> {
   }
   return { value, type: any };
 }
+
+export type JSONable =
+  | null
+  | string
+  | boolean
+  | number
+  | JSONable[]
+  | { [key: string]: JSONable };
+
+export function untyped(value: any): JSONable {
+  if (!value) {
+    return value;
+  }
+  if (
+    typeof value === 'string' ||
+    typeof value === 'boolean' ||
+    typeof value === 'number'
+  ) {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(untyped);
+  }
+
+  if (typeof value == 'object' && !('value' in value)) {
+    return value;
+  }
+
+  const val = value.value;
+  if (Array.isArray(val)) {
+    return val.map(untyped);
+  }
+  return untyped(val);
+}

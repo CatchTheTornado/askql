@@ -15,7 +15,11 @@ test('code2vm', () => {
   expect(vm(`{ 'a': 1 }`)).toStrictEqual({ a: 1 });
   expect(vm(`call(fun(let('a', 5), a))`)).toStrictEqual(5);
   expect(vm('call(fun("1"))')).toBe('1');
-
   // function returned as AskCode
   expect(vm('fun("1",fun("2"))')).toHaveProperty('type');
+});
+
+test('types', () => {
+  expect(vm('typed(2, string)')).toBe(2);
+  // expect(() => vm('typed(string, 2)')).toThrow();
 });

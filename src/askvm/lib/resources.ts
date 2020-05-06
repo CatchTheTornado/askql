@@ -1,9 +1,5 @@
 import { AskNode } from '../../askcode';
-import { boolean, lambda, string, typed } from './typed';
-
-function untyped(x: any) {
-  return x.value; // TODO implement
-}
+import { boolean, lambda, string, typed, untyped } from './typed';
 
 const empty = {
   type: boolean,
@@ -13,6 +9,15 @@ const empty = {
 export const resources: Record<string, any> = {
   empty,
   null: empty,
+  typed: {
+    type: lambda(string, string),
+    evaluate({ node, evaluate }: any) {
+      const value = evaluate(node.children[0]);
+      const type = evaluate(node.children[1]);
+      return typed(value, type);
+    },
+  },
+  string,
   false: {
     type: boolean,
     resolver: () => false,
@@ -33,7 +38,6 @@ export const resources: Record<string, any> = {
       return String(Number(a.value) + Number(b.value));
     },
   },
-  // TODO list: typed(lambda(string, string), function() ...)
   list: {
     type: lambda(string, string),
     resolver(...args: any[]): any {

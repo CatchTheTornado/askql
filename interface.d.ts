@@ -5,8 +5,6 @@ type FirstArg<T extends (arg: any, ...rest: any[]) => any> = T extends (
   ? P
   : never;
 
-declare var global: any;
-
 declare namespace JSX {
   interface IntrinsicElements {
     ask: FirstArg<typeof import('./src/jsx').Ask>;
@@ -18,7 +16,7 @@ declare namespace JSX {
       fragment?: true;
       fun?: true;
       json?: true;
-      ref?: true;
+      get?: true;
       set?: true;
     };
     else: FirstArg<typeof import('./src/jsx').Else>;

@@ -4,5 +4,11 @@ jsx;
 
 export function Ref({ name }: { name: string }) {
   assert(isString(name), 'name');
-  return <code get>{name.split('.')}</code>;
+  return (
+    <code get>
+      {name.split('.').map((name) => (
+        <v>{name}</v>
+      ))}
+    </code>
+  );
 }

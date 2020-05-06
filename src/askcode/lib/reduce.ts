@@ -1,10 +1,11 @@
 export interface Reducer<Value> {
   node(name: string, ...children: Value[]): Value;
   id(name: string): Value;
-  string(value: string): Value;
+  value(value: null | string | number | boolean): Value;
 }
 
 const regexp = {
+  digitChar: /[0-9]/,
   idChar: /[_a-zA-Z0-9]/,
 };
 
@@ -77,32 +78,6 @@ export function reduce<T = any>(
     }
   }
 
-  function expressionList<U>(
-    this: typeof reducers,
-    {
-      reducer,
-      chars: [openChar, closeChar],
-    }: { reducer: Reducer<U>; chars: [string, string] }
-  ) {
-    process(openChar);
-    whitespace();
-
-    const values: U[] = [];
-    while (index < code.length && !isAt(closeChar)) {
-      const value = this.expression(reducer);
-      step('list item', value);
-      values.push(value);
-
-      whitespace();
-      if (!isAt(closeChar)) {
-        process(',');
-      }
-    }
-
-    process(closeChar);
-    return values;
-  }
-
   function id(): string {
     whitespace();
     step('id');
@@ -119,8 +94,8 @@ export function reduce<T = any>(
   }
 
   const reducers: Record<
-    'call' | 'expression' | 'program' | 'string',
-    <U>(reducer: Reducer<U>) => U
+    'call' | 'expression' | 'expressionList' | 'int' | 'program' | 'string',
+    <U>(reducer: Reducer<U>, ...args: any[]) => U
   > = {
     program(r) {
       const value = this.expression(r);
@@ -132,29 +107,92 @@ export function reduce<T = any>(
       }
       return value;
     },
+    expressionList<U>(
+      r: Reducer<U>,
+      {
+        name,
+        openChar,
+        closeChar,
+        separator = ',',
+        oddSeparator = separator,
+      }: {
+        name: string;
+        openChar: string;
+        closeChar: string;
+        separator: string;
+        oddSeparator: string;
+      }
+    ) {
+      process(openChar);
+      whitespace();
+
+      const values: U[] = [];
+      while (index < code.length && !isAt(closeChar)) {
+        const value = this.expression(r);
+        step('list item', value);
+        values.push(value);
+
+        whitespace();
+        if (!isAt(closeChar)) {
+          process(index % 2 ? oddSeparator : separator);
+        }
+      }
+
+      process(closeChar);
+      return r.node(name, ...values);
+    },
     expression(r) {
       whitespace();
       step('expression');
-      if (isAt('"')) {
+      if (isAt('"') || isAt("'")) {
         return this.string(r);
+      }
+      if (isAtRegExp(regexp.digitChar)) {
+        return this.int(r);
+      }
+      if (isAt('[')) {
+        return this.expressionList(r, {
+          name: 'list',
+          openChar: '[',
+          closeChar: ']',
+        });
+      }
+      if (isAt('{')) {
+        return this.expressionList(r, {
+          name: 'object',
+          openChar: '{',
+          closeChar: '}',
+          oddSeparator: ':',
+        });
       }
       return this.call(r);
     },
-    string(r) {
-      process('"');
+    string(r, quote = code[index]) {
+      process(quote);
       step('string');
       const start = index;
       for (
         index = start;
-        index < code.length && !(!isAt('\\', -1) && isAt('"'));
+        index < code.length && !(!isAt('\\', -1) && isAt(quote));
         index += 1
       );
       if (index === code.length) {
         throw new Error('Unlimited string');
       }
       const end = index;
-      process('"');
-      return r.string(code.slice(start, end));
+      process(quote);
+      return r.value(code.slice(start, end));
+    },
+    int(r) {
+      step('int');
+      const start = index;
+      for (
+        index = start;
+        index < code.length && isAtRegExp(regexp.digitChar);
+        index += 1
+      );
+      const end = index;
+      return r.value(Number(code.slice(start, end)));
     },
     call<U>(r: Reducer<U>) {
       whitespace();
@@ -164,12 +202,7 @@ export function reduce<T = any>(
         return r.id(name);
       }
       whitespace();
-      step('args for', name);
-      const args = expressionList.call(this, {
-        chars: ['(', ')'],
-        reducer: r,
-      }) as U[];
-      return r.node(name, ...args);
+      return this.expressionList(r, { name, openChar: '(', closeChar: ')' });
     },
   };
 

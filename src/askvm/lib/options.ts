@@ -59,11 +59,11 @@ export const options: Options<
         throw new Error(`Unknown resource ${node.type}!`);
       }
 
-      function baseEvaluate(this: any, { run, args }: any) {
+      function baseEvaluate({ args }: any) {
         if (!args) {
           return res.resolver();
         }
-        return res.resolver(args.map((arg: any) => run(arg)));
+        return res.resolver(...args);
       }
       const { evaluate = baseEvaluate } = res;
       return evaluate({ node, run, options, args });

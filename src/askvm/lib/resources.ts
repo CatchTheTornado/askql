@@ -1,5 +1,9 @@
 import { typed, boolean, string, lambda } from './typed';
 
+function untyped(x: any) {
+  return x.value; // TODO implement
+}
+
 export const resources: Record<string, any> = {
   false: {
     type: boolean,
@@ -63,14 +67,19 @@ export const resources: Record<string, any> = {
   },
   call: {
     type: lambda(string, string),
-    resolver(...args: any[]): any {
-      return typed([...args]);
-    },
-    evaluate({ node, run, options }: any) {
+    evaluate({ node, run }: any) {
       const [funChild, ...argChildren] = node.children!;
       const args = argChildren!.map((child: any) => run(child));
       const result = run(funChild, args);
       return typed(result); // TODO add result type
+    },
+  },
+  get: {
+    type: lambda(string, string),
+    evaluate({ node, run, args }: any) {
+      const [child] = node.children!;
+      const name = run(child, args);
+      return run({ type: untyped(name) }, args);
     },
   },
 };

@@ -4,7 +4,7 @@ import { reduce, Reducer } from './reduce';
 const askCodeReducer: Reducer<AskCode<string>> = {
   node: (type, ...children) => ({ type, children }),
   id: (type) => ({ type }),
-  string: (value: string) => value,
+  value: (value: string) => value,
 };
 
 export function parse(code: string) {

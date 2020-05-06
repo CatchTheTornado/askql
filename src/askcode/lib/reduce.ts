@@ -8,6 +8,8 @@ const regexp = {
   idChar: /[_a-zA-Z0-9]/,
 };
 
+// AskCode responsible for syntax sugar for REPL - easy structures
+
 interface Options<T> {
   reducer: Reducer<T>;
   logging: boolean;

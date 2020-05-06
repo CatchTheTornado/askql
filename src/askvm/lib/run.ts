@@ -19,18 +19,30 @@ export interface Options<Key extends keyof any, T> {
   valueResolver: Key;
 }
 
+let counter = 0;
+
 function tick<Key extends keyof any, T>(
   code: AskCode<Key>,
   args?: undefined | T[]
 ): T {
   const options: Options<Key, T> = runOptions as any;
 
-  const node: AskNode<Key> =
-    typeof code === 'string'
-      ? { type: options.valueResolver, children: [code] }
-      : code;
-  const result = options.resolvers[node.type]({
-    node,
+  counter += 1;
+
+  if (counter === 20) {
+    throw new Error('stop');
+  }
+
+  let resolver: any;
+
+  if (typeof code === 'string') {
+    resolver = options.resolvers[options.valueResolver];
+  } else {
+    resolver = (options.resolvers as any).call;
+  }
+
+  const result = resolver({
+    node: code,
     options,
     run: (code: AskCode<Key>, args?: T[]) => tick(code, args),
     args,
@@ -57,6 +69,11 @@ function untyped(value: any): JSONable {
   ) {
     return value;
   }
+
+  if (Array.isArray(value)) {
+    return value.map(untyped);
+  }
+
   if (typeof value == 'object' && !('value' in value)) {
     return value;
   }

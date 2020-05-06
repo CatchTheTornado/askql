@@ -17,7 +17,7 @@ export function getScope<Key extends keyof any>(node?: AskNode<Key>): any {
 }
 
 export const options: Options<
-  'empty' | 'true' | 'list' | 'map' | 'typed' | 'call' | 'fun' | 'get' | 'let',
+  'empty' | 'true' | 'map' | 'typed' | 'call' | 'fun' | 'get' | 'let',
   Typed<any>
 > = {
   resolvers: {
@@ -26,9 +26,6 @@ export const options: Options<
     },
     true() {
       return typed(true);
-    },
-    list({ node, run }) {
-      return typed([...node.children!.map((child) => run(child))]);
     },
     map({ node, run }) {
       const map = new Map();
@@ -42,17 +39,41 @@ export const options: Options<
       return typed(map);
     },
     typed({ node, run }) {
-      const [valueChild, typeChild] = node.children!;
-      const value =
-        typeof valueChild === 'string' ? valueChild : run(valueChild);
-      const type = typeChild ? run(typeChild) : undefined;
-      return typed(value, type);
+      if (typeof node !== 'string') {
+        throw new Error('Expected value to be string');
+      }
+      return typed(node);
+      // TODO assert node is string
+      // console.log('typed !', node);
+      // const [valueChild, typeChild] = node.children!;
+      // const value =
+      //   typeof valueChild === 'string' ? valueChild : run(valueChild);
+      // const type = typeChild ? run(typeChild) : undefined;
+      // return typed(value, type);
     },
-    call({ node, run }) {
-      const [funChild, ...argChildren] = node.children!;
-      const args = argChildren!.map((child) => run(child));
-      const result = run(funChild, args);
-      return typed(result); // TODO add result type
+    call({ node, run, args }) {
+      // call node.type
+
+      const res = resources[node.type];
+      if (!res) {
+        throw new Error(`Unknown resource ${node.type}!`);
+      }
+
+      function baseEvaluate(this: any, { run, args }: any) {
+        if (!args) {
+          return res.resolver();
+        }
+        return res.resolver(args.map((arg: any) => run(arg)));
+      }
+      const { evaluate = baseEvaluate } = res;
+      return evaluate({ node, run, options, args });
+
+      // const [funChild, ...argChildren] = node.children!;
+      // console.log('call!', node, funChild, argChildren);
+      // const args = argChildren!.map((child) => run(child));
+      // const result = run(funChild, argChildren as any);
+      // return typed(result); // TODO add result type
+      return 0;
     },
     fun({ node, run, options, args }) {
       if (!args) {
@@ -99,14 +120,25 @@ export const options: Options<
       if (scope === resources) {
         const res = resources[key.value as keyof typeof resources];
 
-        // typedCall
-        if (!Object.prototype.isPrototypeOf.call(lambdaAny, res.type)) {
-          throw new Error('Given resource is not callable');
-        }
+        let argValues: any[] = [];
+        if (args) {
+          if (!Object.prototype.isPrototypeOf.call(lambdaAny, res.type)) {
+            throw new Error('Given resource is not callable');
+          }
 
-        const argValues = (args ?? []).map((arg) =>
-          typed(arg, res.type.argType)
-        );
+          // compute args
+          // argChildren!.map((child) => run(child));
+          argValues = args;
+          // argValues = args.map((arg) => typed(arg, res.type.argType));
+        }
+        function baseEvaluate(this: any, { run, args }: any) {
+          if (!args) {
+            return this.resolver();
+          }
+          return this.resolver(args.map((arg: any) => run(arg)));
+        }
+        const { evaluate = baseEvaluate } = res;
+        return evaluate({ node, run, options, args });
         const result = res.resolver(...argValues);
         return typed(result, res.type.retType);
       }
@@ -131,6 +163,9 @@ export const options: Options<
         throw new Error(`Scope already has key ${key.value}`);
       }
       scope[key.value] = value;
+
+      // execute zwraca argumenty dla tego zasobu
+      // evaluate
       return value;
     },
   },

@@ -5,7 +5,11 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc",
+    "postbuild": "chmod +x dist/cli.js",
     "test": "jest"
+  },
+  "bin": {
+    "askql": "dist/cli.js"
   },
   "repository": {
     "type": "git",

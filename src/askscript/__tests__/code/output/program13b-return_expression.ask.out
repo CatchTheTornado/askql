@@ -1,0 +1,47 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "value",
+      "props": {
+        "type": "string",
+        "value": "Hello world!"
+      }
+    },
+    {
+      "name": "return",
+      "props": {
+        "value": {
+          "name": "call",
+          "props": {
+            "name": "plus",
+            "args": [
+              {
+                "name": "ref",
+                "props": {
+                  "name": "n"
+                }
+              },
+              {
+                "name": "value",
+                "props": {
+                  "type": "int",
+                  "value": "1"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "ref",
+      "props": {
+        "name": "hello"
+      }
+    }
+  ]
+}

@@ -1,12 +1,20 @@
-import type { AskCode } from './AskCode';
-import { reduce, Reducer } from './reduce';
-
-const askCodeReducer: Reducer<AskCode<string>> = {
-  node: (type, ...children) => ({ type, children }),
-  id: (type) => ({ type }),
-  value: (value: string) => value,
-};
+import { askCode } from './askCode';
+import { reduce } from './reduce';
 
 export function parse(code: string) {
-  return reduce(askCodeReducer, code);
+  return reduce(
+    {
+      node: (type, ...children) =>
+        askCode({
+          name: type,
+          params: children,
+        }),
+      id: (type) =>
+        askCode({
+          name: type,
+        }),
+      value: askCode,
+    },
+    code
+  );
 }

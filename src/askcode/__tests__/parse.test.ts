@@ -1,12 +1,12 @@
 import { parse } from '../lib/parse';
 
 test('parse', () => {
-  expect(parse('f(g())')).toStrictEqual({
-    type: 'f',
-    children: [
+  expect(parse('f(g())')).toEqual({
+    name: 'f',
+    params: [
       {
-        type: 'g',
-        children: [],
+        name: 'g',
+        params: [],
       },
     ],
   });

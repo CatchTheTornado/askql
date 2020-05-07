@@ -1,45 +1,54 @@
-import { AskCode } from '../../askcode';
-import { evaluate } from './evaluate';
-import type { Options } from './evaluate';
-import { resources } from './resources';
-import { typed, untyped } from './typed';
-import type { JSONable, Typed } from './typed';
+import { AskCode, AskCodeOrValue, Value } from '../../askcode';
+import * as res from '../resources';
+import { Resources as BaseResources } from './resource';
+import { Frame, step } from './step';
+import { typed, Typed, untyped } from './typed';
+import type { JSONable } from './typed';
 
-const options: Options<string, Typed<any>> = {
-  leaf({ value }) {
-    if (!value) {
-      throw new Error('Expected code to be a value');
-    }
-    return typed(value);
-  },
-  node({ node, evaluate, args }) {
-    if (!node) {
-      throw new Error('Expected code to be a node');
-    }
-    let res = resources[node.type];
-    if (!res) {
-      throw new Error(`Unknown resource ${node.type}!`);
-    }
+export function getScope(resources: BaseResources, code?: AskCode): any {
+  if (!code) {
+    return resources;
+  }
 
-    function baseEvaluate({ args }: any) {
-      const { resolver = () => res } = res;
-      if (!args) {
-        // TODO rename to callArgs
-        const values = node!.children
-          ?.map((arg: any) => evaluate(arg))
-          .map(untyped);
-        return resolver(...(values ?? []));
-      }
+  if (code.name !== 'fun') {
+    return getScope(resources, code.parent);
+  }
 
-      // function call
-      return resolver(...args);
-    }
-    const { evaluate: resEvaluate = baseEvaluate } = res;
-    return resEvaluate.call(res, { node, evaluate, options, args });
-  },
+  return code.scope!;
+}
+
+const resources = {
+  ...res,
+  null: res.empty,
+  f: res.fun,
 };
 
-export function run(code: AskCode<string>): JSONable {
-  const result = evaluate<string, Typed<any>>(options, code);
-  return untyped(result);
+type Resources = typeof resources;
+
+export function run(code: AskCodeOrValue, args?: any[]): JSONable {
+  return untyped(
+    step(
+      {
+        resources,
+        value(value: Value): Typed<any> {
+          return typed(value);
+        },
+        code(code: AskCode, frame: Frame<Typed<any>, Resources>): Typed<any> {
+          const { resources } = frame;
+          const res = resources[code.name as keyof typeof resources];
+          // TODO better code for resource retrieval
+          if (!res) {
+            throw new Error(`Unknown resource ${code.name}!`);
+          }
+
+          if (res.compute) {
+            return res.compute(code, frame);
+          }
+          return res as any; // TODO fix with scopes
+        },
+      },
+      code,
+      args
+    )
+  );
 }

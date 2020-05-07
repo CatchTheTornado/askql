@@ -1,7 +1,7 @@
 ask {
     query {
         firstName
-        lastName:upperCase:concat(" ")
+        lastName:upperCase:concat(' ')
         friends {
             id
         }

@@ -289,8 +289,14 @@ class String {
   }
 
   print() {
-    // return `{"${this.text}"}`
-    return this.text;
+    let output = {
+      name: 'value',
+      props: {
+        type: 'string',
+        value: this.text
+      }
+    }
+    return output
   }
 }
 
@@ -358,19 +364,40 @@ class Identifier {
 
 class Null {
   print() {
-    return 'null';
+    let output = {
+      name: 'value',
+      props: {
+        type: 'empty',
+        value: 'null'
+      }
+    }
+    return output
   }
 }
 
 class True {
   print() {
-    return 'true';
+    let output = {
+      name: 'value',
+      props: {
+        type: 'boolean',
+        value: 'true'
+      }
+    }
+    return output
   }
 }
 
 class False {
   print() {
-    return 'false';
+    let output = {
+      name: 'value',
+      props: {
+        type: 'boolean',
+        value: 'false'
+      }
+    }
+    return output
   }
 }
 
@@ -380,7 +407,14 @@ class Int {
   }
 
   print() {
-    return this.text;
+    let output = {
+      name: 'value',
+      props: {
+        type: 'int',
+        value: this.text
+      }
+    }
+    return output
   }
 }
 
@@ -390,7 +424,14 @@ class Float {
   }
 
   print() {
-    return this.text;
+    let output = {
+      name: 'value',
+      props: {
+        type: 'float',
+        value: this.text
+      }
+    }
+    return output
   }
 }
 
@@ -459,6 +500,9 @@ class QueryFieldNode {
   print() {
     let output = {
       name: 'node',
+      props: {
+        name: this.identifier.text
+      },
       children: this.queryFieldList.map((queryField) => queryField.print()),
     };
     return output;

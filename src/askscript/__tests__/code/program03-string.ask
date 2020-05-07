@@ -1,3 +1,3 @@
 ask {
-    "Hello world!"
+    'Hello world!'
 }

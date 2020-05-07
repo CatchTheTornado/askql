@@ -1,0 +1,10 @@
+ask {
+	query {
+		firstName
+		lastName
+		parents {
+			firstName
+			lastName
+		}
+	}
+}

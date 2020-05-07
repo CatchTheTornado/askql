@@ -1,7 +1,7 @@
 ask {
     if (5) {
-        return n
+        return yes
     } else {
-        return n
+        return no
     }
 }

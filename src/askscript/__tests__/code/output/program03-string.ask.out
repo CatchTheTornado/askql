@@ -3,5 +3,11 @@
 	props: {
 		args: []
 	},
-	children: ["Hello world!"]
+	children: [{
+           	name: "value",
+           	props: {
+             	type: "string",
+             	value: "Hello world!",
+           	}
+		}]
 }

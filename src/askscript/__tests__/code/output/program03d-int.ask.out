@@ -1,0 +1,22 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "value",
+      "props": {
+        "type": "int",
+        "value": "123"
+      }
+    },
+    {
+      "name": "value",
+      "props": {
+        "type": "int",
+        "value": "-456"
+      }
+    }
+  ]
+}

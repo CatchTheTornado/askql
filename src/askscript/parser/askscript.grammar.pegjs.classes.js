@@ -1,4 +1,3 @@
-
 // In the following classes arguments to all the constructors have the same name as the class they are type of.
 // If an argument ends with *List, it means it's a list of elements of type *. In some cases it's converted to an object of a class *List in the constructor to make printing AskJSX easier.
 //
@@ -13,12 +12,11 @@ class Ask {
     let output = {
       name: 'ask',
       props: this.askHeader.print(),
-      children: this.askBody.print()
-    }
+      children: this.askBody.print(),
+    };
     return output;
   }
 }
-
 
 class AskHeader {
   constructor(argList, returnTypeOrNull) {
@@ -28,14 +26,13 @@ class AskHeader {
 
   print() {
     let output = {
-      args: this.argList.map(arg => arg.print())
-    }
+      args: this.argList.map((arg) => arg.print()),
+    };
     if (this.returnTypeOrNull !== null)
       output.returns = this.returnTypeOrNull.print();
-    return output
+    return output;
   }
 }
-
 
 class AskBody {
   constructor(statementList) {
@@ -43,7 +40,7 @@ class AskBody {
   }
 
   print() {
-    return this.statementList.map(statement => statement.print())
+    return this.statementList.map((statement) => statement.print());
   }
 }
 
@@ -59,10 +56,10 @@ class Statement {
 
 class VariableDefinition {
   constructor(modifier, identifier, type, value) {
-    this.modifier = modifier
-    this.identifier = identifier
-    this.type = type
-    this.value = value
+    this.modifier = modifier;
+    this.identifier = identifier;
+    this.type = type;
+    this.value = value;
   }
 
   print() {
@@ -71,77 +68,99 @@ class VariableDefinition {
       props: {
         name: this.identifier.print(),
         type: this.type.print(),
-        value: this.value.print()
-      }
-    }
-    return output
+        value: this.value.print(),
+      },
+    };
+    return output;
   }
 }
 
 class Value {
   constructor(expression, methodCallAppliedList) {
-    
-    this.expression = expression
-    this.methodCallAppliedList = methodCallAppliedList
-    
+    this.expression = expression;
+    this.methodCallAppliedList = methodCallAppliedList;
+
     // If there are methods applied (which are a syntactic sugar for functions), convert them to functions
     if (methodCallAppliedList.length == 0) {
-      this.expressionToPrint = expression
+      this.expressionToPrint = expression;
     } else {
-
       // We need to convert here from:
       //     expression:method1(arg1, arg2):method2(arg3, arg4):...:methodn(argn1, argn2)
       // to:
       //     methodn(method(....(method2(method1(expression, arg1, arg2), arg3, arg4), .....),....), argn1, argn2)
-      
-      for(const methodCall of methodCallAppliedList) {
-        const callArgListShallowCopy = methodCall.callArgList.slice()
-        callArgListShallowCopy.unshift(expression)
-        expression = new FunctionCall(methodCall.identifier, callArgListShallowCopy)
+
+      for (const methodCall of methodCallAppliedList) {
+        const callArgListShallowCopy = methodCall.callArgList.slice();
+        callArgListShallowCopy.unshift(expression);
+        expression = new FunctionCall(
+          methodCall.identifier,
+          callArgListShallowCopy
+        );
       }
-      this.expressionToPrint = expression
+      this.expressionToPrint = expression;
     }
   }
 
   print() {
-    let output = this.expressionToPrint.print()
-    return output
+    let output = this.expressionToPrint.print();
+    return output;
   }
 }
 
 class FunctionDefinition {
-  constructor(functionHeader, statementList) {
-    this.functionHeader = functionHeader;
-    this.statementList = statementList;
-  }
-
-  print() {
-    let output = this.functionHeader.print()
-    output.children = this.statementList.map(statement => statement.print())
-
-    return output
-  }
-}
-
-class FunctionHeader {
-  constructor(modifier, identifier, typeNullable, argumentList, returnType) {
-    this.modifier = modifier
-    this.identifier = identifier
-    this.typeNullable = typeNullable
-    this.argumentList = new ArgumentList(argumentList)
-    this.returnType = returnType
+  constructor(functionSignature, functionObject) {
+    this.functionSignature = functionSignature;
+    this.functionObject = functionObject;
   }
 
   print() {
     let output = {
       name: 'fun',
       props: {
-        name: this.identifier.text,
-        args: this.argumentList.print(),
-        returns: this.returnType.print()
-      }
-    }
-    return output
+        name: this.functionSignature.identifier.text,
+        args: this.functionObject.functionHeader.argumentList.print(),
+        returns: this.functionObject.functionHeader.returnType.print(),
+      },
+      children: this.functionObject.statementList.map((statement) => statement.print())
+    };
+
+    return output;
+  }
+}
+
+class FunctionSignature {
+  constructor(modifier, identifier, typeNullable) {
+    this.modifier = modifier;
+    this.identifier = identifier;
+    this.typeNullable = typeNullable;
+  }
+}
+
+class FunctionObject {
+  constructor(functionHeader, statementList) {
+    this.functionHeader = functionHeader
+    this.statementList = statementList
+  }
+
+  // This print() is used only in lambda functions
+  print() {
+    let output = {
+      name: 'fun',
+      props: {
+        args: this.functionHeader.argumentList.print(),
+        returns: this.functionHeader.returnType.print(),
+      },
+      children: this.statementList.map((statement) => statement.print())
+    };
+
+    return output;
+  }
+}
+
+class FunctionHeader {
+  constructor(argumentList, returnType) {
+    this.argumentList = new ArgumentList(argumentList);
+    this.returnType = returnType;
   }
 }
 
@@ -152,43 +171,43 @@ class Arg {
   }
 
   print() {
-    let output = [this.identifier.text, this.type.print()]
-    return output
+    let output = [this.identifier.text, this.type.print()];
+    return output;
   }
 }
 
 class If {
   constructor(value, statementList, elseBlockOrNull) {
-    this.value = value
-    this.statementList = statementList
-    this.elseBlockOrNull = elseBlockOrNull
+    this.value = value;
+    this.statementList = statementList;
+    this.elseBlockOrNull = elseBlockOrNull;
   }
 
   print() {
     let output = {
       name: 'if',
       props: {
-        condition: this.value.print()
+        condition: this.value.print(),
       },
-      children: this.statementList.map(statement => statement.print())
+      children: this.statementList.map((statement) => statement.print()),
     };
 
     if (this.elseBlockOrNull !== null)
       output.props.else = this.elseBlockOrNull.print();
-    
-    return output
+
+    return output;
   }
 }
 
 class Else {
   constructor(statementList) {
-    this.statementList = statementList
+    this.statementList = statementList;
   }
 
   print() {
     let output = {
       name: 'else',
-      children: this.statementList.map(statement => statement.print())
+      children: this.statementList.map((statement) => statement.print()),
     };
     return output;
   }
@@ -196,8 +215,8 @@ class Else {
 
 class While {
   constructor(value, statementList) {
-    this.value = value
-    this.statementList = statementList
+    this.value = value;
+    this.statementList = statementList;
   }
 
   print() {
@@ -206,32 +225,32 @@ class While {
       props: {
         condition: this.value.print(),
       },
-      children: this.statementList.map(statement => statement.print())
-    }
-    return output
+      children: this.statementList.map((statement) => statement.print()),
+    };
+    return output;
   }
 }
 
 class Return {
   constructor(value) {
-    this.value = value
+    this.value = value;
   }
 
   print() {
     let output = {
       name: 'return',
       props: {
-        value: this.value.print()
-      }
-    }
-    return output
+        value: this.value.print(),
+      },
+    };
+    return output;
   }
 }
 
 class FunctionCall {
   constructor(identifier, callArgList) {
-    this.identifier = identifier
-    this.callArgList = new CallArgumentList(callArgList)
+    this.identifier = identifier;
+    this.callArgList = new CallArgumentList(callArgList);
   }
 
   print() {
@@ -239,91 +258,98 @@ class FunctionCall {
       name: 'call',
       props: {
         name: this.identifier.text,
-        args: this.callArgList.print()
+        args: this.callArgList.print(),
+      },
+    };
+    return output;
+  }
+}
+
+class MethodCallApplied {
+  constructor(identifier, callArgList) {
+    this.identifier = identifier;
+    this.callArgList = callArgList;
+  }
+}
+
+class Type {
+  constructor(identifier) {
+    this.identifier = identifier;
+  }
+
+  print() {
+    let output = this.identifier.text;
+    return output;
+  }
+}
+
+class ArrayType {
+  constructor(type) {
+    this.type = type;
+  }
+
+  print() {
+    let output = 'array(' + this.type.print() + ')';
+    return output;
+  }
+}
+
+class ValueLiteral {
+  constructor(value) {
+    this.value = value;
+  }
+
+  print() {
+    return this.value.print();
+  }
+}
+
+class String {
+  constructor(text) {
+    this.text = text;
+  }
+
+  print() {
+    let output = {
+      name: 'value',
+      props: {
+        type: 'string',
+        value: this.text
       }
     }
     return output
   }
 }
 
-class MethodCallApplied {
-  constructor(identifier, callArgList) {
-    this.identifier = identifier
-    this.callArgList = callArgList
-  }
-}
-
-class Type {
-  constructor(identifier) {
-    this.identifier = identifier
-  }
-
-  print() {
-    let output = this.identifier.text;
-    return output
-  }
-}
-
-class ArrayType {
-  constructor(type) {
-    this.type = type
-  }
-
-  print() {
-    let output = 'array(' + this.type.print() + ')';
-    return output
-  }
-}
-
-
-class ValueLiteral {
-  constructor(value) {
-    this.value = value
-  }
-
-  print() {
-    return this.value.print()
-  }
-}
-
-class String {
-  constructor(text) {
-    this.text = text
-  }
-
-  print() {
-    // return `{"${this.text}"}`
-    return this.text
-  }
-}
-
 class Array {
   constructor(valueList) {
-    this.valueList = valueList
+    this.valueList = valueList;
   }
 
   print() {
-    let output = this.valueList.map(value => value.print())
-    return output
+    let output = this.valueList.map((value) => value.print());
+    return output;
   }
 }
 
 class Map {
   constructor(mapEntryList) {
-    this.mapEntryList = mapEntryList
+    this.mapEntryList = mapEntryList;
   }
 
   print() {
-    let output = {}
-    this.mapEntryList.forEach(mapEntry => output[mapEntry.identifier.text] = mapEntry.value.print())
-    return output
+    let output = {};
+    this.mapEntryList.forEach(
+      (mapEntry) => (output[mapEntry.identifier.text] = mapEntry.value.print())
+    );
+    return output;
   }
 }
 
 class MapEntry {
   constructor(identifier, value) {
-    this.identifier = identifier
-    this.value = value
+    this.identifier = identifier;
+    this.value = value;
   }
 
   // print not needed as Map handles it
@@ -331,67 +357,102 @@ class MapEntry {
 
 class Const {
   print() {
-    return 'const'
+    return 'const';
   }
 }
 
 class Let {
   print() {
-    return 'let'
+    return 'let';
   }
 }
 
 class Identifier {
   constructor(text) {
-    this.text = text
+    this.text = text;
   }
 
   print() {
     let output = {
       name: 'ref',
       props: {
-        name: this.text
+        name: this.text,
+      },
+    };
+    return output;
+  }
+}
+
+class Null {
+  print() {
+    let output = {
+      name: 'value',
+      props: {
+        type: 'empty',
+        value: 'null'
       }
     }
     return output
   }
 }
 
-class Null {
-  print() {
-    return 'null';
-  }
-}
-
 class True {
   print() {
-    return 'true';
+    let output = {
+      name: 'value',
+      props: {
+        type: 'boolean',
+        value: 'true'
+      }
+    }
+    return output
   }
 }
 
 class False {
   print() {
-    return 'false';
+    let output = {
+      name: 'value',
+      props: {
+        type: 'boolean',
+        value: 'false'
+      }
+    }
+    return output
   }
 }
 
 class Int {
   constructor(text) {
-    this.text = text
+    this.text = text;
   }
 
   print() {
-    return this.text
+    let output = {
+      name: 'value',
+      props: {
+        type: 'int',
+        value: this.text
+      }
+    }
+    return output
   }
 }
 
 class Float {
   constructor(text) {
-    this.text = text
+    this.text = text;
   }
 
   print() {
-    return this.text
+    let output = {
+      name: 'value',
+      props: {
+        type: 'float',
+        value: this.text
+      }
+    }
+    return output
   }
 }
 
@@ -399,45 +460,44 @@ class Float {
 
 class ArgumentList {
   constructor(argList) {
-    this.argList = argList
+    this.argList = argList;
   }
 
   print() {
-    let output = this.argList.map(arg => arg.print())
+    let output = this.argList.map((arg) => arg.print());
     return output;
   }
 }
 
-
 class CallArgumentList {
   constructor(callArgList) {
-    this.callArgList = callArgList
+    this.callArgList = callArgList;
   }
 
   print() {
-    let output = this.callArgList.map(value => value.print())
+    let output = this.callArgList.map((value) => value.print());
     return output;
   }
 }
 
 class Query {
   constructor(queryFieldList) {
-    this.queryFieldList = queryFieldList
+    this.queryFieldList = queryFieldList;
   }
 
   print() {
     let output = {
       name: 'query',
-      children: this.queryFieldList.map(queryField => queryField.print())
-    }
+      children: this.queryFieldList.map((queryField) => queryField.print()),
+    };
     return output;
   }
 }
 
 class QueryFieldLeaf {
   constructor(identifier, value) {
-    this.identifier = identifier
-    this.value = value
+    this.identifier = identifier;
+    this.value = value;
   }
 
   print() {
@@ -445,69 +505,73 @@ class QueryFieldLeaf {
       name: 'leaf',
       props: {
         name: this.identifier.text,
-        value: this.value.print()
-      }
-    }
-    return output
+        value: this.value.print(),
+      },
+    };
+    return output;
   }
 }
 
 class QueryFieldNode {
   constructor(identifier, queryFieldList) {
-    this.identifier = identifier
-    this.queryFieldList = queryFieldList
+    this.identifier = identifier;
+    this.queryFieldList = queryFieldList;
   }
 
   print() {
     let output = {
       name: 'node',
-      children: this.queryFieldList.map(queryField => queryField.print())
-    }
+      props: {
+        name: this.identifier.text
+      },
+      children: this.queryFieldList.map((queryField) => queryField.print()),
+    };
     return output;
   }
 }
 
-const nullValue = new Value(new ValueLiteral(new Null()), [])
-const anyType = new Type(new Identifier('any'))
-
+const nullValue = new Value(new ValueLiteral(new Null()), []);
+const anyType = new Type(new Identifier('any'));
 
 module.exports = {
-    Ask: Ask,
-    AskHeader: AskHeader,
-    AskBody: AskBody,
-    Statement: Statement,
-    VariableDefinition: VariableDefinition,
-    Value: Value,
-    FunctionDefinition: FunctionDefinition,
-    FunctionHeader: FunctionHeader,
-    Arg: Arg,
-    If: If,
-    Else: Else,
-    While: While,
-    Return: Return,
-    FunctionCall: FunctionCall,
-    MethodCallApplied: MethodCallApplied,
-    Type: Type,
-    ArrayType: ArrayType,
-    ValueLiteral: ValueLiteral,
-    String: String,
-    Array: Array,
-    Map: Map,
-    MapEntry: MapEntry,
-    Const: Const,
-    Let: Let,
-    Identifier: Identifier,
-    Null: Null,
-    True: True,
-    False: False,
-    Int: Int,
-    Float: Float,
-    ArgumentList: ArgumentList,
-    CallArgumentList: CallArgumentList,
-    Query: Query,
-    QueryFieldLeaf: QueryFieldLeaf,
-    QueryFieldNode: QueryFieldNode,
+  Ask: Ask,
+  AskHeader: AskHeader,
+  AskBody: AskBody,
+  Statement: Statement,
+  VariableDefinition: VariableDefinition,
+  Value: Value,
+  FunctionSignature: FunctionSignature,
+  FunctionDefinition: FunctionDefinition,
+  FunctionHeader: FunctionHeader,
+  FunctionObject: FunctionObject,
+  Arg: Arg,
+  If: If,
+  Else: Else,
+  While: While,
+  Return: Return,
+  FunctionCall: FunctionCall,
+  MethodCallApplied: MethodCallApplied,
+  Type: Type,
+  ArrayType: ArrayType,
+  ValueLiteral: ValueLiteral,
+  String: String,
+  Array: Array,
+  Map: Map,
+  MapEntry: MapEntry,
+  Const: Const,
+  Let: Let,
+  Identifier: Identifier,
+  Null: Null,
+  True: True,
+  False: False,
+  Int: Int,
+  Float: Float,
+  ArgumentList: ArgumentList,
+  CallArgumentList: CallArgumentList,
+  Query: Query,
+  QueryFieldLeaf: QueryFieldLeaf,
+  QueryFieldNode: QueryFieldNode,
 
-    nullValue: nullValue,
-    anyType: anyType
+  nullValue: nullValue,
+  anyType: anyType,
 };

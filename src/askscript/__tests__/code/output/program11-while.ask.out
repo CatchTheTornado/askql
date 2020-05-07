@@ -1,0 +1,58 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "while",
+      "props": {
+        "condition": {
+          "name": "call",
+          "props": {
+            "name": "lessThan",
+            "args": [
+              {
+                "name": "ref",
+                "props": {
+                  "name": "n"
+                }
+              },
+              {
+                "name": "value",
+                "props": {
+                  "type": "int",
+                  "value": "2"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "children": [
+        {
+          "name": "return",
+          "props": {
+            "value": {
+              "name": "ref",
+              "props": {
+                "name": "n"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "return",
+      "props": {
+        "value": {
+          "name": "ref",
+          "props": {
+            "name": "x"
+          }
+        }
+      }
+    }
+  ]
+}

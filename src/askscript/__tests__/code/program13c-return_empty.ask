@@ -1,5 +1,5 @@
 ask {
-    "Hello world!"
+    'Hello world!'
     return
     hello
 }

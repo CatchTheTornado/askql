@@ -1,0 +1,32 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "value",
+      "props": {
+        "type": "string",
+        "value": "Hello world!"
+      }
+    },
+    {
+      "name": "return",
+      "props": {
+        "value": {
+          "name": "ref",
+          "props": {
+            "name": "n"
+          }
+        }
+      }
+    },
+    {
+      "name": "ref",
+      "props": {
+        "name": "hello"
+      }
+    }
+  ]
+}

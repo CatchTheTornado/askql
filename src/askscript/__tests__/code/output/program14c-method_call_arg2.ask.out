@@ -1,0 +1,29 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "call",
+      "props": {
+        "name": "plus",
+        "args": [
+          {
+            "name": "ref",
+            "props": {
+              "name": "a"
+            }
+          },
+          {
+            "name": "value",
+            "props": {
+              "type": "float",
+              "value": "5.3"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

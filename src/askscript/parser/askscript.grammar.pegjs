@@ -1,10 +1,11 @@
 // TODO:
+// - call() with a lambda function
+// - repl with ask { detection
+// - allow no newlines [nice to have]
+
 // - object type definition
-// - graphql syntax
-//
 // - records
 // - tuples
-// - call() with a lambda function
 // - unions
 
 // convert " to ' in string literals
@@ -56,13 +57,17 @@ value =
     e:(
       functionCall
     / query
+    / valueLiteral
     / identifier
-    / valueLiteral)
+    / functionObject)
     mCAs:methodCallApplied* { return new ask.Value(e, mCAs) }
 
-functionDefinition = fH:functionHeader cB:codeBlock functionFooter { return new ask.FunctionDefinition(fH, cB) }
+functionDefinition = fS:functionSignature ws* '=' ws* fO:functionObject {                             return new ask.FunctionDefinition(fS, fO) }
 
-functionHeader = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? ws* '=' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? nl { return new ask.FunctionHeader(m, i, tD, aL, rTD === null ? ask.anyType : rTD) }
+functionObject = fH:functionHeader cB:codeBlock functionFooter {                                      return new ask.FunctionObject(fH, cB) }
+
+functionSignature = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? {                         return new ask.FunctionSignature(m, i, tD) }
+functionHeader = '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? nl {  return new ask.FunctionHeader(aL, rTD === null ? ask.anyType : rTD) }
 functionHeader_typeDecl = ws* ':' ws* t1:type { return t1 } // this is the optional variable type declaration
 functionHeader_returnTypeDecl = ws* ':' ws* t2:type { return t2 } // this is the optional return type declaration
 
@@ -141,7 +146,7 @@ valueLiteral =
       / map
     ) { return new ask.ValueLiteral(v) }
 
-string = '"' sC:stringContents  '"' { return sC }
+string = "'" sC:stringContents  "'" { return sC }
 stringContents = ch* { return new ask.String(text()) }
 
 array = '[' vL:valueList ']' { return new ask.Array(vL) }
@@ -183,11 +188,11 @@ float = [-]?[0-9]+ '.' [0-9]+ { return new ask.Float(text()) }  // TODO: yes, mu
 
 // character (in string)
 ch = 
-      [\x20\x21\x23-\x5B\x5D-\xff] // all printable characters except " and \
-    / '\\' escape
+  '\\' escape
+  / [\x20-\x26\x28-\x5B\x5D-\xff] // all printable characters except ' (\x27) and \ (\x5C)
 
 escape =
-      '"'
+      "'"
     / '\\'  // this is one backslash
     / 'u' hex hex hex hex
 

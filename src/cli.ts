@@ -1,14 +1,20 @@
 #!/usr/bin/env node
 
-import { start, REPLServer } from 'repl';
+import { start, REPLServer, ReplOptions } from 'repl';
 import { parse } from './askcode';
-import { run } from './askvm';
+import { run, resources } from './askvm';
 
 export type Context = Record<string, any>;
 
-const r = start({
+export const replOptions: ReplOptions = {
   prompt: '!> ',
-  eval: function (
+  completer(line: string) {
+    const completions = Object.keys(resources);
+    const hits = completions.filter((c) => c.startsWith(line));
+    // Show all completions if none found
+    return [hits.length ? hits : completions, line];
+  },
+  eval(
     this: REPLServer,
     code: string,
     context: Context,
@@ -16,11 +22,13 @@ const r = start({
     cb: (err: Error | null, result: any) => void
   ) {
     try {
-      const result = run(parse(code));
+      const result = run({ resources }, parse(code));
       // cb(null, new TypedValue(35, 'any'));
       cb(null, result);
     } catch (e) {
       cb(e, null);
     }
   },
-});
+};
+
+start(replOptions);

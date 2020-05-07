@@ -12,7 +12,8 @@ export class Resource<T, R extends (...args: any[]) => any = any> {
       throw new Error('No resolver!');
     }
     if (args) {
-      return this.resolver(args);
+      // map(untyped); ?
+      return this.resolver(...args);
     }
     const values = params.map((param) => run(options, param)).map(untyped);
     return this.resolver(...values);

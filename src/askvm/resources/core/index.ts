@@ -1,9 +1,10 @@
 export { call } from './call';
-export { empty } from './empty';
+export { empty, empty as null } from './empty';
 export { falseRes as false } from './false';
-export { fun } from './fun';
+export { fun as f, fun } from './fun';
 export { get } from './get';
 export { ifRes as if } from './if';
+export { is } from './is';
 export { letRes as let } from './let';
 export { list } from './list';
 export { map } from './map';

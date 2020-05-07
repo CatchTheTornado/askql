@@ -33,13 +33,15 @@ export function run(
   }
 
   if (res.compute) {
-    return typed(res.compute(options, code, args));
+    return typed(res.compute(options, code, args?.map(typed)));
   }
 
   // Typed
   if (res.type) {
     return (res as any).value;
   }
+
+  console.log(res);
 
   throw new Error('Unhandled resource!');
 }

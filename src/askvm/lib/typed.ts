@@ -105,7 +105,7 @@ export type JSONable =
   | JSONable[]
   | { [key: string]: JSONable };
 
-export function untyped(value: any): JSONable {
+export function untyped(value: any): any {
   if (!value) {
     return value;
   }

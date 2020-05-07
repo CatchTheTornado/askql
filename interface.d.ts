@@ -22,7 +22,6 @@ declare namespace JSX {
       let?: true;
       set?: true;
     };
-    else: FirstArg<typeof import('./src/askjsx').Else>;
     fragment: FirstArg<typeof import('./src/askjsx').Fragment>;
     fun: FirstArg<typeof import('./src/askjsx').Fun>;
     if: FirstArg<typeof import('./src/askjsx').If>;

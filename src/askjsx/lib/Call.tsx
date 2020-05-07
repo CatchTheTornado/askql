@@ -10,7 +10,7 @@ export function Call({
   children: fun = [],
 }: {
   name?: string;
-  args?: string[];
+  args?: AskCodeOrValue[];
   children?: AskCodeOrValue[];
 }) {
   assert(isString(name), 'name');

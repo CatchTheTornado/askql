@@ -1,23 +1,28 @@
 import { resource } from '../../lib/resource';
-import { getScope } from '../../lib/run';
-import { lambda, string, Typed } from '../../lib/typed';
+import { run } from '../../lib/run';
+import { lambda, string, Typed, JSONable, typed } from '../../lib/typed';
 
-export const letRes = resource<Typed<any[]>>({
+export const letRes = resource<Typed<JSONable>>({
   type: lambda(string, string),
-  compute(code, { options, resources, step }) {
+  compute(options, code, args) {
+    // console.log(code.name, code.params, 'args:', args);
+
     const { params: children = [] } = code;
-    const value = step(options, children[1]);
-    const key: any = step(options, children[0]); // FIXME any
+
+    const value = run(options, children[1]);
+    const key: any = run(options, children[0]); // FIXME any
 
     if (key.type !== string) {
       throw new Error(`Expected set key to be string, got: ${key.type}`);
     }
 
-    const scope = getScope(resources, code);
-    if (key.value in scope) {
-      throw new Error(`Scope already has key ${key.value}`);
+    const scope = options.resources;
+    if (key.value === 'resources') {
+      throw new Error(`Key "resources" cannot be redeclared`);
     }
-    scope[key.value] = value;
+
+    (scope as any)[key.value] = value; // FIXME
+
     return value;
   },
 });

@@ -1,5 +1,6 @@
+import { run } from '../../lib';
 import { resource } from '../../lib/resource';
-import { lambda, string, untyped, Typed } from '../../lib/typed';
+import { lambda, string, Typed, untyped } from '../../lib/typed';
 
 export const map = resource<Typed<Map<any, any>>>({
   type: lambda(string, string),
@@ -13,11 +14,11 @@ export const map = resource<Typed<Map<any, any>>>({
     }
     return map; // typed
   },
-  compute({ params: items = [] }, { options, step }) {
+  compute(options, { params: items = [] }) {
     // TODO allow bare identifiers instead of string (syntax sugar)
     // TODO accept list of pairs from syntax sugar
     return this.resolver!(
-      ...items.map((item) => step(options, item)).map(untyped)
+      ...items.map((item) => run(options, item)).map(untyped)
     );
   },
 });

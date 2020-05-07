@@ -1,54 +1,53 @@
-import { AskCode, AskCodeOrValue, Value } from '../../askcode';
-import * as res from '../resources';
-import { Resources as BaseResources } from './resource';
-import { Frame, step } from './step';
-import { typed, Typed, untyped } from './typed';
-import type { JSONable } from './typed';
+import { AskCodeOrValue, isValue, AskCode } from '../../askcode';
+import { Resources } from './resource';
+import { JSONable, typed, Typed, untyped } from './typed';
 
-export function getScope(resources: BaseResources, code?: AskCode): any {
-  if (!code) {
-    return resources;
-  }
-
-  if (code.name !== 'fun') {
-    return getScope(resources, code.parent);
-  }
-
-  return code.scope!;
+export interface Options {
+  resources: Resources;
 }
 
-const resources = {
-  ...res,
-  null: res.empty,
-  f: res.fun,
-};
+export function run(
+  options: Options,
+  code: AskCodeOrValue,
+  args?: any[]
+): Typed<JSONable> {
+  const { resources: scope } = options;
+  if (isValue(code) || Array.isArray(code) || !(code instanceof AskCode)) {
+    return typed(code);
+  }
 
-type Resources = typeof resources;
+  if (!scope) {
+    throw new Error('No scope!');
+  }
 
-export function run(code: AskCodeOrValue, args?: any[]): JSONable {
-  return untyped(
-    step(
-      {
-        resources,
-        value(value: Value): Typed<any> {
-          return typed(value);
-        },
-        code(code: AskCode, frame: Frame<Typed<any>, Resources>): Typed<any> {
-          const { resources } = frame;
-          const res = resources[code.name as keyof typeof resources];
-          // TODO better code for resource retrieval
-          if (!res) {
-            throw new Error(`Unknown resource ${code.name}!`);
-          }
+  const name = code.name as keyof typeof scope;
+  if (!(name in scope)) {
+    throw new Error(`Unknown resource ${code.name}!`);
+  }
 
-          if (res.compute) {
-            return res.compute(code, frame);
-          }
-          return res as any; // TODO fix with scopes
-        },
-      },
-      code,
-      args
-    )
-  );
+  const res = scope[name];
+
+  if (res.type?.name === 'code' && args) {
+    const code = ((res as any) as Typed<any>).value as AskCodeOrValue;
+    return run(options, code, args);
+  }
+
+  if (res.compute) {
+    return typed(res.compute(options, code, args));
+  }
+
+  // Typed
+  if (res.type) {
+    return (res as any).value;
+  }
+
+  throw new Error('Unhandled resource!');
+}
+
+export function runUntyped(
+  options: Options,
+  code: AskCodeOrValue,
+  ...args: any[]
+): JSONable {
+  return untyped(run(options, code, ...args));
 }

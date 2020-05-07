@@ -1,8 +1,8 @@
 import { assert, isString, isStringArray } from '../../utils';
-import * as jsx from './';
+import * as askjsx from './jsx';
 import { Ref } from './Ref';
 import { Set } from './Set';
-jsx;
+askjsx;
 
 export function Fun({
   name = '',
@@ -11,7 +11,7 @@ export function Fun({
 }: {
   name?: string;
   args?: string[];
-  children?: jsx.AskNode[];
+  children?: askjsx.AskNode[];
 }) {
   assert(isString(name), 'name');
   assert(isStringArray(args), 'args');

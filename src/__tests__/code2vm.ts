@@ -1,9 +1,4 @@
-import { parse } from '../askcode';
-import { run } from '../askvm';
-
-function vm(code: string) {
-  return run(parse(code));
-}
+import { vm } from './lib';
 
 test('code2vm', () => {
   expect(vm('list("1", "2" ,"3")')).toStrictEqual(['1', '2', '3']);
@@ -20,6 +15,6 @@ test('code2vm', () => {
 });
 
 test('types', () => {
-  // expect(vm('typed(2, string)')).toBe(2);
+  expect(vm('typed(2)')).toBe(2);
   // expect(() => vm('typed(string, 2)')).toThrow();
 });

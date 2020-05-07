@@ -4,7 +4,7 @@
     "module": "commonjs",
     "target": "es2016",
     "jsx": "react",
-    "jsxFactory": "jsx.jsx",
+    "jsxFactory": "askjsx.createElement",
     "strict": true,
     "sourceMap": true,
     "outDir": "dist"

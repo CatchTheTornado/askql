@@ -1,9 +1,9 @@
-import * as jsx from './jsx';
 import { Call } from './Call';
 import { Fun } from './Fun';
-jsx;
+import * as askjsx from './jsx';
+askjsx;
 
-export function Ask({ children = [] }: { children?: jsx.AskNode[] }) {
+export function Ask({ children = [] }: { children?: askjsx.AskNode[] }) {
   return (
     <Call>
       <Fun>{children}</Fun>

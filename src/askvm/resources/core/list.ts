@@ -1,16 +1,17 @@
 import { resource } from '../../lib/resource';
 import { lambda, string, Typed, typed } from '../../lib/typed';
+import { run } from '../../lib';
 
 export const list = resource<
   Typed<any[]>,
   (...args: Typed<any>[]) => Typed<any[]>
 >({
   type: lambda(string, string),
-  resolver(...args: any[]) {
+  resolver(...args) {
     return typed([...args]);
   },
-  compute(code, { step, options }) {
-    const values = code.params!.map((param) => step(options, param));
-    return this.resolver!(...values);
+  compute(options, { params: items }) {
+    const itemValues = items!.map((item) => run(options, item));
+    return this.resolver!(...itemValues);
   },
 });

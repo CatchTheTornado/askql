@@ -1,7 +1,7 @@
-import * as jsx from './jsx';
 import { Fragment } from './Fragment';
-jsx;
+import * as askjsx from './jsx';
+askjsx;
 
-export function Else({ children = [] }: { children?: jsx.AskNode[] }) {
+export function Else({ children = [] }: { children?: askjsx.AskNode[] }) {
   return <Fragment>{children}</Fragment>;
 }

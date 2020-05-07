@@ -1,14 +1,14 @@
 import { Else } from './Else';
-import * as jsx from './jsx';
+import * as askjsx from './jsx';
 import { AskElement } from './jsx';
-jsx;
+askjsx;
 
 export function If(
   {
     condition,
     children = [],
-  }: { condition: string; children?: jsx.AskNode | jsx.AskNode[] },
-  { next }: jsx.AskJSXRenderOptions
+  }: { condition: string; children?: askjsx.AskNode | askjsx.AskNode[] },
+  { next }: askjsx.AskJSXRenderOptions
 ) {
   const $then = children;
   const $else =

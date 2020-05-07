@@ -1,7 +1,7 @@
-import * as jsx from './jsx';
-import { Set } from './Set';
 import { Fragment } from './Fragment';
-jsx;
+import * as askjsx from './jsx';
+import { Set } from './Set';
+askjsx;
 
 export function Return({ value }: { value: string }) {
   return (

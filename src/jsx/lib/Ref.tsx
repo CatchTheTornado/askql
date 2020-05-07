@@ -1,6 +1,6 @@
 import { assert, isString } from '../../utils';
-import * as jsx from './jsx';
-jsx;
+import * as askjsx from './jsx';
+askjsx;
 
 export function Ref({ name }: { name: string }) {
   assert(isString(name), 'name');

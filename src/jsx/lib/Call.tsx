@@ -1,7 +1,8 @@
+import { AskCodeOrValue } from '../../askcode';
 import { assert, isString, isStringArray } from '../../utils';
-import * as jsx from './jsx';
+import * as askjsx from './jsx';
 import { Ref } from './Ref';
-jsx;
+askjsx;
 
 export function Call({
   name = '',
@@ -9,8 +10,8 @@ export function Call({
   children: fun = [],
 }: {
   name?: string;
-  args?: string[];
-  children?: jsx.AskNode[];
+  args?: AskCodeOrValue[];
+  children?: AskCodeOrValue[];
 }) {
   assert(isString(name), 'name');
   assert(isStringArray(args), 'args');

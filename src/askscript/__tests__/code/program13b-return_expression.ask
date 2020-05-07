@@ -1,5 +1,5 @@
 ask {
     'Hello world!'
-    return n+1
+    return n:plus(1)
     hello
 }

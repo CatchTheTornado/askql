@@ -1,0 +1,46 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "const",
+      "props": {
+        "name": {
+          "name": "ref",
+          "props": {
+            "name": "arr1"
+          }
+        },
+        "type": "array(array(int))",
+        "value": [
+          [],
+          [
+            {
+              "name": "value",
+              "props": {
+                "type": "int",
+                "value": "1"
+              }
+            },
+            {
+              "name": "value",
+              "props": {
+                "type": "int",
+                "value": "2"
+              }
+            },
+            {
+              "name": "value",
+              "props": {
+                "type": "int",
+                "value": "3"
+              }
+            }
+          ]
+        ]
+      }
+    }
+  ]
+}

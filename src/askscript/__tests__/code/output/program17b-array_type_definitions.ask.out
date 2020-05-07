@@ -1,0 +1,148 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "const",
+      "props": {
+        "name": {
+          "name": "ref",
+          "props": {
+            "name": "arr1"
+          }
+        },
+        "type": "array(int)",
+        "value": [
+          {
+            "name": "value",
+            "props": {
+              "type": "int",
+              "value": "1"
+            }
+          },
+          {
+            "name": "value",
+            "props": {
+              "type": "int",
+              "value": "2"
+            }
+          },
+          {
+            "name": "value",
+            "props": {
+              "type": "int",
+              "value": "3"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "const",
+      "props": {
+        "name": {
+          "name": "ref",
+          "props": {
+            "name": "arr2"
+          }
+        },
+        "type": "any",
+        "value": [
+          {
+            "name": "value",
+            "props": {
+              "type": "int",
+              "value": "1"
+            }
+          },
+          {
+            "name": "value",
+            "props": {
+              "type": "int",
+              "value": "2"
+            }
+          },
+          {
+            "name": "value",
+            "props": {
+              "type": "int",
+              "value": "3"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "const",
+      "props": {
+        "name": {
+          "name": "ref",
+          "props": {
+            "name": "arr3"
+          }
+        },
+        "type": "any",
+        "value": [
+          {
+            "name": "value",
+            "props": {
+              "type": "float",
+              "value": "1.3"
+            }
+          },
+          {
+            "name": "value",
+            "props": {
+              "type": "float",
+              "value": "1.4"
+            }
+          },
+          {
+            "name": "value",
+            "props": {
+              "type": "float",
+              "value": "1.5"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "const",
+      "props": {
+        "name": {
+          "name": "ref",
+          "props": {
+            "name": "arr4"
+          }
+        },
+        "type": "any",
+        "value": [
+          {
+            "name": "value",
+            "props": {
+              "type": "string",
+              "value": "asdf"
+            }
+          },
+          {
+            "name": "value",
+            "props": {
+              "type": "string",
+              "value": "qwer"
+            }
+          },
+          {
+            "name": "value",
+            "props": {
+              "type": "string",
+              "value": "tyui"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

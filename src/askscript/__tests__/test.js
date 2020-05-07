@@ -5,7 +5,7 @@ const path = require('path');
 // Include AskScript parser
 const parser = require('../parser/askscript.grammar');
 
-describe('AskScript parser can parse', () => {
+describe('AskScript parser can parse the .ask file', () => {
   function checkIfParsesFile(absoluteFilePath) {
     const code = fs.readFileSync(absoluteFilePath).toString();
 
@@ -19,13 +19,14 @@ describe('AskScript parser can parse', () => {
   const testFilenames = glob.sync(testsGlobPath);
 
   for (const testFilename of testFilenames) {
-    test(`parses ${testFilename}`, () => {
+    const parts = path.parse(testFilename)
+    test(`parses successfully ${parts.base}`, () => {
       checkIfParsesFile(testFilename);
     });
   }
 });
 
-describe('AskScript parser output', () => {
+describe('AskScript parser output looks as expected', () => {
   function checkIfParsedFileMatchesOutput(
     absoluteFilePath,
     absoluteOutputFilePath
@@ -51,7 +52,7 @@ describe('AskScript parser output', () => {
     const parts = path.parse(outputFilePath);
     const testFilePath = path.join(parts.dir, '..', parts.name);
 
-    test(`parsed ${parts.name} matches ${parts.base}`, () => {
+    test(`returns correct output for file ${parts.name}`, () => {
       checkIfParsedFileMatchesOutput(testFilePath, outputFilePath);
     });
   }

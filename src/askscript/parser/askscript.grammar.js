@@ -1076,9 +1076,9 @@ function peg$parse(input, options) {
     if (s1 === peg$FAILED) {
       s1 = peg$parsequery();
       if (s1 === peg$FAILED) {
-        s1 = peg$parseidentifier();
+        s1 = peg$parsevalueLiteral();
         if (s1 === peg$FAILED) {
-          s1 = peg$parsevalueLiteral();
+          s1 = peg$parseidentifier();
         }
       }
     }

@@ -57,8 +57,8 @@ value =
     e:(
       functionCall
     / query
-    / identifier
-    / valueLiteral)
+    / valueLiteral
+    / identifier)
     mCAs:methodCallApplied* { return new ask.Value(e, mCAs) }
 
 functionDefinition = fH:functionHeader cB:codeBlock functionFooter { return new ask.FunctionDefinition(fH, cB) }

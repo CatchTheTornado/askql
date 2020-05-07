@@ -58,12 +58,16 @@ value =
       functionCall
     / query
     / valueLiteral
-    / identifier)
+    / identifier
+    / functionObject)
     mCAs:methodCallApplied* { return new ask.Value(e, mCAs) }
 
-functionDefinition = fH:functionHeader cB:codeBlock functionFooter { return new ask.FunctionDefinition(fH, cB) }
+functionDefinition = fS:functionSignature ws* '=' ws* fO:functionObject {                             return new ask.FunctionDefinition(fS, fO) }
 
-functionHeader = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? ws* '=' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? nl { return new ask.FunctionHeader(m, i, tD, aL, rTD === null ? ask.anyType : rTD) }
+functionObject = fH:functionHeader cB:codeBlock functionFooter {                                      return new ask.FunctionObject(fH, cB) }
+
+functionSignature = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? {                         return new ask.FunctionSignature(m, i, tD) }
+functionHeader = '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? nl {  return new ask.FunctionHeader(aL, rTD === null ? ask.anyType : rTD) }
 functionHeader_typeDecl = ws* ':' ws* t1:type { return t1 } // this is the optional variable type declaration
 functionHeader_returnTypeDecl = ws* ':' ws* t2:type { return t2 } // this is the optional return type declaration
 

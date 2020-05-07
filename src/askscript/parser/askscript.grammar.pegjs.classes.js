@@ -108,38 +108,59 @@ class Value {
 }
 
 class FunctionDefinition {
-  constructor(functionHeader, statementList) {
-    this.functionHeader = functionHeader;
-    this.statementList = statementList;
-  }
-
-  print() {
-    let output = this.functionHeader.print();
-    output.children = this.statementList.map((statement) => statement.print());
-
-    return output;
-  }
-}
-
-class FunctionHeader {
-  constructor(modifier, identifier, typeNullable, argumentList, returnType) {
-    this.modifier = modifier;
-    this.identifier = identifier;
-    this.typeNullable = typeNullable;
-    this.argumentList = new ArgumentList(argumentList);
-    this.returnType = returnType;
+  constructor(functionSignature, functionObject) {
+    this.functionSignature = functionSignature;
+    this.functionObject = functionObject;
   }
 
   print() {
     let output = {
       name: 'fun',
       props: {
-        name: this.identifier.text,
-        args: this.argumentList.print(),
-        returns: this.returnType.print(),
+        name: this.functionSignature.identifier.text,
+        args: this.functionObject.functionHeader.argumentList.print(),
+        returns: this.functionObject.functionHeader.returnType.print(),
       },
+      children: this.functionObject.statementList.map((statement) => statement.print())
     };
+
     return output;
+  }
+}
+
+class FunctionSignature {
+  constructor(modifier, identifier, typeNullable) {
+    this.modifier = modifier;
+    this.identifier = identifier;
+    this.typeNullable = typeNullable;
+  }
+}
+
+class FunctionObject {
+  constructor(functionHeader, statementList) {
+    this.functionHeader = functionHeader
+    this.statementList = statementList
+  }
+
+  // This print() is used only in lambda functions
+  print() {
+    let output = {
+      name: 'fun',
+      props: {
+        args: this.functionHeader.argumentList.print(),
+        returns: this.functionHeader.returnType.print(),
+      },
+      children: this.statementList.map((statement) => statement.print())
+    };
+
+    return output;
+  }
+}
+
+class FunctionHeader {
+  constructor(argumentList, returnType) {
+    this.argumentList = new ArgumentList(argumentList);
+    this.returnType = returnType;
   }
 }
 
@@ -519,8 +540,10 @@ module.exports = {
   Statement: Statement,
   VariableDefinition: VariableDefinition,
   Value: Value,
+  FunctionSignature: FunctionSignature,
   FunctionDefinition: FunctionDefinition,
   FunctionHeader: FunctionHeader,
+  FunctionObject: FunctionObject,
   Arg: Arg,
   If: If,
   Else: Else,

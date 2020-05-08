@@ -39,6 +39,9 @@ export function run(
 
   // Typed
   if (res.type) {
+    if ((res as any).value === undefined) {
+      throw new Error(`Unknown resource ${code.name}!`);
+    }
     return (res as any).value;
   }
 

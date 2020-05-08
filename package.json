@@ -5,11 +5,12 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "postbuild": "chmod +x dist/cli.js",
+    "postbuild": "chmod +x dist/*.js",
     "test": "jest"
   },
   "bin": {
-    "askql": "dist/cli.js"
+    "askql": "dist/cli.js",
+    "askqlServer": "dist/demoServer.js"
   },
   "repository": {
     "type": "git",
@@ -26,9 +27,11 @@
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.9.0",
+    "@types/express": "^4.17.6",
     "@types/jest": "^25.2.1",
     "@types/node": "^13.13.4",
     "babel-jest": "^25.4.0",
+    "express": "^4.17.1",
     "glob": "^7.1.6",
     "jest": "^25.4.0",
     "prettier": "^2.0.5"

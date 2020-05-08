@@ -7,3 +7,4 @@ export * from './jsx';
 export * from './Ref';
 export * from './Return';
 export * from './Set';
+export * from './Value';

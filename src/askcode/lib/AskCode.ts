@@ -1,3 +1,5 @@
+import { Reducer, reduce } from './reduce';
+
 export type Value = null | boolean | number | string;
 export type AskCodeOrValue = AskCode | Value;
 
@@ -27,6 +29,26 @@ export class AskCode {
   }
 
   parent?: AskCode;
+
+  toString(): string {
+    return askCodeToSource(this);
+  }
+}
+
+export const askCodeReducer: Reducer<string> = {
+  node: (name, ...args) => `${name}(${args.join(', ')})`,
+  id: (name) => name,
+  value: (value) => JSON.stringify(value),
+};
+
+export function askCodeToSource(value: AskCodeOrValue): string {
+  if (isValue(value)) {
+    return JSON.stringify(value);
+  }
+  const { name, params } = value;
+  return `${name}${
+    params ? `(${params.map(askCodeToSource).join(', ')})` : ''
+  }`;
 }
 
 export function isValue(value: AskCodeOrValue): value is Value {

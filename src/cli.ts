@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import { start, REPLServer, ReplOptions } from 'repl';
+import { ReplOptions, REPLServer, start } from 'repl';
 import { parse } from './askcode';
-import { run, resources, runUntyped } from './askvm';
+import { resources, runUntyped } from './askvm';
 
 export type Context = Record<string, any>;
 

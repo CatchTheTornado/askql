@@ -32,6 +32,6 @@ export function createElement(
 
   assert(name != null, 'name cannot be null');
   const component = (components as any)[titleCase(name)];
-  assert(component != null, 'expecting jsx component');
+  assert(component != null, `no jsx component for "${name}"`);
   return createElement(component, propsOrNull, ...children);
 }

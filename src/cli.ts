@@ -4,6 +4,8 @@ import { start, REPLServer } from 'repl';
 import { parse } from './askcode';
 import { run } from './askvm';
 
+const ask = require('./askscript/parser/askscript.grammar');
+
 export type Context = Record<string, any>;
 
 const r = start({
@@ -15,8 +17,16 @@ const r = start({
     file: string,
     cb: (err: Error | null, result: any) => void
   ) {
+    let isAskProgram;
     try {
-      const result = run(parse(code));
+      ask.parse(code, {startRule: 'askForRepl'});
+      isAskProgram = true;
+    } catch (e) {
+      isAskProgram = false;
+    }
+    
+    try {
+      const result = isAskProgram ? ask.parse(code) : run(parse(code));
       // cb(null, new TypedValue(35, 'any'));
       cb(null, result);
     } catch (e) {

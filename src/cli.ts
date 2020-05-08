@@ -2,7 +2,7 @@
 
 import { ReplOptions, REPLServer, start } from 'repl';
 import { parse } from './askcode';
-import { resources, runUntyped } from './askvm';
+import { resources, runUntyped, Options } from './askvm';
 
 const ask = require('./askscript/parser/askscript.grammar');
 
@@ -10,6 +10,7 @@ export type Context = Record<string, any>;
 
 const values = {
   clientNames: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+  hello: 'Hi! This is a local AskVM running a REPL',
   revPerClient: {
     A: 136,
     B: 426,
@@ -20,6 +21,11 @@ const values = {
     G: 53,
   },
   test: 5,
+};
+
+const options: Options = {
+  resources,
+  values,
 };
 
 export const replOptions: ReplOptions = {
@@ -47,7 +53,7 @@ export const replOptions: ReplOptions = {
       }
       
       try {
-        const result = isAskProgram ? ask.parse(code) : await runUntyped({ resources, values }, parse(code));
+        const result = isAskProgram ? ask.parse(code) : await runUntyped(options, parse(code));
         cb(null, result);
       } catch (e) {
         cb(e, null);

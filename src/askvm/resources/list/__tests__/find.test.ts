@@ -34,4 +34,5 @@ test('find', () => {
   expect(ask(`test`)).toBe(5);
   expect(ask(`clientNames`)).toStrictEqual(values.clientNames);
   expect(ask(`revPerClient`)).toStrictEqual(values.revPerClient);
+  expect(ask(`find(clientNames, f(is(get('$0'), 'A')))`)).toBe('A');
 });

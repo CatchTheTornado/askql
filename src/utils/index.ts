@@ -15,11 +15,20 @@ export function isStringArray(value: any): value is string[] {
   return value.every(isString);
 }
 
-export function flatten<T>(arr: (T | T[])[]): T[] {
-  return arr.reduce<T[]>(
-    (result, item) => result.concat(Array.isArray(item) ? flatten(item) : item),
-    []
-  );
+export function flatten<T>(
+  arr: (T | T[])[],
+  options: { arrays?: boolean; objectValues?: boolean } = {}
+): T[] {
+  const { arrays = true, objectValues = false } = options;
+  return arr.reduce<T[]>(function (result, item) {
+    if (arrays && Array.isArray(item)) {
+      return result.concat(flatten(item, options));
+    }
+    if (objectValues && item && typeof item === 'object') {
+      return result.concat(flatten(Object.values(item), options));
+    }
+    return result.concat(item);
+  }, []);
 }
 
 export function titleCase(s: string): string {

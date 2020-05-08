@@ -5,6 +5,10 @@ import { flatten } from '../../../utils';
 export const max = resource<Typed<(numbers: number[]) => number>>({
   type: lambda(string, string),
   resolver(...numbers: number[]): number {
-    return Math.max(...flatten(numbers));
+    const flatNumbers = flatten(numbers, {
+      arrays: true,
+      objectValues: true,
+    });
+    return Math.max(...flatNumbers);
   },
 });

@@ -19,7 +19,11 @@ export const fun = resource<Typed<Function>>({
       resources[`$${index}`] = arg;
     });
 
-    const runOptions = { resources, returnedValue: undefined };
+    const runOptions = {
+      resources,
+      values: options.values,
+      returnedValue: undefined,
+    };
 
     let result: any;
     const { params = [] } = code;

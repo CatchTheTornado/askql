@@ -37,4 +37,5 @@ test('find', async () => {
   await expect(ask(`find(clientNames, f(is(get('$0'), 'A')))`)).resolves.toBe(
     'A'
   );
+  await expect(ask(`call(f(revPerClient))`)).resolves.toBe(values.revPerClient);
 });

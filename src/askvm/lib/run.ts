@@ -45,7 +45,10 @@ export async function run(
     return (res as any).value;
   }
 
-  throw new Error('Unhandled resource!');
+  // console.error(res);
+  // throw new Error('Unhandled resource!');
+
+  return res as any;
 }
 
 export async function runUntyped(

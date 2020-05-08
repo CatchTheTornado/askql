@@ -1,7 +1,10 @@
 import { resource } from '../../lib/resource';
 import { lambda, string, Typed } from '../../lib/typed';
+import { flatten } from '../../../utils';
 
-export const max = resource<Typed<(a: number, b: number) => number>>({
+export const max = resource<Typed<(numbers: number[]) => number>>({
   type: lambda(string, string),
-  resolver: Math.max,
+  resolver(...numbers: number[]): number {
+    return Math.max(...flatten(numbers));
+  },
 });

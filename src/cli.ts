@@ -2,7 +2,7 @@
 
 import { start, REPLServer, ReplOptions } from 'repl';
 import { parse } from './askcode';
-import { run, resources } from './askvm';
+import { run, resources, runUntyped } from './askvm';
 
 export type Context = Record<string, any>;
 
@@ -35,7 +35,7 @@ export const replOptions: ReplOptions = {
     cb: (err: Error | null, result: any) => void
   ) {
     try {
-      const result = run({ resources, values }, parse(code));
+      const result = runUntyped({ resources, values }, parse(code));
       cb(null, result);
     } catch (e) {
       cb(e, null);

@@ -42,8 +42,6 @@ export function run(
     return (res as any).value;
   }
 
-  console.log(res);
-
   throw new Error('Unhandled resource!');
 }
 

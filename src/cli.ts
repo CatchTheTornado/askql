@@ -6,12 +6,25 @@ import { run, resources } from './askvm';
 
 export type Context = Record<string, any>;
 
+const values = {
+  clientNames: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+  revPerClient: {
+    A: 136,
+    B: 426,
+    C: 133,
+    D: 35,
+    E: 246,
+    F: 446,
+    G: 53,
+  },
+  test: 5,
+};
+
 export const replOptions: ReplOptions = {
-  prompt: '!> ',
+  prompt: '🦄 ',
   completer(line: string) {
-    const completions = Object.keys(resources);
+    const completions = [...Object.keys(resources), ...Object.keys(values)];
     const hits = completions.filter((c) => c.startsWith(line));
-    // Show all completions if none found
     return [hits.length ? hits : completions, line];
   },
   eval(
@@ -22,8 +35,7 @@ export const replOptions: ReplOptions = {
     cb: (err: Error | null, result: any) => void
   ) {
     try {
-      const result = run({ resources }, parse(code));
-      // cb(null, new TypedValue(35, 'any'));
+      const result = run({ resources, values }, parse(code));
       cb(null, result);
     } catch (e) {
       cb(e, null);

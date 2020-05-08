@@ -12,7 +12,7 @@ export const fun = resource<Typed<Function>>({
     }
 
     // create a new scope
-    const resources = Object.create(options.resources);
+    const resources = Object.create(options.resources ?? {});
 
     // add simple argument resolvers in the scope
     args.forEach((arg, index) => {

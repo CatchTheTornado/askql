@@ -4,8 +4,8 @@ import { JSONable, typed, Typed, untyped } from './typed';
 
 type Values = Record<string, any>;
 export interface Options {
-  resources: Resources;
-  values: Values;
+  resources?: Resources;
+  values?: Values;
 }
 
 export function run(
@@ -13,7 +13,7 @@ export function run(
   code: AskCodeOrValue,
   args?: any[]
 ): Typed<JSONable> {
-  const { resources } = options;
+  const { resources = {}, values = {} } = options;
   if (isValue(code) || Array.isArray(code) || !(code instanceof AskCode)) {
     return typed(code);
   }
@@ -23,11 +23,10 @@ export function run(
   }
 
   const name = code.name as keyof typeof resources;
-  if (!(name in resources)) {
+  const res = resources[name] ?? typed(values[name]);
+  if (!res) {
     throw new Error(`Unknown resource ${code.name}!`);
   }
-
-  const res = resources[name];
 
   if (res.type?.name === 'code' && args) {
     const code = ((res as any) as Typed<any>).value as AskCodeOrValue;

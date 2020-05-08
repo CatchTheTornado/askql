@@ -11,6 +11,5 @@ export { map } from './map';
 export { not } from './not';
 export { object } from './object';
 export { returnRes as return } from './return';
-export { sum } from './sum';
 export { trueRes as true } from './true';
 export { typedRes as typed } from './typed';

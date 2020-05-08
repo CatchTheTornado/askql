@@ -2,8 +2,10 @@ import { AskCodeOrValue, isValue, AskCode } from '../../askcode';
 import { Resources } from './resource';
 import { JSONable, typed, Typed, untyped } from './typed';
 
+type Values = Record<string, any>;
 export interface Options {
   resources: Resources;
+  values: Values;
 }
 
 export function run(
@@ -11,21 +13,21 @@ export function run(
   code: AskCodeOrValue,
   args?: any[]
 ): Typed<JSONable> {
-  const { resources: scope } = options;
+  const { resources } = options;
   if (isValue(code) || Array.isArray(code) || !(code instanceof AskCode)) {
     return typed(code);
   }
 
-  if (!scope) {
-    throw new Error('No scope!');
+  if (!resources) {
+    throw new Error('No resources!');
   }
 
-  const name = code.name as keyof typeof scope;
-  if (!(name in scope)) {
+  const name = code.name as keyof typeof resources;
+  if (!(name in resources)) {
     throw new Error(`Unknown resource ${code.name}!`);
   }
 
-  const res = scope[name];
+  const res = resources[name];
 
   if (res.type?.name === 'code' && args) {
     const code = ((res as any) as Typed<any>).value as AskCodeOrValue;

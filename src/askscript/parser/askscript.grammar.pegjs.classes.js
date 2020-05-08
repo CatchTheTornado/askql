@@ -310,13 +310,7 @@ class String {
   }
 
   print() {
-    let output = {
-      name: 'value',
-      props: {
-        type: 'string',
-        value: this.text
-      }
-    }
+    let output = this.text;
     return output
   }
 }
@@ -428,13 +422,7 @@ class Int {
   }
 
   print() {
-    let output = {
-      name: 'value',
-      props: {
-        type: 'int',
-        value: this.text
-      }
-    }
+    let output = parseInt(this.text);
     return output
   }
 }
@@ -445,13 +433,7 @@ class Float {
   }
 
   print() {
-    let output = {
-      name: 'value',
-      props: {
-        type: 'float',
-        value: this.text
-      }
-    }
+    let output = parseFloat(this.text);
     return output
   }
 }

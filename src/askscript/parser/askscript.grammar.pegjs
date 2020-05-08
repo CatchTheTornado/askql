@@ -19,6 +19,8 @@ ask = lineWithoutCode* aH:askHeader aB:askBody askFooter lineWithoutCode* eof {
   return new ask.Ask(aH, aB);
 }
 
+askForRepl = lineWithoutCode* ws* 'ask' aL:askHeader_argList? aRT:askHeader_retType? ws* '{' .*
+
 askHeader = ws* 'ask' aL:askHeader_argList? aRT:askHeader_retType? ws* '{' ws* lineComment? nl {
   return new ask.AskHeader(aL === null ? [] : aL, aRT);
 }

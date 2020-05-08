@@ -2,7 +2,7 @@
 Output: `parser/askscript.grammar.js` file
 
 ```bash
-pegjs parser/askscript.grammar.pegjs
+pegjs --allowed-start-rules ask,askForRepl parser/askscript.grammar.pegjs
 ```
 
 ## How to transpile AskScript -> AskJSX AST

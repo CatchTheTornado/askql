@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
 import { ReplOptions, REPLServer, start } from 'repl';
-import { parse } from './askcode';
+import { parse, AskCodeOrValue } from './askcode';
+import { createElement } from './askjsx';
 import { resources, runUntyped, Options } from './askvm';
+import { parser as askscript } from './askscript';
 
 export type Context = Record<string, any>;
 
@@ -26,6 +28,17 @@ const options: Options = {
   values,
 };
 
+
+function fromAst({ name, props, children = [] }: any): AskCodeOrValue {
+  return createElement(name, props, ...children.map(fromAst));
+}
+
+function e2e(script: string): any {
+  const ast = askscript.parse(script).print();
+  const code = fromAst(ast);
+  return runUntyped({ resources }, code);
+}
+
 export const replOptions: ReplOptions = {
   prompt: '🦄 ',
   completer(line: string) {
@@ -41,8 +54,24 @@ export const replOptions: ReplOptions = {
     cb: (err: Error | null, result: any) => void
   ) {
     (async () => {
+
+      // If the input is empty, do nothing
+      if (code.trim() == '') {
+        const result = '';
+        cb(null, result);
+        return;
+      }
+      
+      let isAskProgram;
       try {
-        const result = await runUntyped(options, parse(code));
+        askscript.parse(code, {startRule: 'askForRepl'});
+        isAskProgram = true;
+      } catch (e) {
+        isAskProgram = false;
+      }
+      
+      try {
+        const result = isAskProgram ? await e2e(code) : await runUntyped(options, parse(code));
         cb(null, result);
       } catch (e) {
         cb(e, null);

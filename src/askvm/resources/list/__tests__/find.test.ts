@@ -27,12 +27,14 @@ function ask(code: string) {
   );
 }
 
-test('find', () => {
-  expect(ask('call(f(1),)')).toBe(1);
-  expect(ask('[1, 2, 3, 4]')).toStrictEqual([1, 2, 3, 4]);
-  expect(ask(`find([1, 2, 3, 4], f(is(get('$0'), 3)))`)).toBe(3);
-  expect(ask(`test`)).toBe(5);
-  expect(ask(`clientNames`)).toStrictEqual(values.clientNames);
-  expect(ask(`revPerClient`)).toStrictEqual(values.revPerClient);
-  expect(ask(`find(clientNames, f(is(get('$0'), 'A')))`)).toBe('A');
+test('find', async () => {
+  await expect(ask('call(f(1),)')).resolves.toBe(1);
+  await expect(ask('[1, 2, 3, 4]')).resolves.toStrictEqual([1, 2, 3, 4]);
+  await expect(ask(`find([1, 2, 3, 4], f(is(get('$0'), 3)))`)).resolves.toBe(3);
+  await expect(ask(`test`)).resolves.toBe(5);
+  await expect(ask(`clientNames`)).resolves.toStrictEqual(values.clientNames);
+  await expect(ask(`revPerClient`)).resolves.toStrictEqual(values.revPerClient);
+  await expect(ask(`find(clientNames, f(is(get('$0'), 'A')))`)).resolves.toBe(
+    'A'
+  );
 });

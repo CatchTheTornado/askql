@@ -1,6 +1,7 @@
 import { resource } from '../../lib/resource';
 import { lambda, string, Typed, typed } from '../../lib/typed';
 import { run } from '../../lib';
+import { asyncMap } from '../../../utils';
 
 export const list = resource<
   Typed<any[]>,
@@ -10,8 +11,8 @@ export const list = resource<
   resolver(...args) {
     return typed([...args]);
   },
-  compute(options, { params: items }) {
-    const itemValues = items!.map((item) => run(options, item));
+  async compute(options, { params: items }) {
+    const itemValues = await asyncMap(items!, (item) => run(options, item));
     return this.resolver!(...itemValues);
   },
 });

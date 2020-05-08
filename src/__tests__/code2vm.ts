@@ -1,20 +1,24 @@
 import { vm } from './lib';
 
-test('code2vm', () => {
-  expect(vm('list("1", "2" ,"3")')).toStrictEqual(['1', '2', '3']);
-  expect(vm('false')).toBe(false);
-  expect(vm('2')).toBe(2);
-  expect(vm('true')).toBe(true);
-  expect(vm('get("false")')).toBe(false);
-  expect(vm('get("true")')).toBe(true);
-  expect(vm(`{ 'a': 1 }`)).toStrictEqual({ a: 1 });
-  expect(vm(`call(fun(let('a', 5), a))`)).toStrictEqual(5);
-  expect(vm('call(fun("1"))')).toBe('1');
+test('code2vm', async () => {
+  await expect(vm('list("1", "2" ,"3")')).resolves.toStrictEqual([
+    '1',
+    '2',
+    '3',
+  ]);
+  await expect(vm('false')).resolves.toBe(false);
+  await expect(vm('2')).resolves.toBe(2);
+  await expect(vm('true')).resolves.toBe(true);
+  await expect(vm('get("false")')).resolves.toBe(false);
+  await expect(vm('get("true")')).resolves.toBe(true);
+  await expect(vm(`{ 'a': 1 }`)).resolves.toStrictEqual({ a: 1 });
+  await expect(vm(`call(fun(let('a', 5), a))`)).resolves.toStrictEqual(5);
+  await expect(vm('call(fun("1"))')).resolves.toBe('1');
   // // // function returned as AskCode
-  expect(vm('fun("1",fun("2"))')).toHaveProperty('name');
+  await expect(vm('fun("1",fun("2"))')).resolves.toHaveProperty('name');
 });
 
-test('types', () => {
-  expect(vm('typed(2)')).toBe(2);
+test('types', async () => {
+  await expect(vm('typed(2)')).resolves.toBe(2);
   // expect(() => vm('typed(string, 2)')).toThrow();
 });

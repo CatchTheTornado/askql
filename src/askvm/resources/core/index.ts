@@ -1,4 +1,5 @@
 export { call } from './call';
+export { delay } from './delay';
 export { empty, empty as null } from './empty';
 export { falseRes as false } from './false';
 export { fun as f, fun } from './fun';

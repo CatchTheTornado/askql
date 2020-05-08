@@ -34,3 +34,46 @@ export function flatten<T>(
 export function titleCase(s: string): string {
   return `${s[0].toUpperCase()}${s.slice(1)}`;
 }
+
+export async function asyncFind<T>(
+  array: T[],
+  callback: (item: T, index: number) => Promise<boolean>
+): Promise<T | undefined> {
+  const results = await Promise.all(array.map(callback));
+  return array.find(({}, index) => results[index]);
+}
+
+export async function asyncFilter<T>(
+  array: T[],
+  callback: (item: T) => Promise<boolean>
+): Promise<T[]> {
+  const results = await Promise.all(array.map(callback));
+  return array.filter(({}, index) => results[index]);
+}
+
+export async function asyncEvery<T>(
+  array: T[],
+  callback: (item: T) => Promise<boolean>
+) {
+  const results = await Promise.all(array.map(callback));
+  return results.every((result) => result);
+}
+
+export async function asyncSome<T>(
+  array: T[],
+  callback: (item: T) => Promise<boolean>
+) {
+  const results = await Promise.all(array.map(callback));
+  return results.some((result) => result);
+}
+
+export async function asyncMap<T, U>(
+  array: T[],
+  callback: (item: T) => Promise<U>
+): Promise<U[]> {
+  let result: U[] = [];
+  for (let item of array) {
+    result.push(await callback(item));
+  }
+  return result;
+}

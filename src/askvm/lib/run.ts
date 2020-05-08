@@ -8,11 +8,11 @@ export interface Options {
   values?: Values;
 }
 
-export function run(
+export async function run(
   options: Options,
   code: AskCodeOrValue,
   args?: any[]
-): Typed<JSONable> {
+): Promise<Typed<JSONable>> {
   const { resources = {}, values = {} } = options;
   if (isValue(code) || Array.isArray(code) || !(code instanceof AskCode)) {
     return typed(code);
@@ -30,11 +30,11 @@ export function run(
 
   if (res.type?.name === 'code' && args) {
     const code = ((res as any) as Typed<any>).value as AskCodeOrValue;
-    return run(options, code, args);
+    return await run(options, code, args);
   }
 
   if (res.compute) {
-    return typed(res.compute(options, code, args?.map(typed)));
+    return typed(await res.compute(options, code, args?.map(typed)));
   }
 
   // Typed
@@ -48,10 +48,10 @@ export function run(
   throw new Error('Unhandled resource!');
 }
 
-export function runUntyped(
+export async function runUntyped(
   options: Options,
   code: AskCodeOrValue,
   ...args: any[]
-): JSONable {
-  return untyped(run(options, code, ...args));
+): Promise<JSONable> {
+  return untyped(await run(options, code, ...args));
 }

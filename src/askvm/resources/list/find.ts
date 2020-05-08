@@ -1,26 +1,29 @@
 import { runUntyped } from '../../lib';
 import { resource } from '../../lib/resource';
 import { lambda, string, Typed, typed } from '../../lib/typed';
+import { asyncFind } from '../../../utils';
 
 type Value = Typed<any>;
 
 export const find = resource<Value>({
   type: lambda(string, string),
-  resolver(
+  async resolver(
     list: any[],
-    predicate: (value: any, key: number) => boolean,
+    predicate: (value: any, key: number) => Promise<boolean>,
     notSetValue?: any
-  ): any {
+  ): Promise<any> {
     if (!Array.isArray(list)) {
       throw new Error('Expecting an array in find');
     }
 
-    return typed(list.find(predicate));
+    const result = typed(await asyncFind(list, predicate));
+    return result;
   },
-  compute(options, { params }) {
-    const list = runUntyped(options, params![0]);
-    const predicate = (...args: any[]) =>
-      runUntyped(options, params![1], args.map(typed));
+  async compute(options, { params }) {
+    const list = await runUntyped(options, params![0]);
+    const predicate = async (...args: any[]) => {
+      return await runUntyped(options, params![1], args.map(typed));
+    };
     return this.resolver(list, predicate);
   },
 });

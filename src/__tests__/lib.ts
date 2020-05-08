@@ -1,8 +1,7 @@
 import { askvm } from '..';
 import { AskCodeOrValue, parse } from '../askcode';
-import { JSONable, Typed } from '../askvm/lib/typed';
 
-export function run(code: AskCodeOrValue, args?: any): Typed<JSONable> {
+export async function run(code: AskCodeOrValue, args?: any) {
   return askvm.run(
     {
       resources: askvm.resources,
@@ -12,7 +11,7 @@ export function run(code: AskCodeOrValue, args?: any): Typed<JSONable> {
   );
 }
 
-export function ask(code: AskCodeOrValue, args?: any): JSONable {
+export async function ask(code: AskCodeOrValue, args?: any) {
   return askvm.runUntyped(
     {
       resources: askvm.resources,
@@ -22,6 +21,6 @@ export function ask(code: AskCodeOrValue, args?: any): JSONable {
   );
 }
 
-export function vm(code: string) {
+export async function vm(code: string) {
   return ask(parse(code));
 }

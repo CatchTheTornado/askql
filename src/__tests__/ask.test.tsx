@@ -3,29 +3,31 @@ import { AskCode } from '../askcode';
 import { ask } from './lib';
 askjsx;
 
-test('returns true', () => {
+test('returns true', async () => {
   const context = ask(<ref name="true" />);
-  expect(context).toBe(true);
+  await expect(context).resolves.toBe(true);
 });
 
-test('creates the basic function', () => {
+test('creates the basic function', async () => {
   const f = <fun>Hello world!</fun>;
   expect(f).toBeInstanceOf(AskCode);
-  expect(ask(f, [])).toBe('Hello world!');
+  await expect(ask(f, [])).resolves.toBe('Hello world!');
 });
 
-test('creates function with arguments', () => {
+test('creates function with arguments', async () => {
   const f = (
     <fun args={['a']}>
       <ref name="a" />
     </fun>
   );
   expect(f).toBeInstanceOf(AskCode);
-  expect(ask(<call args={['Hello world!']}>{f}</call>)).toBe('Hello world!');
+  await expect(ask(<call args={['Hello world!']}>{f}</call>)).resolves.toBe(
+    'Hello world!'
+  );
 });
 
-test('closure', () => {
-  expect(
+test('closure', async () => {
+  await expect(
     ask(
       <call>
         <fun>
@@ -39,10 +41,10 @@ test('closure', () => {
         </fun>
       </call>
     )
-  ).toBe('a');
+  ).resolves.toBe('a');
 });
 
-test('if', () => {
+test('if', async () => {
   const expr = (cond: string) => (
     <ask>
       <if condition={cond} else="no">
@@ -50,21 +52,21 @@ test('if', () => {
       </if>
     </ask>
   );
-  expect(ask(expr('Y'))).toBe('yes');
-  expect(ask(expr(''))).toBe('no');
+  await expect(ask(expr('Y'))).resolves.toBe('yes');
+  await expect(ask(expr(''))).resolves.toBe('no');
 });
 
-test('return', () => {
-  expect(
+test('return', async () => {
+  await expect(
     ask(
       <ask>
         <return value="5" />6
       </ask>
     )
-  ).toBe('5');
+  ).resolves.toBe('5');
 });
 
-test('if and return', () => {
+test('if and return', async () => {
   const code = (
     <if
       condition="4"
@@ -72,10 +74,10 @@ test('if and return', () => {
       else={<return value="NO" />}
     />
   );
-  expect(ask(code)).toBe('YES');
+  await expect(ask(code)).resolves.toBe('YES');
 });
 
-test('jsx', () => {
+test('jsx', async () => {
   const call = (arg: string) => (
     <ask>
       <fun name="test" args={['a']}>
@@ -88,12 +90,12 @@ test('jsx', () => {
       <call name="test" args={[<v>{arg}</v>]} />
     </ask>
   );
-  expect(ask(call('Y'))).toBe('YES');
-  expect(ask(call(''))).toBe('NO');
+  await expect(ask(call('Y'))).resolves.toBe('YES');
+  await expect(ask(call(''))).resolves.toBe('NO');
 });
 
-test('multival', () => {
-  expect(ask([1, 2, 3] as any)).toStrictEqual([1, 2, 3]);
+test('multival', async () => {
+  await expect(ask([1, 2, 3] as any)).resolves.toStrictEqual([1, 2, 3]);
 });
 
 // test('host concat', () => {

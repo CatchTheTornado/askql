@@ -4,7 +4,7 @@ import { lambda, string, typed, Typed } from '../../lib/typed';
 
 export const fun = resource<Typed<Function>>({
   type: lambda(string, string),
-  compute(options, code, args) {
+  async compute(options, code, args) {
     // console.log(code.name, code.params, 'args:', args);
 
     if (!args) {
@@ -24,7 +24,7 @@ export const fun = resource<Typed<Function>>({
     let result: any;
     const { params = [] } = code;
     for (let i = 0; i < params.length; i += 1) {
-      result = run(runOptions, params[i]);
+      result = await run(runOptions, params[i]);
       if (runOptions.returnedValue) {
         return typed(runOptions.returnedValue);
       }

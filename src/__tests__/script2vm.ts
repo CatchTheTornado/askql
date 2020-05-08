@@ -18,10 +18,10 @@ function e2e(script: string): any {
   );
 }
 
-test('e2e', () => {
-  expect(
+test('e2e', async () => {
+  await expect(
     e2e(`ask {
     'Hello world!'
 }`)
-  ).toBe('Hello world!');
+  ).resolves.toBe('Hello world!');
 });

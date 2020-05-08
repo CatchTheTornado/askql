@@ -34,12 +34,14 @@ export const replOptions: ReplOptions = {
     file: string,
     cb: (err: Error | null, result: any) => void
   ) {
-    try {
-      const result = runUntyped({ resources, values }, parse(code));
-      cb(null, result);
-    } catch (e) {
-      cb(e, null);
-    }
+    (async () => {
+      try {
+        const result = await runUntyped({ resources, values }, parse(code));
+        cb(null, result);
+      } catch (e) {
+        cb(e, null);
+      }
+    })();
   },
 };
 

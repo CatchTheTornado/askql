@@ -28,7 +28,6 @@ const options: Options = {
   values,
 };
 
-
 function fromAst({ name, props, children = [] }: any): AskCodeOrValue {
   return createElement(name, props, ...children.map(fromAst));
 }
@@ -36,7 +35,7 @@ function fromAst({ name, props, children = [] }: any): AskCodeOrValue {
 function e2e(script: string): any {
   const ast = askscript.parse(script).print();
   const code = fromAst(ast);
-  return runUntyped({ resources }, code);
+  return runUntyped(options, code);
 }
 
 export const replOptions: ReplOptions = {
@@ -54,24 +53,25 @@ export const replOptions: ReplOptions = {
     cb: (err: Error | null, result: any) => void
   ) {
     (async () => {
-
       // If the input is empty, do nothing
       if (code.trim() == '') {
         const result = '';
         cb(null, result);
         return;
       }
-      
+
       let isAskProgram;
       try {
-        askscript.parse(code, {startRule: 'askForRepl'});
+        askscript.parse(code, { startRule: 'askForRepl' });
         isAskProgram = true;
       } catch (e) {
         isAskProgram = false;
       }
-      
+
       try {
-        const result = isAskProgram ? await e2e(code) : await runUntyped(options, parse(code));
+        const result = isAskProgram
+          ? await e2e(code)
+          : await runUntyped(options, parse(code));
         cb(null, result);
       } catch (e) {
         cb(e, null);

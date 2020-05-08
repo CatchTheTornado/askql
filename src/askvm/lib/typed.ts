@@ -1,3 +1,5 @@
+import { AskCode } from '../../askcode';
+
 export interface Type<T> {
   name: string;
   prototype: null | Type<T>;
@@ -47,6 +49,14 @@ export const lambdaAny: LambdaType<any, any> = {
   validate: any.validate,
 };
 
+export const codeAny: LambdaType<any, any> = {
+  name: 'code',
+  retType: any,
+  argType: any,
+  prototype: any,
+  validate: any.validate,
+};
+
 export function lambda<T, A>(
   retType: Type<T>,
   argType: Type<A>
@@ -60,11 +70,15 @@ export function lambda<T, A>(
   } as LambdaType<T, A>);
 }
 
+//TODO TypedValue<T> extends Resource
 export type Typed<T> = { type: any; value: T };
 
 export const basicTypes = [empty, boolean, string];
 
 export function typed(value: any, type?: any): Typed<any> {
+  if (value instanceof AskCode) {
+    return { value, type: codeAny };
+  }
   if (value && typeof value.type !== 'undefined') {
     // if already a typed value, don't wrap again
     return value;
@@ -91,7 +105,7 @@ export type JSONable =
   | JSONable[]
   | { [key: string]: JSONable };
 
-export function untyped(value: any): JSONable {
+export function untyped(value: any): any {
   if (!value) {
     return value;
   }

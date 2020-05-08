@@ -1,36 +1,59 @@
 #!/usr/bin/env node
 
-import { start, REPLServer } from 'repl';
+import { ReplOptions, REPLServer, start } from 'repl';
 import { parse } from './askcode';
-import { run } from './askvm';
+import { resources, runUntyped } from './askvm';
 
 const ask = require('./askscript/parser/askscript.grammar');
 
 export type Context = Record<string, any>;
 
-const r = start({
-  prompt: '!> ',
-  eval: function (
+const values = {
+  clientNames: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+  revPerClient: {
+    A: 136,
+    B: 426,
+    C: 133,
+    D: 35,
+    E: 246,
+    F: 446,
+    G: 53,
+  },
+  test: 5,
+};
+
+export const replOptions: ReplOptions = {
+  prompt: '🦄 ',
+  completer(line: string) {
+    const completions = [...Object.keys(resources), ...Object.keys(values)];
+    const hits = completions.filter((c) => c.startsWith(line));
+    return [hits.length ? hits : completions, line];
+  },
+  eval(
     this: REPLServer,
     code: string,
     context: Context,
     file: string,
     cb: (err: Error | null, result: any) => void
   ) {
-    let isAskProgram;
-    try {
-      ask.parse(code, {startRule: 'askForRepl'});
-      isAskProgram = true;
-    } catch (e) {
-      isAskProgram = false;
-    }
-    
-    try {
-      const result = isAskProgram ? ask.parse(code) : run(parse(code));
-      // cb(null, new TypedValue(35, 'any'));
-      cb(null, result);
-    } catch (e) {
-      cb(e, null);
-    }
+    (async () => {
+
+      let isAskProgram;
+      try {
+        ask.parse(code, {startRule: 'askForRepl'});
+        isAskProgram = true;
+      } catch (e) {
+        isAskProgram = false;
+      }
+      
+      try {
+        const result = isAskProgram ? ask.parse(code) : await runUntyped({ resources, values }, parse(code));
+        cb(null, result);
+      } catch (e) {
+        cb(e, null);
+      }
+    })();
   },
-});
+};
+
+start(replOptions);

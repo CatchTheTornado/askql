@@ -1,23 +1,28 @@
 import { AskCode } from '../../askcode';
-import { Frame } from './step';
+import { Options, run } from './run';
 import { untyped } from './typed';
+import { asyncMap } from '../../utils';
 
 export class Resource<T, R extends (...args: any[]) => any = any> {
   readonly name?: string;
   readonly type?: any;
   readonly resolver!: R;
 
-  compute(
+  async compute(
+    options: Options,
     { params = [] }: AskCode,
-    { args, options, step }: Frame<T, Resources>
-  ): T {
+    args?: any[]
+  ): Promise<T> {
     if (!this.resolver) {
       throw new Error('No resolver!');
     }
     if (args) {
+      // map(untyped); ?
       return this.resolver(...args);
     }
-    const values = params.map((param) => step(options, param)).map(untyped);
+    const values = (await asyncMap(params, (param) => run(options, param))).map(
+      untyped
+    );
     return this.resolver(...values);
   }
 }
@@ -28,4 +33,4 @@ export function resource<T, R extends (...args: any[]) => any = any>(
   return Object.assign(new Resource(), resource);
 }
 
-export type Resources = Record<string, Resource<any, any>>;
+export type Resources = Record<string, Resource<any>>;

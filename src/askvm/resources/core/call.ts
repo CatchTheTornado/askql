@@ -1,12 +1,14 @@
+import { run } from '../../lib';
 import { resource } from '../../lib/resource';
 import { lambda, string, typed, Typed } from '../../lib/typed';
+import { asyncMap } from '../../../utils';
 
 export const call = resource<Typed<any>>({
   type: lambda(string, string),
-  compute({ params }, { options, step }) {
+  async compute(options, { params }) {
     const [funChild, ...argChildren] = params!;
-    const args = argChildren!.map((child) => step(options, child));
-    const result = step(options, funChild, args);
+    const args = await asyncMap(argChildren, (child) => run(options, child));
+    const result = await run(options, funChild, args);
     return typed(result); // TODO add result type
   },
 });

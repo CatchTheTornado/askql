@@ -1,6 +1,5 @@
-export * from './vm';
-export { jsx };
-import * as jsx from './jsx';
-
+export { askcode, askjsx, askvm, script };
+import * as askcode from './askcode';
+import * as askjsx from './askjsx';
 import * as script from './askscript';
-export { script };
+import * as askvm from './askvm';

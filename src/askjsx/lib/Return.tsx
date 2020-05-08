@@ -1,12 +1,6 @@
-import * as jsx from './jsx';
-import { Set } from './Set';
-import { Fragment } from './Fragment';
-jsx;
+import * as askjsx from './jsx';
+askjsx;
 
 export function Return({ value }: { value: string }) {
-  return (
-    <Fragment>
-      <Set name="frame.returnedValue" value={value} />
-    </Fragment>
-  );
+  return <code return>{value}</code>;
 }

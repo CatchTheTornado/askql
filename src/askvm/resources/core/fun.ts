@@ -1,25 +1,33 @@
 import { resource } from '../../lib/resource';
-import { step } from '../../lib/step';
+import { run, Options } from '../../lib/run';
 import { lambda, string, typed, Typed } from '../../lib/typed';
 
 export const fun = resource<Typed<Function>>({
   type: lambda(string, string),
-  compute(code, { options, args }) {
+  async compute(options, code, args) {
+    // console.log(code.name, code.params, 'args:', args);
+
     if (!args) {
-      return typed(code); // TODO typed musi rozumieć tę strukturę
+      return typed(code); // TODO typed needs to understand AskCode
     }
 
-    // create scope for this function
-    code.scope = {};
+    // create a new scope
+    const resources = Object.create(options.resources ?? {});
 
-    // TODO add arguments in scope with assertion
-    // or add a resolver for reading them
+    // add simple argument resolvers in the scope
+    args.forEach((arg, index) => {
+      resources[`$${index}`] = arg;
+    });
+
+    const runOptions = { resources, returnedValue: undefined };
 
     let result: any;
     const { params = [] } = code;
     for (let i = 0; i < params.length; i += 1) {
-      const child = params[i];
-      result = step(options, child); // TODO rename to run()
+      result = await run(runOptions, params[i]);
+      if (runOptions.returnedValue) {
+        return typed(runOptions.returnedValue);
+      }
     }
     return typed(result);
   },

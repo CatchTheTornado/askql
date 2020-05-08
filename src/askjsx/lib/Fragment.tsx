@@ -1,6 +1,7 @@
-import * as jsx from './jsx';
-jsx;
+import { AskCodeOrValue } from '../../askcode';
+import * as askjsx from './jsx';
+askjsx;
 
-export function Fragment({ children = [] }: { children?: jsx.AskNode[] }) {
-  return <code fragment>{children}</code>;
+export function Fragment({ children = [] }: { children?: AskCodeOrValue[] }) {
+  return children;
 }

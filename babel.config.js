@@ -2,6 +2,6 @@ module.exports = {
   presets: [
     ['@babel/preset-env', { targets: { node: 'current' } }],
     '@babel/preset-typescript',
-    ['@babel/preset-react', { pragma: 'jsx.jsx' }],
+    ['@babel/preset-react', { pragma: 'askjsx.createElement' }],
   ],
 };

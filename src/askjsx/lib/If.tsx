@@ -1,27 +1,22 @@
-import { Else } from './Else';
-import * as jsx from './jsx';
-import { AskElement } from './jsx';
-jsx;
+import { AskCodeOrValue } from '../../askcode';
+import * as askjsx from './jsx';
+askjsx;
 
-export function If(
-  {
-    condition,
-    children = [],
-  }: { condition: string; children?: jsx.AskNode | jsx.AskNode[] },
-  { next }: jsx.AskJSXRenderOptions
-) {
-  const $then = children;
-  const $else =
-    next instanceof AskElement && next.type === Else
-      ? next.renderChildren()
-      : [];
-
+export function If({
+  condition,
+  children,
+  ...props
+}: {
+  condition: string;
+  children?: AskCodeOrValue[];
+  else?: AskCodeOrValue | AskCodeOrValue[];
+  then?: AskCodeOrValue | AskCodeOrValue[];
+}) {
   return (
-    <code call>
-      <code json>if</code>
+    <code if>
       {condition}
-      <code fun>{$then}</code>
-      <code fun>{$else}</code>
+      <code fun>{props.then ?? children}</code>
+      <code fun>{props.else}</code>
     </code>
   );
 }

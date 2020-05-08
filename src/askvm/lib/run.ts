@@ -1,54 +1,57 @@
-import { AskCode, AskCodeOrValue, Value } from '../../askcode';
-import * as res from '../resources';
-import { Resources as BaseResources } from './resource';
-import { Frame, step } from './step';
-import { typed, Typed, untyped } from './typed';
-import type { JSONable } from './typed';
+import { AskCodeOrValue, isValue, AskCode } from '../../askcode';
+import { Resources } from './resource';
+import { JSONable, typed, Typed, untyped } from './typed';
 
-export function getScope(resources: BaseResources, code?: AskCode): any {
-  if (!code) {
-    return resources;
-  }
-
-  if (code.name !== 'fun') {
-    return getScope(resources, code.parent);
-  }
-
-  return code.scope!;
+type Values = Record<string, any>;
+export interface Options {
+  resources?: Resources;
+  values?: Values;
 }
 
-const resources = {
-  ...res,
-  null: res.empty,
-  f: res.fun,
-};
+export async function run(
+  options: Options,
+  code: AskCodeOrValue,
+  args?: any[]
+): Promise<Typed<JSONable>> {
+  const { resources = {}, values = {} } = options;
+  if (isValue(code) || Array.isArray(code) || !(code instanceof AskCode)) {
+    return typed(code);
+  }
 
-type Resources = typeof resources;
+  if (!resources) {
+    throw new Error('No resources!');
+  }
 
-export function run(code: AskCodeOrValue, args?: any[]): JSONable {
-  return untyped(
-    step(
-      {
-        resources,
-        value(value: Value): Typed<any> {
-          return typed(value);
-        },
-        code(code: AskCode, frame: Frame<Typed<any>, Resources>): Typed<any> {
-          const { resources } = frame;
-          const res = resources[code.name as keyof typeof resources];
-          // TODO better code for resource retrieval
-          if (!res) {
-            throw new Error(`Unknown resource ${code.name}!`);
-          }
+  const name = code.name as keyof typeof resources;
+  const res = resources[name] ?? typed(values[name]);
+  if (!res) {
+    throw new Error(`Unknown resource ${code.name}!`);
+  }
 
-          if (res.compute) {
-            return res.compute(code, frame);
-          }
-          return res as any; // TODO fix with scopes
-        },
-      },
-      code,
-      args
-    )
-  );
+  if (res.type?.name === 'code' && args) {
+    const code = ((res as any) as Typed<any>).value as AskCodeOrValue;
+    return await run(options, code, args);
+  }
+
+  if (res.compute) {
+    return typed(await res.compute(options, code, args?.map(typed)));
+  }
+
+  // Typed
+  if (res.type) {
+    if ((res as any).value === undefined) {
+      throw new Error(`Unknown resource ${code.name}!`);
+    }
+    return (res as any).value;
+  }
+
+  throw new Error('Unhandled resource!');
+}
+
+export async function runUntyped(
+  options: Options,
+  code: AskCodeOrValue,
+  ...args: any[]
+): Promise<JSONable> {
+  return untyped(await run(options, code, ...args));
 }

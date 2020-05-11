@@ -1,18 +1,14 @@
 import { AskCode } from '../../askcode';
+import { asyncMap } from '../../utils';
 import { Options, run } from './run';
 import { untyped } from './typed';
-import { asyncMap } from '../../utils';
 
-export class Resource<T, R extends (...args: any[]) => any = any> {
+export class Resource<T, R extends (...args: any[]) => Promise<T> = any> {
   readonly name?: string;
   readonly type?: any;
-  readonly resolver!: R;
+  readonly resolver?: R;
 
-  async compute(
-    options: Options,
-    { params = [] }: AskCode,
-    args?: any[]
-  ): Promise<T> {
+  async compute(options: Options, code: AskCode, args?: any[]): Promise<T> {
     if (!this.resolver) {
       throw new Error('No resolver!');
     }
@@ -20,14 +16,14 @@ export class Resource<T, R extends (...args: any[]) => any = any> {
       // map(untyped); ?
       return this.resolver(...args);
     }
-    const values = (await asyncMap(params, (param) => run(options, param))).map(
-      untyped
-    );
+    const values = (
+      await asyncMap(code.params ?? [], (param) => run(options, param))
+    ).map(untyped);
     return this.resolver(...values);
   }
 }
 
-export function resource<T, R extends (...args: any[]) => any = any>(
+export function resource<T, R extends (...args: any[]) => Promise<T> = any>(
   resource: Partial<Resource<T, R>>
 ): Resource<T, R> {
   return Object.assign(new Resource(), resource);

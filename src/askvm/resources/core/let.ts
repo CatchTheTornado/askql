@@ -9,8 +9,8 @@ export const letRes = resource<Typed<JSONable>>({
 
     const { params: children = [] } = code;
 
-    const value = await run(options, children[1]);
     const key: any = await run(options, children[0]); // FIXME any
+    const value = await run(options, children[1]);
 
     if (key.type !== string) {
       throw new Error(`Expected set key to be string, got: ${key.type}`);

@@ -5,10 +5,10 @@ import { asyncMap } from '../../../utils';
 
 export const list = resource<
   Typed<any[]>,
-  (...args: Typed<any>[]) => Typed<any[]>
+  (...args: Typed<any>[]) => Promise<Typed<any[]>>
 >({
   type: lambda(string, string),
-  resolver(...args) {
+  async resolver(...args) {
     return typed([...args]);
   },
   async compute(options, { params: items }) {

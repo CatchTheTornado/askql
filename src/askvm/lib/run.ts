@@ -18,10 +18,6 @@ export async function run(
     return typed(code);
   }
 
-  if (!resources) {
-    throw new Error('No resources!');
-  }
-
   const { name } = code;
   if (name in resources) {
     return typed(await resources[name].compute(options, code, args));

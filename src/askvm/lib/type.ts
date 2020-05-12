@@ -80,6 +80,104 @@ export const code = type<Type<AskCode>, Type<any>>(any, {
   validate: (value): value is AskCode => value instanceof AskCode,
 });
 
+interface UnionType<T = any> extends Type<T> {
+  types: any[];
+}
+
+const unionAny = type<UnionType<any>, Type<any>>(any, {
+  name: 'union',
+  validate(value): value is any {
+    if (this === unionAny) {
+      return true;
+    }
+    return this.types.some((type) => validate(type, value));
+  },
+  types: [],
+});
+
+interface UnionType2<A, B> extends UnionType<A | B> {
+  types: [Type<A>, Type<B>];
+}
+
+export function union2<A, B>(a: Type<A>, b: Type<B>): UnionType2<A, B> {
+  return type<UnionType2<A, B>, UnionType>(unionAny, {
+    types: [a, b],
+  });
+}
+
+interface UnionType3<A, B, C> extends UnionType<A | B | C> {
+  types: [Type<A>, Type<B>, Type<C>];
+}
+
+export function union3<A, B, C>(
+  a: Type<A>,
+  b: Type<B>,
+  c: Type<C>
+): UnionType3<A, B, C> {
+  return type<UnionType3<A, B, C>, UnionType>(unionAny, {
+    types: [a, b, c],
+  });
+}
+
+interface UnionType4<A, B, C, D> extends UnionType<A | B | C | D> {
+  types: [Type<A>, Type<B>, Type<C>, Type<D>];
+}
+
+export function union4<A, B, C, D>(
+  a: Type<A>,
+  b: Type<B>,
+  c: Type<C>,
+  d: Type<D>
+): UnionType4<A, B, C, D> {
+  return type<UnionType4<A, B, C, D>, UnionType>(unionAny, {
+    types: [a, b, c, d],
+  });
+}
+
+interface ArrayType<T> extends Type<T[]> {
+  itemType: Type<T>;
+}
+
+const arrayAny = type<ArrayType<any>, Type<any>>(any, {
+  name: 'array',
+  validate(value): value is any[] {
+    if (!Array.isArray(value)) {
+      return false;
+    }
+    return value.every((value) => validate(this.itemType, value));
+  },
+  itemType: any,
+});
+
+export function array<T>(itemType: Type<T>): ArrayType<T> {
+  return type<ArrayType<T>, ArrayType<any>>(arrayAny, {
+    itemType,
+  });
+}
+
+interface RecordType<T> extends Type<Record<string, T>> {
+  itemType: Type<T>;
+}
+
+const recordAny = type<RecordType<any>, Type<any>>(any, {
+  name: 'array',
+  validate(value): value is Record<string, any> {
+    if (value == null || typeof value !== 'object') {
+      return false;
+    }
+    return Object.values(value).every((value) =>
+      validate(this.itemType, value)
+    );
+  },
+  itemType: any,
+});
+
+export function record<T>(itemType: Type<T>): RecordType<T> {
+  return type<RecordType<T>, RecordType<any>>(recordAny, {
+    itemType,
+  });
+}
+
 interface LambdaType<T, A extends any[]> extends Type<(...args: A) => T> {
   retType: Type<T>;
   argsType: Type<A>;

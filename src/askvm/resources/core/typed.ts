@@ -5,6 +5,6 @@ export const typedRes = resource({
   async compute(options, code) {
     const value = await runUntyped(options, code.params![0]);
     const type = await runUntyped(options, code.params![1]);
-    return typed(value, type);
+    return typed(value, type as any); // FIXME
   },
 });

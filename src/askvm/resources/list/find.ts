@@ -18,7 +18,11 @@ export const find = resource<any, any[]>({
   async compute(options, { params }) {
     const list = await runUntyped(options, params![0]);
     const predicate = async (...args: any[]) => {
-      return await runUntyped(options, params![1], args.map(typed));
+      return await runUntyped(
+        options,
+        params![1],
+        args.map((arg) => typed(arg))
+      );
     };
     return this.resolver!(list, predicate);
   },

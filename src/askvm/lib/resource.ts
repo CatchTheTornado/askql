@@ -1,8 +1,8 @@
 import { AskCode } from '../../askcode';
 import { asyncMap } from '../../utils';
-import { Options as RunOptions, run, runUntyped } from './run';
+import { Options as RunOptions, runUntyped } from './run';
 import { any, empty, Type } from './type';
-import { TypedValue, untyped } from './typed';
+import { typed, untyped } from './typed';
 
 /**
  * Resource is the basic value wrapper in AskCode.
@@ -18,22 +18,20 @@ export class Resource<T, A extends any[]> {
   }
 
   async compute(options: RunOptions, code: AskCode, args?: A): Promise<T> {
-    // TODO assert args according to argsType
+    const resolverArgs =
+      args ??
+      (await asyncMap(code.params ?? [], (param) =>
+        runUntyped(options, param)
+      ));
 
-    if (args) {
-      return this.resolver(...(args.map(untyped) as A));
-    }
-    const params = await asyncMap(code.params ?? [], (param) =>
-      runUntyped(options, param)
-    );
-    return this.resolver(...(params as any));
+    return this.resolver(...untyped(typed(resolverArgs, this.argsType)));
   }
 }
 
 const defaults: Pick<Resource<any, any>, 'type' | 'name' | 'argsType'> = {
   type: any,
   name: 'resource',
-  argsType: empty, // TODO empty list
+  argsType: any, // TODO empty list
 };
 
 export function resource<T, A extends any[]>(

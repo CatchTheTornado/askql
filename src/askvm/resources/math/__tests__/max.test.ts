@@ -22,6 +22,7 @@ function ask(code: string) {
 
 test('max', async () => {
   await expect(ask('max(1, 2)')).resolves.toBe(2);
+  await expect(() => ask(`max(1, '2')`)).rejects.toBeTruthy();
   await expect(ask('max(1, 2, max(3, max([33, 13], 4)))')).resolves.toBe(33);
   await expect(ask('max([1, 2, [5, 6]])')).resolves.toBe(6);
   await expect(ask('max(scores)')).resolves.toBe(953);

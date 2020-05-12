@@ -1,5 +1,5 @@
 import { AskCode } from '../../askcode';
-import { allTypes, any, code, Type, validate } from './type';
+import { allTypes, any, code, Type, validate, isType } from './type';
 
 export class TypedValue<T> {
   readonly type!: Type<T>;
@@ -18,10 +18,21 @@ export function typedValue<T>(
 
 export const inferableTypes = allTypes;
 
-export function typed(value: any, type?: any): TypedValue<any> {
+export function typed(value: any, type?: Type<any>): TypedValue<any> {
+  if (type) {
+    if (!isType(type)) {
+      throw new Error(`Invalid type value: ${type}`);
+    }
+    if (type && !validate(type, untyped(value))) {
+      throw new Error(
+        `Type mismatch: ${type.name} expected, but "${untyped(value)}" found`
+      );
+    }
+    // TODO optionally change typed if `type` is given and is more strict
+  }
+
   if (value instanceof TypedValue) {
     // if already a typed value, don't wrap again
-    // TODO optionally perform assertion if `type` is given and is more strict
     return value;
   }
 

@@ -1,10 +1,8 @@
-import { run } from '../../lib';
-import { resource } from '../../lib/resource';
-import { lambda, string, Typed, untyped } from '../../lib/typed';
 import { asyncMap } from '../../../utils';
+import { any, resource, runUntyped } from '../../lib';
 
-export const map = resource<Typed<Map<any, any>>>({
-  type: lambda(string, string),
+export const map = resource<any, any[]>({
+  type: any,
   resolver(...values: any[]): any {
     const map = new Map();
     if (!values || values.length % 2 === 1) {
@@ -19,7 +17,7 @@ export const map = resource<Typed<Map<any, any>>>({
     // TODO allow bare identifiers instead of string (syntax sugar)
     // TODO accept list of pairs from syntax sugar
     return this.resolver!(
-      ...(await asyncMap(items, (item) => run(options, item))).map(untyped)
+      ...(await asyncMap(items, (item) => runUntyped(options, item)))
     );
   },
 });

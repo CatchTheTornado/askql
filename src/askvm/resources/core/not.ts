@@ -1,9 +1,8 @@
-import { resource } from '../../lib/resource';
-import { boolean, lambda, Typed } from '../../lib/typed';
+import { resource, any } from '../../lib';
 
-export const not = resource<Typed<(a: boolean) => boolean>>({
-  type: lambda(boolean, boolean),
-  resolver(a: boolean): boolean {
+export const not = resource({
+  type: any,
+  async resolver(a: boolean): Promise<boolean> {
     return !a;
   },
 });

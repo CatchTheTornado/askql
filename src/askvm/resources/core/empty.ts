@@ -1,7 +1,6 @@
-import { resource } from '../../lib/resource';
-import { boolean, Typed, typed } from '../../lib/typed';
+import { any, resource } from '../../lib';
 
-export const empty = resource<Typed<null>>({
-  type: boolean,
-  resolver: () => typed(null),
+export const empty = resource({
+  type: any,
+  resolver: async () => null,
 });

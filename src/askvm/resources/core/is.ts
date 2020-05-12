@@ -1,11 +1,8 @@
-import { resource } from '../../lib/resource';
-import { lambda, string, Typed } from '../../lib/typed';
+import { any, resource } from '../../lib';
 
-type Value = Typed<any>;
-
-export const is = resource<Value>({
-  type: lambda(string, string),
-  resolver(a: any, b: any): boolean {
+export const is = resource({
+  type: any,
+  async resolver(a: any, b: any): Promise<boolean> {
     return a == b;
   },
 });

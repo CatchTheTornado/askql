@@ -1,7 +1,6 @@
-import { resource } from '../../lib/resource';
-import { boolean, typed, Typed } from '../../lib/typed';
+import { boolean, resource } from '../../lib';
 
-export const falseRes = resource<Typed<false>>({
+export const falseRes = resource({
   type: boolean,
-  resolver: () => typed(false),
+  resolver: async () => false,
 });

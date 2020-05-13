@@ -21,7 +21,9 @@
     "url": "https://github.com/xFAANG/askql/issues"
   },
   "homepage": "https://askql.org/",
-  "dependencies": {},
+  "dependencies": {
+    "ts-pegjs": "^0.2.6"
+  },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",

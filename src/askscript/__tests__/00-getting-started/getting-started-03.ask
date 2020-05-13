@@ -3,7 +3,7 @@ ask {
 		if (n:lessThan(2)) {
 			return n
 		}
-		n:times:factorial(n:minus(1))
+		n:times(factorial(n:minus(1)))
 	}
 	
 	score :factorial

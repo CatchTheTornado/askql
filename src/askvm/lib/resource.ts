@@ -1,36 +1,47 @@
 import { AskCode } from '../../askcode';
-import { Options, run } from './run';
-import { untyped } from './typed';
 import { asyncMap } from '../../utils';
+import { Options as RunOptions, runUntyped } from './run';
+import { any, empty, Type } from './type';
+import { typed, untyped } from './typed';
 
-export class Resource<T, R extends (...args: any[]) => any = any> {
-  readonly name?: string;
-  readonly type?: any;
-  readonly resolver!: R;
+/**
+ * Resource is the basic value wrapper in AskCode.
+ */
+export class Resource<T, A extends any[]> {
+  // extends TypedValue ?
+  readonly name!: string;
+  readonly type!: Type<T>;
+  readonly argsType!: Type<A>;
 
-  async compute(
-    options: Options,
-    { params = [] }: AskCode,
-    args?: any[]
-  ): Promise<T> {
-    if (!this.resolver) {
-      throw new Error('No resolver!');
-    }
-    if (args) {
-      // map(untyped); ?
-      return this.resolver(...args);
-    }
-    const values = (await asyncMap(params, (param) => run(options, param))).map(
-      untyped
-    );
-    return this.resolver(...values);
+  async resolver(...argsOrParams: A): Promise<T> {
+    throw new Error('This resource requires resolver to be defined');
+  }
+
+  async compute(options: RunOptions, code: AskCode, args?: A): Promise<T> {
+    const resolverArgs =
+      args ??
+      (await asyncMap(code.params ?? [], (param) =>
+        runUntyped(options, param)
+      ));
+
+    return this.resolver(...untyped(typed(resolverArgs, this.argsType)));
   }
 }
 
-export function resource<T, R extends (...args: any[]) => any = any>(
-  resource: Partial<Resource<T, R>>
-): Resource<T, R> {
-  return Object.assign(new Resource(), resource);
+const defaults: Pick<Resource<any, any>, 'type' | 'name' | 'argsType'> = {
+  type: any,
+  name: 'resource',
+  argsType: any, // TODO empty list
+};
+
+export function resource<T, A extends any[]>(
+  options?: Partial<Resource<T, A>>
+): Resource<T, A> {
+  return Object.assign(
+    new Resource(),
+    defaults as Partial<Resource<T, A>>,
+    options
+  );
 }
 
-export type Resources = Record<string, Resource<any>>;
+export type Resources = Record<string, Resource<any, any>>;

@@ -1,8 +1,7 @@
-import { resource } from '../../lib/resource';
-import { boolean, Typed, typed } from '../../lib/typed';
+import { any, resource } from '../../lib';
 
-export const delay = resource<Typed<null>>({
-  type: boolean,
+export const delay = resource({
+  type: any,
   async resolver() {
     return new Promise((resolve) => setTimeout(resolve, 1000));
   },

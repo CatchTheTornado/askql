@@ -1,6 +1,6 @@
-import { AskCodeOrValue, isValue, AskCode } from '../../askcode';
+import { AskCode, AskCodeOrValue, isValue } from '../../askcode';
 import { Resources } from './resource';
-import { JSONable, typed, Typed, untyped } from './typed';
+import { JSONable, typed, TypedValue, untyped } from './typed';
 
 type Values = Record<string, any>;
 export interface Options {
@@ -12,43 +12,29 @@ export async function run(
   options: Options,
   code: AskCodeOrValue,
   args?: any[]
-): Promise<Typed<JSONable>> {
+): Promise<TypedValue<JSONable>> {
   const { resources = {}, values = {} } = options;
   if (isValue(code) || Array.isArray(code) || !(code instanceof AskCode)) {
     return typed(code);
   }
 
-  if (!resources) {
-    throw new Error('No resources!');
+  const { name } = code;
+  if (name in resources) {
+    return typed(await resources[name].compute(options, code, args));
   }
 
-  const name = code.name as keyof typeof resources;
-  const res = resources[name] ?? typed(values[name]);
-  if (!res) {
-    throw new Error(`Unknown resource ${code.name}!`);
+  if (!(name in values)) {
+    throw new Error(`Unknown identifier ${name}!`);
   }
 
-  if (res.type?.name === 'code' && args) {
-    const code = ((res as any) as Typed<any>).value as AskCodeOrValue;
+  const value = typed(values[name]);
+
+  if (value.type.name === 'code' && args) {
+    const code = value.value as AskCode;
     return await run(options, code, args);
   }
 
-  if (res.compute) {
-    return typed(await res.compute(options, code, args?.map(typed)));
-  }
-
-  // Typed
-  if (res.type) {
-    if ((res as any).value === undefined) {
-      throw new Error(`Unknown resource ${code.name}!`);
-    }
-    return (res as any).value;
-  }
-
-  // console.error(res);
-  // throw new Error('Unhandled resource!');
-
-  return res as any;
+  return value;
 }
 
 export async function runUntyped(

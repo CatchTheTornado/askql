@@ -1,13 +1,11 @@
-import { run } from '../../lib';
-import { resource } from '../../lib/resource';
-import { any, Typed, untyped } from '../../lib/typed';
+import { any, resource, run, runUntyped } from '../../lib';
 
-export const ifRes = resource<Typed<any>>({
+export const ifRes = resource({
   type: any,
   async compute(options, code, args) {
     const { params } = code;
     const [condition, thenFun, elseFun] = params!;
-    const value = await run(options, condition);
-    return run(options, untyped(value) ? thenFun : elseFun, []);
+    const value = await runUntyped(options, condition);
+    return run(options, value ? thenFun : elseFun, []);
   },
 });

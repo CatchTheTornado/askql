@@ -1,28 +1,24 @@
-import { resource } from '../../lib/resource';
-import { run } from '../../lib/run';
-import { lambda, string, Typed, JSONable, typed } from '../../lib/typed';
+import { any, resource, run, runUntyped } from '../../lib';
 
-export const letRes = resource<Typed<JSONable>>({
-  type: lambda(string, string),
+export const letRes = resource({
+  type: any,
   async compute(options, code, args) {
     // console.log(code.name, code.params, 'args:', args);
 
     const { params: children = [] } = code;
 
+    const key: any = await runUntyped(options, children[0]); // FIXME any
     const value = await run(options, children[1]);
-    const key: any = await run(options, children[0]); // FIXME any
 
-    if (key.type !== string) {
-      throw new Error(`Expected set key to be string, got: ${key.type}`);
+    if (typeof key !== 'string') {
+      throw new Error(`Expected set key to be string, got: ${typeof key}`);
     }
 
-    const scope = options.resources;
-    if (key.value === 'resources') {
+    if (key === 'resources') {
       throw new Error(`Key "resources" cannot be redeclared`);
     }
 
-    (scope as any)[key.value] = value; // FIXME
-
+    options.values![key] = value;
     return value;
   },
 });

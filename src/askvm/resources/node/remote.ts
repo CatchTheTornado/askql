@@ -1,11 +1,9 @@
 import fetch from 'node-fetch';
 import { isValue } from '../../../askcode';
-import { runUntyped } from '../../lib';
-import { resource } from '../../lib/resource';
-import { lambda, string, typed, Typed } from '../../lib/typed';
+import { any, resource, runUntyped } from '../../lib';
 
-export const remote = resource<Typed<any>>({
-  type: lambda(string, string),
+export const remote = resource({
+  type: any,
   async compute(options, { params }) {
     const [urlParam, sourceParam] = params!;
     const url = (await runUntyped(options, urlParam)) as string;
@@ -22,6 +20,6 @@ export const remote = resource<Typed<any>>({
       headers: { 'Content-Type': 'application/json' },
     });
     const json = await response.json();
-    return typed(json);
+    return json;
   },
 });

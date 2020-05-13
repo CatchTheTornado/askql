@@ -8,18 +8,18 @@ import { resources, runUntyped } from './askvm';
 import chalk = require('chalk');
 
 const values = {
-  clientNames: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+  clientNames: ['a', 'b', 'c', 'd', 'r', 'f', 'g'],
   hello: 'Hi! This is a AskVM server running on localhost',
   revPerClient: {
-    A: 136,
-    B: 426,
-    C: 133,
-    D: 35,
-    E: 246,
-    F: 446,
-    G: 53,
+    a: 426,
+    b: 35,
+    c: 446,
+    d: 246,
+    e: 133,
+    f: 136,
+    g: 53,
   },
-  test: 5,
+  test: 15,
 };
 
 const app = express();

@@ -1,10 +1,17 @@
-import { resource } from '../../lib/resource';
-import { lambda, string, Typed } from '../../lib/typed';
 import { flatten } from '../../../utils';
+import { any, array, number, record, resource, union3 } from '../../lib';
 
-export const max = resource<Typed<(numbers: number[]) => number>>({
-  type: lambda(string, string),
-  resolver(...numbers: number[]): number {
+const argsType = array(number);
+argsType.itemType = union3(
+  argsType,
+  argsType.itemType,
+  record(argsType.itemType)
+) as any;
+
+export const max = resource({
+  type: any,
+  argsType,
+  async resolver(...numbers: number[]): Promise<number> {
     const flatNumbers = flatten(numbers, {
       arrays: true,
       objectValues: true,

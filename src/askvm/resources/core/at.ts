@@ -1,10 +1,7 @@
-import { resource } from '../../lib/resource';
-import { lambda, string, Typed, typed } from '../../lib/typed';
+import { any, resource, typed } from '../../lib';
 
-type Value = Typed<any>;
-
-export const at = resource<Value>({
-  type: lambda(string, string),
+export const at = resource({
+  type: any,
   async resolver(listOrObject: any, key: any): Promise<any> {
     return typed(listOrObject[key]);
   },

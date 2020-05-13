@@ -1,14 +1,11 @@
 import { askCode } from '../../../askcode';
-import { resource } from '../../lib/resource';
-import { lambda, string, Typed, untyped } from '../../lib/typed';
-import { run } from '../../lib';
+import { any, resource, run, runUntyped } from '../../lib';
 
-export const get = resource<Typed<any>>({
-  type: lambda(string, string),
+export const get = resource({
+  type: any,
   async compute(options, code, args) {
     const [child] = code.params!;
-    const typedName = await run(options, child, args);
-    const name = untyped(typedName);
+    const name = await runUntyped(options, child, args);
     if (typeof name !== 'string') {
       throw new Error('Get expect string as argument');
     }

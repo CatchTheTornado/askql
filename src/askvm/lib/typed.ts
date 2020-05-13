@@ -1,100 +1,57 @@
 import { AskCode } from '../../askcode';
+import { allTypes, any, code, Type, validate, isType } from './type';
 
-export interface Type<T> {
-  name: string;
-  prototype: null | Type<T>;
-  validate: (value: any) => value is T;
+export class TypedValue<T> {
+  readonly type!: Type<T>;
+  readonly value!: T;
 }
 
-export const any: Type<any> = {
-  name: 'any',
-  prototype: null,
-  validate: (value): value is any => true,
+const defaults: Pick<TypedValue<any>, 'type'> = {
+  type: any,
 };
 
-export const typeType: Type<any> = {
-  name: 'type',
-  prototype: any,
-  validate: (value): value is any => true,
-};
-
-export const empty: Type<null> = {
-  name: 'empty',
-  prototype: null,
-  validate: (value): value is null => value == null,
-};
-
-export const boolean: Type<boolean> = {
-  name: 'boolean',
-  prototype: any,
-  validate: (value): value is boolean => typeof value === 'boolean',
-};
-
-export const string: Type<string> = {
-  name: 'string',
-  prototype: any,
-  validate: (value): value is string => typeof value === 'string',
-};
-
-export interface LambdaType<R, A> extends Type<(arg: A) => R> {
-  retType: Type<R>;
-  argType: Type<A>;
+export function typedValue<T>(
+  options?: Partial<TypedValue<any>>
+): TypedValue<T> {
+  return Object.assign(new TypedValue(), defaults, options);
 }
 
-export const lambdaAny: LambdaType<any, any> = {
-  name: 'lambda',
-  retType: any,
-  argType: any,
-  prototype: any,
-  validate: any.validate,
-};
+export const inferableTypes = allTypes;
 
-export const codeAny: LambdaType<any, any> = {
-  name: 'code',
-  retType: any,
-  argType: any,
-  prototype: any,
-  validate: any.validate,
-};
-
-export function lambda<T, A>(
-  retType: Type<T>,
-  argType: Type<A>
-): LambdaType<T, A> {
-  return Object.assign(Object.create(lambdaAny), {
-    name: 'lambda',
-    retType,
-    argType,
-    prototype: any,
-    validate: (value): value is (arg: A) => T => typeof value === 'function',
-  } as LambdaType<T, A>);
-}
-
-//TODO TypedValue<T> extends Resource
-export type Typed<T> = { type: any; value: T };
-
-export const basicTypes = [empty, boolean, string];
-
-export function typed(value: any, type?: any): Typed<any> {
-  if (value instanceof AskCode) {
-    return { value, type: codeAny };
+export function typed(value: any, type?: Type<any>): TypedValue<any> {
+  if (type) {
+    if (!isType(type)) {
+      throw new Error(`Invalid type value: ${type}`);
+    }
+    if (type && !validate(type, untyped(value))) {
+      throw new Error(
+        `Type mismatch: ${type.name} expected, but "${untyped(value)}" found`
+      );
+    }
+    // TODO optionally change typed if `type` is given and is more strict
   }
-  if (value && typeof value.type !== 'undefined') {
+
+  if (value instanceof TypedValue) {
     // if already a typed value, don't wrap again
     return value;
   }
-  if (type) {
-    return { value, type };
+
+  if (value instanceof AskCode) {
+    // TODO return a custom runnable resource implementation
+    // so that function const is callable
+    return typedValue({ value, type: code });
   }
-  if (value != null && typeof value.prototype !== 'undefined') {
-    return { value, type: typeType };
-  }
-  for (let index in basicTypes) {
-    if (basicTypes[index].validate(value)) {
-      return { value, type: basicTypes[index] };
+
+  // type inference
+  for (let index in inferableTypes) {
+    const typeCandidate = inferableTypes[index];
+    if (validate(typeCandidate, value)) {
+      return typedValue({ value, type: typeCandidate });
     }
   }
-  return { value, type: any };
+
+  // catch-all for type any
+  return typedValue({ value });
 }
 
 export type JSONable =
@@ -105,6 +62,7 @@ export type JSONable =
   | JSONable[]
   | { [key: string]: JSONable };
 
+// export function untyped<T>(value: TypedValue<T>): T;
 export function untyped(value: any): any {
   if (!value) {
     return value;

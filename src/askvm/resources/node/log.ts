@@ -1,8 +1,7 @@
-import { resource } from '../../lib/resource';
-import { boolean, Typed } from '../../lib/typed';
+import { resource, any } from '../../lib';
 
-export const log = resource<Typed<null>>({
-  type: boolean,
+export const log = resource({
+  type: any,
   async resolver(...messages: any) {
     console.log(...messages);
     return messages[0] ?? null;

@@ -1,10 +1,8 @@
-import { run } from '../../lib';
-import { resource } from '../../lib/resource';
-import { lambda, string, Typed, untyped } from '../../lib/typed';
 import { asyncMap } from '../../../utils';
+import { any, resource, runUntyped } from '../../lib';
 
-export const object = resource<Typed<Record<string, any>>>({
-  type: lambda(string, string),
+export const object = resource<any, any[]>({
+  type: any,
   resolver(...args: any[]): any {
     const result: Record<string, any> = {};
     for (let i = 0; i + 1 < args.length; i += 2) {
@@ -16,7 +14,7 @@ export const object = resource<Typed<Record<string, any>>>({
     // TODO allow bare identifiers instead of string (syntax sugar)
     // TODO accept list of pairs from syntax sugar
     return this.resolver!(
-      ...(await asyncMap(items, (param) => run(options, param))).map(untyped)
+      ...(await asyncMap(items, (param) => runUntyped(options, param)))
     );
   },
 });

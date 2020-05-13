@@ -4,7 +4,7 @@
   "description": "AskQL is a query language that can express every data request",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc && mkdir dist/askscript/parser/ && cp src/askscript/parser/askscript.grammar.pegjs src/askscript/parser/askscript.grammar.pegjs.classes.js dist/askscript/parser/ && pegjs --allowed-start-rules ask,askForRepl dist/askscript/parser/askscript.grammar.pegjs && rm dist/askscript/parser/askscript.grammar.pegjs",
+    "build": "rm -rf dist && tsc && mkdir -p dist/askscript/parser/ && cp src/askscript/parser/askscript.grammar.pegjs src/askscript/parser/askscript.grammar.pegjs.classes.ts dist/askscript/parser/ && pegjs --allowed-start-rules ask,askForRepl dist/askscript/parser/askscript.grammar.pegjs && rm dist/askscript/parser/askscript.grammar.pegjs",
     "postbuild": "chmod +x dist/*.js",
     "test": "jest"
   },

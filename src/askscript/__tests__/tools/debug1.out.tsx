@@ -3,6 +3,6 @@ askjsx;
 
 export const expectedOutput = (
   <ask>
-    <let name="arr1" type="array(array(int))" value={[[], [1, 2, 3]]} />
+    <set name="arr1" value="[[], [1, 2, 3]]" />
   </ask>
 );

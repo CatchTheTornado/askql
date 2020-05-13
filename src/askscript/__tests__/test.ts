@@ -6,7 +6,7 @@ const path = require('path');
 const parser = require('../parser/askscript.grammar');
 
 describe('AskScript parser can parse the .ask file', () => {
-  function checkIfParsesFile(absoluteFilePath) {
+  function checkIfParsesFile(absoluteFilePath: string) {
     const code = fs.readFileSync(absoluteFilePath).toString();
 
     // AskScript -> AskJSX AST
@@ -19,7 +19,7 @@ describe('AskScript parser can parse the .ask file', () => {
   const testFilenames = glob.sync(testsGlobPath);
 
   for (const testFilename of testFilenames) {
-    const parts = path.parse(testFilename)
+    const parts = path.parse(testFilename);
     test(`parses successfully ${parts.base}`, () => {
       checkIfParsesFile(testFilename);
     });
@@ -28,8 +28,8 @@ describe('AskScript parser can parse the .ask file', () => {
 
 describe('AskScript parser output looks as expected', () => {
   function checkIfParsedFileMatchesOutput(
-    absoluteFilePath,
-    absoluteOutputFilePath
+    absoluteFilePath: string,
+    absoluteOutputFilePath: string
   ) {
     const code = fs.readFileSync(absoluteFilePath).toString();
 

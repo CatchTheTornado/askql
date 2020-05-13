@@ -1,8 +1,8 @@
-// Generates output for all .ask
+// Generates output for all .ask which don't have a corresponding .out.tsx nor .out.tsx.notImplemented file
 
 export = ''; // This dummy line converts this file to a module.
 
-const fs = require('fs');
+import * as fs from 'fs';
 const glob = require('glob');
 const path = require('path');
 
@@ -68,12 +68,17 @@ function jsxObjToXml(
 
     if ('children' in obj && !isObjectEmpty(obj)) {
       output += '>';
-      if (obj.children.length > 0) output += '\n';
+      if (obj.children.length > 0) {
+        output += '\n';
+      }
 
       for (const child of obj.children) {
         output += indent + '  ' + jsxObjToXml(child, indent + '  ') + '\n';
       }
-      output += indent + `</${obj.name}>`;
+      if (obj.children.length > 0) {
+        output += indent;
+      }
+      output += `</${obj.name}>`;
     } else {
       output += ' />';
     }
@@ -88,37 +93,59 @@ const askScriptFilesGlobPath = path.join(
   '*.ask'
 );
 const askScriptFilePaths = glob.sync(askScriptFilesGlobPath);
+console.log('All .ask files: \n');
 console.log(askScriptFilePaths);
+
+let filesGenerated: number = 0;
 
 for (const askScriptFilePath of askScriptFilePaths) {
   const parts = path.parse(askScriptFilePath);
-  const outputFilePath = path.join(parts.dir, parts.nam + '.tsx.out');
+  const outputFilePath = path.join(parts.dir, parts.name + '.out.tsx');
+  const outputFileNotImplementedPath = path.join(
+    parts.dir,
+    parts.name + '.tsx.out.notImplemented'
+  );
 
-  // if (!fs.existsSync(outputFilePath)) {
   // If the output file does not exist, create it from the current AskScript parser output.
+  // Of course later on you need to eyeball it to check whether it looks OK.
+  if (
+    !fs.existsSync(outputFilePath) &&
+    !fs.existsSync(outputFileNotImplementedPath)
+  ) {
+    const askScriptCode = fs.readFileSync(askScriptFilePath).toString();
+    const jsxObj = parser.parse(askScriptCode).print();
 
-  const askScriptCode = fs.readFileSync(askScriptFilePath).toString();
-  const jsxObj = parser.parse(askScriptCode).print();
+    const jsxXml = '  ' + jsxObjToXml(jsxObj, '  ');
 
-  const jsxXml = jsxObjToXml(jsxObj, '  ');
+    const fileContents =
+      'import * as askjsx from "../../../askjsx";\n' +
+      '\n' +
+      'export const expectedOutput = (\n' +
+      jsxXml +
+      '\n' +
+      ');\n';
 
-  const fileContents =
-    'import * as askjsx from "../../../askjsx";\n' +
-    '\n' +
-    'export const expectedOutput = (\n' +
-    jsxXml +
-    '\n' +
-    ');\n';
+    console.log('Filename: ' + askScriptFilePath + '\n\n');
+    console.log(askScriptCode);
+    // console.log(JSON.stringify(jsxObj, null, 2));
+    console.log('\n\n');
+    console.log(fileContents);
+    console.log('\n\n');
+    console.log(`Saving JSX file as ${outputFilePath}\n`);
+    fs.writeFileSync(outputFilePath, fileContents);
+    console.log('\n\n');
 
-  console.log('filename: ' + askScriptFilePath + '\n\n');
-  console.log(JSON.stringify(jsxObj, null, 2));
-  console.log('\n\n');
-  console.log(fileContents);
-  console.log('\n\n\n');
-
-  // break;
-  // }/
+    ++filesGenerated;
+  }
 }
+
+console.log('\n\n\n');
+if (filesGenerated == 0) {
+  console.log('No new files generated as all .out.tsx files already existed.');
+} else {
+  console.log(`Generated ${filesGenerated} new .out.tsx file(s).`);
+}
+console.log('\n\n');
 
 interface LooseObject {
   [key: string]: any;

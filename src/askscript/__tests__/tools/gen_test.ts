@@ -21,8 +21,13 @@ function jsxObjToXml(
   indent: string = '',
   insideCurlyBraces: boolean = false
 ) {
+  // console.log('jsxObj: ' + JSON.stringify(jsxObj, null, 2));
+
   let output = '';
-  if (Array.isArray(jsxObj)) {
+  if (jsxObj === null) {
+    output += 'null';
+    return output;
+  } else if (Array.isArray(jsxObj)) {
     output += '[';
     let values = [];
     const arrValue = jsxObj as object[];
@@ -39,6 +44,7 @@ function jsxObjToXml(
         output = jsxObj;
         break;
       default:
+        // console.log(`typeof ${jsxObj} = ${typeof jsxObj}`);
         if (insideCurlyBraces) {
           output = `'${jsxObj}'`;
         } else {
@@ -95,6 +101,7 @@ const askScriptFilesGlobPath = path.join(
 const askScriptFilePaths = glob.sync(askScriptFilesGlobPath);
 console.log('All .ask files: \n');
 console.log(askScriptFilePaths);
+console.log('\n===================================\n\n');
 
 let filesGenerated: number = 0;
 
@@ -103,7 +110,7 @@ for (const askScriptFilePath of askScriptFilePaths) {
   const outputFilePath = path.join(parts.dir, parts.name + '.out.tsx');
   const outputFileNotImplementedPath = path.join(
     parts.dir,
-    parts.name + '.tsx.out.notImplemented'
+    parts.name + '.out.tsx.notImplemented'
   );
 
   // If the output file does not exist, create it from the current AskScript parser output.
@@ -127,13 +134,14 @@ for (const askScriptFilePath of askScriptFilePaths) {
 
     console.log('Filename: ' + askScriptFilePath + '\n\n');
     console.log(askScriptCode);
-    // console.log(JSON.stringify(jsxObj, null, 2));
-    console.log('\n\n');
+    console.log('\n\n----\n\n');
+    console.log(JSON.stringify(jsxObj, null, 2));
+    console.log('\n\n----\n\n');
     console.log(fileContents);
     console.log('\n\n');
     console.log(`Saving JSX file as ${outputFilePath}\n`);
     fs.writeFileSync(outputFilePath, fileContents);
-    console.log('\n\n');
+    console.log('\n===================================\n\n');
 
     ++filesGenerated;
   }

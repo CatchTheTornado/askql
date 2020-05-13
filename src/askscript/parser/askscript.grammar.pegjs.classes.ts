@@ -72,7 +72,7 @@ export class Statement {
     this.statement = statement;
   }
 
-  print(): object | string | number {
+  print(): object | string | number | boolean | null {
     return this.statement.print();
   }
 }
@@ -152,7 +152,7 @@ export class Value {
     }
   }
 
-  print(): object | string | number {
+  print(): object | string | number | boolean | null {
     let output = this.expressionToPrint.print();
     return output;
   }
@@ -287,10 +287,7 @@ export class Else {
   }
 
   print(): object {
-    let output = {
-      name: 'else',
-      children: this.statementList.map((statement) => statement.print()),
-    };
+    let output = this.statementList.map((statement) => statement.print());
     return output;
   }
 }
@@ -398,7 +395,7 @@ export class ValueLiteral {
     this.value = value;
   }
 
-  print(): object | string | number {
+  print(): object | string | number | boolean | null {
     return this.value.print();
   }
 }
@@ -488,40 +485,22 @@ export class Identifier {
 }
 
 export class Null {
-  print(): object {
-    let output = {
-      name: 'value',
-      props: {
-        type: 'empty',
-        value: 'null',
-      },
-    };
+  print(): null {
+    let output = null;
     return output;
   }
 }
 
 export class True {
-  print(): object {
-    let output = {
-      name: 'value',
-      props: {
-        type: 'boolean',
-        value: 'true',
-      },
-    };
+  print(): boolean {
+    let output = true;
     return output;
   }
 }
 
 export class False {
-  print(): object {
-    let output = {
-      name: 'value',
-      props: {
-        type: 'boolean',
-        value: 'false',
-      },
-    };
+  print(): boolean {
+    let output = false;
     return output;
   }
 }

@@ -5,3 +5,6 @@ node_modules
 src/askscript/.vscode/
 
 .vscode/
+
+src/askscript/parser/askscript.grammar.js
+

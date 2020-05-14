@@ -11,8 +11,9 @@ export function Fun({
   children = [],
 }: {
   name?: string;
-  args?: string[];
+  args?: any[]; //TODO(mh)
   children?: AskCodeOrValue[];
+  returns?: any;
 }) {
   assert(isString(name), 'name');
   // assert(isStringArray(args), 'args'); // TODO(mh)

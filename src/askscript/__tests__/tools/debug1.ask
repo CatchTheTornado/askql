@@ -1,3 +1,0 @@
-ask {
-    let arr1:array(array(int)) = [[], [1, 2, 3]]
-}

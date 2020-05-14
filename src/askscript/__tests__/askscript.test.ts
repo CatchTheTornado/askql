@@ -1,12 +1,10 @@
 import { AskCodeOrValue } from '../../askcode';
 import * as askjsx from '../../askjsx';
+import { parser } from '../../askscript';
 
-const fs = require('fs');
-const glob = require('glob');
-const path = require('path');
-
-// Include AskScript parser
-const parser = require('../parser/askscript.grammar');
+import * as fs from 'fs';
+import * as glob from 'glob';
+import * as path from 'path';
 
 function fromAst(ast: any): AskCodeOrValue {
   if (Array.isArray(ast)) {
@@ -36,7 +34,28 @@ function jsonprint(object: any) {
 }
 
 describe('AskScript parser can parse the .ask file', () => {
-  function checkIfParsesFile(
+  function checkIfParsesFile(absoluteFilePath: string) {
+    const code = fs.readFileSync(absoluteFilePath).toString();
+
+    // AskScript -> AskJSX AST
+    const askJsxStructure = parser.parse(code).print();
+
+    expect(askJsxStructure).not.toBeNull();
+  }
+
+  const testsGlobPath = path.join(__dirname, 'code', '*.ask');
+  const testFilenames = glob.sync(testsGlobPath);
+
+  for (const testFilename of testFilenames) {
+    const parts = path.parse(testFilename);
+    test(`parses successfully ${parts.base}`, () => {
+      checkIfParsesFile(testFilename);
+    });
+  }
+});
+
+describe('AskScript parser produces correct output', () => {
+  function checkIfParsedFileMatchesOutput(
     askScriptFilePath: string,
     expectedOutputFilePath: string
   ) {
@@ -44,6 +63,8 @@ describe('AskScript parser can parse the .ask file', () => {
 
     // AskScript -> AskJSX AST
     const ast = parser.parse(code).print();
+
+    // TODO(lc): remove comments when cleaning up the repository
 
     // console.log(path.parse(askScriptFilePath).base);
     // console.log('ast: ');
@@ -80,8 +101,8 @@ describe('AskScript parser can parse the .ask file', () => {
 
     const parts = path.parse(askScriptFilePath);
     // if (parts.base != 'program14d-method_call_args.ask') continue;
-    test(`parses ${parts2.name + '.ask'} successfully`, () => {
-      checkIfParsesFile(askScriptFilePath, expectedOutputFilePath);
+    test(`produces correct output for ${parts2.name + '.ask'}`, () => {
+      checkIfParsedFileMatchesOutput(askScriptFilePath, expectedOutputFilePath);
     });
     // break;
   }

@@ -4,7 +4,7 @@
   "description": "AskQL is a query language that can express every data request",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc && mkdir -p dist/askscript/parser/ && cp src/askscript/parser/askscript.grammar.pegjs src/askscript/parser/askscript.grammar.pegjs.classes.ts dist/askscript/parser/ && pegjs --allowed-start-rules ask,askForRepl dist/askscript/parser/askscript.grammar.pegjs && rm dist/askscript/parser/askscript.grammar.pegjs",
+    "build": "rm -rf dist && tsc",
     "postbuild": "chmod +x dist/*.js",
     "test": "jest"
   },
@@ -21,25 +21,26 @@
     "url": "https://github.com/xFAANG/askql/issues"
   },
   "homepage": "https://askql.org/",
-  "dependencies": {
-    "ts-pegjs": "^0.2.6"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.9.0",
     "@types/express": "^4.17.6",
+    "@types/glob": "^7.1.1",
     "@types/jest": "^25.2.1",
     "@types/node": "^13.13.4",
     "@types/node-fetch": "^2.5.7",
     "babel-jest": "^25.4.0",
     "chalk": "^4.0.0",
+    "child-process": "^1.0.2",
     "express": "^4.17.1",
     "glob": "^7.1.6",
     "jest": "^25.4.0",
     "node-fetch": "^2.6.0",
     "pegjs": "^0.10.0",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "ts-node": "^8.10.1"
   }
 }

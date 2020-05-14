@@ -11,7 +11,9 @@
 // convert " to ' in string literals
 
 {
-  const ask = require('./askscript.grammar.pegjs.classes')
+  const path = require('path');
+
+  const ask = require(path.join(__dirname, 'askscript.grammar.pegjs.classes.ts'));
 }
 
 

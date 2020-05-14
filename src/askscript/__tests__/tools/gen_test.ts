@@ -1,13 +1,12 @@
 // Generates output for all .ask which don't have a corresponding .out.tsx nor .out.tsx.notImplemented file
 
-export = ''; // This dummy line converts this file to a module.
+export const x = null; // This dummy line converts this file to a module.
 
 import * as fs from 'fs';
-const glob = require('glob');
-const path = require('path');
+import * as glob from 'glob';
+import * as path from 'path';
 
-// Include AskScript parser
-const parser = require('../../parser/askscript.grammar');
+import { parser } from '../../../askscript';
 
 function isObjectEmpty(obj: object) {
   for (const key in obj) {

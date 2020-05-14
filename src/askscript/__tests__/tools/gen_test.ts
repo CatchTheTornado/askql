@@ -10,7 +10,7 @@
 // Usage: npx ts-node src/askscript/__tests__/tools/gen_test.ts     (no args)
 //
 
-export const x = null; // This dummy line converts this file to a module.
+export {}; // This dummy line converts this file to a module.
 
 import * as fs from 'fs';
 import * as glob from 'glob';

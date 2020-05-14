@@ -1,7 +1,7 @@
 ask {
     if (n:lessThan(2)) {
-        return n
+        return a
     }
     
-    return n
+    return b
 }

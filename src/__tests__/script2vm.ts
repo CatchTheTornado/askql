@@ -42,7 +42,7 @@ async function e2e(
   const ast = parse(script);
   const askCode = fromAskScriptAst(ast);
 
-  return runUntyped({ values: environment.values, resources }, askCode);
+  return runUntyped(environment, askCode);
 }
 
 describe('simple e2e tests', () => {

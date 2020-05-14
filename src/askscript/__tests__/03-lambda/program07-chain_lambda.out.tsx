@@ -4,10 +4,10 @@ askjsx;
 export const expectedOutput = (
   <ask>
     <call
-      name={'number'}
+      name={'ceil'}
       args={[
         <call
-          name={'sumOfSquares'}
+          name={'divideBy'}
           args={[
             <call
               name={'toInt'}
@@ -47,6 +47,7 @@ export const expectedOutput = (
                 />,
               ]}
             />,
+            6,
           ]}
         />,
       ]}

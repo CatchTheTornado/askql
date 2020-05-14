@@ -1,0 +1,3 @@
+// Error from AskVM:
+//    Unknown identifier lessThan!
+export const expectedResult = 120;

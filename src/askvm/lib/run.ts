@@ -24,7 +24,7 @@ export async function run(
   }
 
   if (!(name in values)) {
-    throw new Error(`Unknown identifier ${name}!`);
+    throw new Error(`Unknown identifier '${name}'!`);
   }
 
   const value = typed(values[name]);

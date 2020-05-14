@@ -1,62 +1,88 @@
 import { fromAskScriptAst } from '../askjsx';
 import { parse } from '../askscript';
-import { resources, runUntyped, Values } from '../askvm';
+import { resources, runUntyped, Values, Options, Resource } from '../askvm';
+import * as type from '../askvm/lib/type';
+import { resource } from '../askvm/lib';
 
 import * as fs from 'fs';
 import * as glob from 'glob';
 import * as path from 'path';
 
-const environment: Values = {
-  hello: 'Hello, this is your Ask server!',
-  helloFunction: () => 'Hello, this is your Ask server!',
-  helloDynamicFunction: () =>
-    "Hello, this is your Ask server! It's " + new Date().toString(),
+const defaultEnvironment: Options = {
+  values: {
+    hello: 'Hello, this is your Ask server!',
+  },
+  resources: {
+    ...resources,
+
+    helloFunction: resource({
+      name: 'helloFunction',
+      type: type.string,
+      argsType: type.empty,
+      resolver: async (): Promise<string> => {
+        return 'Hello, this is your Ask server!';
+      },
+    }),
+
+    helloDynamicFunction: resource({
+      name: 'helloDynamicFunction',
+      type: type.string,
+      argsType: type.empty,
+      resolver: async (): Promise<string> => {
+        return "Hello, this is your Ask server! It's " + new Date().toString();
+      },
+    }),
+  },
 };
 
-function e2e(script: string, values: Values = environment): any {
+async function e2e(
+  script: string,
+  environment: Options = defaultEnvironment
+): Promise<any> {
   const ast = parse(script);
   const askCode = fromAskScriptAst(ast);
 
-  return runUntyped(
-    {
-      resources,
-      values,
-    },
-    askCode
-  );
+  return runUntyped({ values: environment.values, resources }, askCode);
 }
 
 describe('simple e2e tests', () => {
   test('e2e #1', async () => {
-    await expect(
-      e2e(`ask {
-        'Hello world!'
-    }`)
-    ).resolves.toBe('Hello world!');
+    const output = await e2e(`ask {
+      'Hello world!'
+  }`);
+    expect(output).toBe('Hello world!');
   });
 
   test('e2e #2', async () => {
-    await expect(
-      e2e(`ask {
+    const output = await e2e(`ask {
       hello
-  }`)
-    ).resolves.toBe(environment.hello);
+  }`);
+    expect(output).toBe(defaultEnvironment.values?.hello);
   });
 
+  // // TODO(mh):
+  // // Unknown identifier 'helloFunction'!
   // test('e2e #3 -- not implemented', async () => {
-  //   await expect(
-  //     e2e(`ask {
+  //   const output = await e2e(`ask {
   //         helloFunction()
-  //   }`)
-  //   ).resolves.toBe(environment.helloFunction());
+  //   }`);
+
+  //   expect(output).toBe(
+  //     await defaultEnvironment.resources?.helloFunction.resolver()
+  //   );
   // });
 
-  // test('e2e #4 -- not implemented', async () => {
-  //   await expect(
-  //     e2e(`ask {
+  // // TODO(mh):
+  // // Expected: "Hello, this is your Ask server! It's Thu May 14 2020 23:03:43 GMT+0200 (Central European Summer Time)"
+  // // Received: {}
+  // test('e2e #4 -- wrong output', async () => {
+  //   const output = e2e(`ask {
   //         helloDynamicFunction()
-  //   }`)
-  //   ).resolves.toBe(environment.helloDynamicFunction()); // This might be 'a bit' flaky, since the time is returned with second precision
+  //   }`);
+
+  //   expect(output).toBe(
+  //     await defaultEnvironment.resources?.helloDynamicFunction.resolver()
+  //   ); // This might be 'a bit' flaky, since the time is returned with second precision
   // });
 });
 
@@ -91,17 +117,20 @@ describe('running .ask files produces expected output', () => {
       // Read environment, if available
       const environmentFilePath = path.join(parts.dir, '_environment.ts');
 
-      let env: Values;
+      let environment: Options;
       if (fs.existsSync(environmentFilePath)) {
-        const { values } = require(environmentFilePath);
-        env = values;
+        const newEnvironment = require(environmentFilePath);
+        environment = {
+          values: newEnvironment.values,
+          resources: { ...resources, ...newEnvironment.resources },
+        };
       } else {
         // Using default environment
-        env = environment;
+        environment = defaultEnvironment;
       }
 
       // Run the .ask code
-      const result = await e2e(askScriptCode, env);
+      const result = await e2e(askScriptCode, environment);
 
       // Read expected output
       // console.log('expectedResultFilePath: ' + expectedResultFilePath);

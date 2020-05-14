@@ -7,7 +7,7 @@ export function If({
   children,
   ...props
 }: {
-  condition: string;
+  condition: AskCodeOrValue;
   children?: AskCodeOrValue[];
   else?: AskCodeOrValue | AskCodeOrValue[];
   then?: AskCodeOrValue | AskCodeOrValue[];

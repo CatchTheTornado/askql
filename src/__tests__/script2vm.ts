@@ -1,27 +1,20 @@
-import { script as askscript } from '..';
-import { AskCodeOrValue } from '../askcode';
-import { createElement } from '../askjsx';
+import { fromAskScriptAst } from '../askjsx';
+import { parse } from '../askscript';
 import { resources, runUntyped } from '../askvm';
 
-function fromAst({ name, props, children = [] }: any): AskCodeOrValue {
-  return createElement(name, props, ...children.map(fromAst));
-}
-
 function e2e(script: string): any {
-  const ast = askscript.parser.parse(script).print();
-  const code = fromAst(ast);
   return runUntyped(
     {
       resources,
     },
-    code
+    fromAskScriptAst(parse(script))
   );
 }
 
 test('e2e', async () => {
   await expect(
     e2e(`ask {
-    'Hello world!'
+  'Hello world!'
 }`)
   ).resolves.toBe('Hello world!');
 });

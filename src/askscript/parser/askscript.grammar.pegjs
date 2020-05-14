@@ -12,8 +12,7 @@
 
 {
   const path = require('path');
-
-  const ask = require(path.join(__dirname, 'askscript.grammar.pegjs.classes.ts'));
+  const ask = require(path.join(__dirname, '../../../../src/askscript/parser/askscript.grammar.pegjs.classes.ts'));
 }
 
 

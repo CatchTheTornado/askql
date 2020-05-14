@@ -1,6 +1,7 @@
 export * from './Ask';
 export * from './Call';
 export * from './Fragment';
+export * from './fromAskScriptAst';
 export * from './Fun';
 export * from './If';
 export * from './jsx';

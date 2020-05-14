@@ -2,7 +2,7 @@ import { AskCode, AskCodeOrValue, isValue } from '../../askcode';
 import { Resources } from './resource';
 import { JSONable, typed, TypedValue, untyped } from './typed';
 
-type Values = Record<string, any>;
+export type Values = Record<string, any>;
 export interface Options {
   resources?: Resources;
   values?: Values;

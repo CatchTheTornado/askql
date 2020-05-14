@@ -1,9 +1,9 @@
 import { fromAskScriptAst } from '../../askjsx';
 import { parse } from '../../askscript';
 
-const fs = require('fs');
-const glob = require('glob');
-const path = require('path');
+import * as fs from 'fs';
+import * as glob from 'glob';
+import * as path from 'path';
 
 function jsonprint(object: any) {
   return JSON.stringify(object, null, 2);

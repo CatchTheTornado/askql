@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import { ReplOptions, REPLServer, start } from 'repl';
-import { AskCodeOrValue, parse } from './askcode';
-import { createElement } from './askjsx';
-import { parser as askscript } from './askscript';
+import { parse } from './askcode';
+import { fromAskScriptAst } from './askjsx';
+import * as askscript from './askscript';
 import { Options, resources, run } from './askvm';
 
 export type Context = Record<string, any>;
@@ -27,10 +27,6 @@ const options: Options = {
   resources,
   values,
 };
-
-function fromAst({ name, props, children = [] }: any): AskCodeOrValue {
-  return createElement(name, props, ...children.map(fromAst));
-}
 
 export const replOptions: ReplOptions = {
   prompt: '🦄 ',
@@ -62,7 +58,7 @@ export const replOptions: ReplOptions = {
 
       try {
         const { type, value } = isAskProgram
-          ? await run(options, fromAst(askscript.parse(code).print()))
+          ? await run(options, fromAskScriptAst(askscript.parse(code)))
           : await run(options, parse(code));
         return [value, type.name];
       } catch (e) {

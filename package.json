@@ -34,7 +34,6 @@
     "@types/node-fetch": "^2.5.7",
     "babel-jest": "^25.4.0",
     "chalk": "^4.0.0",
-    "child-process": "^1.0.2",
     "express": "^4.17.1",
     "glob": "^7.1.6",
     "jest": "^25.4.0",

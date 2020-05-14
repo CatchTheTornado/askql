@@ -40,6 +40,8 @@ describe('AskScript parser produces correct output', () => {
     // AskScript -> AskJSX AST
     const ast = parse(code);
 
+    // TODO(lc): remove comments when cleaning up the repository
+
     // console.log(path.parse(askScriptFilePath).base);
     // console.log('ast: ');
     // console.log(jsonprint(ast));

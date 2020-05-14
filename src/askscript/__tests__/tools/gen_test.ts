@@ -1,4 +1,14 @@
 // Generates output for all .ask which don't have a corresponding .out.tsx nor .out.tsx.notImplemented file
+// using the output from the AskScript parser. Please note that we are using the parser itself to generate
+// files with which parser output will be later compared during tests. Please please read each and every such
+// file to make sure the output is correct and fix any mistake.
+//
+// This script was found useful when adding a dozen of .ask test files at once, because it is easier to eyeball the JSX
+// output to verify whether it looks valid rather than type all of the JSX files manually (typos, typos, typos, braces,
+// braces, braces...).
+//
+// Usage: npx ts-node src/askscript/__tests__/tools/gen_test.ts     (no args)
+//
 
 export const x = null; // This dummy line converts this file to a module.
 
@@ -24,24 +34,46 @@ function jsxObjToXml(
 
   let output = '';
   if (jsxObj === null) {
-    output += 'null';
+    if (insideCurlyBraces) {
+      output += 'null';
+    } else {
+      output += '{null}';
+    }
     return output;
-  } else if (Array.isArray(jsxObj)) {
+  }
+
+  if (Array.isArray(jsxObj)) {
     output += '[';
     let values = [];
     const arrValue = jsxObj as object[];
     for (const value of arrValue)
-      values.push(jsxObjToXml(value, indent + '  ', insideCurlyBraces));
+      values.push(jsxObjToXml(value, `${indent}  `, insideCurlyBraces));
     output += values.join(',');
     output += ']';
     return output;
-  } else if (typeof jsxObj != 'object') {
+  }
+
+  if (typeof jsxObj != 'object') {
     // for string, numbers etc. return the value
 
     switch (typeof jsxObj) {
       case 'number':
-        output = jsxObj;
+        if (insideCurlyBraces) {
+          output = jsxObj;
+        } else {
+          output = `{${jsxObj}}`;
+        }
         break;
+
+      case 'boolean':
+        const text = jsxObj ? 'true' : 'false';
+        if (insideCurlyBraces) {
+          output = text;
+        } else {
+          output = `{${text}}`;
+        }
+        break;
+
       default:
         // console.log(`typeof ${jsxObj} = ${typeof jsxObj}`);
         if (insideCurlyBraces) {
@@ -52,43 +84,43 @@ function jsxObjToXml(
     }
 
     return output;
-  } else {
-    const obj = jsxObj as LooseObject;
-
-    output += `<${obj.name}`;
-    if ('props' in obj) {
-      for (const propKey in obj.props) {
-        const propValue = obj.props[propKey];
-        if (obj.name == 'ask' && propKey == 'args' && propValue.length == 0) {
-          // don't output empty args for ask (avoids: <ask args={[]}>, outputs: <ask> instead)
-        } else {
-          output += ` ${propKey}={${jsxObjToXml(
-            propValue,
-            indent + '  ',
-            true
-          )}}`;
-        }
-      }
-    }
-
-    if ('children' in obj && !isObjectEmpty(obj)) {
-      output += '>';
-      if (obj.children.length > 0) {
-        output += '\n';
-      }
-
-      for (const child of obj.children) {
-        output += indent + '  ' + jsxObjToXml(child, indent + '  ') + '\n';
-      }
-      if (obj.children.length > 0) {
-        output += indent;
-      }
-      output += `</${obj.name}>`;
-    } else {
-      output += ' />';
-    }
-    return output;
   }
+
+  const obj = jsxObj as LooseObject;
+
+  output += `<${obj.name}`;
+  if ('props' in obj) {
+    for (const propKey in obj.props) {
+      const propValue = obj.props[propKey];
+      if (obj.name == 'ask' && propKey == 'args' && propValue.length == 0) {
+        // don't output empty args for ask (avoids: <ask args={[]}>, outputs: <ask> instead)
+      } else {
+        output += ` ${propKey}={${jsxObjToXml(
+          propValue,
+          `${indent}  `,
+          true
+        )}}`;
+      }
+    }
+  }
+
+  if ('children' in obj && !isObjectEmpty(obj)) {
+    output += '>';
+    if (obj.children.length > 0) {
+      output += '\n';
+    }
+
+    for (const child of obj.children) {
+      output += `${indent}  ${jsxObjToXml(child, `${indent}  `)}\n`;
+    }
+    if (obj.children.length > 0) {
+      output += indent;
+    }
+    output += `</${obj.name}>`;
+  } else {
+    output += ' />';
+  }
+  return output;
 }
 
 const askScriptFilesGlobPath = path.join(
@@ -106,10 +138,10 @@ let filesGenerated: number = 0;
 
 for (const askScriptFilePath of askScriptFilePaths) {
   const parts = path.parse(askScriptFilePath);
-  const outputFilePath = path.join(parts.dir, parts.name + '.out.tsx');
+  const outputFilePath = path.join(parts.dir, `${parts.name}.out.tsx`);
   const outputFileNotImplementedPath = path.join(
     parts.dir,
-    parts.name + '.out.tsx.notImplemented'
+    `${parts.name}.out.tsx.notImplemented`
   );
 
   // If the output file does not exist, create it from the current AskScript parser output.
@@ -121,10 +153,10 @@ for (const askScriptFilePath of askScriptFilePaths) {
     const askScriptCode = fs.readFileSync(askScriptFilePath).toString();
     const jsxObj = parser.parse(askScriptCode).print();
 
-    const jsxXml = '  ' + jsxObjToXml(jsxObj, '  ');
+    const jsxXml = `  ${jsxObjToXml(jsxObj, '  ')}`;
 
     const fileContents =
-      'import * as askjsx from "../../../askjsx";\n' +
+      "import * as askjsx from '../../../askjsx';\n" +
       'askjsx;\n' +
       '\n' +
       'export const expectedOutput = (\n' +
@@ -132,7 +164,7 @@ for (const askScriptFilePath of askScriptFilePaths) {
       '\n' +
       ');\n';
 
-    console.log('Filename: ' + askScriptFilePath + '\n\n');
+    console.log(`Filename: ${askScriptFilePath}\n\n`);
     console.log(askScriptCode);
     console.log('\n\n----\n\n');
     console.log(JSON.stringify(jsxObj, null, 2));

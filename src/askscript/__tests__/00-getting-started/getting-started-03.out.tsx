@@ -3,9 +3,9 @@ askjsx;
 
 export const expectedOutput = (
   <ask>
-    <fun name={'factorial'} args={['n']}>
-      <if condition={<call name="lessThan" args={[<ref name="n" />, 2]} />}>
-        <return value={<ref name="n" />} />
+    <fun name={'factorial'} args={[['n', 'int']]} returns={'int'}>
+      <if condition={<call name={'lessThan'} args={[<ref name={'n'} />, 2]} />}>
+        <return value={<ref name={'n'} />} />
       </if>
       <call
         name={'times'}

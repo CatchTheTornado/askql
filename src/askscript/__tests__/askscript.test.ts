@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import * as glob from 'glob';
 import * as path from 'path';
 
+// TODO(mh): move to AskJSX
 function fromAst(ast: any): AskCodeOrValue {
   if (Array.isArray(ast)) {
     return ast.map(fromAst) as any;

@@ -126,6 +126,7 @@ for (const askScriptFilePath of askScriptFilePaths) {
 
     const fileContents =
       'import * as askjsx from "../../../askjsx";\n' +
+      'askjsx;\n' +
       '\n' +
       'export const expectedOutput = (\n' +
       jsxXml +

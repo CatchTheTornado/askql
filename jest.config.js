@@ -4,6 +4,6 @@ module.exports = {
     '<rootDir>/dist',
     '__tests__/lib',
     'src/__tests__/script2vm.ts',
-    'src/askscript/__tests__/*',
+    // 'src/askscript/__tests__/*',
   ],
 };

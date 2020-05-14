@@ -1,7 +1,4 @@
-import * as askjsx from "../../../askjsx";
+import * as askjsx from '../../../askjsx';
+askjsx;
 
-export const expectedOutput = (
-  <ask>
-    true
-  </ask>
-);
+export const expectedOutput = <ask>{true}</ask>;

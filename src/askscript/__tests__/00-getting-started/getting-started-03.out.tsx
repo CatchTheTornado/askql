@@ -1,4 +1,5 @@
 import * as askjsx from '../../../askjsx';
+askjsx;
 
 export const expectedOutput = (
   <ask>
@@ -17,5 +18,6 @@ export const expectedOutput = (
         ]}
       />
     </fun>
+    <call name={'factorial'} args={[<ref name={'score'} />]} />
   </ask>
 );

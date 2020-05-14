@@ -15,7 +15,7 @@ export function Fun({
   children?: AskCodeOrValue[];
 }) {
   assert(isString(name), 'name');
-  assert(isStringArray(args), 'args');
+  // assert(isStringArray(args), 'args'); // TODO(mh)
 
   const expressions = children;
   if (expressions.length === 0) {

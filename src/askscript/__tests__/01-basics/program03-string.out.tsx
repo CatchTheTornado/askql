@@ -1,7 +1,4 @@
-import * as askjsx from "../../../askjsx";
+import * as askjsx from '../../../askjsx';
+askjsx;
 
-export const expectedOutput = (
-  <ask>
-    Hello world!
-  </ask>
-);
+export const expectedOutput = <ask>{'Hello world!'}</ask>;

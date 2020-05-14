@@ -32,6 +32,7 @@
     "@types/jest": "^25.2.1",
     "@types/node": "^13.13.4",
     "@types/node-fetch": "^2.5.7",
+    "@types/pegjs": "^0.10.1",
     "babel-jest": "^25.4.0",
     "chalk": "^4.0.0",
     "express": "^4.17.1",

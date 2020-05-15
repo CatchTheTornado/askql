@@ -1,5 +1,5 @@
 import { fromAskScriptAst } from '../../askjsx';
-import { parse } from '../../askscript';
+import { parse } from '..';
 
 import * as fs from 'fs';
 import * as glob from 'glob';
@@ -8,27 +8,6 @@ import * as path from 'path';
 function jsonprint(object: any) {
   return JSON.stringify(object, null, 2);
 }
-
-describe('AskScript parser can parse the .ask file', () => {
-  function checkIfParsesFile(absoluteFilePath: string) {
-    const code = fs.readFileSync(absoluteFilePath).toString();
-
-    // AskScript -> AskJSX AST
-    const askJsxStructure = parse(code);
-
-    expect(askJsxStructure).not.toBeNull();
-  }
-
-  const testsGlobPath = path.join(__dirname, 'code', '*.ask');
-  const testFilenames = glob.sync(testsGlobPath);
-
-  for (const testFilename of testFilenames) {
-    const parts = path.parse(testFilename);
-    test(`parses successfully ${parts.base}`, () => {
-      checkIfParsesFile(testFilename);
-    });
-  }
-});
 
 describe('AskScript parser produces correct output', () => {
   function checkIfParsedFileMatchesOutput(

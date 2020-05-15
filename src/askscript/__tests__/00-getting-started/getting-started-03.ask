@@ -1,5 +1,5 @@
 ask {
-	const factorial = (n:int): int {
+	const factorial = fun(n:int): int {
 		if (n:lessThan(2)) {
 			return n
 		}

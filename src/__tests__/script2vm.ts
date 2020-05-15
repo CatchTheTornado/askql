@@ -119,7 +119,7 @@ describe('running .ask files succeeds', () => {
       try {
         await runAskFile(askScriptFilesFilePath, defaultEnvironment);
       } catch (e) {
-        myLogger(`Info: Finished with an error:  ${parts.base}`);
+        myLogger(`Warning: Finished with an error:  ${parts.base}`); // TODO(mh): please fix all failing tests and add 'throw e;' below.
       }
     });
   }

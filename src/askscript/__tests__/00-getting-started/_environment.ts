@@ -2,7 +2,7 @@ import { Values, Resources } from '../../../askvm';
 export const values: Values = {
   hello: 'Hi, this is your Ask server',
   helloD: () => "Hello, this is AskQL server! It's " + new Date().toString(),
-  score: 3,
+  score: 5,
 };
 
 export const resources: Resources = {};

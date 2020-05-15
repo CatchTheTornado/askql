@@ -4,5 +4,5 @@ ask {
 			s:concat(s)
 		}
 		s:double // same as s:double()
-	}) :toInt :sumOfSquares :number
+	}) :toInt :divideBy(6) :ceil
 }

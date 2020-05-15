@@ -1,0 +1,7 @@
+ask {
+    let sum:int = 0
+    for(let itemPrice of itemPrices) {
+        sum:assign(sum:plus(itemPrice))
+    }
+    return sum
+}

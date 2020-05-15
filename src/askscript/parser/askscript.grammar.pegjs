@@ -35,13 +35,17 @@ statement_NoWs =
       / variableDefinition
       / if
       / while
+      / forOf
+      / forIn
       / return
       / value
     ) { return new ask.Statement(s) }
 
 // variables other than of function type
 variableDefinition = 
-      m:modifier ws+ i:identifier t:variableDefinition_type? ws* '=' ws* v:value { return new ask.VariableDefinition(m, i, t === null ? ask.anyType : t, v)}
+      vD:variableDeclaration ws* '=' ws* v:value { return new ask.VariableDefinition(vD, v) }
+variableDeclaration = 
+      m:modifier ws+ i:identifier t:variableDefinition_type? { return new ask.VariableDeclaration(m, i, t === null ? ask.anyType : t) }
 variableDefinition_type = ws* ':' ws* t:type { return t }
 
 value = 
@@ -63,6 +67,9 @@ functionHeader_typeDecl = ws* ':' ws* t1:type { return t1 } // this is the optio
 functionHeader_returnTypeDecl = ws* ':' ws* t2:type { return t2 } // this is the optional return type declaration
 
 functionFooter = blockFooter
+
+
+codeBlockWithBraces = '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' { return cB; }
 
 // a block of code 
 codeBlock = statementList
@@ -109,11 +116,13 @@ nonEmptyValueList =
     ws* v:value ws* ',' vL:nonEmptyValueList { vL.unshift(v); return vL }
   / ws* v:value ws* { return [v] }
 
-if =        'if' ws* '(' v:value ')' ws* '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' ws* eB:elseBlock? {       return new ask.If(v, cB, eB) }
-while  = 'while' ws* '(' v:value ')' ws* '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' {       return new ask.While(v, cB) }
-elseBlock = 'else' ws* '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' { return new ask.Else(cB) }
+if =        'if' ws* '(' v:value ')' ws* cB:codeBlockWithBraces ws* eB:elseBlock? {       return new ask.If(v, cB, eB) }
+while  = 'while' ws* '(' v:value ')' ws* cB:codeBlockWithBraces {                         return new ask.While(v, cB) }
+forOf  = 'for'   ws* '(' vD:variableDeclaration ws+ 'of' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForOf(vD, v, cB)}
+forIn  = 'for'   ws* '(' vD:variableDeclaration ws+ 'in' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForIn(vD, v, cB)}
+elseBlock = 'else' ws* cB:codeBlockWithBraces { return new ask.Else(cB) }
 return = 
-  'return' ws+ v:value {                                                        return new ask.Return(v) }
+    'return' ws+ v:value {                                                        return new ask.Return(v) }
   / 'return' {                                                                  return new ask.Return(ask.nullValue) }
 
 functionCall = i:identifier ws* '(' cAL:callArgList ')' {                       return new ask.FunctionCall(i, cAL) }

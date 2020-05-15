@@ -1,0 +1,12 @@
+import * as askjsx from '../../../askjsx';
+askjsx;
+
+export const expectedOutput = (
+  <ask>
+    <set name={'sum'} type={'int'} />
+    <forIn variableDeclaration={<set name={'index'} type={'any'} />} value={<ref name={'itemPrices'} />}>
+      <call name={'assign'} args={[<ref name={'sum'} />,<call name={'plus'} args={[<ref name={'sum'} />,<call name={'at'} args={[<ref name={'itemPrices'} />,<ref name={'index'} />]} />]} />]} />
+    </forIn>
+    <return value={<ref name={'sum'} />} />
+  </ask>
+);

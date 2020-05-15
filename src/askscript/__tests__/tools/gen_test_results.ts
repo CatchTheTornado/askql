@@ -41,7 +41,7 @@ async function runFiles(askScriptFilePaths: string[]): Promise<number> {
     const outputFilePath = path.join(parts.dir, `${parts.name}.result.tsx`);
     const outputFileNotImplementedPath = path.join(
       parts.dir,
-      `${parts.name}.out.result.notImplemented`
+      `${parts.name}.result.tsx.notImplemented`
     );
 
     if (parts.base == 'program15c-function_def_args.ask') continue; // This test hangs

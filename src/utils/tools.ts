@@ -21,7 +21,7 @@ export async function runAskFile(
 ): Promise<any> {
   const parts = path.parse(askScriptFilePath);
 
-  myLogger(`askScriptFilePath: ${askScriptFilePath}`);
+  if (debugPrintEnvValues) myLogger(`askScriptFilePath: ${askScriptFilePath}`);
 
   // Read .ask source code
   const askScriptCode = fs.readFileSync(askScriptFilePath).toString();

@@ -33,8 +33,11 @@ console.log('\n===================================\n\n');
 
 const promise = runFiles(askScriptFilePaths);
 
-async function runFiles(askScriptFilePaths: string[]): Promise<number> {
+async function runFiles(
+  askScriptFilePaths: string[]
+): Promise<Record<string, number>> {
   let filesGenerated: number = 0;
+  let notImplementedFilesGenerated: number = 0;
 
   for (const askScriptFilePath of askScriptFilePaths) {
     const parts = path.parse(askScriptFilePath);
@@ -52,49 +55,68 @@ async function runFiles(askScriptFilePaths: string[]): Promise<number> {
       !fs.existsSync(outputFilePath) &&
       !fs.existsSync(outputFileNotImplementedPath)
     ) {
+      let fileContents;
+      let outputFilePathToSave;
+      let result;
+
       try {
-        const result = await runAskFile(
+        result = await runAskFile(
           askScriptFilePath,
           { values: {}, resources: {} },
           true
         );
+        outputFilePathToSave = outputFilePath;
 
-        const fileContents = `export const expectedResult = ${JSON.stringify(
+        fileContents = `export const expectedResult = ${JSON.stringify(
           result,
           null,
           2
         )};\n`;
 
-        const askScriptCode = fs.readFileSync(askScriptFilePath).toString();
-
-        const myLogger = util.debuglog('');
-
-        myLogger(`Filename: ${askScriptFilePath}\n\n`);
-        myLogger(askScriptCode);
-        myLogger('\n\n----\n\n');
-        myLogger(fileContents);
-        myLogger('\n\n----\n\n');
-        myLogger(`Saving result in file as ${outputFilePath}\n`);
-        fs.writeFileSync(outputFilePath, fileContents);
-        myLogger('\n===================================\n\n');
-
         ++filesGenerated;
       } catch (reason) {
+        const myLogger = util.debuglog('');
+
+        outputFilePathToSave = outputFileNotImplementedPath;
+
         myLogger(
-          `Error when executing file ${parts.base}: ${reason.message}\n\n----------\n\n`
+          `Error when executing file ${parts.base}: ${reason.message}`,
+          `    script will generate ${path.parse(outputFilePathToSave).base}`,
+          `\n\n----------\n\n`
         );
+
+        fileContents =
+          `// AskVM Error: \n` +
+          `//   ${reason.message}\n` +
+          `export const expectedResult = ???;\n`;
+
+        ++notImplementedFilesGenerated;
       }
+
+      const askScriptCode = fs.readFileSync(askScriptFilePath).toString();
+      myLogger(`Filename: ${askScriptFilePath}\n\n`);
+      myLogger(askScriptCode);
+      myLogger('\n\n----\n\n');
+      myLogger(fileContents);
+      myLogger('\n\n----\n\n');
+      myLogger(`Saving result in file as ${outputFilePathToSave}\n`);
+      fs.writeFileSync(outputFilePathToSave, fileContents);
+      myLogger('\n===================================\n\n');
     }
   }
-  return filesGenerated;
+  return { filesGenerated, notImplementedFilesGenerated };
 }
 
-promise.then((filesGenerated) => {
+promise.then(({ filesGenerated, notImplementedFilesGenerated }) => {
   myLogger('\n\n\n');
-  if (filesGenerated == 0) {
-    myLogger('No new files generated as all .out.tsx files already existed.');
+  if (filesGenerated + notImplementedFilesGenerated == 0) {
+    myLogger(
+      'No new files generated as all .out.tsx and .out.tsx.notImplemented files already existed.'
+    );
   } else {
-    myLogger(`Generated ${filesGenerated} new .out.tsx file(s).`);
+    myLogger(
+      `Generated ${filesGenerated} new .out.tsx file(s) and ${notImplementedFilesGenerated} new .out.tsx.notImplemented file(s).`
+    );
   }
   myLogger('\n\n');
 });

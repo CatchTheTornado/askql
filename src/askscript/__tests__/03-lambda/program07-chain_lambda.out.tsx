@@ -3,53 +3,16 @@ askjsx;
 
 export const expectedOutput = (
   <ask>
+    <fun name={'double'} args={[['s', 'string']]} returns={'string'}>
+      <call name={'concat'} args={[<ref name={'s'} />, <ref name={'s'} />]} />
+    </fun>
     <call
-      name={'ceil'}
+      name={'call'}
       args={[
-        <call
-          name={'divideBy'}
-          args={[
-            <call
-              name={'toInt'}
-              args={[
-                <call
-                  name={'call'}
-                  args={[
-                    <call
-                      name={'toString'}
-                      args={[
-                        <call
-                          name={'plus'}
-                          args={[
-                            <call
-                              name={'times'}
-                              args={[<ref name={'score'} />, 2]}
-                            />,
-                            1,
-                          ]}
-                        />,
-                      ]}
-                    />,
-                    <fun args={[['s', 'string']]} returns={'string'}>
-                      <fun
-                        name={'double'}
-                        args={[['s', 'string']]}
-                        returns={'string'}
-                      >
-                        <call
-                          name={'concat'}
-                          args={[<ref name={'s'} />, <ref name={'s'} />]}
-                        />
-                      </fun>
-                      <call name={'double'} args={[<ref name={'s'} />]} />
-                    </fun>,
-                  ]}
-                />,
-              ]}
-            />,
-            6,
-          ]}
-        />,
+        <ref name={'text'} />,
+        <fun args={[['s', 'string']]} returns={'string'}>
+          <call name={'double'} args={[<ref name={'s'} />]} />
+        </fun>,
       ]}
     />
   </ask>

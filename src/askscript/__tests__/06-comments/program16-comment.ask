@@ -2,7 +2,7 @@ ask {
 // this is a comment
 // this is a comment
 // this is a comment
-    const square = (a: int): int {// this is a comment
+    const square = fun(a: int): int {// this is a comment
 		a:times(a) // // this is a comment
 		if (a:check()) {// this is a comment
 			return 2// this is a comment

@@ -1,15 +1,3 @@
-// TODO:
-// - call() with a lambda function
-// - repl with ask { detection
-// - allow no newlines [nice to have]
-
-// - object type definition
-// - records
-// - tuples
-// - unions
-
-// convert " to ' in string literals
-
 {
   const path = require('path');
   const ask = require(path.join(__dirname, '../../../../src/askscript/parser/askscript.grammar.pegjs.classes.ts'));
@@ -58,11 +46,11 @@ variableDefinition_type = ws* ':' ws* t:type { return t }
 
 value = 
     e:(
-      functionCall
+      functionObject
+    / functionCall
     / query
     / valueLiteral
-    / identifier
-    / functionObject)
+    / identifier)
     mCAs:methodCallApplied* { return new ask.Value(e, mCAs) }
 
 functionDefinition = fS:functionSignature ws* '=' ws* fO:functionObject {                             return new ask.FunctionDefinition(fS, fO) }
@@ -70,7 +58,7 @@ functionDefinition = fS:functionSignature ws* '=' ws* fO:functionObject {       
 functionObject = fH:functionHeader cB:codeBlock functionFooter {                                      return new ask.FunctionObject(fH, cB) }
 
 functionSignature = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? {                         return new ask.FunctionSignature(m, i, tD) }
-functionHeader = '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? nl {  return new ask.FunctionHeader(aL, rTD === null ? ask.anyType : rTD) }
+functionHeader = 'fun' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? nl {  return new ask.FunctionHeader(aL, rTD === null ? ask.anyType : rTD) }
 functionHeader_typeDecl = ws* ':' ws* t1:type { return t1 } // this is the optional variable type declaration
 functionHeader_returnTypeDecl = ws* ':' ws* t2:type { return t2 } // this is the optional return type declaration
 

@@ -1,8 +1,9 @@
 ask {
-	score :times(2) :plus(1) :toString :call((s:string): string {
-		const double = (s:string):string {
-			s:concat(s)
-		}
-		s:double // same as s:double()
-	}) :toInt :divideBy(6) :ceil
+	const double = fun(s:string):string {
+        s:concat(s)
+	}
+
+    text :call(fun(s:string): string {
+        s:double // same as s:double()
+    })
 }

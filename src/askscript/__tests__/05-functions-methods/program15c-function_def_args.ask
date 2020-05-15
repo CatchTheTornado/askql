@@ -1,5 +1,5 @@
 ask {
-    const plus = (a:int,b:float,c:int): float {
+    const plus = fun(a:int,b:float,c:int): float {
 		return a:plus(b):plus(c)
 	}
 	plus(2, 3.6, 4)

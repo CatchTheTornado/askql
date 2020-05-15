@@ -57,7 +57,10 @@ export class Statement {
     | VariableDefinition
     | If
     | While
+    | ForOf
+    | ForIn
     | Return
+    | Assignment
     | Value;
 
   constructor(
@@ -66,7 +69,10 @@ export class Statement {
       | VariableDefinition
       | If
       | While
+      | ForOf
+      | ForIn
       | Return
+      | Assignment
       | Value
   ) {
     this.statement = statement;
@@ -237,9 +243,9 @@ export class FunctionObject {
 
 export class FunctionHeader {
   argumentList: ArgumentList;
-  returnType: Return;
+  returnType: Type;
 
-  constructor(argumentList: Arg[], returnType: Return) {
+  constructor(argumentList: Arg[], returnType: Type) {
     this.argumentList = new ArgumentList(argumentList);
     this.returnType = returnType;
   }
@@ -338,10 +344,10 @@ export class ForOf {
 
   print(): LooseObject {
     let output = {
-      name: 'forOf',
+      name: 'for',
       props: {
-        variableDeclaration: this.variableDeclaration.print(),
-        value: this.value.print(),
+        key: this.variableDeclaration.print(),
+        of: this.value.print(),
       },
       children: this.statementList.map((statement) => statement.print()),
     };
@@ -366,10 +372,10 @@ export class ForIn {
 
   print(): LooseObject {
     let output = {
-      name: 'forIn',
+      name: 'for',
       props: {
-        variableDeclaration: this.variableDeclaration.print(),
-        value: this.value.print(),
+        key: this.variableDeclaration.print(),
+        in: this.value.print(),
       },
       children: this.statementList.map((statement) => statement.print()),
     };
@@ -388,6 +394,27 @@ export class Return {
     let output = {
       name: 'return',
       props: {
+        value: this.value.print(),
+      },
+    };
+    return output;
+  }
+}
+
+export class Assignment {
+  identifier: Identifier;
+  value: Value;
+
+  constructor(identifier: Identifier, value: Value) {
+    this.identifier = identifier;
+    this.value = value;
+  }
+
+  print(): LooseObject {
+    let output = {
+      name: 'assign',
+      props: {
+        name: this.identifier.text,
         value: this.value.print(),
       },
     };

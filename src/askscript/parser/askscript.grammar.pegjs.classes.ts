@@ -11,7 +11,7 @@ export class Ask {
     this.askBody = askBody;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output = {
       name: 'ask',
       props: this.askHeader.print(),
@@ -29,7 +29,7 @@ export class AskHeader {
     this.returnTypeOrNull = returnTypeOrNull;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output: LooseObject = {
       args: this.argList.map((arg) => arg.print()),
     };
@@ -46,7 +46,7 @@ export class AskBody {
     this.statementList = statementList;
   }
 
-  print(): object {
+  print(): LooseObject {
     return this.statementList.map((statement) => statement.print());
   }
 }
@@ -57,7 +57,10 @@ export class Statement {
     | VariableDefinition
     | If
     | While
+    | ForOf
+    | ForIn
     | Return
+    | Assignment
     | Value;
 
   constructor(
@@ -66,42 +69,53 @@ export class Statement {
       | VariableDefinition
       | If
       | While
+      | ForOf
+      | ForIn
       | Return
+      | Assignment
       | Value
   ) {
     this.statement = statement;
   }
 
-  print(): object | string | number | boolean | null {
+  print(): LooseObject | string | number | boolean | null {
     return this.statement.print();
   }
 }
 
 export class VariableDefinition {
+  value: Value;
+  variableDeclaration: VariableDeclaration;
+
+  constructor(variableDeclaration: VariableDeclaration, value: Value) {
+    this.value = value;
+    this.variableDeclaration = variableDeclaration;
+  }
+
+  print(): LooseObject {
+    let output = this.variableDeclaration.print();
+    output.value = this.value.print();
+    return output;
+  }
+}
+
+export class VariableDeclaration {
   modifier: Const | Let;
   identifier: Identifier;
   type: Type;
-  value: Value;
 
-  constructor(
-    modifier: Const | Let,
-    identifier: Identifier,
-    type: Type,
-    value: Value
-  ) {
+  constructor(modifier: Const | Let, identifier: Identifier, type: Type) {
     this.modifier = modifier;
     this.identifier = identifier;
     this.type = type;
-    this.value = value;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output = {
       name: this.modifier.print(),
       props: {
         name: this.identifier.text,
         type: this.type.print(),
-        value: this.value.print(),
       },
     };
     return output;
@@ -152,7 +166,7 @@ export class Value {
     }
   }
 
-  print(): object | string | number | boolean | null {
+  print(): LooseObject | string | number | boolean | null {
     let output = this.expressionToPrint.print();
     return output;
   }
@@ -170,7 +184,7 @@ export class FunctionDefinition {
     this.functionObject = functionObject;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output = {
       name: 'fun',
       props: {
@@ -213,7 +227,7 @@ export class FunctionObject {
   }
 
   // This print() is used only in lambda functions
-  print(): object {
+  print(): LooseObject {
     let output = {
       name: 'fun',
       props: {
@@ -229,9 +243,9 @@ export class FunctionObject {
 
 export class FunctionHeader {
   argumentList: ArgumentList;
-  returnType: Return;
+  returnType: Type;
 
-  constructor(argumentList: Arg[], returnType: Return) {
+  constructor(argumentList: Arg[], returnType: Type) {
     this.argumentList = new ArgumentList(argumentList);
     this.returnType = returnType;
   }
@@ -246,7 +260,7 @@ export class Arg {
     this.type = type;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output = [this.identifier.text, this.type.print()];
     return output;
   }
@@ -263,7 +277,7 @@ export class If {
     this.elseBlockOrNull = elseBlockOrNull;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output: LooseObject = {
       name: 'if',
       props: {
@@ -286,7 +300,7 @@ export class Else {
     this.statementList = statementList;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output = this.statementList.map((statement) => statement.print());
     return output;
   }
@@ -301,11 +315,67 @@ export class While {
     this.statementList = statementList;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output = {
       name: 'while',
       props: {
         condition: this.value.print(),
+      },
+      children: this.statementList.map((statement) => statement.print()),
+    };
+    return output;
+  }
+}
+
+export class ForOf {
+  variableDeclaration: VariableDeclaration;
+  value: Value;
+  statementList: Statement[];
+
+  constructor(
+    variableDeclaration: VariableDeclaration,
+    value: Value,
+    statementList: Statement[]
+  ) {
+    this.variableDeclaration = variableDeclaration;
+    this.value = value;
+    this.statementList = statementList;
+  }
+
+  print(): LooseObject {
+    let output = {
+      name: 'for',
+      props: {
+        key: this.variableDeclaration.print(),
+        of: this.value.print(),
+      },
+      children: this.statementList.map((statement) => statement.print()),
+    };
+    return output;
+  }
+}
+
+export class ForIn {
+  variableDeclaration: VariableDeclaration;
+  value: Value;
+  statementList: Statement[];
+
+  constructor(
+    variableDeclaration: VariableDeclaration,
+    value: Value,
+    statementList: Statement[]
+  ) {
+    this.variableDeclaration = variableDeclaration;
+    this.value = value;
+    this.statementList = statementList;
+  }
+
+  print(): LooseObject {
+    let output = {
+      name: 'for',
+      props: {
+        key: this.variableDeclaration.print(),
+        in: this.value.print(),
       },
       children: this.statementList.map((statement) => statement.print()),
     };
@@ -320,10 +390,31 @@ export class Return {
     this.value = value;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output = {
       name: 'return',
       props: {
+        value: this.value.print(),
+      },
+    };
+    return output;
+  }
+}
+
+export class Assignment {
+  identifier: Identifier;
+  value: Value;
+
+  constructor(identifier: Identifier, value: Value) {
+    this.identifier = identifier;
+    this.value = value;
+  }
+
+  print(): LooseObject {
+    let output = {
+      name: 'assign',
+      props: {
+        name: this.identifier.text,
         value: this.value.print(),
       },
     };
@@ -340,7 +431,7 @@ export class FunctionCall {
     this.callArgList = callArgList;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output = {
       name: 'call',
       props: {
@@ -395,7 +486,7 @@ export class ValueLiteral {
     this.value = value;
   }
 
-  print(): object | string | number | boolean | null {
+  print(): LooseObject | string | number | boolean | null {
     return this.value.print();
   }
 }
@@ -420,7 +511,7 @@ export class Array {
     this.valueList = valueList;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output = this.valueList.map((value) => value.print());
     return output;
   }
@@ -433,7 +524,7 @@ export class Map {
     this.mapEntryList = mapEntryList;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output: LooseObject = {};
     this.mapEntryList.forEach(
       (mapEntry) => (output[mapEntry.identifier.text] = mapEntry.value.print())
@@ -473,7 +564,7 @@ export class Identifier {
     this.text = text;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output = {
       name: 'ref',
       props: {
@@ -540,7 +631,7 @@ export class ArgumentList {
     this.argList = argList;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output = this.argList.map((arg) => arg.print());
     return output;
   }
@@ -553,7 +644,7 @@ export class Query {
     this.queryFieldList = queryFieldList;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output = {
       name: 'query',
       children: this.queryFieldList.map((queryField) => queryField.print()),
@@ -571,7 +662,7 @@ export class QueryFieldLeaf {
     this.value = value;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output = {
       name: 'leaf',
       props: {
@@ -595,7 +686,7 @@ export class QueryFieldNode {
     this.queryFieldList = queryFieldList;
   }
 
-  print(): object {
+  print(): LooseObject {
     let output = {
       name: 'node',
       props: {

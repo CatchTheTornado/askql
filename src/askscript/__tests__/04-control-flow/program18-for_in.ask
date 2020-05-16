@@ -1,0 +1,7 @@
+ask {
+    let sum:float = 0
+    for(let index in itemPrices) {
+        sum = sum:plus(itemPrices:at(index))
+    }
+    sum
+}

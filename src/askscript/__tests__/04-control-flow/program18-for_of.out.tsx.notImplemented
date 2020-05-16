@@ -1,0 +1,12 @@
+import * as askjsx from '../../../askjsx';
+askjsx;
+
+export const expectedOutput = (
+  <ask>
+    <set name={'sum'} type={'float'} />
+    <for key={<set name={'itemPrice'} type={'any'} />} of={<ref name={'itemPrices'} />}>
+      <assign name={'sum'} value={<call name={'plus'} args={[<ref name={'sum'} />,<ref name={'itemPrice'} />]} />} />
+    </for>
+    <ref name={'sum'} />
+  </ask>
+);

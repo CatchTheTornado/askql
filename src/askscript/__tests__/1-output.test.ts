@@ -1,9 +1,20 @@
+// Usage:
+//   -- To run this test suite only, run: --
+//    npm test src/askscript/__tests__/1-output.test.ts
+//
+//   -- To run this test for a single file only, run: --
+//    ASK_FILE=<path_to_.ask_file> npm test src/askscript/__tests__/1-output.test.ts
+//
+
 import { fromAskScriptAst } from '../../askjsx';
 import { parse } from '..';
 
 import * as fs from 'fs';
 import * as glob from 'glob';
 import * as path from 'path';
+import * as util from 'util';
+
+const myLogger = util.debuglog('');
 
 function jsonprint(object: any) {
   return JSON.stringify(object, null, 2);
@@ -41,24 +52,42 @@ describe('AskScript parser produces correct output', () => {
     expect(askJsxStructure).toEqual(debug1.expectedOutput);
   }
 
-  const expectedOutputFilesGlobPath = path.join(
-    __dirname,
-    '[0-9][0-9]-*',
-    '*.out.tsx'
-  );
-  const expectedOutputFilePaths = glob.sync(expectedOutputFilesGlobPath);
-
-  for (const expectedOutputFilePath of expectedOutputFilePaths) {
-    const parts1 = path.parse(expectedOutputFilePath);
-    const parts2 = path.parse(parts1.name);
-
-    const askScriptFilePath = path.join(parts1.dir, parts2.name + '.ask');
-
+  function testAskFile(
+    askScriptFilePath: string,
+    expectedOutputFilePath: string
+  ) {
     const parts = path.parse(askScriptFilePath);
     // if (parts.base != 'program14d-method_call_args.ask') continue;
-    test(`produces correct output for ${parts2.name + '.ask'}`, () => {
+    test(`produces correct output for ${parts.base}`, () => {
       checkIfParsedFileMatchesOutput(askScriptFilePath, expectedOutputFilePath);
     });
     // break;
+  }
+
+  if (typeof process.env.ASK_FILE === 'undefined') {
+    const expectedOutputFilesGlobPath = path.join(
+      __dirname,
+      '[0-9][0-9]-*',
+      '*.out.tsx'
+    );
+    const expectedOutputFilePaths = glob.sync(expectedOutputFilesGlobPath);
+
+    for (const expectedOutputFilePath of expectedOutputFilePaths) {
+      const parts1 = path.parse(expectedOutputFilePath);
+      const parts2 = path.parse(parts1.name);
+
+      const askScriptFilePath = path.join(parts1.dir, parts2.name + '.ask');
+
+      testAskFile(askScriptFilePath, expectedOutputFilePath);
+    }
+  } else {
+    myLogger(`Running a single test for file ${process.env.ASK_FILE}`);
+    const askScriptFilePath = path.resolve(__dirname, process.env.ASK_FILE);
+    const parts = path.parse(askScriptFilePath);
+    const expectedOutputFilePath = path.join(
+      parts.dir,
+      parts.name + '.out.tsx'
+    );
+    testAskFile(askScriptFilePath, expectedOutputFilePath);
   }
 });

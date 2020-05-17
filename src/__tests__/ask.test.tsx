@@ -81,11 +81,8 @@ test('jsx', async () => {
   const call = (arg: string) => (
     <ask>
       <fun name="test" args={['a']}>
-        <if
-          condition={<ref name="a" />}
-          then={<return value={<v>YES</v>} />}
-          else={<return value={<v>NO</v>} />}
-        />
+        <if condition={<ref name="a" />} then={<return value={<v>YES</v>} />} />
+        NO
       </fun>
       <call name="test" args={[<v>{arg}</v>]} />
     </ask>

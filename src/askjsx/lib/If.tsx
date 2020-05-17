@@ -15,8 +15,8 @@ export function If({
   return (
     <code if>
       {condition}
-      <code fun>{props.then ?? children}</code>
-      <code fun>{props.else}</code>
+      <code block>{props.then ?? children}</code>
+      <code block>{props.else}</code>
     </code>
   );
 }

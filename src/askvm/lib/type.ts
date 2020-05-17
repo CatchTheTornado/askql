@@ -8,6 +8,7 @@ class Type<T> {
 
 export type { Type, LambdaType };
 
+// TODO rename -> extend
 export function type<T extends Type<any>, Proto extends Type<any>>(
   prototype: Proto,
   options: Partial<T> & Omit<T, keyof Proto>

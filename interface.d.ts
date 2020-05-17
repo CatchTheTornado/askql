@@ -11,6 +11,7 @@ declare namespace JSX {
     call: FirstArg<typeof import('./src/askjsx').Call>;
     code: {
       ask?: true;
+      block?: true;
       call?: true;
       children?: any | any[];
       fragment?: true;

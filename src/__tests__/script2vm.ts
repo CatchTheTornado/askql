@@ -146,18 +146,16 @@ describe('running .ask files produces expected output', () => {
 
     const askScriptFilePath = path.join(parts1.dir, `${parts2.name}.ask`);
 
-    // if (parts.base != 'program14d-method_call_args.ask') continue;
+    // if (parts2.name != 'getting-started-03') continue;
+
+    // Read expected output
+    // console.log('expectedResultFilePath: ' + expectedResultFilePath);
 
     test(`produces correct result for ${parts2.name}.ask`, async () => {
-      const result = await runAskFile(askScriptFilePath);
-
-      // Read expected output
-      // console.log('expectedResultFilePath: ' + expectedResultFilePath);
-      const debug1 = require(expectedResultFilePath);
-
-      // Validate output
-      expect(result).toEqual(debug1.expectedResult);
+      const { expectedResult } = require(expectedResultFilePath);
+      await expect(runAskFile(askScriptFilePath)).resolves.toEqual(
+        expectedResult
+      );
     });
-    // break;
   }
 });

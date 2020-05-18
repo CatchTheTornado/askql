@@ -64,8 +64,8 @@ export type JSONable =
 
 // export function untyped<T>(value: TypedValue<T>): T;
 export function untyped(value: any): any {
-  if (!value) {
-    return value;
+  if (value == null) {
+    return null;
   }
   if (
     typeof value === 'string' ||

@@ -1,0 +1,28 @@
+import * as askjsx from '../../../askjsx';
+askjsx;
+
+export const expectedOutput = (
+  <ask>
+    <query>
+      <leaf
+        name={'firstName'}
+        value={<call name={'toUpper'} args={[<ref name={'firstName'} />]} />}
+      />
+      <leaf
+        name={'lastName'}
+        value={
+          <call
+            name={'concat'}
+            args={[
+              <call name={'toLower'} args={[<ref name={'lastName'} />]} />,
+              ' ',
+              'is my ',
+              'name; ',
+              'lastName :: toLower is a shorthand to: lastName : lastName:toLower',
+            ]}
+          />
+        }
+      />
+    </query>
+  </ask>
+);

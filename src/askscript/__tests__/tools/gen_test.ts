@@ -85,8 +85,27 @@ function jsxObjToXml(
     return output;
   }
 
+  // -- jsxObj is an object here: --
+
   const obj = jsxObj as LooseObject;
 
+  // if this object hold a value of type object, output it, like we do with an array above
+  if ('jsxValue' in obj) {
+    output += '{';
+    let values = [];
+    const objValue = obj.jsxValue as object[];
+    for (const key in objValue) {
+      const value = objValue[key];
+      values.push(
+        `${key}: ${jsxObjToXml(value, `${indent}  `, insideCurlyBraces)}`
+      );
+    }
+    output += values.join(',');
+    output += '}';
+    return output;
+  }
+
+  // -- here the object holds the program structure --
   output += `<${obj.name}`;
   if ('props' in obj) {
     for (const propKey in obj.props) {
@@ -134,6 +153,7 @@ console.log(askScriptFilePaths);
 console.log('\n===================================\n\n');
 
 let filesGenerated: number = 0;
+let filesErrors: number = 0;
 
 for (const askScriptFilePath of askScriptFilePaths) {
   const parts = path.parse(askScriptFilePath);
@@ -149,32 +169,43 @@ for (const askScriptFilePath of askScriptFilePaths) {
     !fs.existsSync(outputFilePath) &&
     !fs.existsSync(outputFileNotImplementedPath)
   ) {
-    const askScriptCode = fs.readFileSync(askScriptFilePath).toString();
-    const jsxObj = parse(askScriptCode);
+    try {
+      console.log(`Filename: ${askScriptFilePath}\n\n`);
 
-    const jsxXml = `  ${jsxObjToXml(jsxObj, '  ')}`;
+      const askScriptCode = fs.readFileSync(askScriptFilePath).toString();
+      const jsxObj = parse(askScriptCode);
 
-    const fileContents =
-      "import * as askjsx from '../../../askjsx';\n" +
-      'askjsx;\n' +
-      '\n' +
-      'export const expectedOutput = (\n' +
-      jsxXml +
-      '\n' +
-      ');\n';
+      const jsxXml = `  ${jsxObjToXml(jsxObj, '  ')}`;
 
-    console.log(`Filename: ${askScriptFilePath}\n\n`);
-    console.log(askScriptCode);
-    console.log('\n\n----\n\n');
-    console.log(JSON.stringify(jsxObj, null, 2));
-    console.log('\n\n----\n\n');
-    console.log(fileContents);
-    console.log('\n\n');
-    console.log(`Saving JSX file as ${outputFilePath}\n`);
-    fs.writeFileSync(outputFilePath, fileContents);
-    console.log('\n===================================\n\n');
+      const fileContents =
+        "import * as askjsx from '../../../askjsx';\n" +
+        'askjsx;\n' +
+        '\n' +
+        'export const expectedOutput = (\n' +
+        jsxXml +
+        '\n' +
+        ');\n';
 
-    ++filesGenerated;
+      console.log(askScriptCode);
+      console.log('\n\n----\n\n');
+      console.log(JSON.stringify(jsxObj, null, 2));
+      console.log('\n\n----\n\n');
+      console.log(fileContents);
+      console.log('\n\n');
+      console.log(`Saving JSX file as ${outputFilePath}\n`);
+      fs.writeFileSync(outputFilePath, fileContents);
+      console.log('\n===================================\n\n');
+
+      ++filesGenerated;
+    } catch (e) {
+      ++filesErrors;
+
+      console.log(`Got an error while parsing:`);
+      console.log(
+        `${e.message}\nLocation:\n${JSON.stringify(e.location, null, 2)}`
+      );
+      console.log(e.stack);
+    }
   }
 }
 
@@ -185,6 +216,10 @@ if (filesGenerated == 0) {
   console.log(`Generated ${filesGenerated} new .out.tsx file(s).`);
 }
 console.log('\n\n');
+
+if (filesErrors > 0) {
+  console.warn(`Got errors when generating ${filesErrors}.`);
+}
 
 interface LooseObject {
   [key: string]: any;

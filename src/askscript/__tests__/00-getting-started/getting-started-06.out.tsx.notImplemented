@@ -5,17 +5,17 @@ export const expectedOutput = (
   <ask>
     <query>
       <leaf
-        name="fullName"
+        name={'fullName'}
         value={
-          <fun
-            name="upperCase"
+          <call
+            name={'upperCase'}
             args={[
-              <fun
-                name="concat"
+              <call
+                name={'concat'}
                 args={[
-                  <fun name="firstName" args={[<ref name="fullName" />]} />,
+                  <ref name={'firstName'} />,
                   ' ',
-                  <ref name="lastName" />,
+                  <ref name={'lastName'} />,
                 ]}
               />,
             ]}

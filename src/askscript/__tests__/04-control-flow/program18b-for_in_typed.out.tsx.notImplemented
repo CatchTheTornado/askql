@@ -3,7 +3,7 @@ askjsx;
 
 export const expectedOutput = (
   <ask>
-    <set name={'sum'} type={'float'} />
+    <set name={'sum'} type={'float'} value={0} />
     <for key={<set name={'index'} type={'int'} />} in={<ref name={'itemPrices'} />}>
       <assign name={'sum'} value={<call name={'plus'} args={[<ref name={'sum'} />,<call name={'at'} args={[<ref name={'itemPrices'} />,<ref name={'index'} />]} />]} />} />
     </for>

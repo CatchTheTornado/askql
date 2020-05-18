@@ -1,6 +1,0 @@
-ask {
-	query {
-		upperCaseFullName = fullName :firstName :concat(' ', lastName) :upperCase
-        secondField = fun1(fun2(34, 'adfs', []))
-	}
-}

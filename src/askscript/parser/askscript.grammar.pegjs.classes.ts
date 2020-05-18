@@ -94,7 +94,10 @@ export class VariableDefinition {
 
   print(): LooseObject {
     let output = this.variableDeclaration.print();
-    output.value = this.value.print();
+    if (!('props' in output)) {
+      output.props = {};
+    }
+    output.props.value = this.value.print();
     return output;
   }
 }
@@ -525,9 +528,12 @@ export class Map {
   }
 
   print(): LooseObject {
-    let output: LooseObject = {};
+    let output: LooseObject = {
+      jsxValue: {},
+    };
     this.mapEntryList.forEach(
-      (mapEntry) => (output[mapEntry.identifier.text] = mapEntry.value.print())
+      (mapEntry) =>
+        (output.jsxValue[mapEntry.identifier.text] = mapEntry.value.print())
     );
     return output;
   }

@@ -1,0 +1,4 @@
+ask {
+    let lastName:string = 'Czerwinski'
+    let o = { firstName::toLower, lastName: :toUpper }
+}

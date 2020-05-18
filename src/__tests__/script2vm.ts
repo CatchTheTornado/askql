@@ -153,6 +153,7 @@ describe('running .ask files produces expected output', () => {
 
     test(`produces correct result for ${parts2.name}.ask`, async () => {
       const { expectedResult } = require(expectedResultFilePath);
+      await runAskFile(askScriptFilePath); // check runtime errors
       await expect(runAskFile(askScriptFilePath)).resolves.toEqual(
         expectedResult
       );

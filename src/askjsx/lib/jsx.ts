@@ -1,4 +1,10 @@
-import { askCode, AskCodeOrValue, isValue } from '../../askcode';
+import {
+  askCode,
+  AskCodeOrValue,
+  isValue,
+  value,
+  toAskCode,
+} from '../../askcode';
 import { assert, flatten, titleCase } from '../../utils';
 import * as components from './';
 
@@ -9,29 +15,26 @@ export function createElement(
 ): AskCodeOrValue {
   const props = propsOrNull || {};
 
-  if (typeof name === 'function') {
-    return name({ ...props, children });
-  }
-
   if (name === 'code') {
     const propKeys = Object.keys(props);
     if (propKeys.length !== 1 || typeof propKeys[0] !== 'string') {
       throw new Error('Invalid code use');
     }
-    return askCode({
+    return toAskCode({
       name: propKeys[0],
       params: flatten(children),
     });
   }
 
-  if (name === 'v') {
-    const child = flatten(children)[0];
-    assert(isValue(child), 'expecting child to be value');
-    return askCode(child);
+  if (typeof name === 'string') {
+    const component = (components as any)[titleCase(name)];
+    assert(component != null, `no jsx component for "${name}"`);
+    return createElement(component, propsOrNull, ...children);
   }
 
-  assert(name != null, 'name cannot be null');
-  const component = (components as any)[titleCase(name)];
-  assert(component != null, `no jsx component for "${name}"`);
-  return createElement(component, propsOrNull, ...children);
+  if (typeof name === 'function') {
+    return name({ ...props, children });
+  }
+
+  throw new Error(`Invalid JSX name typed: ${typeof name}`);
 }

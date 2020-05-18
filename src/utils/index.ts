@@ -77,3 +77,13 @@ export async function asyncMap<T, U>(
   }
   return result;
 }
+
+export function fromEntries<T>(
+  iterable: Iterable<[string, T]>
+): Record<string, T> {
+  const record: Record<string, any> = {};
+  [...iterable].forEach(([key, val]) => {
+    record[key] = val;
+  });
+  return record;
+}

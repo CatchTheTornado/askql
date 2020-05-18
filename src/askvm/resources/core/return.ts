@@ -1,4 +1,4 @@
-import { resource, any, runUntyped, Options } from '../../lib';
+import { any, resource, runUntyped } from '../../lib';
 
 export const returnRes = resource({
   type: any,

@@ -81,10 +81,10 @@ test('jsx', async () => {
   const call = (arg: string) => (
     <ask>
       <fun name="test" args={['a']}>
-        <if condition={<ref name="a" />} then={<return value={<v>YES</v>} />} />
+        <if condition={<ref name="a" />} then={<return value="YES" />} />
         NO
       </fun>
-      <call name="test" args={[<v>{arg}</v>]} />
+      <call name="test" args={[arg]} />
     </ask>
   );
   await expect(ask(call('Y'))).resolves.toBe('YES');
@@ -101,9 +101,7 @@ test('multival', async () => {
 //       <ask>
 //         <call
 //           name="concat"
-//           args={args.map((arg) => (
-//             <v>{arg}</v>
-//           ))}
+//           args={[arg]}
 //         />
 //       </ask>
 //     );

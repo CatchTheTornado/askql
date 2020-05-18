@@ -1,6 +1,6 @@
-import { Reducer, reduce } from './reduce';
+import { Reducer } from './reduce';
 
-export type Value = null | boolean | number | string;
+export type Value = Exclude<null | boolean | number | string | object, AskCode>;
 export type AskCodeOrValue = AskCode | Value;
 
 export class AskCode {
@@ -21,7 +21,7 @@ export class AskCode {
     });
 
     params?.forEach((param) => {
-      if (isValue(param)) {
+      if (!isAskCode(param)) {
         return;
       }
       param.parent = this;
@@ -41,40 +41,54 @@ export const askCodeReducer: Reducer<string> = {
   value: (value) => JSON.stringify(value),
 };
 
+export function isValue(value: AskCodeOrValue): value is Value {
+  return (
+    value == null ||
+    typeof value === 'boolean' ||
+    typeof value === 'number' ||
+    typeof value === 'string' ||
+    (typeof value === 'object' && !(value instanceof AskCode))
+  );
+}
+
+export function isAskCode(value: AskCodeOrValue): value is AskCode {
+  return value instanceof AskCode;
+}
+
 export function askCodeToSource(value: AskCodeOrValue): string {
-  if (isValue(value)) {
+  if (!isAskCode(value)) {
     return JSON.stringify(value);
   }
-  const { name, params } = value;
+  const { name, params } = askCode(value);
   return `${name}${
     params ? `(${params.map(askCodeToSource).join(', ')})` : ''
   }`;
 }
 
-export function isValue(value: AskCodeOrValue): value is Value {
-  // array and objects need to be transported using respective constructors
-  return (
-    value == null ||
-    typeof value === 'boolean' ||
-    typeof value === 'number' ||
-    typeof value === 'string'
-  );
+export function askCode(code: AskCodeOrValue): AskCode {
+  if (!isAskCode(code)) {
+    throw new Error('Expecting code but got value');
+  }
+  return new AskCode(code.name, code.params);
 }
 
-export function askCode(value: Value): AskCodeOrValue;
-export function askCode(call: AskCode): AskCodeOrValue;
-export function askCode(value: Value | AskCode): AskCodeOrValue {
-  if (value == null) {
-    return null;
+export function value(value: AskCodeOrValue): Value {
+  if (!isValue(value)) {
+    throw new Error('Expecting value');
   }
+  return value;
+}
 
+export function toAskCode(code: Readonly<AskCode>): AskCode {
+  if (code instanceof AskCode) {
+    return code;
+  }
+  return new AskCode(code.name, code.params);
+}
+
+export function toAskCodeOrValue(value: Value | AskCode): AskCodeOrValue {
   if (isValue(value)) {
     return value;
   }
-
-  if (Array.isArray(value)) {
-    throw new Error('value!');
-  }
-
-  return new AskCode(value.name, value.params);
+  return toAskCode(value);
 }

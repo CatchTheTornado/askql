@@ -81,6 +81,8 @@ export const code = type<Type<AskCode>, Type<any>>(any, {
   validate: (value): value is AskCode => value instanceof AskCode,
 });
 
+export const askCode = code;
+
 interface UnionType<T = any> extends Type<T> {
   types: any[];
 }

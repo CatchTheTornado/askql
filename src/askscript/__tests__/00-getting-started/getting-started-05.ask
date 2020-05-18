@@ -5,6 +5,6 @@ ask {
 		parents {
 			firstName
 			lastName
-		}
+		} 
 	}
 }

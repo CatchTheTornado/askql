@@ -7,6 +7,7 @@ export const expectedOutput = (
     <set name={'b'} type={'float'} value={1.5} />
     <set name={'c'} type={'bool'} value={false} />
     <set name={'d'} type={'string'} value={'asdf'} />
-    <set name={'e'} type={'any'} value={2.3} />
+    <set name={'e'} type={'empty'} value={null} />
+    <set name={'f'} type={'any'} value={2.3} />
   </ask>
 );

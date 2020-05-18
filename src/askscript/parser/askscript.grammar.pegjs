@@ -91,9 +91,11 @@ queryField =
 queryFieldNode = ws* i:identifier ws* '{' ws* lineComment? nl lineWithoutCode* qFL:queryFieldList ws* '}' { return new ask.QueryFieldNode(i, qFL) }
 
 queryFieldLeaf = 
-    ws* i:identifier ws* '=' ws* v:value {     return new ask.QueryFieldLeaf(i, v) }
-  / ws* i:identifier mCAs:methodCallApplied* { return new ask.QueryFieldLeaf(i, new ask.Value(i, mCAs)) }
-  / ws* i:identifier {                         return new ask.QueryFieldLeaf(i, new ask.Value(i, [])) }
+    ws* i:identifier ws* ':' ws* v:value {                  return new ask.QueryFieldLeaf(i, v) }
+
+    // This is double quote in fact (the second ':' is leading the methodCallApplied rule)
+  / ws* i:identifier ws* ':' ws* mCAs:methodCallApplied* { return new ask.QueryFieldLeaf(i, new ask.Value(i, mCAs)) }
+  / ws* i:identifier {                                      return new ask.QueryFieldLeaf(i, new ask.Value(i, [])) }
 
 queryFooter = blockFooter
 

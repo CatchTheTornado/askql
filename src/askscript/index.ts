@@ -13,6 +13,9 @@ export function parse(code: string, options?: any): AskScriptAst {
       'utf-8'
     );
     parser = peg.generate(pegSource);
+    // parser = peg.generate(pegSource, {
+    //   allowedStartRules: ['ask', 'queryFieldLeaf'],
+    // }); // TODO(lc): remove debug
   }
   const result = parser.parse(code, options);
   return result.print();

@@ -1,0 +1,6 @@
+ask {
+	query {
+		firstName :: toUpper
+        lastName :: toLower:concat(' ', 'is my ', 'name; ', 'lastName :: toLower is a shorthand to: lastName : lastName:toLower')
+	}
+}

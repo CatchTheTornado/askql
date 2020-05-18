@@ -85,8 +85,27 @@ function jsxObjToXml(
     return output;
   }
 
+  // -- jsxObj is an object here: --
+
   const obj = jsxObj as LooseObject;
 
+  // if this object hold a value of type object, output it, like we do with an array above
+  if ('jsxValue' in obj) {
+    output += '{';
+    let values = [];
+    const objValue = obj.jsxValue as object[];
+    for (const key in objValue) {
+      const value = objValue[key];
+      values.push(
+        `${key}: ${jsxObjToXml(value, `${indent}  `, insideCurlyBraces)}`
+      );
+    }
+    output += values.join(',');
+    output += '}';
+    return output;
+  }
+
+  // -- here the object holds the program structure --
   output += `<${obj.name}`;
   if ('props' in obj) {
     for (const propKey in obj.props) {

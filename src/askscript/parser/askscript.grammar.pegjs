@@ -157,9 +157,10 @@ array = '[' vL:valueList ']' { return new ask.Array(vL) }
 map = '{' mEL:mapEntryList '}' { return new ask.Map(mEL) }
 
 mapEntryList = 
-    mE:mapEntry ',' mEL:mapEntryList {  return mEL.unshift(mE), mEL }
-  / mE:mapEntry {                       return [mE] }
-mapEntry = i:identifier ':' v:value { return new ask.MapEntry(i, v) }
+    ws* mE:mapEntry ws* ',' mEL:mapEntryList {  return mEL.unshift(mE), mEL }
+  / ws* mE:mapEntry ws* {                       return [mE] }
+  / ws* {                                       return [] }
+mapEntry = i:identifier ws* ':' ws* v:value { return new ask.MapEntry(i, v) }
 
 
 modifier = const / let

@@ -3,7 +3,14 @@ import * as askjsx from './jsx';
 import { AskCodeOrValue } from '../../askcode';
 askjsx;
 
-export function Set({ name, value }: { name: string; value: AskCodeOrValue }) {
+export function Set({
+  name,
+  value,
+}: {
+  name: string;
+  type?: string;
+  value: AskCodeOrValue;
+}) {
   if (Array.isArray(name)) name = name[0]; //TODO(mh): Support types
 
   assert(

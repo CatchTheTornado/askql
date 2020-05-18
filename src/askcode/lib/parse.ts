@@ -1,19 +1,19 @@
-import { askCode } from './askCode';
+import { askCode, value, AskCodeOrValue, toAskCode } from './askCode';
 import { reduce } from './reduce';
 
 export function parse(code: string) {
-  return reduce(
+  return reduce<AskCodeOrValue>(
     {
       node: (type, ...children) =>
-        askCode({
+        toAskCode({
           name: type,
           params: children,
         }),
       id: (type) =>
-        askCode({
+        toAskCode({
           name: type,
         }),
-      value: askCode,
+      value: value,
     },
     code
   );

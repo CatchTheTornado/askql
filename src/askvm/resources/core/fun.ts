@@ -1,4 +1,4 @@
-import { any, resource, run } from '../../lib';
+import { any, extendOptions, resource, run } from '../../lib';
 
 export const fun = resource({
   type: any,
@@ -9,28 +9,21 @@ export const fun = resource({
       return code; // TODO typed needs to understand AskCode
     }
 
-    // create a new scope
-    const values = Object.create(options.values ?? {});
+    options = extendOptions(options, {
+      code,
+    });
 
     // add simple argument resolvers in the scope
     args.forEach((arg, index) => {
-      values[`$${index}`] = arg;
+      options.values![`$${index}`] = arg;
     });
 
-    const runOptions = {
-      resources: options.resources,
-      values,
-      returnedValue: undefined,
-    };
-
-    let result: any;
-    const { params = [] } = code;
-    for (let i = 0; i < params.length; i += 1) {
-      result = await run(runOptions, params[i]);
-      if (runOptions.returnedValue) {
-        return runOptions.returnedValue;
-      }
+    let lastResult: any;
+    const { params: statements = [] } = code;
+    for (let i = 0; i < statements.length && !('result' in options); i += 1) {
+      const statement = statements[i];
+      lastResult = await run(options, statement);
     }
-    return result;
+    return lastResult;
   },
 });

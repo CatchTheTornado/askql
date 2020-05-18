@@ -1,3 +1,4 @@
+export * from './extend';
 export * from './resource';
 export * from './run';
 export * from './type';

@@ -1,4 +1,4 @@
-import { askCode } from '../../../askcode';
+import { toAskCode } from '../../../askcode';
 import { any, resource, run, runUntyped } from '../../lib';
 
 export const get = resource({
@@ -10,6 +10,6 @@ export const get = resource({
       throw new Error('Get expect string as argument');
     }
 
-    return run(options, askCode({ name }), args);
+    return run(options, toAskCode({ name }), args);
   },
 });

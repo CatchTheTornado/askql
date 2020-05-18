@@ -8,6 +8,7 @@ class Type<T> {
 
 export type { Type, LambdaType };
 
+// TODO rename -> extend
 export function type<T extends Type<any>, Proto extends Type<any>>(
   prototype: Proto,
   options: Partial<T> & Omit<T, keyof Proto>
@@ -79,6 +80,8 @@ export const code = type<Type<AskCode>, Type<any>>(any, {
   name: 'code',
   validate: (value): value is AskCode => value instanceof AskCode,
 });
+
+export const askCode = code;
 
 interface UnionType<T = any> extends Type<T> {
   types: any[];

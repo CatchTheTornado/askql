@@ -4,8 +4,8 @@ export const ifRes = resource({
   type: any,
   async compute(options, code, args) {
     const { params } = code;
-    const [condition, thenFun, elseFun] = params!;
+    const [condition, thenBlock, elseBlock] = params!;
     const value = await runUntyped(options, condition);
-    return run(options, value ? thenFun : elseFun, []);
+    return run(options, value ? thenBlock : elseBlock, []);
   },
 });

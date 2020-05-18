@@ -1,7 +1,7 @@
 import { AskCode } from '../../askcode';
 import { asyncMap } from '../../utils';
 import { Options as RunOptions, runUntyped } from './run';
-import { any, empty, Type } from './type';
+import { any, Type } from './type';
 import { typed, untyped } from './typed';
 
 /**

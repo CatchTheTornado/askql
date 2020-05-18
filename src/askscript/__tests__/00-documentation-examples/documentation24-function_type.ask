@@ -1,0 +1,5 @@
+ask {
+  const f:string(int) = fun(n:int):string {
+    ''
+  }
+}

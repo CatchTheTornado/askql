@@ -1,0 +1,19 @@
+ask {
+	const factorial = fun(n:int):int {
+		  if (n:lessThan(2)) {
+		    return n
+			}
+		
+		  n:multiply(factorial(n:minus(1)))
+	}
+	
+  const sum = fun(a:int, b:int):int {
+	  a:plus(b)
+	}
+	
+	const one: int = 1
+
+	let list = [1,2,3]
+
+	sum(one, factorial(5))
+}

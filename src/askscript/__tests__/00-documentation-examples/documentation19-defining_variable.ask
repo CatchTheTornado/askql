@@ -1,0 +1,7 @@
+ask {
+  let i:int = 12
+  let s:string = 'hello'
+  const f:float = 1.2
+  let b = 'sdf'
+  const a = 'asdf'
+}

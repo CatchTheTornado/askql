@@ -1,3 +1,0 @@
-// AskVM Error: 
-//   Functions need to have at least one expression
-export const expectedResult = ???;

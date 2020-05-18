@@ -1,0 +1,7 @@
+ask {
+  const a:int = 1
+  const b:float = 1.5
+  const c:bool = false
+  const d:string = 'asdf'
+  const e:any = 2.3
+}

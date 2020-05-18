@@ -45,6 +45,7 @@ statement_NoWs =
 // variables other than of function type
 variableDefinition = 
       vD:variableDeclaration ws* '=' ws* v:value { return new ask.VariableDefinition(vD, v) }
+    / vD:variableDeclaration {                     return new ask.VariableDefinition(vD) }
 variableDeclaration = 
       m:modifier ws+ i:(identifier/operator) t:variableDefinition_type? { return new ask.VariableDeclaration(m, i, t === null ? ask.anyType : t) }
 variableDefinition_type = ws* ':' ws* t:type { return t }
@@ -64,7 +65,7 @@ functionObject = fH:functionHeader cB:codeBlock functionFooter {                
 
 functionSignature = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? {                         return new ask.FunctionSignature(m, i, tD) }
 functionHeader = 'fun' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? nl {  return new ask.FunctionHeader(aL, rTD === null ? ask.anyType : rTD) }
-functionHeader_typeDecl = ws* ':' ws* t1:type { return t1 } // this is the optional variable type declaration
+functionHeader_typeDecl = ws* ':' ws* t1:functionType { return t1 } // this is the optional variable type declaration
 functionHeader_returnTypeDecl = ws* ':' ws* t2:type { return t2 } // this is the optional return type declaration
 
 functionFooter = blockFooter
@@ -135,6 +136,17 @@ methodCallApplied   =
 methodCallAppliedArgList = '(' cAL:callArgList ')' { return cAL }
 
 // === simple elements ===
+
+functionType = 
+  type ws* '(' ws* typeList ws* ')'
+  / type
+typeList = 
+    tL:nonEmptyTypeList { return tL }
+  / '' {                  return [] }
+nonEmptyTypeList = 
+    ws* t:type ws* ',' tL:nonEmptyTypeList { return tL.unshift(t), tL }
+  / ws* t:type { return [t] }
+
 type = 
     'array(' t:type ')' { return new ask.ArrayType(t) }
   / i:identifier {        return new ask.Type(i) }

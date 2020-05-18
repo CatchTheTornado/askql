@@ -84,11 +84,11 @@ export class Statement {
 }
 
 export class VariableDefinition {
-  value: Value;
+  valueOrUndef: Value;
   variableDeclaration: VariableDeclaration;
 
-  constructor(variableDeclaration: VariableDeclaration, value: Value) {
-    this.value = value;
+  constructor(variableDeclaration: VariableDeclaration, valueOrUndef: Value) {
+    this.valueOrUndef = valueOrUndef;
     this.variableDeclaration = variableDeclaration;
   }
 
@@ -97,7 +97,9 @@ export class VariableDefinition {
     if (!('props' in output)) {
       output.props = {};
     }
-    output.props.value = this.value.print();
+    if (typeof this.valueOrUndef !== 'undefined') {
+      output.props.value = this.valueOrUndef.print();
+    }
     return output;
   }
 }

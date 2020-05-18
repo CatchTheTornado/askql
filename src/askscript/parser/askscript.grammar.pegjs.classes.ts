@@ -161,7 +161,7 @@ export class Value {
         const callArgListShallowCopy = methodCall.callArgList.slice();
         callArgListShallowCopy.unshift(new Value(expression, []));
         expression = new FunctionCall(
-          methodCall.identifier,
+          methodCall.identOrOper,
           callArgListShallowCopy
         );
       }
@@ -447,13 +447,15 @@ export class FunctionCall {
 }
 
 export class MethodCallApplied {
-  identifier: Identifier;
+  identOrOper: Identifier;
   callArgList: Value[];
 
   constructor(identifier: Identifier, callArgList: Value[]) {
-    this.identifier = identifier;
+    this.identOrOper = identifier;
     this.callArgList = callArgList;
   }
+
+  // no print(), because method calls are rewritten to function calls
 }
 
 export class Type {
@@ -563,6 +565,10 @@ export class Let {
   }
 }
 
+/**
+ * Please note this is a variable/function identifier OR an operator
+ * (which should be treated in JSX exactly like an identifier).
+ */
 export class Identifier {
   text: string;
 

@@ -46,7 +46,7 @@ statement_NoWs =
 variableDefinition = 
       vD:variableDeclaration ws* '=' ws* v:value { return new ask.VariableDefinition(vD, v) }
 variableDeclaration = 
-      m:modifier ws+ i:identifier t:variableDefinition_type? { return new ask.VariableDeclaration(m, i, t === null ? ask.anyType : t) }
+      m:modifier ws+ i:(identifier/operator) t:variableDefinition_type? { return new ask.VariableDeclaration(m, i, t === null ? ask.anyType : t) }
 variableDefinition_type = ws* ':' ws* t:type { return t }
 
 value = 
@@ -130,7 +130,8 @@ return =
 assignment = i:identifier ws* '=' ws* v:value { return new ask.Assignment(i, v) }
 
 functionCall = i:identifier ws* '(' cAL:callArgList ')' {                       return new ask.FunctionCall(i, cAL) }
-methodCallApplied   = ws* ':' ws* i:identifier ws* cAL:methodCallAppliedArgList?  { return new ask.MethodCallApplied(i, cAL === null ? [] : cAL)}
+methodCallApplied   = 
+    ws* ':' ws* iop:(identifier/operator) ws* cAL:methodCallAppliedArgList?  { return new ask.MethodCallApplied(iop, cAL === null ? [] : cAL)}
 methodCallAppliedArgList = '(' cAL:callArgList ')' { return cAL }
 
 // === simple elements ===
@@ -188,6 +189,7 @@ nlws = nl / ws
 
 // === literals ===
 identifier = [_$a-zA-Z][-_$a-zA-Z0-9]* { return new ask.Identifier(text()) } // TODO: add Unicode here
+operator   = [-<>+*/^%=]+ {              return new ask.Identifier(text()) }
 null = 'null' { return new ask.Null() }
 boolean = true / false
 true = 'true' { return new ask.True() }

@@ -1,0 +1,5 @@
+ask {
+    let lastName:string = 'Czerwinski'
+    let hobby:string = 'choir music'
+    let o = { firstName:: toLower, lastName : : toUpper, hobby: : toUpper }
+}

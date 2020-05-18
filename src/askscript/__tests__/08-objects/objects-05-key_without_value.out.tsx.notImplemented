@@ -1,0 +1,9 @@
+import * as askjsx from '../../../askjsx';
+askjsx;
+
+export const expectedOutput = (
+  <ask>
+    <set name={'lastName'} type={'string'} value={'Czerwinski'} />
+    <set name={'o'} type={'any'} value={{firstName: <ref name={'firstName'} />,lastName: <ref name={'lastName'} />}} />
+  </ask>
+);

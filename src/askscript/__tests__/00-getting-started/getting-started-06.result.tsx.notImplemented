@@ -1,3 +1,0 @@
-// AskVM Error:
-//   Assertion error: no jsx component for "leaf"
-export const expectedResult = {};

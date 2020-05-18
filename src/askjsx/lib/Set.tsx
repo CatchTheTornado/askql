@@ -8,7 +8,7 @@ export function Set({
   value,
 }: {
   name: string;
-  type: string;
+  type?: string;
   value: AskCodeOrValue;
 }) {
   if (Array.isArray(name)) name = name[0]; //TODO(mh): Support types

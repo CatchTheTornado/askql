@@ -8,3 +8,4 @@ src/askscript/.vscode/
 
 src/askscript/parser/askscript.grammar.js
 
+askql-*.tgz

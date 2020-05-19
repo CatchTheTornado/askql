@@ -37,5 +37,3 @@ declare namespace JSX {
     v: { children?: any | any[] };
   }
 }
-
-declare module 'pegjs';

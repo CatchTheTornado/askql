@@ -78,7 +78,7 @@ function jsxObjToXml(
         if (insideCurlyBraces) {
           output = `'${jsxObj}'`;
         } else {
-          output = `${jsxObj}`;
+          output = `{'${jsxObj}'}`;
         }
     }
 

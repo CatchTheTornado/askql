@@ -1,0 +1,3 @@
+ask {
+    let capitals:map(string) = { France: 'Paris', france: 'paris' }
+}

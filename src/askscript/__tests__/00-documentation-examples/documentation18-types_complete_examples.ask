@@ -1,0 +1,16 @@
+ask {
+  let i:int = 12
+  i = 98
+
+  let s:string = 'hello'
+  s = 'bye'
+
+  const f:float = 1.2
+  // f = 1.5 - illegal because of const-ness
+
+  let b = 'sdf'
+  b = 3
+
+  const a = 'asdf'
+  // a = 1.5 - illegal because of const-ness
+}

@@ -473,15 +473,24 @@ export class Type {
   }
 }
 
-export class ArrayType {
-  type: Type;
-
+export class ArrayType extends Type {
   constructor(type: Type) {
-    this.type = type;
+    super(type.identifier);
   }
 
   print(): string {
-    let output = 'array(' + this.type.print() + ')';
+    let output = 'array(' + super.print() + ')';
+    return output;
+  }
+}
+
+export class MapType extends Type {
+  constructor(type: Type) {
+    super(type.identifier);
+  }
+
+  print(): string {
+    let output = 'record(' + super.print() + ')';
     return output;
   }
 }

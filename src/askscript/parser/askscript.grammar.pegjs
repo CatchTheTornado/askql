@@ -185,8 +185,9 @@ nonEmptyTypeList =
   / ws* t:type { return [t] }
 
 type = 
-    'array(' t:type ')' { return new ask.ArrayType(t) }
-  / i:identifier {        return new ask.Type(i) }
+    'array(' t:type ')'  {  return new ask.ArrayType(t) }
+  / 'map(' t:type ')' {     return new ask.MapType(t) }
+  / i:identifier {          return new ask.Type(i) }
 
 
 valueLiteral = 

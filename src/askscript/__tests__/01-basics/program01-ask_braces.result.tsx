@@ -1,1 +1,1 @@
-export const expectedResult = undefined;
+export const expectedResult = null;

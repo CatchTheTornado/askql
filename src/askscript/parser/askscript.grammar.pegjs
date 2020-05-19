@@ -4,6 +4,8 @@
 }
 
 
+// === ask { ===
+
 ask = lineWithoutCode* aH:askHeader aB:askBody askFooter lineWithoutCode* eof {
   return new ask.Ask(aH, aB);
 }
@@ -19,6 +21,9 @@ askHeader_retType = ws* ':' ws* t:type { return t }
 askFooter = blockFooter ws*
 
 askBody = sL:statementList { return new ask.AskBody(sL) }
+
+
+// === statements ===
 
 statementList = lineWithoutCode* sL:statementList_NoEmptyLines lineWithoutCode* { return sL }
 statementList_NoEmptyLines = 
@@ -42,21 +47,32 @@ statement_NoWs =
       / value
     ) { return new ask.Statement(s) }
 
+
+// === variables ===
+
 // variables other than of function type
 variableDefinition = 
       vD:variableDeclaration ws* '=' ws* v:value { return new ask.VariableDefinition(vD, v) }
+    / vD:variableDeclaration {                     return new ask.VariableDefinition(vD) }
 variableDeclaration = 
-      m:modifier ws+ i:identifier t:variableDefinition_type? { return new ask.VariableDeclaration(m, i, t === null ? ask.anyType : t) }
+      m:modifier ws+ i:(identifier/operator) t:variableDefinition_type? { return new ask.VariableDeclaration(m, i, t === null ? ask.anyType : t) }
 variableDefinition_type = ws* ':' ws* t:type { return t }
+
+
+// === value ===
 
 value = 
     e:(
       functionObject
+    / remote
     / functionCall
     / query
     / valueLiteral
     / identifier)
     mCAs:methodCallApplied* { return new ask.Value(e, mCAs) }
+
+
+// === function definition ===
 
 functionDefinition = fS:functionSignature ws* '=' ws* fO:functionObject {                             return new ask.FunctionDefinition(fS, fO) }
 
@@ -64,17 +80,20 @@ functionObject = fH:functionHeader cB:codeBlock functionFooter {                
 
 functionSignature = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? {                         return new ask.FunctionSignature(m, i, tD) }
 functionHeader = 'fun' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? nl {  return new ask.FunctionHeader(aL, rTD === null ? ask.anyType : rTD) }
-functionHeader_typeDecl = ws* ':' ws* t1:type { return t1 } // this is the optional variable type declaration
+functionHeader_typeDecl = ws* ':' ws* t1:functionType { return t1 } // this is the optional variable type declaration
 functionHeader_returnTypeDecl = ws* ':' ws* t2:type { return t2 } // this is the optional return type declaration
 
 functionFooter = blockFooter
 
 
+// === code block ===
+
 codeBlockWithBraces = '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' { return cB; }
 
-// a block of code 
 codeBlock = statementList
 
+
+// === query ===
 
 query = queryHeader qFL:queryFieldList queryFooter { return new ask.Query(qFL) }
 
@@ -100,6 +119,14 @@ queryFieldLeaf =
 queryFooter = blockFooter
 
 
+// === remote ===
+
+remote = rH:remoteHeader cB:codeBlockWithBraces {    return new ask.Remote(rH, cB) }
+
+remoteHeader = 'remote(' ws* url:value ws* ')' ws* { return new ask.RemoteHeader(url) }
+
+// === lists: arg list, call list, value list ===
+
 argList = // TODO: check all the *List constructs for handling empty lists
     aL:nonEmptyArgList { return aL }
   / '' {                 return [] }
@@ -119,6 +146,9 @@ nonEmptyValueList =
     ws* v:value ws* ',' vL:nonEmptyValueList { vL.unshift(v); return vL }
   / ws* v:value ws* { return [v] }
 
+
+// === control flow ===
+
 if     = 'if' ws* '(' v:value ')' ws* cB:codeBlockWithBraces ws* eB:elseBlock? {       return new ask.If(v, cB, eB) }
 while  = 'while' ws* '(' v:value ')' ws* cB:codeBlockWithBraces {                         return new ask.While(v, cB) }
 forOf  = 'for'   ws* '(' vD:variableDeclaration ws+ 'of' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForOf(vD, v, cB)}
@@ -127,16 +157,37 @@ elseBlock = 'else' ws* cB:codeBlockWithBraces { return new ask.Else(cB) }
 return = 
     'return' ws+ v:value {                                                        return new ask.Return(v) }
   / 'return' {                                                                  return new ask.Return(ask.nullValue) }
+
+// ===     ====
+
+
 assignment = i:identifier ws* '=' ws* v:value { return new ask.Assignment(i, v) }
 
+
+// === function and method calls ===
+
 functionCall = i:identifier ws* '(' cAL:callArgList ')' {                       return new ask.FunctionCall(i, cAL) }
-methodCallApplied   = ws* ':' ws* i:identifier ws* cAL:methodCallAppliedArgList?  { return new ask.MethodCallApplied(i, cAL === null ? [] : cAL)}
+methodCallApplied   = 
+    ws* ':' ws* iop:(identifier/operator) ws* cAL:methodCallAppliedArgList?  { return new ask.MethodCallApplied(iop, cAL === null ? [] : cAL)}
 methodCallAppliedArgList = '(' cAL:callArgList ')' { return cAL }
 
+
 // === simple elements ===
+
+functionType = 
+  type ws* '(' ws* typeList ws* ')'
+  / type
+typeList = 
+    tL:nonEmptyTypeList { return tL }
+  / '' {                  return [] }
+nonEmptyTypeList = 
+    ws* t:type ws* ',' tL:nonEmptyTypeList { return tL.unshift(t), tL }
+  / ws* t:type { return [t] }
+
 type = 
-    'array(' t:type ')' { return new ask.ArrayType(t) }
-  / i:identifier {        return new ask.Type(i) }
+    'array(' t:type ')'  {  return new ask.ArrayType(t) }
+  / 'map(' t:type ')' {     return new ask.MapType(t) }
+  / i:identifier {          return new ask.Type(i) }
 
 
 valueLiteral = 
@@ -188,6 +239,7 @@ nlws = nl / ws
 
 // === literals ===
 identifier = [_$a-zA-Z][-_$a-zA-Z0-9]* { return new ask.Identifier(text()) } // TODO: add Unicode here
+operator   = [-<>+*/^%=]+ {              return new ask.Identifier(text()) }
 null = 'null' { return new ask.Null() }
 boolean = true / false
 true = 'true' { return new ask.True() }

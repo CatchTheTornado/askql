@@ -1,6 +1,4 @@
 import * as askjsx from '../../../askjsx';
 askjsx;
 
-export const expectedOutput = (
-  <ask returns={'string'}></ask>
-);
+export const expectedOutput = <ask returns={'string'}></ask>;

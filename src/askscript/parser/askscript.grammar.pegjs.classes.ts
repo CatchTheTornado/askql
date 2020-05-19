@@ -84,11 +84,11 @@ export class Statement {
 }
 
 export class VariableDefinition {
-  value: Value;
+  valueOrUndef: Value;
   variableDeclaration: VariableDeclaration;
 
-  constructor(variableDeclaration: VariableDeclaration, value: Value) {
-    this.value = value;
+  constructor(variableDeclaration: VariableDeclaration, valueOrUndef: Value) {
+    this.valueOrUndef = valueOrUndef;
     this.variableDeclaration = variableDeclaration;
   }
 
@@ -97,7 +97,9 @@ export class VariableDefinition {
     if (!('props' in output)) {
       output.props = {};
     }
-    output.props.value = this.value.print();
+    if (typeof this.valueOrUndef !== 'undefined') {
+      output.props.value = this.valueOrUndef.print();
+    }
     return output;
   }
 }
@@ -143,7 +145,7 @@ export class Value {
       | ValueLiteral
       | Identifier
       | FunctionObject,
-    methodCallAppliedList: MethodCallApplied[]
+    methodCallAppliedList: MethodCallApplied[] = []
   ) {
     this.expression = expression;
     this.methodCallAppliedList = methodCallAppliedList;
@@ -161,7 +163,7 @@ export class Value {
         const callArgListShallowCopy = methodCall.callArgList.slice();
         callArgListShallowCopy.unshift(new Value(expression, []));
         expression = new FunctionCall(
-          methodCall.identifier,
+          methodCall.identOrOper,
           callArgListShallowCopy
         );
       }
@@ -447,13 +449,15 @@ export class FunctionCall {
 }
 
 export class MethodCallApplied {
-  identifier: Identifier;
+  identOrOper: Identifier;
   callArgList: Value[];
 
   constructor(identifier: Identifier, callArgList: Value[]) {
-    this.identifier = identifier;
+    this.identOrOper = identifier;
     this.callArgList = callArgList;
   }
+
+  // no print(), because method calls are rewritten to function calls
 }
 
 export class Type {
@@ -469,15 +473,24 @@ export class Type {
   }
 }
 
-export class ArrayType {
-  type: Type;
-
+export class ArrayType extends Type {
   constructor(type: Type) {
-    this.type = type;
+    super(type.identifier);
   }
 
   print(): string {
-    let output = 'array(' + this.type.print() + ')';
+    let output = 'array(' + super.print() + ')';
+    return output;
+  }
+}
+
+export class MapType extends Type {
+  constructor(type: Type) {
+    super(type.identifier);
+  }
+
+  print(): string {
+    let output = 'record(' + super.print() + ')';
     return output;
   }
 }
@@ -563,6 +576,10 @@ export class Let {
   }
 }
 
+/**
+ * Please note this is a variable/function identifier OR an operator
+ * (which should be treated in JSX exactly like an identifier).
+ */
 export class Identifier {
   text: string;
 
@@ -702,6 +719,37 @@ export class QueryFieldNode {
     };
     return output;
   }
+}
+
+export class Remote {
+  header: RemoteHeader;
+  statementList: Statement[];
+
+  constructor(header: RemoteHeader, statementList: Statement[]) {
+    this.header = header;
+    this.statementList = statementList;
+  }
+
+  print(): LooseObject {
+    const remoteFunction = new FunctionObject(
+      new FunctionHeader([], anyType),
+      this.statementList
+    );
+
+    const args: Value[] = [this.header.url, new Value(remoteFunction)];
+    const fun = new FunctionCall(new Identifier('remote'), args);
+    return fun.print();
+  }
+}
+
+export class RemoteHeader {
+  url: Value;
+
+  constructor(url: Value) {
+    this.url = url;
+  }
+
+  // no print() needed, Remote handles it
 }
 
 export const nullValue = new Value(new ValueLiteral(new Null()), []);

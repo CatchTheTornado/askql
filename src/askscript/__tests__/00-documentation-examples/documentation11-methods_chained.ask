@@ -1,0 +1,4 @@
+ask {
+  return 7:multiply(8:plus(1:minus(4))) // equals to: 7*(8+(1-4))
+    2:multiply(3:plus(4:minus(1))) // equals to: 2*(3+(4-1))
+}

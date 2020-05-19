@@ -1,0 +1,7 @@
+ask {
+    let x = 3
+    let y = -0.4
+
+    // (x+y) * (x-y) 
+    x :+ (y) :times (x :- ( y ) )
+}

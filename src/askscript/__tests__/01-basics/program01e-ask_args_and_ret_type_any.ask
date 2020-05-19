@@ -1,0 +1,2 @@
+ask(n:int, thisIsFloat:float, thisIsString:string):any {
+}

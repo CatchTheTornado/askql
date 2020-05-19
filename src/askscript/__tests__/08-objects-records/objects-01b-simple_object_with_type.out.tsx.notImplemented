@@ -1,0 +1,12 @@
+import * as askjsx from '../../../askjsx';
+askjsx;
+
+export const expectedOutput = (
+  <ask>
+    <set
+      name={'o'}
+      type={'object'}
+      value={{ name: 'Arizona', areaInSqMi: 113998, westernState: true }}
+    />
+  </ask>
+);

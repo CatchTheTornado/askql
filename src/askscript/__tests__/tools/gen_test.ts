@@ -78,7 +78,7 @@ function jsxObjToXml(
         if (insideCurlyBraces) {
           output = `'${jsxObj}'`;
         } else {
-          output = `${jsxObj}`;
+          output = `{'${jsxObj}'}`;
         }
     }
 
@@ -218,7 +218,7 @@ if (filesGenerated == 0) {
 console.log('\n\n');
 
 if (filesErrors > 0) {
-  console.warn(`Got errors when generating ${filesErrors}.`);
+  console.warn(`Got errors when generating ${filesErrors} file(s).`);
 }
 
 interface LooseObject {

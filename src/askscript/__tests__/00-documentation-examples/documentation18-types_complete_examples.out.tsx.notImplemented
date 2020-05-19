@@ -1,0 +1,15 @@
+import * as askjsx from '../../../askjsx';
+askjsx;
+
+export const expectedOutput = (
+  <ask>
+    <set name={'i'} type={'int'} value={12} />
+    <assign name={'i'} value={98} />
+    <set name={'s'} type={'string'} value={'hello'} />
+    <assign name={'s'} value={'bye'} />
+    <const name={'f'} type={'float'} value={1.2} />
+    <set name={'b'} type={'any'} value={'sdf'} />
+    <assign name={'b'} value={3} />
+    <const name={'a'} type={'any'} value={'asdf'} />
+  </ask>
+);

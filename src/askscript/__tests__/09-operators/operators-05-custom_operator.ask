@@ -1,0 +1,11 @@
+ask:string {
+    let <> = fun(a:float, b:float):bool {
+        not(a:equals(b))
+    }
+    let a = 3
+    if (a:<>(5)) {
+        return 'It works!'
+    }
+
+    'Ouch.'
+}

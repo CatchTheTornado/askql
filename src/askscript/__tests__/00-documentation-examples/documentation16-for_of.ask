@@ -1,0 +1,4 @@
+ask {
+  for (const price of priceList) {
+  }
+}

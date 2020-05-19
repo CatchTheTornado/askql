@@ -8,6 +8,6 @@ export const expectedOutput = (
       ['thisIsFloat', 'float'],
       ['thisIsString', 'string'],
     ]}
-    returns={'float'}
+    returns={'any'}
   ></ask>
 );

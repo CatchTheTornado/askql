@@ -15,7 +15,7 @@ export {}; // This dummy line converts this file to a module.
 import * as fs from 'fs';
 import * as glob from 'glob';
 import * as path from 'path';
-import { parse } from '../../../askscript';
+import { parseToJSON } from '../../../askscript';
 
 function isObjectEmpty(obj: object) {
   for (const key in obj) {
@@ -173,7 +173,7 @@ for (const askScriptFilePath of askScriptFilePaths) {
       console.log(`Filename: ${askScriptFilePath}\n\n`);
 
       const askScriptCode = fs.readFileSync(askScriptFilePath).toString();
-      const jsxObj = parse(askScriptCode);
+      const jsxObj = parseToJSON(askScriptCode);
 
       const jsxXml = `  ${jsxObjToXml(jsxObj, '  ')}`;
 

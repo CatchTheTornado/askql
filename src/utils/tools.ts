@@ -1,14 +1,14 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import { Options, resources, runUntyped } from '../askvm';
-import { parse } from '../askscript';
+import { parseToJSON } from '../askscript';
 import { fromAskScriptAst } from '../askjsx';
 import * as util from 'util';
 
 const myLogger = util.debuglog('');
 
 export async function e2e(script: string, environment: Options): Promise<any> {
-  const ast = parse(script);
+  const ast = parseToJSON(script);
   const askCode = fromAskScriptAst(ast);
 
   return runUntyped(environment, askCode);

@@ -1,5 +1,5 @@
 import { AskCode, AskCodeOrValue, isAskCode } from '../../askcode';
-import { Resources } from './resource';
+import { Resources, resource, Resource } from './resource';
 import { JSONable, typed, TypedValue, untyped } from './typed';
 
 export type Values = Record<string, any>;
@@ -12,6 +12,11 @@ export interface Options {
 }
 
 let ops = 0;
+
+function logValue<T>(message: string, value: T): T {
+  console.log(message, value);
+  return value;
+}
 
 export async function run(
   options: Options,
@@ -31,6 +36,9 @@ export async function run(
 
   const { name } = code;
   if (name in resources) {
+    if (!(resources[name] instanceof Resource)) {
+      throw new Error(`Invalid resource "${name}"`);
+    }
     return typed(await resources[name].compute(options, code, args));
   }
 

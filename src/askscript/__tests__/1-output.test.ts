@@ -7,7 +7,7 @@
 //
 
 import { fromAskScriptAst } from '../../askjsx';
-import { parse } from '..';
+import { parseToJSON } from '..';
 
 import * as fs from 'fs';
 import * as glob from 'glob';
@@ -28,7 +28,7 @@ describe('AskScript parser produces correct output', () => {
     const code = fs.readFileSync(askScriptFilePath).toString();
 
     // AskScript -> AskJSX AST
-    const ast = parse(code);
+    const ast = parseToJSON(code);
 
     // TODO(lc): remove comments when cleaning up the repository
 

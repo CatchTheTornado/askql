@@ -1,14 +1,10 @@
-import { fromAskScriptAst } from '../askjsx';
-import { parse } from '../askscript';
-import { resources, runUntyped, Values, Options, Resource } from '../askvm';
-import * as type from '../askvm/lib/type';
-import { resource } from '../askvm/lib';
-import { e2e, runAskFile } from '../utils/tools';
-
-import * as fs from 'fs';
 import * as glob from 'glob';
 import * as path from 'path';
 import * as util from 'util';
+import { Options, resources } from '../askvm';
+import { resource } from '../askvm/lib';
+import * as type from '../askvm/lib/type';
+import { e2e, runAskFile } from '../utils/tools';
 
 const myLogger = util.debuglog('');
 

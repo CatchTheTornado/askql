@@ -6,7 +6,7 @@
 //    ASK_FILE=<path_to_.ask_file> npm test src/askscript/__tests__/0-parse.test.ts
 //
 
-import { parse } from '..';
+import { parseToJSON } from '..';
 
 import * as fs from 'fs';
 import * as glob from 'glob';
@@ -26,7 +26,7 @@ describe('AskScript parser can parse the .ask file', () => {
 
     try {
       // AskScript -> AskJSX AST
-      const askJsxStructure = parse(code);
+      const askJsxStructure = parseToJSON(code);
       expect(askJsxStructure).not.toBeNull();
     } catch (e) {
       // console.log('Error stack', e.stack);

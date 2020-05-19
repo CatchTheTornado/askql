@@ -4,4 +4,12 @@ module.exports = {
     '@babel/preset-typescript',
     ['@babel/preset-react', { pragma: 'askjsx.createElement' }],
   ],
+  plugins: [
+    [
+      'babel-plugin-inline-import',
+      {
+        extensions: ['.ask'],
+      },
+    ],
+  ],
 };

@@ -27,8 +27,20 @@ describe('AskScript parser produces correct output', () => {
   ) {
     const code = fs.readFileSync(askScriptFilePath).toString();
 
-    // AskScript -> AskJSX AST
-    const ast = parse(code);
+    try {
+      // AskScript -> AskJSX AST
+      const ast = parse(code);
+    } catch (e) {
+      const error = new Error();
+      error.name = e.name;
+      error.message = `${e.message}\nLocation: ${JSON.stringify(
+        e.location,
+        null,
+        2
+      )}`;
+
+      throw error;
+    }
 
     // TODO(lc): remove comments when cleaning up the repository
 

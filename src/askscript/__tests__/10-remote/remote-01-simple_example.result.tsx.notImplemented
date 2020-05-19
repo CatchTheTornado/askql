@@ -1,0 +1,3 @@
+// AskVM Error: 
+//   params is not iterable
+export const expectedResult = 'Hi! This is a REMOTE Ask server.';

@@ -4,6 +4,8 @@
 }
 
 
+// === ask { ===
+
 ask = lineWithoutCode* aH:askHeader aB:askBody askFooter lineWithoutCode* eof {
   return new ask.Ask(aH, aB);
 }
@@ -19,6 +21,9 @@ askHeader_retType = ws* ':' ws* t:type { return t }
 askFooter = blockFooter ws*
 
 askBody = sL:statementList { return new ask.AskBody(sL) }
+
+
+// === statements ===
 
 statementList = lineWithoutCode* sL:statementList_NoEmptyLines lineWithoutCode* { return sL }
 statementList_NoEmptyLines = 
@@ -42,6 +47,9 @@ statement_NoWs =
       / value
     ) { return new ask.Statement(s) }
 
+
+// === variables ===
+
 // variables other than of function type
 variableDefinition = 
       vD:variableDeclaration ws* '=' ws* v:value { return new ask.VariableDefinition(vD, v) }
@@ -50,14 +58,21 @@ variableDeclaration =
       m:modifier ws+ i:(identifier/operator) t:variableDefinition_type? { return new ask.VariableDeclaration(m, i, t === null ? ask.anyType : t) }
 variableDefinition_type = ws* ':' ws* t:type { return t }
 
+
+// === value ===
+
 value = 
     e:(
       functionObject
+    / remote
     / functionCall
     / query
     / valueLiteral
     / identifier)
     mCAs:methodCallApplied* { return new ask.Value(e, mCAs) }
+
+
+// === function definition ===
 
 functionDefinition = fS:functionSignature ws* '=' ws* fO:functionObject {                             return new ask.FunctionDefinition(fS, fO) }
 
@@ -71,11 +86,14 @@ functionHeader_returnTypeDecl = ws* ':' ws* t2:type { return t2 } // this is the
 functionFooter = blockFooter
 
 
+// === code block ===
+
 codeBlockWithBraces = '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' { return cB; }
 
-// a block of code 
 codeBlock = statementList
 
+
+// === query ===
 
 query = queryHeader qFL:queryFieldList queryFooter { return new ask.Query(qFL) }
 
@@ -101,6 +119,14 @@ queryFieldLeaf =
 queryFooter = blockFooter
 
 
+// === remote ===
+
+remote = rH:remoteHeader cB:codeBlockWithBraces {    return new ask.Remote(rH, cB) }
+
+remoteHeader = 'remote(' ws* url:value ws* ')' ws* { return new ask.RemoteHeader(url) }
+
+// === lists: arg list, call list, value list ===
+
 argList = // TODO: check all the *List constructs for handling empty lists
     aL:nonEmptyArgList { return aL }
   / '' {                 return [] }
@@ -120,6 +146,9 @@ nonEmptyValueList =
     ws* v:value ws* ',' vL:nonEmptyValueList { vL.unshift(v); return vL }
   / ws* v:value ws* { return [v] }
 
+
+// === control flow ===
+
 if     = 'if' ws* '(' v:value ')' ws* cB:codeBlockWithBraces ws* eB:elseBlock? {       return new ask.If(v, cB, eB) }
 while  = 'while' ws* '(' v:value ')' ws* cB:codeBlockWithBraces {                         return new ask.While(v, cB) }
 forOf  = 'for'   ws* '(' vD:variableDeclaration ws+ 'of' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForOf(vD, v, cB)}
@@ -128,12 +157,20 @@ elseBlock = 'else' ws* cB:codeBlockWithBraces { return new ask.Else(cB) }
 return = 
     'return' ws+ v:value {                                                        return new ask.Return(v) }
   / 'return' {                                                                  return new ask.Return(ask.nullValue) }
+
+// ===     ====
+
+
 assignment = i:identifier ws* '=' ws* v:value { return new ask.Assignment(i, v) }
+
+
+// === function and method calls ===
 
 functionCall = i:identifier ws* '(' cAL:callArgList ')' {                       return new ask.FunctionCall(i, cAL) }
 methodCallApplied   = 
     ws* ':' ws* iop:(identifier/operator) ws* cAL:methodCallAppliedArgList?  { return new ask.MethodCallApplied(iop, cAL === null ? [] : cAL)}
 methodCallAppliedArgList = '(' cAL:callArgList ')' { return cAL }
+
 
 // === simple elements ===
 

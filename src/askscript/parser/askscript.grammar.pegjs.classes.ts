@@ -145,7 +145,7 @@ export class Value {
       | ValueLiteral
       | Identifier
       | FunctionObject,
-    methodCallAppliedList: MethodCallApplied[]
+    methodCallAppliedList: MethodCallApplied[] = []
   ) {
     this.expression = expression;
     this.methodCallAppliedList = methodCallAppliedList;
@@ -710,6 +710,37 @@ export class QueryFieldNode {
     };
     return output;
   }
+}
+
+export class Remote {
+  header: RemoteHeader;
+  statementList: Statement[];
+
+  constructor(header: RemoteHeader, statementList: Statement[]) {
+    this.header = header;
+    this.statementList = statementList;
+  }
+
+  print(): LooseObject {
+    const remoteFunction = new FunctionObject(
+      new FunctionHeader([], anyType),
+      this.statementList
+    );
+
+    const args: Value[] = [this.header.url, new Value(remoteFunction)];
+    const fun = new FunctionCall(new Identifier('remote'), args);
+    return fun.print();
+  }
+}
+
+export class RemoteHeader {
+  url: Value;
+
+  constructor(url: Value) {
+    this.url = url;
+  }
+
+  // no print() needed, Remote handles it
 }
 
 export const nullValue = new Value(new ValueLiteral(new Null()), []);

@@ -16,7 +16,6 @@ export async function e2e(script: string, environment: Options): Promise<any> {
 
 export async function runAskFile(
   askScriptFilePath: string,
-  defaultEnvironment: Options = { values: {}, resources: {} },
   debugPrintEnvValues: boolean = false
 ): Promise<any> {
   const parts = path.parse(askScriptFilePath);
@@ -28,7 +27,11 @@ export async function runAskFile(
   // console.log(`askScriptCode: ${askScriptCode}`);
 
   // Read environment, if available
-  const environmentFilePath = path.join(parts.dir, '_environment.ts');
+  const environmentFilePath = path.resolve(
+    path.join(parts.dir, '_environment.ts')
+  );
+  if (debugPrintEnvValues)
+    myLogger(`environmentFilePath: ${environmentFilePath}`);
 
   let environment: Options;
   if (fs.existsSync(environmentFilePath)) {
@@ -39,7 +42,10 @@ export async function runAskFile(
     };
   } else {
     // Using default environment
-    environment = defaultEnvironment;
+    environment = {
+      values: {},
+      resources: resources,
+    };
   }
 
   if (debugPrintEnvValues) {

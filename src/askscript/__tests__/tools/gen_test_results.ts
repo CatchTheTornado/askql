@@ -60,11 +60,7 @@ async function runFiles(
       let result;
 
       try {
-        result = await runAskFile(
-          askScriptFilePath,
-          { values: {}, resources: {} },
-          true
-        );
+        result = await runAskFile(askScriptFilePath, true);
         outputFilePathToSave = outputFilePath;
 
         fileContents = `export const expectedResult = ${JSON.stringify(

@@ -31,10 +31,7 @@ export const expectedOutput = (
                   <call
                     name={'concat'}
                     args={[
-                      <call
-                        name={'firstName'}
-                        args={[<ref name={'fullName'} />]}
-                      />,
+                      <ref name={'firstName'} />,
                       ' ',
                       <ref name={'lastName'} />,
                     ]}

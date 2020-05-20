@@ -1,0 +1,20 @@
+ask {
+  remote('/', {n: 6}) {
+      
+    const factorial = fun(n:int):int {
+      if (n:lessThan(2)) {
+        return n
+      }
+
+      n:multiply(factorial(n:minus(1)))
+    }
+    
+    const sum:int(int, int) = fun(a:int, b:int):int {
+      a:plus(b)
+    }
+    
+    const one = 1
+    
+    sum(one, n:factorial):toString
+  }
+}

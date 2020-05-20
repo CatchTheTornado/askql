@@ -1,8 +1,8 @@
 import { AskCodeOrValue } from '../../askcode';
 import { createElement } from './jsx';
-import { AskScriptAst } from '../../askscript';
+import { AskJSON } from '../../askscript';
 
-export function fromAskScriptAst(ast: AskScriptAst): AskCodeOrValue {
+export function fromAskScriptAst(ast: AskJSON): AskCodeOrValue {
   if (Array.isArray(ast)) {
     return ast.map(fromAskScriptAst) as any;
   }

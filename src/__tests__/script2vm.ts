@@ -148,11 +148,38 @@ describe('running .ask files produces expected output', () => {
     // console.log('expectedResultFilePath: ' + expectedResultFilePath);
 
     test(`produces correct result for ${parts2.name}.ask`, async () => {
-      const { expectedResult } = require(expectedResultFilePath);
-      await runAskFile(askScriptFilePath); // check runtime errors
-      await expect(runAskFile(askScriptFilePath)).resolves.toEqual(
+      const { args, expectedResult } = require(expectedResultFilePath);
+      await expect(runAskFile(askScriptFilePath, args)).resolves.toEqual(
         expectedResult
       );
+    });
+  }
+});
+
+describe('running .ask files throws when expected', () => {
+  const expectedThrowsGlobPath = path.join(
+    __dirname,
+    '..',
+    'askscript',
+    '__tests__',
+    '[0-9][0-9]-*',
+    '*.result.throws.tsx'
+  );
+
+  const expectedThrowsFilePaths = glob.sync(expectedThrowsGlobPath);
+  // console.log(`expectedOutputFilesGlobPath: ${expectedOutputFilesGlobPath}`);
+  // console.log(`expectedResultFilePaths: ${expectedResultFilePaths}`);
+
+  for (const expectedThrowsFilePath of expectedThrowsFilePaths) {
+    const parts1 = path.parse(expectedThrowsFilePath);
+    const parts2 = path.parse(parts1.name);
+    const parts3 = path.parse(parts2.name);
+
+    const askScriptFilePath = path.join(parts1.dir, `${parts3.name}.ask`);
+
+    test(`throws when running ${parts2.name}.ask`, async () => {
+      let { args } = require(expectedThrowsFilePath);
+      await expect(runAskFile(askScriptFilePath, args)).rejects.toBeDefined();
     });
   }
 });

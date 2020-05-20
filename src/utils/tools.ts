@@ -7,15 +7,20 @@ import * as util from 'util';
 
 const myLogger = util.debuglog('');
 
-export async function e2e(script: string, environment: Options): Promise<any> {
+export async function e2e(
+  script: string,
+  environment: Options,
+  args?: any[]
+): Promise<any> {
   const ast = parseToJSON(script);
   const askCode = fromAskScriptAst(ast);
 
-  return runUntyped(environment, askCode);
+  return runUntyped(environment, askCode, args);
 }
 
 export async function runAskFile(
   askScriptFilePath: string,
+  args?: any[],
   debugPrintEnvValues: boolean = false
 ): Promise<any> {
   const parts = path.parse(askScriptFilePath);
@@ -54,7 +59,7 @@ export async function runAskFile(
     );
   }
   // Run the .ask code
-  const result = await e2e(askScriptCode, environment);
+  const result = await e2e(askScriptCode, environment, args);
 
   return result;
 }

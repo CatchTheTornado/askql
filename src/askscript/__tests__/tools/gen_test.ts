@@ -141,6 +141,9 @@ function jsxObjToXml(
   return output;
 }
 
+// Workaround to make the inclusion for askscript.grammar.pegjs.classes work
+process.env.NODE_ENV = 'test';
+
 const askScriptFilesGlobPath = path.join(
   __dirname,
   '..',

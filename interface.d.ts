@@ -25,6 +25,7 @@ declare namespace JSX {
       return?: true;
       set?: true;
     };
+    const: FirstArg<typeof import('./src/askjsx').Const>;
     fragment: FirstArg<typeof import('./src/askjsx').Fragment>;
     fun: FirstArg<typeof import('./src/askjsx').Fun>;
     if: FirstArg<typeof import('./src/askjsx').If>;
@@ -36,4 +37,9 @@ declare namespace JSX {
     set: FirstArg<typeof import('./src/askjsx').Set>;
     v: { children?: any | any[] };
   }
+}
+
+declare module '*.ask' {
+  const source: string;
+  export default content;
 }

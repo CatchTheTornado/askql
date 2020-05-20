@@ -7,7 +7,7 @@
 //
 
 import { fromAskScriptAst } from '../../askjsx';
-import { parse } from '..';
+import { parseToJSON } from '..';
 
 import * as fs from 'fs';
 import * as glob from 'glob';
@@ -29,7 +29,7 @@ describe('AskScript parser produces correct output', () => {
 
     try {
       // AskScript -> AskJSX AST
-      const ast = parse(code);
+      const ast = parseToJSON(code);
     } catch (e) {
       const error = new Error();
       error.name = e.name;

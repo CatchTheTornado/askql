@@ -9,11 +9,13 @@ export function Fun({
   name = '',
   args = [],
   children = [],
+  ask = false,
 }: {
   name?: string;
   args?: any[]; //TODO(mh)
   children?: AskCodeOrValue[];
   returns?: any;
+  ask?: boolean;
 }) {
   assert(isString(name), 'name');
   // assert(isStringArray(args), 'args'); // TODO(mh)
@@ -23,7 +25,7 @@ export function Fun({
     throw new Error('Functions need to have at least one expression');
   }
   const f = (
-    <code fun>
+    <code ask={ask || undefined} fun={!ask || undefined}>
       {args.map((arg, index) => (
         <Set name={arg} value={<Ref name={`$${index}`} />} />
       ))}

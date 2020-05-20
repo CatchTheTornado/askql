@@ -16,8 +16,10 @@ export function createElement(
   const props = propsOrNull || {};
 
   if (name === 'code') {
-    const propKeys = Object.keys(props);
-    if (propKeys.length !== 1 || typeof propKeys[0] !== 'string') {
+    const propKeys = Object.entries(props)
+      .filter(([, value]) => value != null)
+      .map(([key]) => key);
+    if (propKeys.length !== 1) {
       throw new Error('Invalid code use');
     }
     return toAskCode({
@@ -29,11 +31,11 @@ export function createElement(
   if (typeof name === 'string') {
     const component = (components as any)[titleCase(name)];
     assert(component != null, `no jsx component for "${name}"`);
-    return createElement(component, propsOrNull, ...children);
+    return createElement(component, propsOrNull, ...flatten(children));
   }
 
   if (typeof name === 'function') {
-    return name({ ...props, children });
+    return name({ ...props, children: flatten(children) });
   }
 
   throw new Error(`Invalid JSX name typed: ${typeof name}`);

@@ -25,3 +25,5 @@ export function Set({
     </code>
   );
 }
+
+export const Const = Set;

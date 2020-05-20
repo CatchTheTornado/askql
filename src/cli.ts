@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 import { ReplOptions, REPLServer, start } from 'repl';
-import { parse } from './askcode';
-import { fromAskScriptAst } from './askjsx';
+import { askCodeToSource } from './askcode';
 import * as askscript from './askscript';
 import { Options, resources, run } from './askvm';
+import chalk = require('chalk');
 
 export type Context = Record<string, any>;
 
@@ -48,19 +48,11 @@ export const replOptions: ReplOptions = {
         return undefined;
       }
 
-      let isAskProgram;
       try {
-        askscript.parse(code, { startRule: 'askForRepl' });
-        isAskProgram = true;
-      } catch (e) {
-        isAskProgram = false;
-      }
-
-      try {
-        const { type, value } = isAskProgram
-          ? await run(options, fromAskScriptAst(askscript.parse(code)))
-          : await run(options, parse(code));
-        return [value, type.name];
+        const parsedCode = askscript.parse(`ask {\n${code}\n}`);
+        const { type, value } = await run(options, parsedCode);
+        console.log(chalk.blueBright(type.name), chalk.grey(askCodeToSource(parsedCode)));      
+        return value;
       } catch (e) {
         throw e;
       }

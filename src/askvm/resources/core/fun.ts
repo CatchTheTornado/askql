@@ -18,7 +18,7 @@ export const fun = resource({
       options.values![`$${index}`] = arg;
     });
 
-    let lastResult: any;
+    let lastResult = null;
     const { params: statements = [] } = code;
     for (let i = 0; i < statements.length && !('result' in options); i += 1) {
       const statement = statements[i];

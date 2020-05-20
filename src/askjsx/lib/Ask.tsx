@@ -14,7 +14,6 @@ export function Ask({
 }) {
   return (
     <fun ask args={args.map(([name]) => name)}>
-      {null}
       {children}
     </fun>
   );

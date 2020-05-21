@@ -129,7 +129,9 @@ queryFooter = blockFooter
 
 remote = rH:remoteHeader cB:codeBlockWithBraces {    return new ask.Remote(rH, cB) }
 
-remoteHeader = 'remote(' ws* url:value ws* ')' ws* { return new ask.RemoteHeader(url) }
+remoteHeader = 
+    'remote(' ws* url:value ws* ',' ws* args:map ws* ')' ws* { return new ask.RemoteHeader(url, args) }
+  / 'remote(' ws* url:value ws* ')' ws* {                      return new ask.RemoteHeader(url, new ask.Map([])) }
 
 // === lists: arg list, call list, value list ===
 

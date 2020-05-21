@@ -1,0 +1,7 @@
+ask {
+  const result = query {
+		firstName
+		lastName
+	}
+  result
+}

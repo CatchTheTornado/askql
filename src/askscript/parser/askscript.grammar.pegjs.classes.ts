@@ -731,22 +731,25 @@ export class Remote {
   }
 
   print(): LooseObject {
-    const remoteFunction = new FunctionObject(
-      new FunctionHeader([], anyType),
-      this.statementList
-    );
-
-    const args: Value[] = [this.header.url, new Value(remoteFunction)];
-    const fun = new FunctionCall(new Identifier('remote'), args);
-    return fun.print();
+    let output = {
+      name: 'remote',
+      props: {
+        url: this.header.url.print(),
+        values: this.header.args.print(),
+      },
+      children: this.statementList.map((statement) => statement.print()),
+    };
+    return output;
   }
 }
 
 export class RemoteHeader {
   url: Value;
+  args: Map;
 
-  constructor(url: Value) {
+  constructor(url: Value, args: Map) {
     this.url = url;
+    this.args = args;
   }
 
   // no print() needed, Remote handles it

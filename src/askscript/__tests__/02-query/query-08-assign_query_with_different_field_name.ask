@@ -1,0 +1,9 @@
+ask {
+    const result = query {
+        firstField: middleName
+        secondField :fun2(34, 'adfs', [])
+        thirdField :fun3(fun2(34, 'adfs', []))
+        upperCaseFullName: firstName :concat(' ', lastName) :upperCase
+    }
+    result
+}

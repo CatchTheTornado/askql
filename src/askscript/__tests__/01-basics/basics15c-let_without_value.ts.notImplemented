@@ -1,0 +1,9 @@
+import { parse, runUntyped } from '../../..';
+import source from './basics15c-let_without_value.ask';
+import * as environment from './_environment';
+
+test('basics15c-let_without_value', async () => {
+  await expect(
+    runUntyped(environment, parse(source), [])
+  ).rejects.toBeDefined();
+});

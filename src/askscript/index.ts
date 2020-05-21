@@ -9,11 +9,23 @@ export function parseToJSON(
   options?: any,
   debugPrint?: boolean
 ): AskJSON {
-  const ast = parser.parse(code, options);
-  if (debugPrint) {
-    console.log(`AST: \n${JSON.stringify(ast)}`);
+  try {
+    const ast = parser.parse(code, options);
+    if (debugPrint) {
+      console.log(`AST: \n${JSON.stringify(ast)}`);
+    }
+    return ast.print();
+  } catch (e) {
+    const error = new Error();
+    error.name = e.name;
+    error.message = `${e.message}\nLocation: ${JSON.stringify(
+      e.location,
+      null,
+      2
+    )}`;
+
+    throw error;
   }
-  return ast.print();
 }
 
 export function parse(

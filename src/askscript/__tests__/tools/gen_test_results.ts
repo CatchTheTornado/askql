@@ -20,6 +20,9 @@ import { runAskFile } from '../../../utils/tools';
 
 const myLogger = util.debuglog('');
 
+// Workaround to make the inclusion for askscript.grammar.pegjs.classes work
+process.env.NODE_ENV = 'test';
+
 const askScriptFilesGlobPath = path.join(
   __dirname,
   '..',
@@ -46,25 +49,40 @@ async function runFiles(
       parts.dir,
       `${parts.name}.result.tsx.notImplemented`
     );
+    const throwsFilePath = path.join(
+      parts.dir,
+      `${parts.name}.result.throws.tsx`
+    );
+    const throwsFilePathNotImplemented = path.join(
+      parts.dir,
+      `${parts.name}.result.throws.tsx.notImplemented`
+    );
 
-    if (parts.base == 'program15c-function_def_args.ask') continue; // This test hangs
+    const testFilePathInTypescript = path.join(parts.dir, `${parts.name}.ts`);
+
+    const testFilePathInTypescriptNotImplemented = path.join(
+      parts.dir,
+      `${parts.name}.ts.notImplemented`
+    );
+
+    if (parts.base == 'program15c-function_def_args.ask') continue; // This test hangs, TODO(mh): fix and remove this line
 
     // If the output file does not exist, create it from the current AskQL result.
     // Of course later on you need to eyeball it to check whether it looks OK.
     if (
       !fs.existsSync(outputFilePath) &&
-      !fs.existsSync(outputFileNotImplementedPath)
+      !fs.existsSync(outputFileNotImplementedPath) &&
+      !fs.existsSync(throwsFilePath) &&
+      !fs.existsSync(throwsFilePathNotImplemented) &&
+      !fs.existsSync(testFilePathInTypescript) &&
+      !fs.existsSync(testFilePathInTypescriptNotImplemented)
     ) {
       let fileContents;
       let outputFilePathToSave;
       let result;
 
       try {
-        result = await runAskFile(
-          askScriptFilePath,
-          { values: {}, resources: {} },
-          true
-        );
+        result = await runAskFile(askScriptFilePath, [], true);
         outputFilePathToSave = outputFilePath;
 
         fileContents = `export const expectedResult = ${JSON.stringify(

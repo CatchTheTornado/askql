@@ -8,10 +8,10 @@ export const expectedOutput = (
       type={'any'}
       value={
         <query>
-          <leaf name={'firstName'} value={<ref name={'firstName'} />} />
-          <leaf name={'lastName'} value={<ref name={'lastName'} />} />
+          <node name={'firstName'} value={<ref name={'firstName'} />} />
+          <node name={'lastName'} value={<ref name={'lastName'} />} />
           <node name={'friends'}>
-            <leaf name={'id'} value={<ref name={'id'} />} />
+            <node name={'id'} value={<ref name={'id'} />} />
           </node>
         </query>
       }

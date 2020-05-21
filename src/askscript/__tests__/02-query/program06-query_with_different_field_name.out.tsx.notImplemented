@@ -4,12 +4,12 @@ askjsx;
 export const expectedOutput = (
   <ask>
     <query>
-      <leaf name={'firstField'} value={<ref name={'otherField'} />} />
-      <leaf
+      <node name={'firstField'} value={<ref name={'otherField'} />} />
+      <node
         name={'secondField'}
         value={<call name={'fun2'} args={[34, 'adfs', []]} />}
       />
-      <leaf
+      <node
         name={'thirdField'}
         value={
           <call
@@ -18,7 +18,7 @@ export const expectedOutput = (
           />
         }
       />
-      <leaf
+      <node
         name={'upperCaseFullName'}
         value={
           <call

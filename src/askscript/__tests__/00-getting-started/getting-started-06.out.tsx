@@ -4,7 +4,7 @@ askjsx;
 export const expectedOutput = (
   <ask>
     <query>
-      <leaf
+      <node
         name={'fullName'}
         value={
           <call

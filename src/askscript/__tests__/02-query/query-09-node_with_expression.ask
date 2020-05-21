@@ -1,0 +1,8 @@
+ask {
+  query {
+    users::knex:where({ email: 'hi@example.com' }) {
+      firstName
+      lastName
+    }
+  }
+}

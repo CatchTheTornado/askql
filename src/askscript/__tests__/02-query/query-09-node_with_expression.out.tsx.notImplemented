@@ -1,0 +1,24 @@
+import * as askjsx from '../../../askjsx';
+askjsx;
+
+export const expectedOutput = (
+  <ask>
+    <query>
+      <node
+        name={'users'}
+        value={
+          <call
+            name={'where'}
+            args={[
+              <call name={'knex'} args={[<ref name={'users'} />]} />,
+              { email: 'hi@example.com' },
+            ]}
+          />
+        }
+      >
+        <node name={'firstName'} value={<ref name={'firstName'} />} />
+        <node name={'lastName'} value={<ref name={'lastName'} />} />
+      </node>
+    </query>
+  </ask>
+);

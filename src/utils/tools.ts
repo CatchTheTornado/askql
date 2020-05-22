@@ -7,16 +7,20 @@ import * as util from 'util';
 
 const myLogger = util.debuglog('');
 
-export async function e2e(script: string, environment: Options): Promise<any> {
+export async function e2e(
+  script: string,
+  environment: Options,
+  args?: any[]
+): Promise<any> {
   const ast = parseToJSON(script);
   const askCode = fromAskScriptAst(ast);
 
-  return runUntyped(environment, askCode);
+  return runUntyped(environment, askCode, args);
 }
 
 export async function runAskFile(
   askScriptFilePath: string,
-  defaultEnvironment: Options = { values: {}, resources: {} },
+  args?: any[],
   debugPrintEnvValues: boolean = false
 ): Promise<any> {
   const parts = path.parse(askScriptFilePath);
@@ -28,7 +32,11 @@ export async function runAskFile(
   // console.log(`askScriptCode: ${askScriptCode}`);
 
   // Read environment, if available
-  const environmentFilePath = path.join(parts.dir, '_environment.ts');
+  const environmentFilePath = path.resolve(
+    path.join(parts.dir, '_environment.ts')
+  );
+  if (debugPrintEnvValues)
+    myLogger(`environmentFilePath: ${environmentFilePath}`);
 
   let environment: Options;
   if (fs.existsSync(environmentFilePath)) {
@@ -39,7 +47,10 @@ export async function runAskFile(
     };
   } else {
     // Using default environment
-    environment = defaultEnvironment;
+    environment = {
+      values: {},
+      resources: resources,
+    };
   }
 
   if (debugPrintEnvValues) {
@@ -48,7 +59,7 @@ export async function runAskFile(
     );
   }
   // Run the .ask code
-  const result = await e2e(askScriptCode, environment);
+  const result = await e2e(askScriptCode, environment, args);
 
   return result;
 }

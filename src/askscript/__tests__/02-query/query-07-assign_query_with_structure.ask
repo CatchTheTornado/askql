@@ -1,0 +1,10 @@
+ask {
+  const result = query {
+		firstName
+		lastName
+		friends {
+				id
+		}
+	}
+  result
+}

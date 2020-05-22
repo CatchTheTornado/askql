@@ -661,9 +661,9 @@ export class ArgumentList {
 }
 
 export class Query {
-  queryFieldList: (QueryFieldLeaf | QueryFieldNode)[];
+  queryFieldList: QueryField[];
 
-  constructor(queryFieldList: (QueryFieldLeaf | QueryFieldNode)[]) {
+  constructor(queryFieldList: QueryField[]) {
     this.queryFieldList = queryFieldList;
   }
 
@@ -676,47 +676,36 @@ export class Query {
   }
 }
 
-export class QueryFieldLeaf {
+export class QueryField {
   identifier: Identifier;
   value: Value;
+  queryFieldList: QueryField[] | null;
 
-  constructor(identifier: Identifier, value: Value) {
+  constructor(
+    identifier: Identifier,
+    value: Value,
+    queryFieldList: QueryField[] | null
+  ) {
     this.identifier = identifier;
     this.value = value;
+    this.queryFieldList = queryFieldList;
   }
 
   print(): LooseObject {
-    let output = {
-      name: 'leaf',
+    let output: LooseObject = {
+      name: 'node',
       props: {
         name: this.identifier.text,
         value: this.value.print(),
       },
     };
-    return output;
-  }
-}
 
-export class QueryFieldNode {
-  identifier: Identifier;
-  queryFieldList: (QueryFieldNode | QueryFieldNode)[];
+    if (this.queryFieldList !== null) {
+      output.children = this.queryFieldList.map((queryField) =>
+        queryField.print()
+      );
+    }
 
-  constructor(
-    identifier: Identifier,
-    queryFieldList: (QueryFieldNode | QueryFieldNode)[]
-  ) {
-    this.identifier = identifier;
-    this.queryFieldList = queryFieldList;
-  }
-
-  print(): LooseObject {
-    let output = {
-      name: 'node',
-      props: {
-        name: this.identifier.text,
-      },
-      children: this.queryFieldList.map((queryField) => queryField.print()),
-    };
     return output;
   }
 }
@@ -731,22 +720,25 @@ export class Remote {
   }
 
   print(): LooseObject {
-    const remoteFunction = new FunctionObject(
-      new FunctionHeader([], anyType),
-      this.statementList
-    );
-
-    const args: Value[] = [this.header.url, new Value(remoteFunction)];
-    const fun = new FunctionCall(new Identifier('remote'), args);
-    return fun.print();
+    let output = {
+      name: 'remote',
+      props: {
+        url: this.header.url.print(),
+        values: this.header.args.print(),
+      },
+      children: this.statementList.map((statement) => statement.print()),
+    };
+    return output;
   }
 }
 
 export class RemoteHeader {
   url: Value;
+  args: Map;
 
-  constructor(url: Value) {
+  constructor(url: Value, args: Map) {
     this.url = url;
+    this.args = args;
   }
 
   // no print() needed, Remote handles it

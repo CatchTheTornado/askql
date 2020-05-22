@@ -139,7 +139,8 @@ nonEmptyArgList =
     a:arg ',' aL:argList { return aL.unshift(a), aL }
   / a:arg { return [a] }
 
-arg = ws* i:identifier ws* ':' ws* t:type ws* { return new ask.Arg(i, t) }
+arg = ws* i:identifier ws* t:argType? { return new ask.Arg(i, t === null ? ask.anyType : t) }
+argType = ':' ws* t:type ws* { return t }
 
 callArgList = v:valueList { return v }
 valueList = 

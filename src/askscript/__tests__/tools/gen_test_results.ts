@@ -65,8 +65,6 @@ async function runFiles(
       `${parts.name}.ts.notImplemented`
     );
 
-    if (parts.base == 'program15c-function_def_args.ask') continue; // This test hangs, TODO(mh): fix and remove this line
-
     // If the output file does not exist, create it from the current AskQL result.
     // Of course later on you need to eyeball it to check whether it looks OK.
     if (

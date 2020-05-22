@@ -38,5 +38,5 @@ export function createElement(
     return name({ ...props, children: flatten(children) });
   }
 
-  throw new Error(`Invalid JSX name typed: ${typeof name}`);
+  throw new Error(`Invalid JSX name type: ${typeof name}`);
 }

@@ -11,6 +11,10 @@ export function fromAskScriptAst(ast: AskJSON): AskCodeOrValue {
     return ast;
   }
 
+  if ('jsxValue' in ast) {
+    return ast.jsxValue;
+  }
+
   const { name, props, children = [] } = ast;
 
   // Rewrite properties

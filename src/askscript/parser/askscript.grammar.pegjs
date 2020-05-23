@@ -75,16 +75,27 @@ variableDefinition_type = ws* ':' ws* t:type { return t }
 
 // === value ===
 
-value = 
-    e:(
-      functionObject
+value = f:factor aEL:addExpr* {  return new ask.Value(f, aEL) }
+addExpr = c:('+'/'-') f:factor { return new ask.AddExpr(c, f) }
+
+factor = e:nonArithmExpression mL:mulExpr* {  return new ask.Factor(e, mL) }
+mulExpr = c:('*'/'/') e:nonArithmExpression { return new ask.MulExpr(c, e) }
+
+// === non-arithm expressions ===
+nonArithmExpression = 
+  e:( brackets
+    / functionObject
     / remote
     / functionCall
     / query
     / valueLiteral
-    / identifier)
-    mCAs:methodCallApplied* { return new ask.Value(e, mCAs) }
+    / identifier) 
+  mCAs:methodCallApplied* { return new ask.NonArithmValue(e, mCAs) }
 
+
+// === brackets ===
+
+brackets = '(' ws* v:value ws* ')' { return v }
 
 // === function definition ===
 
@@ -121,8 +132,8 @@ queryField =
     ws* i:identifier ws* ':' ws* v:value qFL:queryFieldBlock? {                  return new ask.QueryField(i, v, qFL) }
 
     // This is double quote in fact (the second ':' is leading the methodCallApplied rule)
-  / ws* i:identifier ws* ':' ws* mCAs:methodCallApplied* qFL:queryFieldBlock? {  return new ask.QueryField(i, new ask.Value(i, mCAs), qFL) }
-  / ws* i:identifier qFL:queryFieldBlock? {                                      return new ask.QueryField(i, new ask.Value(i, []), qFL) }
+  / ws* i:identifier ws* ':' ws* mCAs:methodCallApplied* qFL:queryFieldBlock? {  return new ask.QueryField(i, new ask.NonArithmValue(i, mCAs), qFL) }
+  / ws* i:identifier qFL:queryFieldBlock? {                                      return new ask.QueryField(i, new ask.NonArithmValue(i, []), qFL) }
 
 queryFieldBlock = ws* '{' ws* lineComment? lineWithoutCode* qFL:queryFieldList ws* '}' { return qFL }
 
@@ -230,8 +241,8 @@ mapEntry =
     i:identifier ws* ':' ws* v:value {                 return new ask.MapEntry(i, v) }
 
   // This is double quote in fact (the second ':' is leading the methodCallApplied rule)
-  / i:identifier ws* ':' ws* mCAs:methodCallApplied* { return new ask.MapEntry(i, new ask.Value(i, mCAs)) }
-  / ws* i:identifier {                                 return new ask.MapEntry(i, new ask.Value(i, [])) }
+  / i:identifier ws* ':' ws* mCAs:methodCallApplied* { return new ask.MapEntry(i, new ask.NonArithmValue(i, mCAs)) }
+  / ws* i:identifier {                                 return new ask.MapEntry(i, new ask.NonArithmValue(i, [])) }
 
 
 modifier = const / let
@@ -251,7 +262,7 @@ lineComment = wsnonl* '//' (!nl .)* (nl / eof)
 emptyLine = wsnonl* nl
 
 // === literals ===
-identifier = [_$a-zA-Z][-_$a-zA-Z0-9]* { return new ask.Identifier(text()) } // TODO: add Unicode here
+identifier = [_$a-zA-Z][_$a-zA-Z0-9]* { return new ask.Identifier(text()) } // TODO: add Unicode here
 operator   = [-<>+*/^%=&|]+ {            return new ask.Identifier(text()) }
 null = 'null' { return new ask.Null() }
 boolean = true / false

@@ -12,19 +12,27 @@ export function parseToJSON(
   try {
     const ast = parser.parse(code, options);
     if (debugPrint) {
-      console.log(`AST: \n${JSON.stringify(ast)}`);
+      console.log(`AST: \n${JSON.stringify(ast, null, 2)}`);
     }
-    return ast.print();
+    const jsx = ast.print();
+    if (debugPrint) {
+      console.log(`JSX: \n${JSON.stringify(jsx, null, 2)}`);
+    }
+    return jsx;
   } catch (e) {
-    const error = new Error();
-    error.name = e.name;
-    error.message = `${e.message}\nLocation: ${JSON.stringify(
-      e.location,
-      null,
-      2
-    )}`;
+    if (!(e instanceof parser.SyntaxError)) {
+      throw e;
+    } else {
+      const error = new Error();
+      error.name = e.name;
+      error.message = `${e.message}\nLocation: ${JSON.stringify(
+        e.location,
+        null,
+        2
+      )}`;
 
-    throw error;
+      throw error;
+    }
   }
 }
 

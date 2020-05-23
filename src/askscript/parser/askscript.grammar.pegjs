@@ -104,7 +104,7 @@ codeBlock = statementList
 
 query = queryHeader qFL:queryFieldList queryFooter { return new ask.Query(qFL) }
 
-queryHeader = 'query {' ws* lineComment?
+queryHeader = 'query' ws* '{' ws* lineComment?
 queryFieldList = 
     lineWithoutCode* qF:queryField ws* lineComment? lineWithoutCode* qFL:queryFieldList {  return qFL.unshift(qF), qFL }
   / lineWithoutCode* qF:queryField ws* lineComment? lineWithoutCode* {                     return [qF] }

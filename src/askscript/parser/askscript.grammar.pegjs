@@ -18,7 +18,7 @@ ask = lineWithoutCode* aH:askHeader aB:askBody askFooter lineWithoutCode* eof {
 
 askForRepl = lineWithoutCode* ws* 'ask' aL:askHeader_argList? aRT:askHeader_retType? ws* '{' .*
 
-askHeader = ws* 'ask' aL:askHeader_argList? aRT:askHeader_retType? ws* '{' ws* lineComment? nl {
+askHeader = ws* 'ask' aL:askHeader_argList? aRT:askHeader_retType? ws* '{' ws* lineComment? {
   return new ask.AskHeader(aL === null ? [] : aL, aRT);
 }
 askHeader_argList = ws* '(' aL:argList ')' { return aL }
@@ -33,7 +33,7 @@ askBody = sL:statementList { return new ask.AskBody(sL) }
 
 statementList = lineWithoutCode* sL:statementList_NoEmptyLines lineWithoutCode* { return sL }
 statementList_NoEmptyLines = 
-      s:statement ws* lineComment? nl lineWithoutCode* sL:statementList { return sL.unshift(s), sL }
+      s:statement ws* lineComment? lineWithoutCode* sL:statementList { return sL.unshift(s), sL }
     / s:statement ws* lineComment? {                                      return [s] }
     / '' {                                                                return [] }
 
@@ -85,7 +85,7 @@ functionDefinition = fS:functionSignature ws* '=' ws* fO:functionObject {       
 functionObject = fH:functionHeader cB:codeBlock functionFooter {                                      return new ask.FunctionObject(fH, cB) }
 
 functionSignature = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? {                         return new ask.FunctionSignature(m, i, tD) }
-functionHeader = 'fun' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? nl {  return new ask.FunctionHeader(aL, rTD === null ? ask.anyType : rTD) }
+functionHeader = 'fun' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? {  return new ask.FunctionHeader(aL, rTD === null ? ask.anyType : rTD) }
 functionHeader_typeDecl = ws* ':' ws* t1:functionType { return t1 } // this is the optional variable type declaration
 functionHeader_returnTypeDecl = ws* ':' ws* t2:type { return t2 } // this is the optional return type declaration
 
@@ -94,7 +94,7 @@ functionFooter = blockFooter
 
 // === code block ===
 
-codeBlockWithBraces = '{' ws* lineComment? nl+ cB:codeBlock nlws* '}' { return cB; }
+codeBlockWithBraces = '{' ws* cB:codeBlock nlws* '}' { return cB; }
 
 codeBlock = statementList
 
@@ -103,10 +103,10 @@ codeBlock = statementList
 
 query = queryHeader qFL:queryFieldList queryFooter { return new ask.Query(qFL) }
 
-queryHeader = 'query {' ws* lineComment? nl
+queryHeader = 'query {' ws* lineComment?
 queryFieldList = 
-    lineWithoutCode* qF:queryField ws* lineComment? nl lineWithoutCode* qFL:queryFieldList {  return qFL.unshift(qF), qFL }
-  / lineWithoutCode* qF:queryField ws* lineComment? nl lineWithoutCode* {                     return [qF] }
+    lineWithoutCode* qF:queryField ws* lineComment? lineWithoutCode* qFL:queryFieldList {  return qFL.unshift(qF), qFL }
+  / lineWithoutCode* qF:queryField ws* lineComment? lineWithoutCode* {                     return [qF] }
   / lineWithoutCode* {                                                                        return [] }
 
 queryField = 
@@ -116,7 +116,7 @@ queryField =
   / ws* i:identifier ws* ':' ws* mCAs:methodCallApplied* qFL:queryFieldBlock? {  return new ask.QueryField(i, new ask.Value(i, mCAs), qFL) }
   / ws* i:identifier qFL:queryFieldBlock? {                                      return new ask.QueryField(i, new ask.Value(i, []), qFL) }
 
-queryFieldBlock = ws* '{' ws* lineComment? nl lineWithoutCode* qFL:queryFieldList ws* '}' { return qFL }
+queryFieldBlock = ws* '{' ws* lineComment? lineWithoutCode* qFL:queryFieldList ws* '}' { return qFL }
 
 queryFooter = blockFooter
 
@@ -154,17 +154,16 @@ nonEmptyValueList =
 
 // === control flow ===
 
-if     = 'if' ws* '(' v:value ')' ws* cB:codeBlockWithBraces ws* eB:elseBlock? {       return new ask.If(v, cB, eB) }
-while  = 'while' ws* '(' v:value ')' ws* cB:codeBlockWithBraces {                         return new ask.While(v, cB) }
+if     = 'if' ws* '(' v:value ')' ws* cB:codeBlockWithBraces ws* eB:elseBlock? { return new ask.If(v, cB, eB) }
+while  = 'while' ws* '(' v:value ')' ws* cB:codeBlockWithBraces {                return new ask.While(v, cB) }
 forOf  = 'for'   ws* '(' vD:variableDeclaration ws+ 'of' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForOf(vD, v, cB)}
 forIn  = 'for'   ws* '(' vD:variableDeclaration ws+ 'in' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForIn(vD, v, cB)}
 elseBlock = 'else' ws* cB:codeBlockWithBraces { return new ask.Else(cB) }
 return = 
-    'return' ws+ v:value {                                                        return new ask.Return(v) }
-  / 'return' {                                                                  return new ask.Return(ask.nullValue) }
+    'return' wsnonl+ v:value {  return new ask.Return(v) }
+  / 'return' wsnonl* {          return new ask.Return(ask.nullValue) }
 
 // ===     ====
-
 
 assignment = i:identifier ws* '=' ws* v:value { return new ask.Assignment(i, v) }
 
@@ -237,7 +236,7 @@ lineWithoutCode =
 
 lineWithComment = lineComment
 
-lineComment = ws* '//' (!nl .)* (&nl / eof)
+lineComment = ws* '//' (!nl .)* (nl / eof)
 
 emptyLine = ws* nl
 nlws = nl / ws
@@ -272,10 +271,13 @@ onenine = [1-9]
 
 
 // whitespace
-ws = ' ' / '\t'
+ws = wsnonl / nl
+wsnonl = ' ' / '\t'
 
 // new line
-nl = '\n' / '\r' 
+nl = '\n' / '\r'
+
 
 // end of file
 eof = (!.)
+

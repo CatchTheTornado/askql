@@ -1,3 +1,3 @@
 // AskVM Error: 
-//   Unknown identifier '+'!
+//   Unknown identifier '-'!
 export const expectedResult = ???;

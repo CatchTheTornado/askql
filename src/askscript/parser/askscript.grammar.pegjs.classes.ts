@@ -59,6 +59,7 @@ export class Statement {
     | While
     | ForOf
     | ForIn
+    | For3
     | Return
     | Assignment
     | Value;
@@ -71,6 +72,7 @@ export class Statement {
       | While
       | ForOf
       | ForIn
+      | For3
       | Return
       | Assignment
       | Value
@@ -128,51 +130,142 @@ export class VariableDeclaration {
 }
 
 export class Value {
-  expression: FunctionCall | Query | ValueLiteral | Identifier | FunctionObject;
-  methodCallAppliedList: MethodCallApplied[];
+  factor: Factor;
+  addExprList: AddExpr[];
 
-  expressionToPrint:
+  constructor(factor: Factor, addExprList: AddExpr[] = []) {
+    this.factor = factor;
+    this.addExprList = addExprList;
+  }
+
+  print(): LooseObject | string | number | boolean | null {
+    const nonArithmValue = this.toNonArithmValue();
+    const output = nonArithmValue.print();
+    return output;
+  }
+
+  toNonArithmValue(): NonArithmValue {
+    const nonArithmValue = this.factor.toNonArithmValue();
+    this.addExprList.forEach((addExpr) => {
+      nonArithmValue.methodCallAppliedList.push(
+        new MethodCallApplied(new Identifier(addExpr.c), [new Value(addExpr.f)])
+      );
+    });
+    return nonArithmValue;
+  }
+}
+
+export class AddExpr {
+  c: string;
+  f: Factor;
+
+  constructor(c: string, f: Factor) {
+    this.c = c;
+    this.f = f;
+  }
+}
+
+export class Factor {
+  e: NonArithmValue;
+  mulExprList: MulExpr[];
+
+  constructor(e: NonArithmValue, mulExprList: MulExpr[] = []) {
+    this.e = e;
+    this.mulExprList = mulExprList;
+  }
+
+  toNonArithmValue(): NonArithmValue {
+    const methodCallAppliedList = this.e.methodCallAppliedList.slice();
+    this.mulExprList.forEach((mulExpr) => {
+      methodCallAppliedList.push(
+        new MethodCallApplied(new Identifier(mulExpr.c), [
+          new Value(new Factor(mulExpr.e)),
+        ])
+      );
+    });
+
+    const result = new NonArithmValue(this.e.expression, methodCallAppliedList);
+    return result;
+  }
+}
+
+export class MulExpr {
+  c: string;
+  e: NonArithmValue;
+
+  constructor(c: string, e: NonArithmValue) {
+    this.c = c;
+    this.e = e;
+  }
+}
+
+export class NonArithmValue {
+  expression:
+    | Value
     | FunctionCall
     | Query
     | ValueLiteral
     | Identifier
     | FunctionObject;
+  methodCallAppliedList: (MethodCallApplied | KeyAccessApplied)[];
 
   constructor(
     expression:
+      | Value
       | FunctionCall
       | Query
       | ValueLiteral
       | Identifier
       | FunctionObject,
-    methodCallAppliedList: MethodCallApplied[] = []
+    methodCallAppliedList: (MethodCallApplied | KeyAccessApplied)[] = []
   ) {
     this.expression = expression;
     this.methodCallAppliedList = methodCallAppliedList;
+  }
+
+  print(): LooseObject | string | number | boolean | null {
+    let expressionToPrint;
 
     // If there are methods applied (which are a syntactic sugar for functions), convert them to functions
-    if (methodCallAppliedList.length == 0) {
-      this.expressionToPrint = expression;
+    if (this.methodCallAppliedList.length == 0) {
+      expressionToPrint = this.expression;
     } else {
       // We need to convert here from:
       //     expression:method1(arg1, arg2):method2(arg3, arg4):...:methodn(argn1, argn2)
       // to:
       //     methodn(method(....(method2(method1(expression, arg1, arg2), arg3, arg4), .....),....), argn1, argn2)
 
-      for (const methodCall of methodCallAppliedList) {
+      let expression = this.expression;
+
+      for (let methodCall of this.methodCallAppliedList) {
+        // Key access is a syntactic sugar for :at() method, e.g.:
+        // obj.key equals to:
+        // obj:at('key')
+        if (methodCall instanceof KeyAccessApplied) {
+          methodCall = new MethodCallApplied(new Identifier('at'), [
+            new Value(
+              new Factor(
+                new NonArithmValue(
+                  new ValueLiteral(new String(methodCall.identifier.text))
+                )
+              )
+            ),
+          ]);
+        }
+
         const callArgListShallowCopy = methodCall.callArgList.slice();
-        callArgListShallowCopy.unshift(new Value(expression, []));
+        callArgListShallowCopy.unshift(
+          new Value(new Factor(new NonArithmValue(expression)))
+        );
         expression = new FunctionCall(
           methodCall.identOrOper,
           callArgListShallowCopy
         );
       }
-      this.expressionToPrint = expression;
+      expressionToPrint = expression;
     }
-  }
 
-  print(): LooseObject | string | number | boolean | null {
-    let output = this.expressionToPrint.print();
+    let output = expressionToPrint.print();
     return output;
   }
 }
@@ -388,6 +481,40 @@ export class ForIn {
   }
 }
 
+export class For3 {
+  sL1: Statement[];
+  sL2: Statement[];
+  sL3: Statement[];
+
+  body: Statement[];
+
+  constructor(
+    s1: Statement | null,
+    s2: Statement | null,
+    s3: Statement | null,
+    body: Statement[]
+  ) {
+    this.sL1 = s1 !== null ? [s1] : [];
+    this.sL2 = s2 !== null ? [s2] : [];
+    this.sL3 = s3 !== null ? [s3] : [];
+
+    this.body = body;
+  }
+
+  print(): LooseObject {
+    let output = {
+      name: 'for',
+      props: {
+        initialization: this.sL1.map((stmt) => stmt.print()),
+        condition: this.sL2.map((stmt) => stmt.print()),
+        finalExpression: this.sL3.map((stmt) => stmt.print()),
+      },
+      children: this.body.map((stmt) => stmt.print()),
+    };
+    return output;
+  }
+}
+
 export class Return {
   value: Value;
 
@@ -458,6 +585,14 @@ export class MethodCallApplied {
   }
 
   // no print(), because method calls are rewritten to function calls
+}
+
+export class KeyAccessApplied {
+  identifier: Identifier;
+
+  constructor(identifier: Identifier) {
+    this.identifier = identifier;
+  }
 }
 
 export class Type {
@@ -744,7 +879,7 @@ export class RemoteHeader {
   // no print() needed, Remote handles it
 }
 
-export const nullValue = new Value(new ValueLiteral(new Null()), []);
+export const nullValue = new NonArithmValue(new ValueLiteral(new Null()), []);
 export const anyType = new Type(new Identifier('any'));
 
 interface LooseObject {

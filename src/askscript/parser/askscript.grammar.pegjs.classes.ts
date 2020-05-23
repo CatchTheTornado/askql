@@ -59,6 +59,7 @@ export class Statement {
     | While
     | ForOf
     | ForIn
+    | For3
     | Return
     | Assignment
     | Value;
@@ -71,6 +72,7 @@ export class Statement {
       | While
       | ForOf
       | ForIn
+      | For3
       | Return
       | Assignment
       | Value
@@ -383,6 +385,40 @@ export class ForIn {
         in: this.value.print(),
       },
       children: this.statementList.map((statement) => statement.print()),
+    };
+    return output;
+  }
+}
+
+export class For3 {
+  sL1: Statement[];
+  sL2: Statement[];
+  sL3: Statement[];
+
+  body: Statement[];
+
+  constructor(
+    s1: Statement | null,
+    s2: Statement | null,
+    s3: Statement | null,
+    body: Statement[]
+  ) {
+    this.sL1 = s1 !== null ? [s1] : [];
+    this.sL2 = s2 !== null ? [s2] : [];
+    this.sL3 = s3 !== null ? [s3] : [];
+
+    this.body = body;
+  }
+
+  print(): LooseObject {
+    let output = {
+      name: 'for',
+      props: {
+        initialization: this.sL1.map((stmt) => stmt.print()),
+        condition: this.sL2.map((stmt) => stmt.print()),
+        finalExpression: this.sL3.map((stmt) => stmt.print()),
+      },
+      children: this.body.map((stmt) => stmt.print()),
     };
     return output;
   }

@@ -1,3 +1,8 @@
+<a href="https://askql.org" align="right">
+  <img src="https://xfaang-assets.s3.eu-west-3.amazonaws.com/logo/askql-logo-OW-cut.png" align="right"
+     title="AskQL Logo" width="200">
+ </a>
+
 # AskQL
 AskQL is a query language that can express every data request
 

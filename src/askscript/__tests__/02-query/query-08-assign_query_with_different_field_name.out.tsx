@@ -8,12 +8,12 @@ export const expectedOutput = (
       type={'any'}
       value={
         <query>
-          <leaf name={'firstField'} value={<ref name={'middleName'} />} />
-          <leaf
+          <node name={'firstField'} value={<ref name={'middleName'} />} />
+          <node
             name={'secondField'}
             value={<call name={'fun2'} args={[34, 'adfs', []]} />}
           />
-          <leaf
+          <node
             name={'thirdField'}
             value={
               <call
@@ -22,7 +22,7 @@ export const expectedOutput = (
               />
             }
           />
-          <leaf
+          <node
             name={'upperCaseFullName'}
             value={
               <call

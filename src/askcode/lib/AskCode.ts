@@ -55,12 +55,16 @@ export function isAskCode(value: AskCodeOrValue): value is AskCode {
   return value instanceof AskCode;
 }
 
+const resourceAliasMap: Record<string, string> = {
+  fragment: 'f',
+}
+
 export function askCodeToSource(value: AskCodeOrValue): string {
   if (!isAskCode(value)) {
     return JSON.stringify(value);
   }
   const { name, params } = askCode(value);
-  return `${name}${
+  return `${resourceAliasMap[name] ?? name}${
     params ? `(${params.map(askCodeToSource).join(', ')})` : ''
   }`;
 }

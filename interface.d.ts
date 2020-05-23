@@ -29,7 +29,6 @@ declare namespace JSX {
     fragment: FirstArg<typeof import('./src/askjsx').Fragment>;
     fun: FirstArg<typeof import('./src/askjsx').Fun>;
     if: FirstArg<typeof import('./src/askjsx').If>;
-    leaf: FirstArg<typeof import('./src/askjsx').Leaf>;
     node: FirstArg<typeof import('./src/askjsx').Node>;
     query: FirstArg<typeof import('./src/askjsx').Query>;
     ref: FirstArg<typeof import('./src/askjsx').Ref>;

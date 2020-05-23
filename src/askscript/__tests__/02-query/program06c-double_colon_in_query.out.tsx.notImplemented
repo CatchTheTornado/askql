@@ -4,11 +4,11 @@ askjsx;
 export const expectedOutput = (
   <ask>
     <query>
-      <leaf
+      <node
         name={'firstName'}
         value={<call name={'toUpper'} args={[<ref name={'firstName'} />]} />}
       />
-      <leaf
+      <node
         name={'lastName'}
         value={
           <call

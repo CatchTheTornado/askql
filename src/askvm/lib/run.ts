@@ -29,7 +29,7 @@ export async function run(
 
   ops += 1;
   if (ops > 1000) {
-    throw new Error('Over ops limit!');
+    // throw new Error('Over ops limit!');
   }
 
   const { resources = {}, values = {} } = options;

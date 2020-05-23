@@ -51,7 +51,10 @@ export const replOptions: ReplOptions = {
       try {
         const parsedCode = askscript.parse(`ask {\n${code}\n}`);
         const { type, value } = await run(options, parsedCode);
-        console.log(chalk.blueBright(type.name), chalk.grey(askCodeToSource(parsedCode)));      
+        console.log(
+          chalk.blueBright(type.name),
+          chalk.grey(askCodeToSource(parsedCode))
+        );
         return value;
       } catch (e) {
         throw e;

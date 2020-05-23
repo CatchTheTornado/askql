@@ -43,5 +43,3 @@ export function Node({
     </code>
   );
 }
-
-export const Leaf = Node;

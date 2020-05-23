@@ -1,0 +1,6 @@
+ask {
+    let capitals:map(string) = { France: 'Paris', Germany: 'Berlin', Spain: 'Madrid', anywhere: 'any town' }
+    let paris = capitals.France
+    let berlin:string = capitals.Germany
+    capitals.anywhere
+}

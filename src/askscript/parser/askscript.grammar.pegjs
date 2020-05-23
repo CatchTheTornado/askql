@@ -174,8 +174,9 @@ assignment = i:identifier ws* '=' ws* v:value { return new ask.Assignment(i, v) 
 
 functionCall = i:identifier ws* '(' cAL:callArgList ')' {                       return new ask.FunctionCall(i, cAL) }
 methodCallApplied   = 
-    ws* ':' ws* iop:(identifier/operator) ws* cAL:methodCallAppliedArgList?  { return new ask.MethodCallApplied(iop, cAL === null ? [] : cAL)}
-methodCallAppliedArgList = '(' cAL:callArgList ')' { return cAL }
+    ws* ':' ws* iop:(identifier/operator) cAL:methodCallAppliedArgList?  { return new ask.MethodCallApplied(iop, cAL === null ? [] : cAL)}
+  / ws* '.' ws* i:identifier  {                                            return new ask.KeyAccessApplied(i) }
+methodCallAppliedArgList = ws* '(' cAL:callArgList ')' { return cAL }
 
 
 // === simple elements ===

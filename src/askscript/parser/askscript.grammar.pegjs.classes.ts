@@ -131,7 +131,7 @@ export class VariableDeclaration {
 
 export class Value {
   expression: FunctionCall | Query | ValueLiteral | Identifier | FunctionObject;
-  methodCallAppliedList: MethodCallApplied[];
+  methodCallAppliedList: (MethodCallApplied | KeyAccessApplied)[];
 
   expressionToPrint:
     | FunctionCall
@@ -147,7 +147,7 @@ export class Value {
       | ValueLiteral
       | Identifier
       | FunctionObject,
-    methodCallAppliedList: MethodCallApplied[] = []
+    methodCallAppliedList: (MethodCallApplied | KeyAccessApplied)[] = []
   ) {
     this.expression = expression;
     this.methodCallAppliedList = methodCallAppliedList;
@@ -161,7 +161,16 @@ export class Value {
       // to:
       //     methodn(method(....(method2(method1(expression, arg1, arg2), arg3, arg4), .....),....), argn1, argn2)
 
-      for (const methodCall of methodCallAppliedList) {
+      for (let methodCall of methodCallAppliedList) {
+        // Key access is a syntactic sugar for :at() method, e.g.:
+        // obj.key equals to:
+        // obj:at('key')
+        if (methodCall instanceof KeyAccessApplied) {
+          methodCall = new MethodCallApplied(new Identifier('at'), [
+            new Value(new ValueLiteral(new String(methodCall.identifier.text))),
+          ]);
+        }
+
         const callArgListShallowCopy = methodCall.callArgList.slice();
         callArgListShallowCopy.unshift(new Value(expression, []));
         expression = new FunctionCall(
@@ -494,6 +503,14 @@ export class MethodCallApplied {
   }
 
   // no print(), because method calls are rewritten to function calls
+}
+
+export class KeyAccessApplied {
+  identifier: Identifier;
+
+  constructor(identifier: Identifier) {
+    this.identifier = identifier;
+  }
 }
 
 export class Type {

@@ -227,7 +227,7 @@ valueLiteral =
     ) { return new ask.ValueLiteral(v) }
 
 string = "'" sC:stringContents  "'" { return sC }
-stringContents = ch* { return new ask.String(text()) }
+stringContents = ch* { return new ask.StringLiteral(text()) }
 
 array = '[' vL:valueList ']' { return new ask.Array(vL) }
 map = '{' mEL:mapEntryList '}' { return new ask.Map(mEL) }

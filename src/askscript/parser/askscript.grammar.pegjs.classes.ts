@@ -2,6 +2,7 @@
 // If an argument ends with *List, it means it's a list of elements of type *. In some cases it's converted to an object of a class *List in the constructor to make printing AskJSX easier.
 //
 // Except for one instance (typeNullable argument), all values are non-null.
+
 export class Ask {
   askHeader: AskHeader;
   askBody: AskBody;
@@ -246,7 +247,9 @@ export class NonArithmValue {
             new Value(
               new Factor(
                 new NonArithmValue(
-                  new ValueLiteral(new String(methodCall.identifier.text))
+                  new ValueLiteral(
+                    new StringLiteral(methodCall.identifier.text)
+                  )
                 )
               )
             ),
@@ -631,9 +634,11 @@ export class MapType extends Type {
 }
 
 export class ValueLiteral {
-  value: Null | True | False | Float | Int | String | Array | Map;
+  value: Null | True | False | Float | Int | StringLiteral | Array | Map;
 
-  constructor(value: Null | True | False | Float | Int | String | Array | Map) {
+  constructor(
+    value: Null | True | False | Float | Int | StringLiteral | Array | Map
+  ) {
     this.value = value;
   }
 
@@ -642,16 +647,65 @@ export class ValueLiteral {
   }
 }
 
-export class String {
-  text: string;
+export class StringLiteral {
+  escapedText: string;
 
-  constructor(text: string) {
-    this.text = text;
+  constructor(escapedText: string) {
+    this.escapedText = escapedText;
   }
 
   print(): string {
-    let output = this.text;
+    let output = StringLiteral.unescape(this.escapedText);
     return output;
+  }
+
+  // remove \ from \\ and \'
+  static unescape(escapedText: string): string {
+    let unescapedText = '';
+    const REGULAR_TEXT = 0;
+    const ESCAPE_CHARACTER = 1;
+    const ESCAPE_UNICODE = 2;
+
+    let state = REGULAR_TEXT;
+    let stateUnicodeSequence = '';
+    for (const c of escapedText) {
+      switch (state) {
+        case REGULAR_TEXT:
+          if (c == '\\') {
+            state = ESCAPE_CHARACTER;
+          } else {
+            unescapedText += c;
+          }
+          break;
+
+        case ESCAPE_CHARACTER:
+          if (c == "'" || c == '\\') {
+            //unescape -> just output c here
+            unescapedText += c;
+            state = REGULAR_TEXT;
+          } else if (c == 'u') {
+            state = ESCAPE_UNICODE;
+            stateUnicodeSequence = ''; // we empty the container for our Unicode sequence
+          } else {
+            //This shouldn't happen unless someone used escaping for the wrong character.
+            //Maybe we should issue a warning.
+            unescapedText += c;
+            console.warn('Wrong escape sequence: \\' + c);
+            state = REGULAR_TEXT;
+          }
+          break;
+
+        case ESCAPE_UNICODE:
+          stateUnicodeSequence += c;
+          if (stateUnicodeSequence.length == 4) {
+            let c2 = String.fromCodePoint(parseInt(stateUnicodeSequence, 16));
+            unescapedText += c2;
+            stateUnicodeSequence = '';
+            state = REGULAR_TEXT;
+          }
+      }
+    }
+    return unescapedText;
   }
 }
 

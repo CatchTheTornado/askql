@@ -1,0 +1,21 @@
+ask {
+  const lorem = 'lorem ipsum dolor sit amet consectetur adipiscing elit'
+  const capitalize = fun(t: string): string { 
+    return t:at(0):upperCase:concat(t:subStr(1))
+  }
+  let result = ''
+
+  lorem:split(' '):each( fun(t: char, index: number, firstArrayElement: boolean, lastArrayElement: boolean) {
+		const cap = capitalize(t)
+    if (last) {
+      result = result :+ (cap)
+    } else {
+      result = result :+ (concat(cap, ' '))
+    }
+    // result = result :+ (last ? cap : concat(cap, ' '))
+		// Alt. version using co ncat
+		// result = concat(last ? cap : `${cap}`)
+  })  
+
+  result
+}

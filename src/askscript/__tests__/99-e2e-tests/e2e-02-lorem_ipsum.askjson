@@ -1,0 +1,234 @@
+[
+  "ask",
+  {
+    "args": []
+  },
+  [
+    "const",
+    {
+      "name": "lorem",
+      "type": "any",
+      "value": "lorem ipsum dolor sit amet consectetur adipiscing elit"
+    }
+  ],
+  [
+    "fun",
+    {
+      "name": "capitalize",
+      "args": [
+        [
+          "t",
+          "string"
+        ]
+      ],
+      "returns": "string"
+    },
+    [
+      "return",
+      {
+        "value": [
+          "call",
+          {
+            "name": "concat",
+            "args": [
+              [
+                "call",
+                {
+                  "name": "upperCase",
+                  "args": [
+                    [
+                      "call",
+                      {
+                        "name": "at",
+                        "args": [
+                          [
+                            "ref",
+                            {
+                              "name": "t"
+                            }
+                          ],
+                          0
+                        ]
+                      }
+                    ]
+                  ]
+                }
+              ],
+              [
+                "call",
+                {
+                  "name": "subStr",
+                  "args": [
+                    [
+                      "ref",
+                      {
+                        "name": "t"
+                      }
+                    ],
+                    1
+                  ]
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "set",
+    {
+      "name": "result",
+      "type": "any",
+      "value": ""
+    }
+  ],
+  [
+    "call",
+    {
+      "name": "each",
+      "args": [
+        [
+          "call",
+          {
+            "name": "split",
+            "args": [
+              [
+                "ref",
+                {
+                  "name": "lorem"
+                }
+              ],
+              " "
+            ]
+          }
+        ],
+        [
+          "fun",
+          {
+            "args": [
+              [
+                "t",
+                "char"
+              ],
+              [
+                "index",
+                "number"
+              ],
+              [
+                "firstArrayElement",
+                "boolean"
+              ],
+              [
+                "lastArrayElement",
+                "boolean"
+              ]
+            ],
+            "returns": "any"
+          },
+          [
+            "const",
+            {
+              "name": "cap",
+              "type": "any",
+              "value": [
+                "call",
+                {
+                  "name": "capitalize",
+                  "args": [
+                    [
+                      "ref",
+                      {
+                        "name": "t"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          [
+            "if",
+            {
+              "condition": [
+                "ref",
+                {
+                  "name": "last"
+                }
+              ],
+              "else": [
+                [
+                  "assign",
+                  {
+                    "name": "result",
+                    "value": [
+                      "call",
+                      {
+                        "name": "+",
+                        "args": [
+                          [
+                            "ref",
+                            {
+                              "name": "result"
+                            }
+                          ],
+                          [
+                            "call",
+                            {
+                              "name": "concat",
+                              "args": [
+                                [
+                                  "ref",
+                                  {
+                                    "name": "cap"
+                                  }
+                                ],
+                                " "
+                              ]
+                            }
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            },
+            [
+              "assign",
+              {
+                "name": "result",
+                "value": [
+                  "call",
+                  {
+                    "name": "+",
+                    "args": [
+                      [
+                        "ref",
+                        {
+                          "name": "result"
+                        }
+                      ],
+                      [
+                        "ref",
+                        {
+                          "name": "cap"
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          ]
+        ]
+      ]
+    }
+  ],
+  [
+    "ref",
+    {
+      "name": "result"
+    }
+  ]
+]

@@ -31,15 +31,22 @@ askBody = sL:statementList { return new ask.AskBody(sL) }
 
 // === statements ===
 
-statementList = lineWithoutCode* sL:statementList_NoEmptyLines lineWithoutCode* { return sL }
+statementList = 
+    lineWithoutCode* sL:statementList_NoEmptyLines lineWithoutCode* { return sL }
+  / lineWithoutCode* {                                                return [] }
+
 statementList_NoEmptyLines = 
-      s:statement ws* lineComment? lineWithoutCode* sL:statementList { return sL.unshift(s), sL }
-    / s:statement ws* lineComment? {                                      return [s] }
-    / '' {                                                                return [] }
+      s:statement sL:statementList_NoEmptyLines { return sL.unshift(s), sL }
+    / s:lastStatement {                           return [s] }
+    
+
+
 
 // statement is at least one full line
 // statement does NOT include the trailing newline
-statement = ws* s:statement_NoWs ws* { return s }
+
+statement =     lineWithoutCode* wsnonl* s:statement_NoWs wsnonl* (';'? (lineComment / wsnonl* nl) / ';') {  return s }
+lastStatement = lineWithoutCode* wsnonl* s:statement_NoWs wsnonl* (';'? (lineComment / wsnonl* nl) / ';'?) { return s }
 statement_NoWs = 
     s:(
       functionDefinition
@@ -95,7 +102,7 @@ functionFooter = blockFooter
 
 // === code block ===
 
-codeBlockWithBraces = '{' ws* cB:codeBlock nlws* '}' { return cB; }
+codeBlockWithBraces = '{' ws* cB:codeBlock ws* '}' { return cB; }
 
 codeBlock = statementList
 
@@ -155,12 +162,12 @@ nonEmptyValueList =
 
 // === control flow ===
 
-if     = 'if' ws* '(' v:value ')' ws* cB:codeBlockWithBraces ws* eB:elseBlock? { return new ask.If(v, cB, eB) }
+if     = 'if' ws* '(' v:value ')' ws* cB:codeBlockWithBraces eB:elseBlock? {     return new ask.If(v, cB, eB) }
 while  = 'while' ws* '(' v:value ')' ws* cB:codeBlockWithBraces {                return new ask.While(v, cB) }
 forOf  = 'for'   ws* '(' vD:variableDeclaration ws+ 'of' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForOf(vD, v, cB)}
 forIn  = 'for'   ws* '(' vD:variableDeclaration ws+ 'in' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForIn(vD, v, cB)}
 for3   = 'for'   ws* '(' ws* s1:statement_NoWs? ws* ';' ws* s2:statement_NoWs ws* ';' ws* s3:statement_NoWs ws* ')' ws* cB:codeBlockWithBraces { return new ask.For3(s1, s2, s3, cB)}
-elseBlock = 'else' ws* cB:codeBlockWithBraces { return new ask.Else(cB) }
+elseBlock = ws* 'else' ws* cB:codeBlockWithBraces { return new ask.Else(cB) }
 return = 
     'return' wsnonl+ v:value {  return new ask.Return(v) }
   / 'return' wsnonl* {          return new ask.Return(ask.nullValue) }
@@ -239,14 +246,13 @@ lineWithoutCode =
 
 lineWithComment = lineComment
 
-lineComment = ws* '//' (!nl .)* (nl / eof)
+lineComment = wsnonl* '//' (!nl .)* (nl / eof)
 
-emptyLine = ws* nl
-nlws = nl / ws
+emptyLine = wsnonl* nl
 
 // === literals ===
 identifier = [_$a-zA-Z][-_$a-zA-Z0-9]* { return new ask.Identifier(text()) } // TODO: add Unicode here
-operator   = [-<>+*/^%=]+ {              return new ask.Identifier(text()) }
+operator   = [-<>+*/^%=&|]+ {            return new ask.Identifier(text()) }
 null = 'null' { return new ask.Null() }
 boolean = true / false
 true = 'true' { return new ask.True() }
@@ -275,6 +281,8 @@ onenine = [1-9]
 
 // whitespace
 ws = wsnonl / nl
+
+// same-line whitespace
 wsnonl = ' ' / '\t'
 
 // new line

@@ -1,1 +1,1 @@
-ask {    while(n:lessThan(2)) {        return n    }        return x}
+ask {    while(n:lessThan(2)) {        return n    };        return x}

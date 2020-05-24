@@ -90,7 +90,7 @@ async function askRunner(
     : [];
 
   // console.log({ resultPath, file: resultStat.isFile() });
-  const resultPath = join(testPath, `../${name}.result.tsx`);
+  const resultPath = join(testPath, `../${name}.test.result.ts`);
   if (existsSync(resultPath)) {
     // console.log('source', source);
     // const code = askCode;

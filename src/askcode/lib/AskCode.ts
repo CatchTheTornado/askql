@@ -57,15 +57,18 @@ export function isAskCode(value: AskCodeOrValue): value is AskCode {
 
 const resourceAliasMap: Record<string, string> = {
   fragment: 'f',
-}
+};
 
 export function askCodeToSource(value: AskCodeOrValue): string {
+  if (typeof value === 'string') {
+    return `'${value.replace(/\'/g, "\\'")}'`;
+  }
   if (!isAskCode(value)) {
-    return JSON.stringify(value);
+    return String(value);
   }
   const { name, params } = askCode(value);
   return `${resourceAliasMap[name] ?? name}${
-    params ? `(${params.map(askCodeToSource).join(', ')})` : ''
+    params ? `(${params.map(askCodeToSource).join(',')})` : ''
   }`;
 }
 

@@ -3,12 +3,19 @@ import { createEmptyTestResult } from '@jest/test-result';
 import type { AssertionResult, TestResult } from '@jest/test-result';
 import type { Config } from '@jest/types';
 import { existsSync } from 'fs';
-import { mkdir, readFile, rmdir, writeFile } from 'fs.promises';
+import { mkdir, rmdir, writeFile } from 'fs.promises';
 import type { RuntimeType } from 'jest-runtime';
-import { basename, join, relative } from 'path';
-import { runUntyped } from '.';
-import { parse } from './askcode';
-import { extendOptions, Options, Resource, resource, resources } from './askvm';
+import { basename, dirname, join } from 'path';
+import { askCodeToSource, parse } from './askcode';
+import {
+  runUntyped,
+  extendOptions,
+  Options,
+  Resource,
+  resource,
+  resources,
+} from './askvm';
+import { getTargetPath } from './node-utils';
 import { fromEntries } from './utils';
 
 function compareAsJson(a: any, b: any): boolean {
@@ -37,38 +44,23 @@ async function askRunner(
 
   // console.log(1, Object.keys(jestEnvironment.global));
   // const { process } = jestEnvironment.global;
-  const source = runtime.requireModule(testPath);
+  const source = runtime.requireModule<string | null>(testPath);
   if (source == null) {
     // skip further assertions
     return testResults;
   }
 
-  // console.log('source', source);
+  const askCodeSource = askCodeToSource(parse(source));
+
+  const askCodeTargetPath = getTargetPath(testPath, 'askc', '../src');
+  await mkdir(dirname(askCodeTargetPath), { recursive: true });
+  await writeFile(askCodeTargetPath, askCodeSource, {
+    encoding: 'utf-8',
+  });
+
   testResults.compiles = passed({
     title: 'compiles',
   });
-
-  // TODO use Jest env instead
-  if (process.env.NODE_ENV === 'build') {
-    // console.log('BUILD', source);
-    if (typeof source === 'function') {
-      // FIXME set to .js
-      const targetPath = join(
-        'dist2',
-        relative(join(__dirname, '../src'), testPath)
-      );
-
-      // console.log('building', targetPath);
-      const src = await readFile(testPath, {
-        encoding: 'utf-8',
-      });
-      await writeFile(
-        targetPath,
-        require('./jest.ts.transformer').process(src, testPath)
-      );
-    }
-    return testResults;
-  }
 
   const baseEnvironment = {
     resources,
@@ -100,7 +92,7 @@ async function askRunner(
   const resultPath = join(testPath, `../${name}.result.tsx`);
   if (existsSync(resultPath)) {
     // console.log('source', source);
-    const code = parse(source as string);
+    const code = parse(askCodeSource);
     const result = await runUntyped(environment, code, args);
 
     const { expectedResult } = runtime.requireModule<{

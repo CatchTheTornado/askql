@@ -84,7 +84,7 @@ async function askRunner(
   // console.log('environment', environment);
 
   const name = basename(testPath, '.ask');
-  const argsPath = join(testPath, `../${name}.args.ts`);
+  const argsPath = join(testPath, `../${name}.test.args.ts`);
   const args = existsSync(argsPath)
     ? runtime.requireModule<any[]>(argsPath)
     : [];

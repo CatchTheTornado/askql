@@ -168,13 +168,30 @@ export = async function testFileRunner(
     const source = existsSync(askFile)
       ? await readFile(askFile, { encoding: 'utf-8' })
       : '';
-    console.log({ testPath, askFile, source });
+    // console.log({ testPath, askFile, source });
     return jasmine2(
       globalConfig,
       config,
       Object.assign(environment, {
         global: Object.assign(environment.global, {
-          runUntyped: (env, source: string, args?: any[]) => {
+          runUntyped: (envValue, source: string, args?: any[]) => {
+            // console.log(1, envValue);
+            // console.log(2, source);
+
+            const env: Options = extendOptions(
+              {
+                resources,
+              },
+              {
+                resources: fromEntries(
+                  Object.entries(envValue.resources ?? {}).map(([key, val]): [
+                    string,
+                    Resource<any, any>
+                  ] => [key, resource(val)])
+                ),
+              }
+            );
+
             return runUntyped(env, require('./askscript').parse(source), args);
           },
           source,

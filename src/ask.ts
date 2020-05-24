@@ -1,0 +1,3 @@
+export = () => {
+  return 'hello world!';
+};

@@ -9,5 +9,5 @@
     "sourceMap": true,
     "outDir": "dist"
   },
-  "exclude": ["node_modules", "**/node_modules/*", "drafts"]
+  "exclude": ["node_modules", "**/node_modules/*", "drafts", "dist2"]
 }

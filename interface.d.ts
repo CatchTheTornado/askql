@@ -42,3 +42,8 @@ declare module '*.ask' {
   const source: string;
   export default content;
 }
+
+declare module 'askvm' {
+  const source: typeof import('./src/askvm');
+  export = source;
+}

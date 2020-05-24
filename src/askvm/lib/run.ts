@@ -37,6 +37,7 @@ export async function run(
   const { name } = code;
   if (name in resources) {
     if (!(resources[name] instanceof Resource)) {
+      console.error('???', resources[name]);
       throw new Error(`Invalid resource "${name}"`);
     }
     return typed(await resources[name].compute(options, code, args));

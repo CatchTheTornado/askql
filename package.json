@@ -6,7 +6,9 @@
   "scripts": {
     "build": "rm -rf dist && tsc && pegjs -o dist/askscript/parser/askscript.parser.js src/askscript/parser/askscript.grammar.pegjs",
     "postbuild": "chmod +x dist/*.js",
-    "test": "jest"
+    "test": "jest",
+    "compile": "NODE_ENV=build jest",
+    "ask": "ts-node -e '((...args) => require(`./src/${arguments[0]}`))'  dist/run.js $1 $@"
   },
   "bin": {
     "askql": "dist/cli.js",

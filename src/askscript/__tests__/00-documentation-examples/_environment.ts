@@ -1,4 +1,3 @@
-import { resources as defaultResources } from '../../../askvm';
 import * as type from '../../../askvm/lib/type';
 import { resource, Resources, Values } from '../../../askvm/lib';
 
@@ -15,8 +14,6 @@ const fun = resource<number, [number]>({
 });
 
 export const resources: Resources = {
-  ...defaultResources,
-
   checkThis: resource<boolean, []>({
     type: type.boolean,
     resolver: async (): Promise<boolean> => {

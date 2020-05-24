@@ -1,4 +1,4 @@
-import { Options, Values } from './run';
+import { Options } from './run';
 
 interface Extendable {
   prototype?: Extendable;
@@ -6,7 +6,7 @@ interface Extendable {
 
 export function extend<T extends Proto, Proto extends Extendable | undefined>(
   prototype: Proto,
-  options: Partial<T> & Omit<T, keyof Proto>,
+  options: undefined | (Partial<T> & Omit<T, keyof Proto>),
   ...extraOptions: Partial<T>[]
 ): T {
   return Object.assign(
@@ -26,8 +26,18 @@ export function extendOptions(
   return extend<Options, Options>(
     prototype,
     {
-      values: extend(prototype.values, {}),
-    } as Partial<Options>,
-    ...options
+      resources: extend(
+        prototype.resources,
+        {},
+        ...options.map((option) => option.resources ?? {})
+      ),
+      // TODO values should be in resources and resources have resources key which cannot be set
+      values: extend(
+        prototype.values,
+        {},
+        ...options.map((option) => option.values ?? {})
+      ),
+    },
+    ...options.map(({ resources, values, ...rest }) => rest)
   );
 }

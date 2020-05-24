@@ -21,7 +21,7 @@ export const inferableTypes = allTypes;
 export function typed(value: any, type?: Type<any>): TypedValue<any> {
   if (type) {
     if (!isType(type)) {
-      throw new Error(`Invalid type value: ${type}`);
+      throw new Error(`Invalid type: ${JSON.stringify(type)}`);
     }
     if (type && !validate(type, untyped(value))) {
       throw new Error(

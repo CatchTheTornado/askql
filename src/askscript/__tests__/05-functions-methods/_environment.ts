@@ -1,6 +1,5 @@
-import { resources as defaultResources } from '../../../askvm';
-import * as type from '../../../askvm/lib/type';
 import { resource, Resources, Values } from '../../../askvm/lib';
+import * as type from '../../../askvm/lib/type';
 
 export const values: Values = {
   score: 6,
@@ -10,8 +9,6 @@ export const values: Values = {
 };
 
 export const resources: Resources = {
-  ...defaultResources,
-
   factorial: resource<number, [number]>({
     type: type.int,
     resolver: async (n: number): Promise<number> => {

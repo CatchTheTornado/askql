@@ -18,5 +18,3 @@ export const values: Values = {
 };
 
 export const resources: Resources = {};
-
-// TODO(mh): Add resources for query (getting-started-04,05,06.ask)

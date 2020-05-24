@@ -1,10 +1,4 @@
-import {
-  Values,
-  resources as defaultResources,
-  resource,
-  Resources,
-} from '../../../askvm';
-import * as type from '../../../askvm/lib/type';
+import { Values, resource, Resources } from '../../../askvm';
 
 export const values: Values = {
   firstName: 'Luke',
@@ -35,8 +29,6 @@ export const values: Values = {
 };
 
 export const resources: Resources = {
-  ...defaultResources,
-
   fun2: resource<string, [number, string, Array<number>]>({
     resolver: async (
       i: number,

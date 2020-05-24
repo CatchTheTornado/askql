@@ -1,4 +1,4 @@
-import { askCode, value, AskCodeOrValue, toAskCode } from './askCode';
+import { AskCodeOrValue, toAskCode, value } from './askCode';
 import { reduce } from './reduce';
 
 export function parse(code: string) {
@@ -15,6 +15,9 @@ export function parse(code: string) {
         }),
       value: value,
     },
-    code
+    code,
+    {
+      // logging: true,
+    }
   );
 }

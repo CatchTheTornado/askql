@@ -5,7 +5,7 @@ export interface Reducer<Value> {
 }
 
 const regexp = {
-  digitChar: /[0-9]/,
+  numberChar: /[0-9.-]/,
   idChar: /[_a-zA-Z0-9]/,
 };
 
@@ -94,7 +94,7 @@ export function reduce<T = any>(
   }
 
   const reducers: Record<
-    'call' | 'expression' | 'expressionList' | 'int' | 'program' | 'string',
+    'call' | 'expression' | 'expressionList' | 'number' | 'program' | 'string',
     <U>(reducer: Reducer<U>, ...args: any[]) => U
   > = {
     program(r) {
@@ -148,8 +148,8 @@ export function reduce<T = any>(
       if (isAt('"') || isAt("'")) {
         return this.string(r);
       }
-      if (isAtRegExp(regexp.digitChar)) {
-        return this.int(r);
+      if (isAtRegExp(regexp.numberChar)) {
+        return this.number(r);
       }
       if (isAt('[')) {
         return this.expressionList(r, {
@@ -184,15 +184,16 @@ export function reduce<T = any>(
       process(quote);
       return r.value(code.slice(start, end));
     },
-    int(r) {
-      step('int');
+    number(r) {
+      step('number');
       const start = index;
       for (
         index = start;
-        index < code.length && isAtRegExp(regexp.digitChar);
+        index < code.length && isAtRegExp(regexp.numberChar);
         index += 1
       );
       const end = index;
+      // TODO(mh) throw if multiple dots in the number
       return r.value(Number(code.slice(start, end)));
     },
     call<U>(r: Reducer<U>) {

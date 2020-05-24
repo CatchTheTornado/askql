@@ -1,12 +1,18 @@
 import { AskCode } from '../../askcode';
 
-class Type<T> {
-  name!: string;
-  prototype!: null | Type<any>;
-  validate!: (value: any) => value is T;
+export class Type<T> {
+  constructor(...options: (Partial<Type<T>> | undefined)[]) {
+    Object.assign(this, ...options);
+  }
+
+  name: string = 'any!';
+  prototype: null | Type<any> = null;
+  validate(value: any): value is T {
+    return true;
+  }
 }
 
-export type { Type, LambdaType };
+export type { LambdaType };
 
 // TODO rename -> extend
 export function type<T extends Type<any>, Proto extends Type<any>>(

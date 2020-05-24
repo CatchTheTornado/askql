@@ -3,7 +3,7 @@ import { createEmptyTestResult } from '@jest/test-result';
 import type { AssertionResult, TestResult } from '@jest/test-result';
 import type { Config } from '@jest/types';
 import { existsSync } from 'fs';
-import { mkdir, readFile, rmdir, writeFile } from 'fs/promises';
+import { mkdir, readFile, rmdir, writeFile } from 'fs.promises';
 import type { RuntimeType } from 'jest-runtime';
 import { basename, join, relative } from 'path';
 import { runUntyped } from '.';

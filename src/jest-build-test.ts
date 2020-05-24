@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from 'fs/promises';
+import { mkdir, readFile, writeFile } from 'fs.promises';
 import { dirname, join, parse, relative } from 'path';
 import { process as toJavaScriptSource } from './javascript.jest.transformer';
 

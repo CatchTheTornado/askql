@@ -9,7 +9,8 @@
     "strict": true,
     "target": "es2016"
   },
-  "include": [
+  "files": [
+    "../interface.d.ts",
     "build.jest.testRunner.ts",
     "askcode.jest.transformer.ts",
     "javascript.jest.transformer.ts",

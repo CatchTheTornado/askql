@@ -1,6 +1,6 @@
 import { AskCodeOrValue } from '../askcode';
 import { fromAskScriptAst } from '../askjsx';
-import * as parser from './parser/askscript.parser';
+const parser = require('./parser/askscript.grammar'); // TODO(mh) import
 
 export type AskJSON = any; // TODO(lc)
 

@@ -1,13 +1,16 @@
 {
-  "compileOnSave": true,
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2016",
     "jsx": "react",
     "jsxFactory": "askjsx.createElement",
-    "strict": true,
+    "module": "commonjs",
+    "outDir": "dist",
     "sourceMap": true,
-    "outDir": "dist"
+    "strict": true,
+    "target": "es2016"
   },
-  "exclude": ["node_modules", "**/node_modules/*", "drafts", "dist2"]
+  "include": [
+    "src/build.jest.testRunner.ts",
+    "src/js.jest.transformer.ts",
+    "src/jest-build-test.ts"
+  ]
 }

@@ -1,5 +1,0 @@
-ask {
-  test('hello', fun() {
-    log('!')
-  })
-}

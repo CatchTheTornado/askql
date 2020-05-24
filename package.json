@@ -4,10 +4,10 @@
   "description": "AskQL is a query language that can express every data request",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc && pegjs -o dist/askscript/parser/askscript.parser.js src/askscript/parser/askscript.grammar.pegjs",
+    "test": "jest --config jest.test.config.js",
+    "prebuild": "rm -rf dist && tsc --project tsconfig.json",
+    "build": "jest --config jest.build.config.js --no-cache",
     "postbuild": "chmod +x dist/*.js",
-    "test": "jest",
-    "compile": "NODE_ENV=build jest",
     "ask": "ts-node -e '((...args) => require(`./src/${arguments[0]}`))'  dist/run.js $1 $@"
   },
   "bin": {

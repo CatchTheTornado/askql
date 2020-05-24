@@ -1,3 +1,0 @@
-export = () => {
-  return 'hello world!';
-};

@@ -3,20 +3,21 @@ import { createEmptyTestResult } from '@jest/test-result';
 import type { AssertionResult, TestResult } from '@jest/test-result';
 import type { Config } from '@jest/types';
 import { existsSync } from 'fs';
-import { mkdir, rmdir, writeFile } from 'fs.promises';
+import { mkdir, readFile, writeFile } from 'fs.promises';
 import type { RuntimeType } from 'jest-runtime';
 import { basename, dirname, join } from 'path';
-import { askCodeToSource, parse } from './askcode';
+import { askCodeToSource, parse as parseAskCode } from './askcode';
 import {
-  runUntyped,
   extendOptions,
   Options,
   Resource,
   resource,
   resources,
+  runUntyped,
 } from './askvm';
 import { getTargetPath } from './node-utils';
 import { fromEntries } from './utils';
+import jasmine2 = require('jest-jasmine2');
 
 function compareAsJson(a: any, b: any): boolean {
   return JSON.stringify(a) === JSON.stringify(b);
@@ -38,6 +39,7 @@ async function askRunner(
     computes: null,
   };
 
+  // console.log({ env: process.env.NODE_ENV, testPath });
   if (process.env.NODE_ENV === 'test' && !testPath.endsWith('.ask')) {
     return testResults;
   }
@@ -50,7 +52,7 @@ async function askRunner(
     return testResults;
   }
 
-  const askCode = parse(source);
+  const askCode = parseAskCode(source);
   const askCodeSource = askCodeToSource(askCode);
 
   const askCodeTargetPath = getTargetPath(testPath, 'askc', '../src');
@@ -94,7 +96,7 @@ async function askRunner(
   if (existsSync(resultPath)) {
     // console.log('source', source);
     // const code = askCode;
-    const code = parse(askCodeSource);
+    const code = parseAskCode(askCodeSource);
     const result = await runUntyped(environment, code, args);
 
     const { expectedResult } = runtime.requireModule<{
@@ -154,21 +156,38 @@ function todo(...options: Partial<AssertionResult>[]): AssertionResult {
 export = async function testFileRunner(
   globalConfig: Config.GlobalConfig,
   config: Config.ProjectConfig,
-  jestEnvironment: JestEnvironment,
+  environment: JestEnvironment,
   runtime: RuntimeType,
   testPath: string
 ): Promise<TestResult> {
-  if (process.env.NODE_ENV === 'build') {
-    const outDirPath = join(__dirname, '../dist2');
-    await rmdir(outDirPath, {
-      recursive: true,
-    });
-    await mkdir(outDirPath);
+  if (testPath.endsWith('.test.ts')) {
+    const askFile = join(
+      dirname(testPath),
+      `${basename(testPath, '.test.ts')}.ask`
+    );
+    const source = existsSync(askFile)
+      ? await readFile(askFile, { encoding: 'utf-8' })
+      : '';
+    console.log({ testPath, askFile, source });
+    return jasmine2(
+      globalConfig,
+      config,
+      Object.assign(environment, {
+        global: Object.assign(environment.global, {
+          runUntyped: (env, source: string, args?: any[]) => {
+            return runUntyped(env, require('./askscript').parse(source), args);
+          },
+          source,
+        }),
+      }),
+      runtime,
+      testPath
+    );
   }
   const testResults: AssertionResult[] = Object.entries<
     undefined | null | AssertionResult
   >(
-    await askRunner(globalConfig, config, jestEnvironment, runtime, testPath)
+    await askRunner(globalConfig, config, environment, runtime, testPath)
   ).map(([name, testResult]) => ({ ...(testResult || todo()), title: name }));
   return Object.assign(createEmptyTestResult(), {
     testResults,

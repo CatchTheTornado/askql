@@ -24,6 +24,14 @@ async function buildFile(
   );
 }
 
+// if (process.env.NODE_ENV === 'build') {
+//   const outDirPath = join(__dirname, '../dist2');
+//   await rmdir(outDirPath, {
+//     recursive: true,
+//   });
+//   await mkdir(outDirPath);
+// }
+
 export = async function buildRunner(
   globalConfig: Config.GlobalConfig,
   config: Config.ProjectConfig,

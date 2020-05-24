@@ -1,7 +1,7 @@
 module.exports = {
   testEnvironment: 'node',
   displayName: 'test',
-  moduleFileExtensions: ['ask', 'ts', 'pegjs', 'js'],
+  moduleFileExtensions: ['ask', 'ts', 'tsx', 'pegjs', 'js'],
   testMatch: [
     '<rootDir>/src/**/*.([jt]s?(x)|ask|pegjs)',
     '<rootDir>/src/*.([jt]s?(x)|ask|pegjs)',

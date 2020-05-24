@@ -11,6 +11,7 @@
   },
   "files": [
     "../interface.d.ts",
+    "askscript/__tests__/interface.d.ts",
     "build.jest.testRunner.ts",
     "askcode.jest.transformer.ts",
     "javascript.jest.transformer.ts",

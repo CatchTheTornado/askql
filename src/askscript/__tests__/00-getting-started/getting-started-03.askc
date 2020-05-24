@@ -1,1 +1,1 @@
-ask(let('factorial',fun(let('n',get('$0')),if(call(get('lessThan'),get('n'),2),block(return(get('n'))),block(undefined)),call(get('times'),get('n'),call(get('factorial'),call(get('minus'),get('n'),1))))),call(get('factorial'),get('score')))
+ask(let('factorial',fun(let('n',get('$0')),if(call(get('lessThan'),get('n'),2),block(return(get('n'))),block()),call(get('times'),get('n'),call(get('factorial'),call(get('minus'),get('n'),1))))),call(get('factorial'),get('score')))

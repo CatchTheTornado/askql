@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { dirname, join, parse, relative } from 'path';
-import { process } from './js.jest.transformer';
+import * as ts from 'typescript';
+import tsConfig = require('../tsconfig.json');
 
 declare var jestTestPath: string;
 
@@ -14,7 +15,13 @@ test(`builds ${targetPath}`, async () => {
   const src: string = await readFile(jestTestPath, { encoding: 'utf-8' });
   expect(src).toBeDefined();
 
-  const compiledSource = process(src, jestTestPath);
+  const compiledSource = ts.transpile(
+    src,
+    tsConfig.compilerOptions as Omit<ts.CompilerOptions, 'jsx'>,
+    jestTestPath,
+    []
+  );
+
   expect(compiledSource).toBeDefined();
 
   // TODO sourceMap for TS ?

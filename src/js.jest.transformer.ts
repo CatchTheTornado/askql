@@ -1,7 +1,7 @@
-import * as ts from 'typescript';
 import { extname } from 'path';
 import * as peg from 'pegjs';
-const tsConfig = require('../tsconfig.json');
+import * as ts from 'typescript';
+import tsConfig = require('../tsconfig.json');
 
 export function process(src: string, path: string) {
   if (path.endsWith('.js')) {
@@ -9,7 +9,12 @@ export function process(src: string, path: string) {
   }
 
   if (path.endsWith('.ts') || path.endsWith('.tsx')) {
-    return ts.transpile(src, tsConfig.compilerOptions, path, []);
+    return ts.transpile(
+      src,
+      tsConfig.compilerOptions as Omit<ts.CompilerOptions, 'jsx'>,
+      path,
+      []
+    );
   }
 
   if (path.endsWith('.pegjs')) {

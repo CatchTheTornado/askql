@@ -4,6 +4,7 @@
     "jsxFactory": "askjsx.createElement",
     "module": "commonjs",
     "outDir": "dist",
+    "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
     "target": "es2016"

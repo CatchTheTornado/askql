@@ -1,0 +1,1 @@
+ask(let('i',12),let('i',98),let('s','hello'),let('s','bye'),let('f',1.2),let('b','sdf'),let('b',3),let('a','asdf'))

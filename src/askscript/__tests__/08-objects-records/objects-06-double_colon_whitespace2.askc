@@ -1,0 +1,1 @@
+ask(let('lastName','Czerwinski'),let('hobby','choir music'),let('o',object('firstName',call(get('toLower'),get('firstName')),'lastName',call(get('toUpper'),get('lastName')),'hobby',call(get('toUpper'),get('hobby')))))

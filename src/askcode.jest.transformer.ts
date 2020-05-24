@@ -1,8 +1,9 @@
 import { existsSync } from 'fs';
 import { basename, join } from 'path';
+import { process as toJavaScript } from './javascript.jest.transformer';
 
 export function process(src: string, filename: string) {
-  let source: string | undefined;
+  let source: string | null = null;
   try {
     const { askCodeToSource, parse } = require('.');
     const name = basename(filename, '.ask');
@@ -23,6 +24,6 @@ export function process(src: string, filename: string) {
   }
 
   return {
-    code: `module.exports = ${source ? JSON.stringify(source) : null}`,
+    code: toJavaScript(src, filename),
   };
 }

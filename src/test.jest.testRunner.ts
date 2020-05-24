@@ -7,6 +7,7 @@ import { mkdir, readFile, writeFile } from 'fs.promises';
 import type { RuntimeType } from 'jest-runtime';
 import { basename, dirname, join } from 'path';
 import { askCodeToSource, parse as parseAskCode } from './askcode';
+import { parse as parseAskScript } from './askscript';
 import {
   extendOptions,
   Options,
@@ -46,13 +47,14 @@ async function askRunner(
 
   // console.log(1, Object.keys(jestEnvironment.global));
   // const { process } = jestEnvironment.global;
-  const source = runtime.requireModule<string | null>(testPath);
+  const source = await readFile(testPath, { encoding: 'utf-8' });
+  // console.log('source', source);
   if (source == null) {
     // skip further assertions
     return testResults;
   }
 
-  const askCode = parseAskCode(source);
+  const askCode = parseAskScript(source);
   const askCodeSource = askCodeToSource(askCode);
 
   const askCodeTargetPath = getTargetPath(testPath, 'askc', '../src');
@@ -160,6 +162,28 @@ export = async function testFileRunner(
   runtime: RuntimeType,
   testPath: string
 ): Promise<TestResult> {
+  const baseEnv = extendOptions(
+    {
+      resources,
+    },
+    {}
+  );
+
+  environment.global.askvm = async (source, [...args], resolve, reject) => {
+    try {
+      // console.log('source', source);
+      const code = parseAskScript(source);
+      // console.log('code', code);
+      // console.log('args', args);
+      const result = await runUntyped(baseEnv, code, args);
+      // console.log('result', result);
+      resolve(result);
+    } catch (e) {
+      console.error(e);
+      reject(String(e));
+    }
+  };
+
   if (testPath.endsWith('.test.ts')) {
     const askFile = join(
       dirname(testPath),

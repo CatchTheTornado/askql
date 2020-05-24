@@ -1,0 +1,1 @@
+ask(let('lastName','Czerwinski'),let('o',object('firstName',get('firstName'),'lastName',get('lastName'))))

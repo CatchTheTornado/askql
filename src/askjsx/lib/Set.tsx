@@ -27,3 +27,4 @@ export function Set({
 }
 
 export const Const = Set;
+export const Assign = Set;

@@ -1,0 +1,1 @@
+ask(let('sum',0),for(let('itemPrice',undefined),undefined,let('sum',call(get('plus'),get('sum'),get('itemPrice')))),get('sum'))

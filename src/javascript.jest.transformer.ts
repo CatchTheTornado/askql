@@ -25,8 +25,10 @@ export function process(src: string, path: string) {
   }
 
   if (path.endsWith('.ask')) {
-    const askScriptJson = JSON.stringify(src); // TODO(mh): assert compiles
-    return `module.exports = ${askScriptJson};`;
+    // TODO(mh): assert compiles
+    return `module.exports = function () {
+  return new Promise(askvm.bind(null, ${JSON.stringify(src)}, arguments));
+};`;
   }
 
   throw new Error(`Invalid file extensions: ${extname(path)}`);

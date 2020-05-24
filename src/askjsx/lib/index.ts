@@ -1,5 +1,6 @@
 export * from './Ask';
 export * from './Call';
+export * from './For';
 export * from './Fragment';
 export * from './fromAskScriptAst';
 export * from './Fun';
@@ -7,6 +8,8 @@ export * from './If';
 export * from './jsx';
 export * from './Query';
 export * from './Ref';
+export * from './Remote';
 export * from './Return';
 export * from './Set';
 export * from './Value';
+export * from './While';

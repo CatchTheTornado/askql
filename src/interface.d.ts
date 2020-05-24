@@ -14,6 +14,7 @@ declare namespace JSX {
       block?: true;
       call?: true;
       children?: any | any[];
+      for?: true;
       fragment?: true;
       fun?: true;
       get?: true;
@@ -22,8 +23,10 @@ declare namespace JSX {
       let?: true;
       node?: true;
       query?: true;
+      remote?: true;
       return?: true;
       set?: true;
+      while?: true;
     };
     const: FirstArg<typeof import('./askjsx').Const>;
     fragment: FirstArg<typeof import('./askjsx').Fragment>;
@@ -52,3 +55,11 @@ declare module 'askvm' {
   const source: typeof import('./askvm');
   export = source;
 }
+
+declare module 'fs.promises' {
+  const source: typeof import('fs/promises');
+  export = source;
+}
+
+declare var runUntyped: Function;
+declare var source: string;

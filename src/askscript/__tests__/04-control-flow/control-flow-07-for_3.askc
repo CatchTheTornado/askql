@@ -1,0 +1,1 @@
+ask(let('nums',1,2,3,5,7),for(undefined,undefined,call(get('fun1'),get('i')),call(get('fun2'),get('i'))))

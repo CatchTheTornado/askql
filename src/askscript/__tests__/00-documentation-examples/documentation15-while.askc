@@ -1,0 +1,1 @@
+ask(while(call(get('lessThan'),call(get('rand')),0.5),undefined))

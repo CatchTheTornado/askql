@@ -1,8 +1,5 @@
-import environment = require('./.environment');
-
-declare var runUntyped: Function;
-declare var source: string;
+import example = require('./documentation01-complete_example.ask');
 
 test('documentation01-complete_example', async () => {
-  await expect(runUntyped(environment, source, [5])).resolves.toBe('121');
+  await expect(example(5)).resolves.toBe('121');
 });

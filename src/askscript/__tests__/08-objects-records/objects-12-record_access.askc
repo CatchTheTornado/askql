@@ -1,0 +1,1 @@
+ask(let('capitals',object('France','Paris','Germany','Berlin','Spain','Madrid')),let('paris',call(get('at'),get('capitals'),'France')),let('berlin',call(get('at'),get('capitals'),'Germany')),call(get('at'),get('capitals'),'Spain'))

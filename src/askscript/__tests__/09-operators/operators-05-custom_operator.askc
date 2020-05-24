@@ -1,0 +1,1 @@
+ask(let('<>',fun(let('a',get('$0')),let('b',get('$1')),call(get('not'),call(get('equals'),get('a'),get('b'))))),let('a',3),if(call(get('<>'),get('a'),5),block(return('It works!')),block()),'Ouch.')

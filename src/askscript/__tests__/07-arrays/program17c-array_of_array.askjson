@@ -1,0 +1,23 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "const",
+      "props": {
+        "name": "arr1",
+        "type": "array(int)",
+        "value": [
+          [],
+          [
+            1,
+            2,
+            3
+          ]
+        ]
+      }
+    }
+  ]
+}

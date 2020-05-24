@@ -1,0 +1,16 @@
+{
+  "name": "ask",
+  "props": {
+    "args": [
+      [
+        "maxAge",
+        "int"
+      ],
+      [
+        "userName",
+        "string"
+      ]
+    ]
+  },
+  "children": []
+}

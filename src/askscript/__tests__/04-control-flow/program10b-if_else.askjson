@@ -1,0 +1,40 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "if",
+      "props": {
+        "condition": 5,
+        "else": [
+          {
+            "name": "return",
+            "props": {
+              "value": {
+                "name": "ref",
+                "props": {
+                  "name": "no"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "children": [
+        {
+          "name": "return",
+          "props": {
+            "value": {
+              "name": "ref",
+              "props": {
+                "name": "yes"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

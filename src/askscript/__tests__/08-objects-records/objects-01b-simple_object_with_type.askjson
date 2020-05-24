@@ -1,0 +1,22 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "set",
+      "props": {
+        "name": "o",
+        "type": "object",
+        "value": {
+          "jsxValue": {
+            "name": "Arizona",
+            "areaInSqMi": 113998,
+            "westernState": true
+          }
+        }
+      }
+    }
+  ]
+}

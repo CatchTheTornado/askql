@@ -1,0 +1,120 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "const",
+      "props": {
+        "name": "nums",
+        "type": "any",
+        "value": [
+          1,
+          2,
+          3,
+          5,
+          7
+        ]
+      }
+    },
+    {
+      "name": "for",
+      "props": {
+        "initialization": [
+          {
+            "name": "set",
+            "props": {
+              "name": "i",
+              "type": "any",
+              "value": 0
+            }
+          }
+        ],
+        "condition": [
+          {
+            "name": "call",
+            "props": {
+              "name": "<",
+              "args": [
+                {
+                  "name": "ref",
+                  "props": {
+                    "name": "i"
+                  }
+                },
+                {
+                  "name": "call",
+                  "props": {
+                    "name": "length",
+                    "args": [
+                      {
+                        "name": "ref",
+                        "props": {
+                          "name": "nums"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "finalExpression": [
+          {
+            "name": "assign",
+            "props": {
+              "name": "i",
+              "value": {
+                "name": "call",
+                "props": {
+                  "name": "+",
+                  "args": [
+                    {
+                      "name": "ref",
+                      "props": {
+                        "name": "i"
+                      }
+                    },
+                    1
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "children": [
+        {
+          "name": "call",
+          "props": {
+            "name": "fun1",
+            "args": [
+              {
+                "name": "ref",
+                "props": {
+                  "name": "i"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "call",
+          "props": {
+            "name": "fun2",
+            "args": [
+              {
+                "name": "ref",
+                "props": {
+                  "name": "i"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "set",
+      "props": {
+        "name": "x",
+        "type": "any",
+        "value": 3
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "y",
+        "type": "any",
+        "value": -0.4
+      }
+    },
+    {
+      "name": "call",
+      "props": {
+        "name": "*",
+        "args": [
+          {
+            "name": "call",
+            "props": {
+              "name": "+",
+              "args": [
+                {
+                  "name": "ref",
+                  "props": {
+                    "name": "x"
+                  }
+                },
+                {
+                  "name": "ref",
+                  "props": {
+                    "name": "y"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "call",
+            "props": {
+              "name": "-",
+              "args": [
+                {
+                  "name": "ref",
+                  "props": {
+                    "name": "x"
+                  }
+                },
+                {
+                  "name": "ref",
+                  "props": {
+                    "name": "y"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

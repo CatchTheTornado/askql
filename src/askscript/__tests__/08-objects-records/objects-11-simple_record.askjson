@@ -1,0 +1,22 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "set",
+      "props": {
+        "name": "capitals",
+        "type": "record(string)",
+        "value": {
+          "jsxValue": {
+            "France": "Paris",
+            "Germany": "Berlin",
+            "Spain": "Madrid"
+          }
+        }
+      }
+    }
+  ]
+}

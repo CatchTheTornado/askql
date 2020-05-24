@@ -1,0 +1,72 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "set",
+      "props": {
+        "name": "a",
+        "type": "int",
+        "value": 1
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "b",
+        "type": "float",
+        "value": 1.5
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "c",
+        "type": "bool",
+        "value": false
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "d",
+        "type": "string",
+        "value": "asdf"
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "e",
+        "type": "empty",
+        "value": null
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "f",
+        "type": "any",
+        "value": 2.3
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "g",
+        "type": "any",
+        "value": 2.3
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "h",
+        "type": "any",
+        "value": 2.3
+      }
+    }
+  ]
+}

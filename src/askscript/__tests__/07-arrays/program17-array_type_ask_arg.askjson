@@ -1,0 +1,12 @@
+{
+  "name": "ask",
+  "props": {
+    "args": [
+      [
+        "arr",
+        "array(int)"
+      ]
+    ]
+  },
+  "children": []
+}

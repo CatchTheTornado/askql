@@ -1,0 +1,69 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "set",
+      "props": {
+        "name": "i",
+        "type": "int",
+        "value": 12
+      }
+    },
+    {
+      "name": "assign",
+      "props": {
+        "name": "i",
+        "value": 98
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "s",
+        "type": "string",
+        "value": "hello"
+      }
+    },
+    {
+      "name": "assign",
+      "props": {
+        "name": "s",
+        "value": "bye"
+      }
+    },
+    {
+      "name": "const",
+      "props": {
+        "name": "f",
+        "type": "float",
+        "value": 1.2
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "b",
+        "type": "any",
+        "value": "sdf"
+      }
+    },
+    {
+      "name": "assign",
+      "props": {
+        "name": "b",
+        "value": 3
+      }
+    },
+    {
+      "name": "const",
+      "props": {
+        "name": "a",
+        "type": "any",
+        "value": "asdf"
+      }
+    }
+  ]
+}

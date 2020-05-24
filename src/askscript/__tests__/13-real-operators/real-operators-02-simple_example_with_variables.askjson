@@ -1,0 +1,36 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "set",
+      "props": {
+        "name": "a",
+        "type": "any",
+        "value": 1
+      }
+    },
+    {
+      "name": "call",
+      "props": {
+        "name": "+",
+        "args": [
+          {
+            "name": "ref",
+            "props": {
+              "name": "a"
+            }
+          },
+          {
+            "name": "ref",
+            "props": {
+              "name": "bFromEnv"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

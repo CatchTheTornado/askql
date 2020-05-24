@@ -1,0 +1,39 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "set",
+      "props": {
+        "name": "lastName",
+        "type": "string",
+        "value": "Czerwinski"
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "o",
+        "type": "any",
+        "value": {
+          "jsxValue": {
+            "firstName": {
+              "name": "ref",
+              "props": {
+                "name": "firstName"
+              }
+            },
+            "lastName": {
+              "name": "ref",
+              "props": {
+                "name": "lastName"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "while",
+      "props": {
+        "condition": {
+          "name": "call",
+          "props": {
+            "name": "lessThan",
+            "args": [
+              {
+                "name": "call",
+                "props": {
+                  "name": "rand",
+                  "args": []
+                }
+              },
+              0.5
+            ]
+          }
+        }
+      },
+      "children": [
+        {
+          "name": "call",
+          "props": {
+            "name": "doSomething",
+            "args": []
+          }
+        }
+      ]
+    }
+  ]
+}

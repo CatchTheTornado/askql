@@ -1,0 +1,52 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "if",
+      "props": {
+        "condition": {
+          "name": "call",
+          "props": {
+            "name": "lessThan",
+            "args": [
+              {
+                "name": "ref",
+                "props": {
+                  "name": "n"
+                }
+              },
+              2
+            ]
+          }
+        }
+      },
+      "children": [
+        {
+          "name": "return",
+          "props": {
+            "value": {
+              "name": "ref",
+              "props": {
+                "name": "a"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "return",
+      "props": {
+        "value": {
+          "name": "ref",
+          "props": {
+            "name": "b"
+          }
+        }
+      }
+    }
+  ]
+}

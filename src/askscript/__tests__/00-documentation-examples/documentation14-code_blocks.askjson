@@ -1,0 +1,175 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "fun",
+      "props": {
+        "name": "factorial",
+        "args": [
+          [
+            "n",
+            "int"
+          ]
+        ],
+        "returns": "int"
+      },
+      "children": [
+        {
+          "name": "if",
+          "props": {
+            "condition": {
+              "name": "call",
+              "props": {
+                "name": "lessThan",
+                "args": [
+                  {
+                    "name": "ref",
+                    "props": {
+                      "name": "n"
+                    }
+                  },
+                  2
+                ]
+              }
+            }
+          },
+          "children": [
+            {
+              "name": "return",
+              "props": {
+                "value": {
+                  "name": "ref",
+                  "props": {
+                    "name": "n"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "call",
+          "props": {
+            "name": "multiply",
+            "args": [
+              {
+                "name": "ref",
+                "props": {
+                  "name": "n"
+                }
+              },
+              {
+                "name": "call",
+                "props": {
+                  "name": "factorial",
+                  "args": [
+                    {
+                      "name": "call",
+                      "props": {
+                        "name": "minus",
+                        "args": [
+                          {
+                            "name": "ref",
+                            "props": {
+                              "name": "n"
+                            }
+                          },
+                          1
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "fun",
+      "props": {
+        "name": "sum",
+        "args": [
+          [
+            "a",
+            "int"
+          ],
+          [
+            "b",
+            "int"
+          ]
+        ],
+        "returns": "int"
+      },
+      "children": [
+        {
+          "name": "call",
+          "props": {
+            "name": "plus",
+            "args": [
+              {
+                "name": "ref",
+                "props": {
+                  "name": "a"
+                }
+              },
+              {
+                "name": "ref",
+                "props": {
+                  "name": "b"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "const",
+      "props": {
+        "name": "one",
+        "type": "int",
+        "value": 1
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "list",
+        "type": "any",
+        "value": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "name": "call",
+      "props": {
+        "name": "sum",
+        "args": [
+          {
+            "name": "ref",
+            "props": {
+              "name": "one"
+            }
+          },
+          {
+            "name": "call",
+            "props": {
+              "name": "factorial",
+              "args": [
+                5
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

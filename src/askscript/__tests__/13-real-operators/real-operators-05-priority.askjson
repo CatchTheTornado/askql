@@ -1,0 +1,99 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "call",
+      "props": {
+        "name": "+",
+        "args": [
+          {
+            "name": "call",
+            "props": {
+              "name": "+",
+              "args": [
+                {
+                  "name": "call",
+                  "props": {
+                    "name": "+",
+                    "args": [
+                      {
+                        "name": "call",
+                        "props": {
+                          "name": "+",
+                          "args": [
+                            {
+                              "name": "call",
+                              "props": {
+                                "name": "+",
+                                "args": [
+                                  {
+                                    "name": "call",
+                                    "props": {
+                                      "name": "+",
+                                      "args": [
+                                        1,
+                                        {
+                                          "name": "call",
+                                          "props": {
+                                            "name": "*",
+                                            "args": [
+                                              2,
+                                              3
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    "name": "call",
+                                    "props": {
+                                      "name": "*",
+                                      "args": [
+                                        {
+                                          "name": "call",
+                                          "props": {
+                                            "name": "*",
+                                            "args": [
+                                              4,
+                                              5
+                                            ]
+                                          }
+                                        },
+                                        6
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            7
+                          ]
+                        }
+                      },
+                      8
+                    ]
+                  }
+                },
+                9
+              ]
+            }
+          },
+          {
+            "name": "call",
+            "props": {
+              "name": "*",
+              "args": [
+                10,
+                11
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

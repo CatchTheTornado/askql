@@ -1,0 +1,35 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    "Hello world!",
+    {
+      "name": "return",
+      "props": {
+        "value": {
+          "name": "call",
+          "props": {
+            "name": "plus",
+            "args": [
+              {
+                "name": "ref",
+                "props": {
+                  "name": "n"
+                }
+              },
+              1
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "ref",
+      "props": {
+        "name": "hello"
+      }
+    }
+  ]
+}

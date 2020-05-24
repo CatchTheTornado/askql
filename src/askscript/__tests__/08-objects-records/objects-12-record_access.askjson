@@ -1,0 +1,81 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "set",
+      "props": {
+        "name": "capitals",
+        "type": "record(string)",
+        "value": {
+          "jsxValue": {
+            "France": "Paris",
+            "Germany": "Berlin",
+            "Spain": "Madrid"
+          }
+        }
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "paris",
+        "type": "any",
+        "value": {
+          "name": "call",
+          "props": {
+            "name": "at",
+            "args": [
+              {
+                "name": "ref",
+                "props": {
+                  "name": "capitals"
+                }
+              },
+              "France"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "berlin",
+        "type": "string",
+        "value": {
+          "name": "call",
+          "props": {
+            "name": "at",
+            "args": [
+              {
+                "name": "ref",
+                "props": {
+                  "name": "capitals"
+                }
+              },
+              "Germany"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "call",
+      "props": {
+        "name": "at",
+        "args": [
+          {
+            "name": "ref",
+            "props": {
+              "name": "capitals"
+            }
+          },
+          "Spain"
+        ]
+      }
+    }
+  ]
+}

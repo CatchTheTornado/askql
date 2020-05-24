@@ -1,0 +1,68 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "set",
+      "props": {
+        "name": "sum",
+        "type": "float",
+        "value": 0
+      }
+    },
+    {
+      "name": "for",
+      "props": {
+        "key": {
+          "name": "set",
+          "props": {
+            "name": "itemPrice",
+            "type": "float"
+          }
+        },
+        "of": {
+          "name": "ref",
+          "props": {
+            "name": "itemPrices"
+          }
+        }
+      },
+      "children": [
+        {
+          "name": "assign",
+          "props": {
+            "name": "sum",
+            "value": {
+              "name": "call",
+              "props": {
+                "name": "plus",
+                "args": [
+                  {
+                    "name": "ref",
+                    "props": {
+                      "name": "sum"
+                    }
+                  },
+                  {
+                    "name": "ref",
+                    "props": {
+                      "name": "itemPrice"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ref",
+      "props": {
+        "name": "sum"
+      }
+    }
+  ]
+}

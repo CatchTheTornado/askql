@@ -1,0 +1,14 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "ref",
+      "props": {
+        "name": "hello"
+      }
+    }
+  ]
+}

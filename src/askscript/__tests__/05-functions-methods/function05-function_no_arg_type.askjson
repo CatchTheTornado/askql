@@ -1,0 +1,81 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "fun",
+      "props": {
+        "name": "plus",
+        "args": [
+          [
+            "a",
+            "any"
+          ],
+          [
+            "b",
+            "float"
+          ],
+          [
+            "c",
+            "int"
+          ]
+        ],
+        "returns": "float"
+      },
+      "children": [
+        {
+          "name": "return",
+          "props": {
+            "value": {
+              "name": "call",
+              "props": {
+                "name": "plus",
+                "args": [
+                  {
+                    "name": "call",
+                    "props": {
+                      "name": "plus",
+                      "args": [
+                        {
+                          "name": "ref",
+                          "props": {
+                            "name": "a"
+                          }
+                        },
+                        {
+                          "name": "ref",
+                          "props": {
+                            "name": "b"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "ref",
+                    "props": {
+                      "name": "c"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "call",
+      "props": {
+        "name": "plus",
+        "args": [
+          2,
+          3.6,
+          4
+        ]
+      }
+    }
+  ]
+}

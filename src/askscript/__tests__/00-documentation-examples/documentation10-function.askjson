@@ -1,0 +1,30 @@
+{
+  "name": "ask",
+  "props": {
+    "args": [],
+    "returns": "string"
+  },
+  "children": [
+    {
+      "name": "if",
+      "props": {
+        "condition": {
+          "name": "call",
+          "props": {
+            "name": "checkThis",
+            "args": []
+          }
+        }
+      },
+      "children": [
+        {
+          "name": "return",
+          "props": {
+            "value": "your string"
+          }
+        }
+      ]
+    },
+    "my string"
+  ]
+}

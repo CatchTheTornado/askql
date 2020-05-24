@@ -1,0 +1,63 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "query",
+      "children": [
+        {
+          "name": "node",
+          "props": {
+            "name": "firstName",
+            "value": {
+              "name": "ref",
+              "props": {
+                "name": "firstName"
+              }
+            }
+          }
+        },
+        {
+          "name": "node",
+          "props": {
+            "name": "lastName",
+            "value": {
+              "name": "ref",
+              "props": {
+                "name": "lastName"
+              }
+            }
+          }
+        },
+        {
+          "name": "node",
+          "props": {
+            "name": "friends",
+            "value": {
+              "name": "ref",
+              "props": {
+                "name": "friends"
+              }
+            }
+          },
+          "children": [
+            {
+              "name": "node",
+              "props": {
+                "name": "id",
+                "value": {
+                  "name": "ref",
+                  "props": {
+                    "name": "id"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

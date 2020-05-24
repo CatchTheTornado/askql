@@ -1,0 +1,99 @@
+{
+  "name": "ask",
+  "props": {
+    "args": [],
+    "returns": "string"
+  },
+  "children": [
+    {
+      "name": "set",
+      "props": {
+        "name": "<>",
+        "type": "any",
+        "value": {
+          "name": "fun",
+          "props": {
+            "args": [
+              [
+                "a",
+                "float"
+              ],
+              [
+                "b",
+                "float"
+              ]
+            ],
+            "returns": "bool"
+          },
+          "children": [
+            {
+              "name": "call",
+              "props": {
+                "name": "not",
+                "args": [
+                  {
+                    "name": "call",
+                    "props": {
+                      "name": "equals",
+                      "args": [
+                        {
+                          "name": "ref",
+                          "props": {
+                            "name": "a"
+                          }
+                        },
+                        {
+                          "name": "ref",
+                          "props": {
+                            "name": "b"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "a",
+        "type": "any",
+        "value": 3
+      }
+    },
+    {
+      "name": "if",
+      "props": {
+        "condition": {
+          "name": "call",
+          "props": {
+            "name": "<>",
+            "args": [
+              {
+                "name": "ref",
+                "props": {
+                  "name": "a"
+                }
+              },
+              5
+            ]
+          }
+        }
+      },
+      "children": [
+        {
+          "name": "return",
+          "props": {
+            "value": "It works!"
+          }
+        }
+      ]
+    },
+    "Ouch."
+  ]
+}

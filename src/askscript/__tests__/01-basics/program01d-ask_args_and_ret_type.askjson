@@ -1,0 +1,21 @@
+{
+  "name": "ask",
+  "props": {
+    "args": [
+      [
+        "n",
+        "int"
+      ],
+      [
+        "thisIsFloat",
+        "float"
+      ],
+      [
+        "thisIsString",
+        "string"
+      ]
+    ],
+    "returns": "float"
+  },
+  "children": []
+}

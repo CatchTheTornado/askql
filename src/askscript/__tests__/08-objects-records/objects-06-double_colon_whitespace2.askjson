@@ -1,0 +1,77 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "set",
+      "props": {
+        "name": "lastName",
+        "type": "string",
+        "value": "Czerwinski"
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "hobby",
+        "type": "string",
+        "value": "choir music"
+      }
+    },
+    {
+      "name": "set",
+      "props": {
+        "name": "o",
+        "type": "any",
+        "value": {
+          "jsxValue": {
+            "firstName": {
+              "name": "call",
+              "props": {
+                "name": "toLower",
+                "args": [
+                  {
+                    "name": "ref",
+                    "props": {
+                      "name": "firstName"
+                    }
+                  }
+                ]
+              }
+            },
+            "lastName": {
+              "name": "call",
+              "props": {
+                "name": "toUpper",
+                "args": [
+                  {
+                    "name": "ref",
+                    "props": {
+                      "name": "lastName"
+                    }
+                  }
+                ]
+              }
+            },
+            "hobby": {
+              "name": "call",
+              "props": {
+                "name": "toUpper",
+                "args": [
+                  {
+                    "name": "ref",
+                    "props": {
+                      "name": "hobby"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "ask",
+  "props": {
+    "args": []
+  },
+  "children": [
+    {
+      "name": "for",
+      "props": {
+        "key": {
+          "name": "const",
+          "props": {
+            "name": "price",
+            "type": "any"
+          }
+        },
+        "of": {
+          "name": "ref",
+          "props": {
+            "name": "priceList"
+          }
+        }
+      },
+      "children": []
+    }
+  ]
+}

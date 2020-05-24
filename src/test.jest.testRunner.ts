@@ -64,7 +64,7 @@ async function askRunner(
 
   const askCode = fromAskScriptAst(askJson);
   const askCodeSource = askCodeToSource(askCode);
-  const askCodeTargetPath = getTargetPath(testPath, 'askc', '../src');
+  const askCodeTargetPath = getTargetPath(testPath, 'askcode', '../src');
   await mkdir(dirname(askCodeTargetPath), { recursive: true });
   await writeFile(askCodeTargetPath, askCodeSource, {
     encoding: 'utf-8',

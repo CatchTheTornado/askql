@@ -3,15 +3,15 @@
     "jsx": "react",
     "jsxFactory": "askjsx.createElement",
     "module": "commonjs",
-    "outDir": "dist",
+    "outDir": "../dist",
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
     "target": "es2016"
   },
   "include": [
-    "src/build.jest.testRunner.ts",
-    "src/js.jest.transformer.ts",
-    "src/jest-build-test.ts"
+    "build.jest.testRunner.ts",
+    "js.jest.transformer.ts",
+    "jest-build-test.ts"
   ]
 }

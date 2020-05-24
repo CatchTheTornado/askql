@@ -1,0 +1,1 @@
+ask(let('sum',fun(let('a',get('$0')),let('b',get('$1')),call(get('plus'),get('a'),get('b')))),call(get('sum'),2,3))

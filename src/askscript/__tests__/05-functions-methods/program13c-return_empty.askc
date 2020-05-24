@@ -1,0 +1,1 @@
+ask('Hello world!',return(null),get('hello'))

@@ -1,0 +1,1 @@
+ask(query(node('firstName',f(get('firstName'))),node('lastName',f(get('lastName')))))

@@ -1,0 +1,1 @@
+ask(if(call(get('checkThis')),block(return('your string')),block(undefined)),'my string')

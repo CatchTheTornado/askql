@@ -1,0 +1,1 @@
+ask(call(get('fun1'),call(get('fun2'),call(get('fun3'),2.4))))

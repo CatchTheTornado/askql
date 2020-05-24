@@ -1,0 +1,1 @@
+ask(call(get('ceil'),call(get('divideBy'),call(get('toInt'),call(get('call'),call(get('toString'),call(get('plus'),call(get('times'),get('score'),2),1)),fun(let('s',get('$0')),let('double',fun(let('s',get('$0')),call(get('concat'),get('s'),get('s')))),call(get('double'),get('s'))))),6)))

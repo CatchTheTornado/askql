@@ -50,7 +50,8 @@ async function askRunner(
     return testResults;
   }
 
-  const askCodeSource = askCodeToSource(parse(source));
+  const askCode = parse(source);
+  const askCodeSource = askCodeToSource(askCode);
 
   const askCodeTargetPath = getTargetPath(testPath, 'askc', '../src');
   await mkdir(dirname(askCodeTargetPath), { recursive: true });
@@ -92,6 +93,7 @@ async function askRunner(
   const resultPath = join(testPath, `../${name}.result.tsx`);
   if (existsSync(resultPath)) {
     // console.log('source', source);
+    // const code = askCode;
     const code = parse(askCodeSource);
     const result = await runUntyped(environment, code, args);
 

@@ -1,0 +1,1 @@
+ask(return(call(get('multiply'),7,call(get('plus'),8,call(get('minus'),1,4)))),call(get('multiply'),2,call(get('plus'),3,call(get('minus'),4,1))))

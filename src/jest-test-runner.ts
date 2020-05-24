@@ -105,7 +105,7 @@ async function askRunner(
       expectedResult: any;
     }>(resultPath);
     const isCorrect = compareAsJson(result, expectedResult);
-    testResults.compiles = assertionResult({
+    testResults.computes = assertionResult({
       status: isCorrect ? 'passed' : 'failed',
       title: 'produces the expected result',
       failureMessages: isCorrect

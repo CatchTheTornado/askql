@@ -1,6 +1,6 @@
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { dirname, join, parse, relative } from 'path';
-import { process } from './js.jest.transformer';
+import { process as toJavaScriptSource } from './javascript.jest.transformer';
 
 declare var jestTestPath: string;
 
@@ -13,15 +13,16 @@ const { name: testName, ext: fileExt } = parse(jestTestPath);
 
 const targetPath = join(targetDir, `${testName}.js`);
 
-test(`builds ${targetPath}`, async () => {
+// TODO '.*/__tests__/.*',
+// special case
+
+test(`saves ${targetPath}`, async () => {
   const src: string = await readFile(jestTestPath, { encoding: 'utf-8' });
   expect(src).toBeDefined();
 
-  const compiledSource = process(src, testPath);
-  expect(compiledSource).toBeDefined();
-
-  // TODO sourceMap for TS ?
+  const javaScriptSource = toJavaScriptSource(src, testPath);
+  expect(javaScriptSource).toBeDefined();
 
   await mkdir(targetDir, { recursive: true });
-  await writeFile(targetPath, compiledSource);
+  await writeFile(targetPath, javaScriptSource);
 });

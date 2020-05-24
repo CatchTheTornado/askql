@@ -58,7 +58,7 @@ async function askRunner(
         relative(join(__dirname, '../src'), testPath)
       );
 
-      console.log('building', targetPath);
+      // console.log('building', targetPath);
       const src = await readFile(testPath, {
         encoding: 'utf-8',
       });
@@ -73,10 +73,12 @@ async function askRunner(
   const baseEnvironment = {
     resources,
   };
-  const rawEnvironment = runtime.requireActual<Options>(
-    testPath,
-    './_environment'
-  );
+
+  const localEnvPath = join(testPath, '../_environment');
+  const rawEnvironment = existsSync(`${localEnvPath}.ts`)
+    ? runtime.requireActual<Options>(testPath, localEnvPath)
+    : {};
+
   // Revive objects
   const environment: Options = extendOptions(baseEnvironment, rawEnvironment, {
     resources: fromEntries(

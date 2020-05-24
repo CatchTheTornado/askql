@@ -1,18 +1,22 @@
 module.exports = {
   displayName: 'build',
-  moduleFileExtensions: ['pegjs', 'ts', 'tsx', 'js'],
+  moduleFileExtensions: ['ask', 'pegjs', 'ts', 'tsx', 'js'],
   testEnvironment: 'node',
-  testMatch: ['<rootDir>/src/**/*.[jt]s?(x)', '<rootDir>/src/**/*.pegjs'],
+  testMatch: [
+    '<rootDir>/src/**/*.([jt]s?(x)|ask|pegjs)',
+    '<rootDir>/src/*.([jt]s?(x)|ask|pegjs)',
+  ],
   testPathIgnorePatterns: [
-    '<rootDir>/node_modules',
-    '<rootDir>/dist',
+    '.*\\.d.ts',
     '.*/__tests__/.*',
+    '<rootDir>/dist',
+    '<rootDir>/drafts',
+    '<rootDir>/node_modules',
   ],
   testRunner: './dist/build.jest.testRunner',
   transform: {
-    '^.+\\.[jt]sx?$': './dist/js.jest.transformer',
-    '^.+\\.pegjs$': './dist/js.jest.transformer',
-    // '^.+\\.ask$': './dist/jest.ask.transformer',
+    '^.+\\.([jt]sx?|pegjs)$': './dist/javascript.jest.transformer',
+    '^.+\\.(ask)$': './dist/askcode.jest.transformer',
   },
   // moduleNameMapper: {
   //   '^askvm(.*)': '<rootDir>/src/askvm$1',

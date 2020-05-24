@@ -4,7 +4,7 @@
   "description": "AskQL is a query language that can express every data request",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest --config jest.test.config.js",
+    "test": "jest --config jest.test.config.js --no-cache",
     "prebuild": "rm -rf dist && tsc --project src/tsconfig.json",
     "build": "jest --config jest.build.config.js --no-cache",
     "postbuild": "cd dist && chmod +x *.js",

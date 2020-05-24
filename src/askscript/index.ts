@@ -1,6 +1,5 @@
 import { AskCodeOrValue } from '../askcode';
 import { fromAskScriptAst } from '../askjsx';
-const parser = require('./parser/askscript.grammar'); // TODO(mh) import
 
 export type AskJSON = any; // TODO(lc)
 
@@ -9,7 +8,9 @@ export function parseToJSON(
   options?: any,
   debugPrint?: boolean
 ): AskJSON {
+  const parser: any = require('./parser/askscript.grammar');
   try {
+    // @ts-ignore PEG.parse accepts second argument
     const ast = parser.parse(code, options);
     if (debugPrint) {
       console.log(`AST: \n${JSON.stringify(ast, null, 2)}`);

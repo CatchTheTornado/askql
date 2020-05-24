@@ -5,13 +5,14 @@
     "module": "commonjs",
     "outDir": "../dist",
     "resolveJsonModule": true,
-    "sourceMap": true,
+    "inlineSourceMap": true,
     "strict": true,
     "target": "es2016"
   },
   "include": [
     "build.jest.testRunner.ts",
-    "js.jest.transformer.ts",
+    "askcode.jest.transformer.ts",
+    "javascript.jest.transformer.ts",
     "jest-build-test.ts"
   ]
 }

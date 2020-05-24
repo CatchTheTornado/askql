@@ -47,7 +47,7 @@ function jsxObjToXml(
     const arrValue = jsxObj as object[];
     for (const value of arrValue)
       values.push(jsxObjToXml(value, `${indent}  `, insideCurlyBraces));
-    output += values.join(',');
+    output += values.join(', ');
     output += ']';
     return output;
   }
@@ -100,7 +100,7 @@ function jsxObjToXml(
         `${key}: ${jsxObjToXml(value, `${indent}  `, insideCurlyBraces)}`
       );
     }
-    output += values.join(',');
+    output += values.join(', ');
     output += '}';
     return output;
   }

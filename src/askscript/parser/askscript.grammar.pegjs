@@ -97,7 +97,7 @@ functionDefinition = fS:functionSignature ws* '=' ws* fO:functionObject {       
 functionObject = fH:functionHeader cB:codeBlock functionFooter {                                      return new ask.FunctionObject(fH, cB) }
 
 functionSignature = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? {                         return new ask.FunctionSignature(m, i, tD) }
-functionHeader = 'fun' ws* '(' aL:argList ')' rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? {  return new ask.FunctionHeader(aL, rTD === null ? ask.anyType : rTD) }
+functionHeader = 'fun' aL:argBrackets? rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? {  return new ask.FunctionHeader(aL === null ? [] : aL, rTD === null ? ask.anyType : rTD) }
 functionHeader_typeDecl = ws* ':' ws* t1:functionType { return t1 } // this is the optional variable type declaration
 functionHeader_returnTypeDecl = ws* ':' ws* t2:type { return t2 } // this is the optional return type declaration
 
@@ -142,6 +142,8 @@ remoteHeader =
   / 'remote(' ws* url:value ws* ')' ws* {                      return new ask.RemoteHeader(url, new ask.Map([])) }
 
 // === lists: arg list, call list, value list ===
+
+argBrackets = ws* '(' aL:argList ')' { return aL }
 
 argList = // TODO(lc): check all the *List constructs for handling empty lists
     aL:nonEmptyArgList { return aL }

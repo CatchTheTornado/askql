@@ -1,0 +1,6 @@
+ask {
+    const func = fun {
+	  return 5
+	}
+  func()
+}

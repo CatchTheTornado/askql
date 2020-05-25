@@ -1,0 +1,101 @@
+[
+  "query",
+  {},
+  [
+    "node",
+    {
+      "name": "firstField",
+      "value": [
+        "ref",
+        {
+          "name": "otherField"
+        }
+      ]
+    }
+  ],
+  [
+    "node",
+    {
+      "name": "secondField",
+      "value": [
+        "call",
+        {
+          "name": "fun2",
+          "args": [
+            34,
+            "adfs",
+            []
+          ]
+        }
+      ]
+    }
+  ],
+  [
+    "node",
+    {
+      "name": "thirdField",
+      "value": [
+        "call",
+        {
+          "name": "fun3",
+          "args": [
+            [
+              "call",
+              {
+                "name": "fun2",
+                "args": [
+                  34,
+                  "adfs",
+                  []
+                ]
+              }
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  [
+    "node",
+    {
+      "name": "upperCaseFullName",
+      "value": [
+        "call",
+        {
+          "name": "toUpperCase",
+          "args": [
+            [
+              "call",
+              {
+                "name": "concat",
+                "args": [
+                  [
+                    "call",
+                    {
+                      "name": "firstName",
+                      "args": [
+                        [
+                          "ref",
+                          {
+                            "name": "fullName"
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  " ",
+                  [
+                    "ref",
+                    {
+                      "name": "lastName"
+                    }
+                  ]
+                ]
+              }
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+]

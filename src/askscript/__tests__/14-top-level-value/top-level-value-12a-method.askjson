@@ -1,0 +1,9 @@
+[
+  "call",
+  {
+    "name": "toUpperCase",
+    "args": [
+      "Hello world!"
+    ]
+  }
+]

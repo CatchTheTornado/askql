@@ -1,0 +1,6 @@
+query {
+    firstField: otherField
+    secondField :fun2(34, 'adfs', [])
+    thirdField :fun3(fun2(34, 'adfs', []))
+    upperCaseFullName: fullName :firstName :concat(' ', lastName) :toUpperCase
+}

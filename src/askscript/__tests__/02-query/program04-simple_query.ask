@@ -1,6 +1,6 @@
 ask {
-	query {
-		firstName
-		lastName
+  query {
+	  firstName
+	  lastName
 	}
 }

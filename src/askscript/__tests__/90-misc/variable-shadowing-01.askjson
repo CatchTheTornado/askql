@@ -1,0 +1,125 @@
+[
+  "ask",
+  {
+    "args": []
+  },
+  [
+    "fun",
+    {
+      "name": "square",
+      "args": [
+        [
+          "b",
+          "int"
+        ]
+      ],
+      "returns": "int"
+    },
+    [
+      "call",
+      {
+        "name": "times",
+        "args": [
+          [
+            "ref",
+            {
+              "name": "b"
+            }
+          ],
+          [
+            "ref",
+            {
+              "name": "b"
+            }
+          ]
+        ]
+      }
+    ],
+    [
+      "if",
+      {
+        "condition": [
+          "call",
+          {
+            "name": "check",
+            "args": [
+              [
+                "ref",
+                {
+                  "name": "b"
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      [
+        "return",
+        {
+          "value": 2
+        }
+      ]
+    ],
+    [
+      "return",
+      {
+        "value": [
+          "call",
+          {
+            "name": "times",
+            "args": [
+              [
+                "ref",
+                {
+                  "name": "b"
+                }
+              ],
+              [
+                "ref",
+                {
+                  "name": "b"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    "call",
+    {
+      "name": "plus",
+      "args": [
+        [
+          "call",
+          {
+            "name": "square",
+            "args": [
+              [
+                "ref",
+                {
+                  "name": "b"
+                }
+              ]
+            ]
+          }
+        ],
+        [
+          "call",
+          {
+            "name": "square",
+            "args": [
+              [
+                "ref",
+                {
+                  "name": "c"
+                }
+              ]
+            ]
+          }
+        ]
+      ]
+    }
+  ]
+]

@@ -1,3 +1,1 @@
-// AskVM Error:
-//   Invalid JSX name typed: undefined
-export const expectedResult = null;
+export const expectedResult = 721;

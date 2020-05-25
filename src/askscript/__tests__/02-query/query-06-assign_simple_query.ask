@@ -1,7 +1,7 @@
 ask {
   const result = query {
-		firstName
-		lastName
+	  firstName
+	  lastName
 	}
   result
 }

@@ -4,14 +4,14 @@ ask {// this is a comment
 // this is a comment
     const square = fun(a: int): int {// this is a comment
 		// this is a comment
-		a:times(a) // // this is a comment
-		if (a:check()) {// this is a comment
+	  a:times(a) // // this is a comment
+	  if (a:check()) {// this is a comment
 
 		// this is a comment
-			return 2// this is a comment
+		  return 2// this is a comment
 		}// this is a comment
-		return a// this is a comment
+	  return a:times(a)// this is a comment
 	}// this is a comment
-	a:square:plus(square(a))// this is a comment
+  a:square:plus(square(a))// this is a comment
 }// this is a comment
 // this is a comment

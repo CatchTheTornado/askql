@@ -1,10 +1,10 @@
 ask {
-	query {
-		firstName
-		lastName
-		parents {
-			firstName
-			lastName
+  query {
+	  firstName
+	  lastName
+	  parents {
+		  firstName
+		  lastName
 		} 
 	}
 }

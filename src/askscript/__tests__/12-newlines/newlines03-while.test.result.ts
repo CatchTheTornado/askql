@@ -1,3 +1,1 @@
-// AskVM Error:
-//   Assertion error: no jsx component for "while"
-export const expectedResult = null;
+export const expectedResult = 1.23;

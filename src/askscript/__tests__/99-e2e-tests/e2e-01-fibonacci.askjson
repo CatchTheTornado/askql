@@ -1,0 +1,101 @@
+[
+  "ask",
+  {
+    "args": []
+  },
+  [
+    "fun",
+    {
+      "name": "factorial",
+      "args": [
+        [
+          "n",
+          "int"
+        ]
+      ],
+      "returns": "int"
+    },
+    [
+      "if",
+      {
+        "condition": [
+          "call",
+          {
+            "name": "lessThan",
+            "args": [
+              [
+                "ref",
+                {
+                  "name": "n"
+                }
+              ],
+              2
+            ]
+          }
+        ]
+      },
+      [
+        "return",
+        {
+          "value": [
+            "ref",
+            {
+              "name": "n"
+            }
+          ]
+        }
+      ]
+    ],
+    [
+      "call",
+      {
+        "name": "times",
+        "args": [
+          [
+            "ref",
+            {
+              "name": "n"
+            }
+          ],
+          [
+            "call",
+            {
+              "name": "factorial",
+              "args": [
+                [
+                  "call",
+                  {
+                    "name": "minus",
+                    "args": [
+                      [
+                        "ref",
+                        {
+                          "name": "n"
+                        }
+                      ],
+                      1
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      }
+    ]
+  ],
+  [
+    "call",
+    {
+      "name": "factorial",
+      "args": [
+        [
+          "ref",
+          {
+            "name": "score"
+          }
+        ]
+      ]
+    }
+  ]
+]

@@ -1,1 +1,1 @@
-export const expectedResult = -1;
+export const expectedResult = 2 / 3;

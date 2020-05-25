@@ -1,6 +1,6 @@
 ask {
     const square = fun (a: int): int {
-		a:times(a)
+	  a:times(a)
 	}
-	a:square:plus(square(a))
+  a:square:plus(square(a))
 }

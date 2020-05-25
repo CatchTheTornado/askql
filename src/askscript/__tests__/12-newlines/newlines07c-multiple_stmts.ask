@@ -1,6 +1,6 @@
 ask {
   let a:int = 1; let b:float = 1.5;let c:bool = false;
-let d:string = 'asdf';            	let e:empty = null;
+let d:string = 'asdf';              let e:empty = null;
   let f:any = 2.3;let g:any = 2.3
-	let h:any = 2.3
+  let h:any = 2.3
 }

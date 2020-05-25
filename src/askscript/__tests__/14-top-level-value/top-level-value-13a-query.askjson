@@ -1,0 +1,34 @@
+[
+  "ask",
+  {
+    "args": []
+  },
+  [
+    "query",
+    {},
+    [
+      "node",
+      {
+        "name": "firstName",
+        "value": [
+          "ref",
+          {
+            "name": "firstName"
+          }
+        ]
+      }
+    ],
+    [
+      "node",
+      {
+        "name": "lastName",
+        "value": [
+          "ref",
+          {
+            "name": "lastName"
+          }
+        ]
+      }
+    ]
+  ]
+]

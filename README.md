@@ -1,7 +1,7 @@
 <a href="https://askql.org" align="right">
   <img src="https://xfaang-assets.s3.eu-west-3.amazonaws.com/logo/askql-logo-OW-cut.png" align="right"
      title="AskQL Logo" width="200">
- </a>
+</a>
 
 # AskQL
 
@@ -180,3 +180,10 @@ The code in this project is licensed under MIT license.
 
 - Marcin Hagmajer (ex-Facebook)
 - Łukasz Czerwiński (ex-Google)
+<a href="https://xfaang.com" align="left">
+  <img 
+    src="https://xfaang-assets.s3.eu-west-3.amazonaws.com/logo/logo.png" 
+    align="left"
+    title="xFAANG Logo" 
+    width="236">
+</a>

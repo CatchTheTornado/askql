@@ -1,9 +1,5 @@
 ask {
-	const double = fun(s:string):string {
-        s:concat(s)
-	}
-
-    text :call(fun(s:string): string {
-        s:double // same as s:double()
-    })
+  call(fun() {
+    5
+  })
 }

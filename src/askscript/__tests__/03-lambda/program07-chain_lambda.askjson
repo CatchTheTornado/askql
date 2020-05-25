@@ -4,74 +4,17 @@
     "args": []
   },
   [
-    "fun",
-    {
-      "name": "double",
-      "args": [
-        [
-          "s",
-          "string"
-        ]
-      ],
-      "returns": "string"
-    },
-    [
-      "call",
-      {
-        "name": "concat",
-        "args": [
-          [
-            "ref",
-            {
-              "name": "s"
-            }
-          ],
-          [
-            "ref",
-            {
-              "name": "s"
-            }
-          ]
-        ]
-      }
-    ]
-  ],
-  [
     "call",
     {
       "name": "call",
       "args": [
         [
-          "ref",
-          {
-            "name": "text"
-          }
-        ],
-        [
           "fun",
           {
-            "args": [
-              [
-                "s",
-                "string"
-              ]
-            ],
-            "returns": "string"
+            "args": [],
+            "returns": "any"
           },
-          [
-            "call",
-            {
-              "name": "double",
-              "args": [
-                [
-                  "ref",
-                  {
-                    "name": "s"
-                  }
-                ]
-              ]
-            }
-          ]
+          5
         ]
       ]
     }

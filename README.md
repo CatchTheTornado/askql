@@ -25,22 +25,26 @@ AskQL is a query language that can express every data request
 
 In your Node project run:
 
-    npm install askql
+```
+npm install askql
+```
 
 ### Usage
 
 Sample index.js file:
 
-    const askql = require("askql");
+```js
+const askql = require("askql");
 
-    (async () => {
-      const result = await askql.runUntyped(
-        { resources: askql.askvm.resources },
-        askql.parse("ask { 'hello world!' }")
-      );
+(async () => {
+  const result = await askql.runUntyped(
+    { resources: askql.askvm.resources },
+    askql.parse("ask { 'hello world!' }")
+  );
 
-      console.log(JSON.stringify(result, null, 2));
-    })();
+  console.log(JSON.stringify(result, null, 2));
+})();
+```
 
 ## Development & Contributing
 

@@ -17,8 +17,24 @@ AskQL is a query language that can express every data request
 ### Prerequisites
 
 
+### Instalation
+
+
 ### Usage
 
+
+### Examples
+
+
+### Quick Guide
+https://www.notion.so/AskQL-Documentation-cd065c579d0c44d381ddddc4682f5736
+
+### Try It Yourself
+
+
+### Tools
+#### Test server
+#### CLI
 
 ## Troubleshooting
 
@@ -27,5 +43,9 @@ AskQL is a query language that can express every data request
 [Contributing guidelines](https://github.com/xFAANG/askql/blob/master/CONTRIBUTING.md)
 
 ## License
-
 The code in this project is licensed under MIT license.
+
+## Core Team
+- Marcin Hagmajer (ex-Facebook)
+- Łukasz Czerwiński (ex-Google)
+

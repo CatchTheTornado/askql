@@ -143,7 +143,7 @@ remoteHeader =
 
 // === lists: arg list, call list, value list ===
 
-argList = // TODO: check all the *List constructs for handling empty lists
+argList = // TODO(lc): check all the *List constructs for handling empty lists
     aL:nonEmptyArgList { return aL }
   / '' {                 return [] }
 
@@ -255,14 +255,14 @@ lineComment = wsnonl* '//' (!nl .)* (nl / eof)
 emptyLine = wsnonl* nl
 
 // === literals ===
-identifier = [_$a-zA-Z][_$a-zA-Z0-9]* { return new ask.Identifier(text()) } // TODO: add Unicode here
+identifier = [_$a-zA-Z][_$a-zA-Z0-9]* { return new ask.Identifier(text()) } // TODO(lc): add Unicode here one day
 operator   = [-<>+*/^%=&|]+ {            return new ask.Identifier(text()) }
 null = 'null' { return new ask.Null() }
 boolean = true / false
 true = 'true' { return new ask.True() }
 false = 'false' { return new ask.False() }
-int = [-]?[0-9]+ { return new ask.Int(text()) }               // TODO: yes, multiple leading zeros possible, I might fix one day
-float = [-]?[0-9]+ '.' [0-9]+ { return new ask.Float(text()) }  // TODO: yes, multiple leading zeros possible, I might fix one day
+int = [-]?[0-9]+ { return new ask.Int(text()) }               // TODO(lc): yes, multiple leading zeros possible, I might fix one day
+float = [-]?[0-9]+ '.' [0-9]+ { return new ask.Float(text()) }  // TODO(lc): yes, multiple leading zeros possible, I might fix one day
 
 // === character classes ===
 

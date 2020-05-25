@@ -9,16 +9,15 @@ import chalk = require('chalk');
 export type Context = Record<string, any>;
 
 const values = {
-  clientNames: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
   hello: 'Hi! This is a local AskVM running a REPL',
-  revPerClient: {
-    A: 136,
-    B: 426,
-    C: 133,
-    D: 35,
-    E: 246,
-    F: 446,
-    G: 53,
+  philosophers: ['Aristotle', 'Kant', 'Plato', 'Russel', 'Turing', 'Wittgenstein'],
+  scorePerPhilosopher: {
+    Aristotle: 385,
+    Kant: 42,
+    Plato: 1,
+    Russel: 7331,
+    Turing: 65536,
+    Wittgenstein: 420,
   },
   test: 5,
 };

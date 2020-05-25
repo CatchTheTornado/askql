@@ -16,15 +16,112 @@ AskQL is a query language that can express every data request
 
 ### Prerequisites
 
+`node >=12.14 `
+
 
 ### Instalation
+1. Clone the repository
 
+`git clone git@github.com:xFAANG/askql.git`
+
+2. Install dependencies
+`npm i`
+
+3. Build the project
+`npm run build`
+
+
+4. Link the project to askql command
+`npm link`
+
+Now it should be able to enter the console! (We use REPL for that) 
+`askql`
 
 ### Usage
+
+1. Write a hello world!
+
+In AskQL we only use single quotes:
+
+```
+🦄 'Hello world'
+string ask('Hello world')
+'Hello world'
+```
+
+In the response you get a compiled version of the program what is send asynchronously to the AskVM
+
+2. There are two number types
+
+```
+🦄 4
+int ask(4)
+4 
+```
+
+```
+🦄 4.2
+float ask(4.2)
+4.2
+```
+
+3. Let's say we have a table of philosophers and their scores let's say in the meaning of their contribution for computer science!
+
+```
+🦄 scorePerPhilosopher
+any ask(get('scorePerPhilosopher'))
+{
+  Aristotle: 385,
+  Kant: 42,
+  Plato: 1,
+  Russel: 7331,
+  Turing: 65536,
+  Wittgenstein: 420
+}
+```
+Awesome!
+
+4. Now let's find the max score with a simple query:
+
+```
+🦄 max(scorePerPhilosopher)
+int ask(call(get('max'),get('scorePerPhilosopher')))
+65536
+```
+Nice!
+
+5. Write first query
+A query can be a multiliner! 
+For that we write first:
+
+`.editor`
+
+and as second we write the first query:
+
+```
+query {
+  philosophers
+}
+```
+
+and here you have your answer:
+
+```
+any ask(query(node('philosophers',f(get('philosophers')))))
+{
+  philosophers: [ 'Aristotle', 'Kant', 'Plato', 'Russel', 'Turing', 'Wittgenstein' ]
+}
+```
+
+
+6. Exit the console!
+
+`ctrl + d`
 
 
 ### Examples
 
+You can find all the examples in `__test__` folders
 
 ### Quick Guide
 https://www.notion.so/AskQL-Documentation-cd065c579d0c44d381ddddc4682f5736

@@ -1,0 +1,27 @@
+[
+  "ask",
+  {
+    "args": []
+  },
+  [
+    "fun",
+    {
+      "name": "func",
+      "args": [],
+      "returns": "any"
+    },
+    [
+      "return",
+      {
+        "value": 5
+      }
+    ]
+  ],
+  [
+    "call",
+    {
+      "name": "func",
+      "args": []
+    }
+  ]
+]

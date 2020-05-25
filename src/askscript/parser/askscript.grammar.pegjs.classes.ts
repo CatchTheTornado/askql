@@ -131,72 +131,35 @@ export class VariableDeclaration {
 }
 
 export class Value {
-  factor: Factor;
-  addExprList: AddExpr[];
+  nAV: NonArithmValue;
+  operValues: OperNAValue[];
 
-  constructor(factor: Factor, addExprList: AddExpr[] = []) {
-    this.factor = factor;
-    this.addExprList = addExprList;
+  constructor(nAV: NonArithmValue, operValues: OperNAValue[] = []) {
+    this.nAV = nAV;
+    this.operValues = operValues;
   }
 
   print(): LooseObject | string | number | boolean | null {
-    const nonArithmValue = this.toNonArithmValue();
+    const nonArithmValue = this.nAV.getShallowCopy();
+
+    this.operValues.forEach((operValue) => {
+      nonArithmValue.methodCallAppliedList.push(
+        new MethodCallApplied(operValue.operator, [new Value(operValue.nAV)])
+      );
+    });
+
     const output = nonArithmValue.print();
     return output;
   }
-
-  toNonArithmValue(): NonArithmValue {
-    const nonArithmValue = this.factor.toNonArithmValue();
-    this.addExprList.forEach((addExpr) => {
-      nonArithmValue.methodCallAppliedList.push(
-        new MethodCallApplied(new Identifier(addExpr.c), [new Value(addExpr.f)])
-      );
-    });
-    return nonArithmValue;
-  }
 }
 
-export class AddExpr {
-  c: string;
-  f: Factor;
+export class OperNAValue {
+  operator: Identifier;
+  nAV: NonArithmValue;
 
-  constructor(c: string, f: Factor) {
-    this.c = c;
-    this.f = f;
-  }
-}
-
-export class Factor {
-  e: NonArithmValue;
-  mulExprList: MulExpr[];
-
-  constructor(e: NonArithmValue, mulExprList: MulExpr[] = []) {
-    this.e = e;
-    this.mulExprList = mulExprList;
-  }
-
-  toNonArithmValue(): NonArithmValue {
-    const methodCallAppliedList = this.e.methodCallAppliedList.slice();
-    this.mulExprList.forEach((mulExpr) => {
-      methodCallAppliedList.push(
-        new MethodCallApplied(new Identifier(mulExpr.c), [
-          new Value(new Factor(mulExpr.e)),
-        ])
-      );
-    });
-
-    const result = new NonArithmValue(this.e.expression, methodCallAppliedList);
-    return result;
-  }
-}
-
-export class MulExpr {
-  c: string;
-  e: NonArithmValue;
-
-  constructor(c: string, e: NonArithmValue) {
-    this.c = c;
-    this.e = e;
+  constructor(operator: Identifier, nAV: NonArithmValue) {
+    this.operator = operator;
+    this.nAV = nAV;
   }
 }
 
@@ -245,12 +208,8 @@ export class NonArithmValue {
         if (methodCall instanceof KeyAccessApplied) {
           methodCall = new MethodCallApplied(new Identifier('at'), [
             new Value(
-              new Factor(
-                new NonArithmValue(
-                  new ValueLiteral(
-                    new StringLiteral(methodCall.identifier.text)
-                  )
-                )
+              new NonArithmValue(
+                new ValueLiteral(new StringLiteral(methodCall.identifier.text))
               )
             ),
           ]);
@@ -258,7 +217,7 @@ export class NonArithmValue {
 
         const callArgListShallowCopy = methodCall.callArgList.slice();
         callArgListShallowCopy.unshift(
-          new Value(new Factor(new NonArithmValue(expression)))
+          new Value(new NonArithmValue(expression))
         );
         expression = new FunctionCall(
           methodCall.identOrOper,
@@ -270,6 +229,10 @@ export class NonArithmValue {
 
     let output = expressionToPrint.print();
     return output;
+  }
+
+  getShallowCopy() {
+    return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
   }
 }
 

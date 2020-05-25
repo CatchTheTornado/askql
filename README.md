@@ -4,37 +4,62 @@
  </a>
 
 # AskQL
+
 AskQL is a query language that can express every data request
 
 ## Why and what for?
 
-* next milestone after GraphQL
-* sending code to servers without the need to deploy
-* new safe query language
-* 4 - 6 kB of robust code
-* compiled to clean functional code
+- next milestone after GraphQL
+- sending code to servers without the need to deploy
+- new safe query language
+- 4 - 6 kB of robust code
+- compiled to clean functional code
 
 ### Prerequisites
 
-`node >=12.14 `
+`node >=12.14`
 
+## Quick Start
+
+### Installation
+
+In your Node project run:
+
+    npm install askql
+
+### Usage
+
+Sample index.js file:
+
+    const askql = require("askql");
+
+    (async () => {
+      const result = await askql.runUntyped(
+        { resources: askql.askvm.resources },
+        askql.parse("ask { 'hello world!' }")
+      );
+
+      console.log(JSON.stringify(result, null, 2));
+    })();
+
+## Development & Contributing
 
 ### Instalation
+
 1. Clone the repository
 
 `git clone git@github.com:xFAANG/askql.git`
 
 2. Install dependencies
-`npm i`
+   `npm i`
 
 3. Build the project
-`npm run build`
+   `npm run build`
 
+4) Link the project to askql command
+   `npm link`
 
-4. Link the project to askql command
-`npm link`
-
-Now it should be able to enter the console! (We use REPL for that) 
+Now it should be able to enter the console! (We use REPL for that)
 `askql`
 
 ### Usage
@@ -56,7 +81,7 @@ In the response you get a compiled version of the program what is send asynchron
 ```
 🦄 4
 int ask(4)
-4 
+4
 ```
 
 ```
@@ -79,6 +104,7 @@ any ask(get('scorePerPhilosopher'))
   Wittgenstein: 420
 }
 ```
+
 Awesome!
 
 4. Now let's find the max score with a simple query:
@@ -88,11 +114,12 @@ Awesome!
 int ask(call(get('max'),get('scorePerPhilosopher')))
 65536
 ```
+
 Nice!
 
 5. Write first query
-A query can be a multiliner! 
-For that we write first:
+   A query can be a multiliner!
+   For that we write first:
 
 `.editor`
 
@@ -113,36 +140,37 @@ any ask(query(node('philosophers',f(get('philosophers')))))
 }
 ```
 
-
 6. Exit the console!
 
 `ctrl + d`
-
 
 ### Examples
 
 You can find all the examples in `__test__` folders
 
 ### Quick Guide
+
 https://www.notion.so/AskQL-Documentation-cd065c579d0c44d381ddddc4682f5736
 
 ### Try It Yourself
 
-
 ### Tools
+
 #### Test server
+
 #### CLI
 
 ## Troubleshooting
 
-
 ## Contributing
+
 [Contributing guidelines](https://github.com/xFAANG/askql/blob/master/CONTRIBUTING.md)
 
 ## License
+
 The code in this project is licensed under MIT license.
 
 ## Core Team
+
 - Marcin Hagmajer (ex-Facebook)
 - Łukasz Czerwiński (ex-Google)
-

@@ -1,0 +1,46 @@
+[
+  "ask",
+  {
+    "args": []
+  },
+  [
+    "const",
+    {
+      "name": "arr",
+      "type": "any",
+      "value": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  [
+    "call",
+    {
+      "name": "map",
+      "args": [
+        [
+          "ref",
+          {
+            "name": "arr"
+          }
+        ],
+        [
+          "fun",
+          {
+            "args": [],
+            "returns": "any"
+          },
+          [
+            "return",
+            {
+              "value": 7
+            }
+          ]
+        ]
+      ]
+    }
+  ]
+]

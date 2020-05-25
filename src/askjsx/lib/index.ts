@@ -6,6 +6,7 @@ export * from './fromAskScriptAst';
 export * from './Fun';
 export * from './If';
 export * from './jsx';
+export * from './List';
 export * from './Query';
 export * from './Ref';
 export * from './Remote';

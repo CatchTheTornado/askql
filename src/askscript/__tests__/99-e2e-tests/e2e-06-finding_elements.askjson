@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "const",
@@ -9,6 +12,8 @@
       "name": "covid",
       "type": "any",
       "value": [
+        "list",
+        null,
         [
           "code",
           {
@@ -87,6 +92,8 @@
     {
       "name": "find",
       "args": [
+        "list",
+        null,
         [
           "ref",
           {
@@ -97,7 +104,11 @@
           "fun",
           {
             "args": [
+              "list",
+              null,
               [
+                "list",
+                null,
                 "c",
                 "any"
               ]
@@ -112,16 +123,22 @@
                 {
                   "name": "&&",
                   "args": [
+                    "list",
+                    null,
                     [
                       "call",
                       {
                         "name": "moreThan",
                         "args": [
+                          "list",
+                          null,
                           [
                             "call",
                             {
                               "name": "at",
                               "args": [
+                                "list",
+                                null,
                                 [
                                   "ref",
                                   {
@@ -141,11 +158,15 @@
                       {
                         "name": "lessThan",
                         "args": [
+                          "list",
+                          null,
                           [
                             "call",
                             {
                               "name": "at",
                               "args": [
+                                "list",
+                                null,
                                 [
                                   "ref",
                                   {

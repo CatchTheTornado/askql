@@ -1,43 +1,60 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "call",
     {
       "name": "ceil",
       "args": [
+        "list",
+        null,
         [
           "call",
           {
             "name": "divideBy",
             "args": [
+              "list",
+              null,
               [
                 "call",
                 {
                   "name": "toInt",
                   "args": [
+                    "list",
+                    null,
                     [
                       "call",
                       {
                         "name": "call",
                         "args": [
+                          "list",
+                          null,
                           [
                             "call",
                             {
                               "name": "toString",
                               "args": [
+                                "list",
+                                null,
                                 [
                                   "call",
                                   {
                                     "name": "plus",
                                     "args": [
+                                      "list",
+                                      null,
                                       [
                                         "call",
                                         {
                                           "name": "times",
                                           "args": [
+                                            "list",
+                                            null,
                                             [
                                               "ref",
                                               {
@@ -59,7 +76,11 @@
                             "fun",
                             {
                               "args": [
+                                "list",
+                                null,
                                 [
+                                  "list",
+                                  null,
                                   "s",
                                   "string"
                                 ]
@@ -71,7 +92,11 @@
                               {
                                 "name": "double",
                                 "args": [
+                                  "list",
+                                  null,
                                   [
+                                    "list",
+                                    null,
                                     "s",
                                     "string"
                                   ]
@@ -83,6 +108,8 @@
                                 {
                                   "name": "concat",
                                   "args": [
+                                    "list",
+                                    null,
                                     [
                                       "ref",
                                       {
@@ -104,6 +131,8 @@
                               {
                                 "name": "double",
                                 "args": [
+                                  "list",
+                                  null,
                                   [
                                     "ref",
                                     {

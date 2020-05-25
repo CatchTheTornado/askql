@@ -1,5 +1,5 @@
 import type { AskCodeOrValue } from '../../askcode';
-import type { AskJSON } from '../../askscript';
+import type { AskScriptAst } from '../../askscript';
 
 type AstReducer = (
   name: string | Function,
@@ -8,11 +8,15 @@ type AstReducer = (
 ) => AskCodeOrValue;
 
 export function fromAskScriptAst(
-  ast: AskJSON | AskJSON[],
+  ast: AskScriptAst,
   reducer: AstReducer
 ): AskCodeOrValue {
   if (Array.isArray(ast)) {
-    return ast.map((ast) => fromAskScriptAst(ast, reducer));
+    return reducer(
+      'list',
+      null,
+      ...ast.map((ast) => fromAskScriptAst(ast, reducer))
+    );
   }
 
   if (ast == null || typeof ast !== 'object') {

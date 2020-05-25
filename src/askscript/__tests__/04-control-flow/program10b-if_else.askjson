@@ -1,13 +1,18 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "if",
     {
       "condition": 5,
       "else": [
+        "list",
+        null,
         [
           "return",
           {

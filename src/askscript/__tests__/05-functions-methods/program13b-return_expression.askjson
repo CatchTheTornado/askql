@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   "Hello world!",
   [
@@ -12,6 +15,8 @@
         {
           "name": "plus",
           "args": [
+            "list",
+            null,
             [
               "ref",
               {

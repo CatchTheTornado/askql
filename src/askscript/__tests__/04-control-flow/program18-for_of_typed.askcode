@@ -1,1 +1,1 @@
-ask(let('sum',0),forOf(let('itemPrice'),get('itemPrices'),block(let('sum',call(get('plus'),get('sum'),get('itemPrice'))))),get('sum'))
+ask(let('sum',0),for(block(let('sum',call(get('plus'),get('sum'),get('itemPrice'))))),get('sum'))

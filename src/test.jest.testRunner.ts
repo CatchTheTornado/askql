@@ -7,7 +7,8 @@ import { mkdir, readFile, writeFile } from 'fs.promises';
 import type { RuntimeType } from 'jest-runtime';
 import { basename, dirname, join } from 'path';
 import { askCodeToSource, parse as parseAskCode } from './askcode';
-import { parse as parseAskScript, parseToJSON } from './askscript';
+import { fromAskScriptAst, createElement } from './askjsx';
+import { parse as parseAskScript, parseToAst } from './askscript';
 import {
   extendOptions,
   Options,
@@ -19,7 +20,6 @@ import {
 import { getTargetPath } from './node-utils';
 import { fromEntries } from './utils';
 import jasmine2 = require('jest-jasmine2');
-import { fromAskScriptAst } from './askjsx';
 
 function compareAsJson(a: any, b: any): boolean {
   return JSON.stringify(a) === JSON.stringify(b);
@@ -58,7 +58,21 @@ async function askRunner(
     return testResults;
   }
 
-  const askScriptAst = parseToJSON(source);
+  const askScriptAst = parseToAst(source);
+  const askScriptAstTargetPath = getTargetPath(
+    testPath,
+    'ask.ast.json',
+    '../src'
+  );
+  await mkdir(dirname(askScriptAstTargetPath), { recursive: true });
+  await writeFile(
+    askScriptAstTargetPath,
+    JSON.stringify(askScriptAst, null, 2),
+    {
+      encoding: 'utf-8',
+    }
+  );
+
   const askJson = fromAskScriptAst(askScriptAst, (name, props, ...children) => [
     name,
     props,
@@ -72,6 +86,10 @@ async function askRunner(
 
   const askCode = parseAskScript(source);
   const askCodeSource = askCodeToSource(askCode);
+  const askCodeSource2 = askCodeToSource(
+    fromAskScriptAst(askScriptAst, createElement)
+  );
+  // console.log({ askCodeSource1: askCodeSource, askCodeSource2 });
   const askCodeTargetPath = getTargetPath(testPath, 'askcode', '../src');
   await mkdir(dirname(askCodeTargetPath), { recursive: true });
   await writeFile(askCodeTargetPath, askCodeSource, {

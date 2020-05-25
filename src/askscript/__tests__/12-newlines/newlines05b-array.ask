@@ -1,5 +1,5 @@
 ask {
-  const arr1: array(array(int)) = [
+  const arr = [
     [],
     [
       1, 

@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "query",
@@ -15,11 +18,15 @@
           {
             "name": "toUpperCase",
             "args": [
+              "list",
+              null,
               [
                 "call",
                 {
                   "name": "concat",
                   "args": [
+                    "list",
+                    null,
                     [
                       "ref",
                       {

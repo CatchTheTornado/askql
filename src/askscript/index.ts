@@ -1,13 +1,27 @@
 import { AskCodeOrValue } from '../askcode';
 import { fromAskScriptAst, createElement } from '../askjsx';
 
-export type AskJSON = any; // TODO(lc)
+export type AskScriptAstValue =
+  | null
+  | boolean
+  | number
+  | string
+  | { jsxValue: Record<string, AskScriptAstValue> }
+  | AskScriptAstValue[];
 
-export function parseToJSON(
+export type AskScriptAst =
+  | AskScriptAstValue
+  | {
+      name: string;
+      props: Record<string, AskScriptAst>;
+      children: AskScriptAst[];
+    };
+
+export function parseToAst(
   code: string,
   options?: any,
   debugPrint?: boolean
-): AskJSON {
+): AskScriptAst {
   const parser: any = require('./parser/askscript.grammar');
   try {
     // @ts-ignore PEG.parse accepts second argument
@@ -16,6 +30,11 @@ export function parseToJSON(
       console.log(`AST: \n${JSON.stringify(ast, null, 2)}`);
     }
     const jsx = ast.print();
+    // if (Array.isArray(jsx)) {
+    //   jsx = {
+    //     jsxValue: jsx,
+    //   };
+    // }
     if (debugPrint) {
       console.log(`JSX: \n${JSON.stringify(jsx, null, 2)}`);
     }
@@ -42,8 +61,5 @@ export function parse(
   options?: any,
   debugPrint?: boolean
 ): AskCodeOrValue {
-  return fromAskScriptAst(
-    parseToJSON(code, options, debugPrint),
-    createElement
-  );
+  return fromAskScriptAst(parseToAst(code, options, debugPrint), createElement);
 }

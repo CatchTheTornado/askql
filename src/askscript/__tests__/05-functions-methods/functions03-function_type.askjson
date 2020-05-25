@@ -1,18 +1,27 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "fun",
     {
       "name": "sum",
       "args": [
+        "list",
+        null,
         [
+          "list",
+          null,
           "a",
           "int"
         ],
         [
+          "list",
+          null,
           "b",
           "int"
         ]
@@ -24,6 +33,8 @@
       {
         "name": "plus",
         "args": [
+          "list",
+          null,
           [
             "ref",
             {
@@ -45,6 +56,8 @@
     {
       "name": "sum",
       "args": [
+        "list",
+        null,
         2,
         3
       ]

@@ -1,5 +1,5 @@
 import { AskCodeOrValue } from '../../askcode';
-import { assert, isString } from '../../utils';
+import { assert, isString, isStringArray } from '../../utils';
 import * as askjsx from './';
 import { Ref } from './Ref';
 import { Set } from './Set';
@@ -18,11 +18,16 @@ export function Fun({
   ask?: boolean;
 }) {
   assert(isString(name), 'name');
-  // assert(isStringArray(args), 'args'); // TODO(mh)
+  // console.log('args', (args as any).params);
+  // assert(isStringArray(args), 'args'); // todo(mh)
+
+  if ('params' in args) {
+    args = (args as any).params; // fixme(mh)
+  }
 
   const f = (
     <code ask={ask || undefined} fun={!ask || undefined}>
-      {args.map((arg, index) => (
+      {args.map(({ params: [arg, type] }: any, index: any) => (
         <Set name={arg} value={<Ref name={`$${index}`} />} />
       ))}
       {expressions.length > 0 ? expressions : null}

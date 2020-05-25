@@ -1,1 +1,1 @@
-ask(if(5,block(return(get('yes'))),block(return(get('no')))))
+ask(if(5,block(return(get('yes'))),block(list(return(get('no'))))))

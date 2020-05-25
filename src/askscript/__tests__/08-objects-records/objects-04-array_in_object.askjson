@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "set",
@@ -17,6 +20,8 @@
         "Arizona",
         "numbers",
         [
+          "list",
+          null,
           113998,
           2020
         ]

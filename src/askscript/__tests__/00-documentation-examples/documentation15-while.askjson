@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "while",
@@ -11,11 +14,16 @@
         {
           "name": "lessThan",
           "args": [
+            "list",
+            null,
             [
               "call",
               {
                 "name": "rand",
-                "args": []
+                "args": [
+                  "list",
+                  null
+                ]
               }
             ],
             0.5
@@ -27,7 +35,10 @@
       "call",
       {
         "name": "doSomething",
-        "args": []
+        "args": [
+          "list",
+          null
+        ]
       }
     ]
   ]

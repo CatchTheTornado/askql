@@ -2,7 +2,11 @@
   "ask",
   {
     "args": [
+      "list",
+      null,
       [
+        "list",
+        null,
         "arr",
         "array(int)"
       ]

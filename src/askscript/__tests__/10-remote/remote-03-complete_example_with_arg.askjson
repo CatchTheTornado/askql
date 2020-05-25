@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "remote",
@@ -21,7 +24,11 @@
       {
         "name": "factorial",
         "args": [
+          "list",
+          null,
           [
+            "list",
+            null,
             "n",
             "int"
           ]
@@ -36,6 +43,8 @@
             {
               "name": "lessThan",
               "args": [
+                "list",
+                null,
                 [
                   "ref",
                   {
@@ -64,6 +73,8 @@
         {
           "name": "multiply",
           "args": [
+            "list",
+            null,
             [
               "ref",
               {
@@ -75,11 +86,15 @@
               {
                 "name": "factorial",
                 "args": [
+                  "list",
+                  null,
                   [
                     "call",
                     {
                       "name": "minus",
                       "args": [
+                        "list",
+                        null,
                         [
                           "ref",
                           {
@@ -102,11 +117,17 @@
       {
         "name": "sum",
         "args": [
+          "list",
+          null,
           [
+            "list",
+            null,
             "a",
             "int"
           ],
           [
+            "list",
+            null,
             "b",
             "int"
           ]
@@ -118,6 +139,8 @@
         {
           "name": "plus",
           "args": [
+            "list",
+            null,
             [
               "ref",
               {
@@ -147,11 +170,15 @@
       {
         "name": "toString",
         "args": [
+          "list",
+          null,
           [
             "call",
             {
               "name": "sum",
               "args": [
+                "list",
+                null,
                 [
                   "ref",
                   {
@@ -163,6 +190,8 @@
                   {
                     "name": "factorial",
                     "args": [
+                      "list",
+                      null,
                       [
                         "ref",
                         {

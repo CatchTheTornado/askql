@@ -4,6 +4,7 @@ import {
   isValue,
   value,
   toAskCode,
+  isAskCode,
 } from '../../askcode';
 import { assert, flatten, titleCase } from '../../utils';
 import * as components from './';
@@ -13,7 +14,12 @@ export function createElement(
   propsOrNull: Record<string, AskCodeOrValue> | null,
   ...children: AskCodeOrValue[]
 ): AskCodeOrValue {
+  // if (name === 'list') {
+  //   return children.map(createElement);
+  // }
+
   const props = propsOrNull || {};
+  // console.log('createElement', props, ...children);
 
   if (name === 'code') {
     const propKeys = Object.entries(props)
@@ -31,7 +37,7 @@ export function createElement(
   if (typeof name === 'string') {
     const component = (components as any)[titleCase(name)];
     assert(component != null, `no jsx component for "${name}"`);
-    return createElement(component, propsOrNull, ...flatten(children));
+    return createElement(component, props, ...flatten(children));
   }
 
   if (typeof name === 'function') {

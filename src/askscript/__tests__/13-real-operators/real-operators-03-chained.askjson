@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "set",
@@ -24,11 +27,15 @@
     {
       "name": "*",
       "args": [
+        "list",
+        null,
         [
           "call",
           {
             "name": "+",
             "args": [
+              "list",
+              null,
               [
                 "ref",
                 {
@@ -49,6 +56,8 @@
           {
             "name": "-",
             "args": [
+              "list",
+              null,
               [
                 "ref",
                 {

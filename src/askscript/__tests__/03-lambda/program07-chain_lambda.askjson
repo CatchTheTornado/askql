@@ -1,17 +1,25 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "call",
     {
       "name": "call",
       "args": [
+        "list",
+        null,
         [
           "fun",
           {
-            "args": [],
+            "args": [
+              "list",
+              null
+            ],
             "returns": "any"
           },
           5

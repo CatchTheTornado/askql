@@ -1,18 +1,26 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "call",
     {
       "name": "test",
       "args": [
+        "list",
+        null,
         "hello",
         [
           "fun",
           {
-            "args": [],
+            "args": [
+              "list",
+              null
+            ],
             "returns": "any"
           },
           [
@@ -20,6 +28,8 @@
             {
               "name": "log",
               "args": [
+                "list",
+                null,
                 "Hello!"
               ]
             }
@@ -29,16 +39,22 @@
             {
               "name": "toBe",
               "args": [
+                "list",
+                null,
                 [
                   "call",
                   {
                     "name": "expect",
                     "args": [
+                      "list",
+                      null,
                       [
                         "call",
                         {
                           "name": "+",
                           "args": [
+                            "list",
+                            null,
                             2,
                             2
                           ]

@@ -1,13 +1,18 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "call",
     {
       "name": "factorial",
       "args": [
+        "list",
+        null,
         [
           "ref",
           {

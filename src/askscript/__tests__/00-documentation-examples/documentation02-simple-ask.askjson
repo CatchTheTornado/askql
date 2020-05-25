@@ -2,11 +2,17 @@
   "ask",
   {
     "args": [
+      "list",
+      null,
       [
+        "list",
+        null,
         "maxAge",
         "int"
       ],
       [
+        "list",
+        null,
         "userName",
         "string"
       ]

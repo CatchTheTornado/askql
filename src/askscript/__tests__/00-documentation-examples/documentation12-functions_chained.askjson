@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": [],
+    "args": [
+      "list",
+      null
+    ],
     "returns": "float"
   },
   [
@@ -9,16 +12,22 @@
     {
       "name": "fun1",
       "args": [
+        "list",
+        null,
         [
           "call",
           {
             "name": "fun2",
             "args": [
+              "list",
+              null,
               [
                 "call",
                 {
                   "name": "fun3",
                   "args": [
+                    "list",
+                    null,
                     2.4
                   ]
                 }

@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": [],
+    "args": [
+      "list",
+      null
+    ],
     "returns": "string"
   },
   [
@@ -11,7 +14,10 @@
         "call",
         {
           "name": "checkThis",
-          "args": []
+          "args": [
+            "list",
+            null
+          ]
         }
       ]
     },

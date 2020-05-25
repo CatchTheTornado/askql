@@ -3,6 +3,8 @@
   {
     "name": "toUpperCase",
     "args": [
+      "list",
+      null,
       "Hello world!"
     ]
   }

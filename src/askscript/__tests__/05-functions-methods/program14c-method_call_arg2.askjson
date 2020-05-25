@@ -1,13 +1,18 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "call",
     {
       "name": "plus",
       "args": [
+        "list",
+        null,
         [
           "ref",
           {

@@ -1,1 +1,1 @@
-ask(let('o',object('name','Arizona','numbers',113998,2020)))
+ask(let('o',object('name','Arizona','numbers',list(113998,2020))))

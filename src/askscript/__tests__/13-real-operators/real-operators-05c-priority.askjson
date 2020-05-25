@@ -1,43 +1,60 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "call",
     {
       "name": "*",
       "args": [
+        "list",
+        null,
         [
           "call",
           {
             "name": "/",
             "args": [
+              "list",
+              null,
               [
                 "call",
                 {
                   "name": "*",
                   "args": [
+                    "list",
+                    null,
                     [
                       "call",
                       {
                         "name": "/",
                         "args": [
+                          "list",
+                          null,
                           [
                             "call",
                             {
                               "name": "*",
                               "args": [
+                                "list",
+                                null,
                                 [
                                   "call",
                                   {
                                     "name": "/",
                                     "args": [
+                                      "list",
+                                      null,
                                       [
                                         "call",
                                         {
                                           "name": "*",
                                           "args": [
+                                            "list",
+                                            null,
                                             1,
                                             2
                                           ]

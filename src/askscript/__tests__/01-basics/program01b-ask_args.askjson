@@ -2,15 +2,23 @@
   "ask",
   {
     "args": [
+      "list",
+      null,
       [
+        "list",
+        null,
         "n",
         "int"
       ],
       [
+        "list",
+        null,
         "thisIsFloat",
         "float"
       ],
       [
+        "list",
+        null,
         "thisIsString",
         "string"
       ]

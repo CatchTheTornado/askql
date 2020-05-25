@@ -1,22 +1,33 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "fun",
     {
       "name": "plus",
       "args": [
+        "list",
+        null,
         [
+          "list",
+          null,
           "a",
           "any"
         ],
         [
+          "list",
+          null,
           "b",
           "any"
         ],
         [
+          "list",
+          null,
           "c",
           "any"
         ]
@@ -31,11 +42,15 @@
           {
             "name": "plus",
             "args": [
+              "list",
+              null,
               [
                 "call",
                 {
                   "name": "plus",
                   "args": [
+                    "list",
+                    null,
                     [
                       "ref",
                       {
@@ -68,6 +83,8 @@
     {
       "name": "plus",
       "args": [
+        "list",
+        null,
         2,
         3.6,
         4

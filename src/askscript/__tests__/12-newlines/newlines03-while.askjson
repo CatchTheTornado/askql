@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "while",
@@ -11,6 +14,8 @@
         {
           "name": "lessThan",
           "args": [
+            "list",
+            null,
             [
               "ref",
               {

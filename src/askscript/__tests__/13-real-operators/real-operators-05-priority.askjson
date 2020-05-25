@@ -1,44 +1,61 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "call",
     {
       "name": "+",
       "args": [
+        "list",
+        null,
         [
           "call",
           {
             "name": "+",
             "args": [
+              "list",
+              null,
               [
                 "call",
                 {
                   "name": "+",
                   "args": [
+                    "list",
+                    null,
                     [
                       "call",
                       {
                         "name": "+",
                         "args": [
+                          "list",
+                          null,
                           [
                             "call",
                             {
                               "name": "+",
                               "args": [
+                                "list",
+                                null,
                                 [
                                   "call",
                                   {
                                     "name": "+",
                                     "args": [
+                                      "list",
+                                      null,
                                       1,
                                       [
                                         "call",
                                         {
                                           "name": "*",
                                           "args": [
+                                            "list",
+                                            null,
                                             2,
                                             3
                                           ]
@@ -52,11 +69,15 @@
                                   {
                                     "name": "*",
                                     "args": [
+                                      "list",
+                                      null,
                                       [
                                         "call",
                                         {
                                           "name": "*",
                                           "args": [
+                                            "list",
+                                            null,
                                             4,
                                             5
                                           ]
@@ -86,6 +107,8 @@
           {
             "name": "*",
             "args": [
+              "list",
+              null,
               10,
               11
             ]

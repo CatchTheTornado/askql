@@ -3,11 +3,9 @@ module.exports = {
   moduleFileExtensions: ['ask', 'pegjs', 'ts', 'tsx', 'js'],
   testEnvironment: 'node',
   testMatch: [
-    '<rootDir>/src/**/*.(ask|pegjs|[jt]s?(x))',
-    '<rootDir>/src/*.(ask|pegjs|[jt]s?(x))',
-
-    // '<rootDir>/src/**/*.(ask|pegjs|[jt]s?(x))',
-    // '<rootDir>/src/*.(ask|pegjs|[jt]s?(x))',
+    '**/__tests__/**/*.[jt]s?(x)',
+    '**/?(*.)+(spec|test).[jt]s?(x)',
+    '**/*.(ask|pegjs)',
   ],
   testPathIgnorePatterns: [
     '.*\\.d.ts',

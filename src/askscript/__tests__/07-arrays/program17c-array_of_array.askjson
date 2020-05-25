@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "const",
@@ -9,8 +12,15 @@
       "name": "arr1",
       "type": "array(int)",
       "value": [
-        [],
+        "list",
+        null,
         [
+          "list",
+          null
+        ],
+        [
+          "list",
+          null,
           1,
           2,
           3

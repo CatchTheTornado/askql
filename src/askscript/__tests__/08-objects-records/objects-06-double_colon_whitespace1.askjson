@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "set",
@@ -27,6 +30,8 @@
           {
             "name": "toLowerCase",
             "args": [
+              "list",
+              null,
               [
                 "ref",
                 {
@@ -42,6 +47,8 @@
           {
             "name": "toUpperCase",
             "args": [
+              "list",
+              null,
               [
                 "ref",
                 {

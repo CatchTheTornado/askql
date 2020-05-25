@@ -11,8 +11,9 @@ export function Set({
   type?: string;
   value: AskCodeOrValue;
 }) {
-  if (Array.isArray(name)) name = name[0]; //TODO(mh): Support types
-
+  if (typeof name !== 'string') {
+    name = (name as any).params[0]; // fixme(me)
+  }
   assert(
     isString(name),
     `name should be string, got: ${JSON.stringify(name, null, 2)}`

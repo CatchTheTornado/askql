@@ -23,6 +23,7 @@ declare namespace JSX {
       if?: true;
       json?: true;
       let?: true;
+      list?: true;
       node?: true;
       query?: true;
       remote?: true;

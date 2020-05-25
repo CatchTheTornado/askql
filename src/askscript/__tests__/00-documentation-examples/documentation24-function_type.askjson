@@ -1,14 +1,21 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "fun",
     {
       "name": "f",
       "args": [
+        "list",
+        null,
         [
+          "list",
+          null,
           "n",
           "int"
         ]

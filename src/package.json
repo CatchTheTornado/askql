@@ -1,0 +1,20 @@
+{
+  "name": "askql",
+  "version": "1.0.0",
+  "description": "AskQL is a query language that can express every data request",
+  "main": "index.js",
+  "bin": {
+    "askql": "cli.js",
+    "askqlServer": "demoServer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xFAANG/askql.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xFAANG/askql/issues"
+  },
+  "homepage": "https://askql.org/",
+  "dependencies": {}
+}

@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "const",
@@ -9,6 +12,8 @@
       "name": "nums",
       "type": "any",
       "value": [
+        "list",
+        null,
         1,
         2,
         3,
@@ -21,6 +26,8 @@
     "for",
     {
       "initialization": [
+        "list",
+        null,
         [
           "set",
           {
@@ -31,11 +38,15 @@
         ]
       ],
       "condition": [
+        "list",
+        null,
         [
           "call",
           {
             "name": "<",
             "args": [
+              "list",
+              null,
               [
                 "ref",
                 {
@@ -47,6 +58,8 @@
                 {
                   "name": "length",
                   "args": [
+                    "list",
+                    null,
                     [
                       "ref",
                       {
@@ -61,6 +74,8 @@
         ]
       ],
       "finalExpression": [
+        "list",
+        null,
         [
           "assign",
           {
@@ -70,6 +85,8 @@
               {
                 "name": "+",
                 "args": [
+                  "list",
+                  null,
                   [
                     "ref",
                     {
@@ -89,6 +106,8 @@
       {
         "name": "fun1",
         "args": [
+          "list",
+          null,
           [
             "ref",
             {
@@ -103,6 +122,8 @@
       {
         "name": "fun2",
         "args": [
+          "list",
+          null,
           [
             "ref",
             {

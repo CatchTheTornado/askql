@@ -3,7 +3,11 @@
   {
     "name": "sum",
     "args": [
+      "list",
+      null,
       [
+        "list",
+        null,
         1,
         2,
         3,

@@ -18,7 +18,7 @@ export function Call({
   return (
     <code call>
       {name ? <Ref name={name} /> : fun}
-      {args}
+      {'params' in args ? (args as any).params : args}
     </code>
   );
 }

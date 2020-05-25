@@ -1,14 +1,21 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "fun",
     {
       "name": "square",
       "args": [
+        "list",
+        null,
         [
+          "list",
+          null,
           "a",
           "int"
         ]
@@ -20,6 +27,8 @@
       {
         "name": "times",
         "args": [
+          "list",
+          null,
           [
             "ref",
             {
@@ -41,11 +50,15 @@
     {
       "name": "plus",
       "args": [
+        "list",
+        null,
         [
           "call",
           {
             "name": "square",
             "args": [
+              "list",
+              null,
               [
                 "ref",
                 {
@@ -60,6 +73,8 @@
           {
             "name": "square",
             "args": [
+              "list",
+              null,
               [
                 "ref",
                 {

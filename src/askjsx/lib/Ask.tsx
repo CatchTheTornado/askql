@@ -13,7 +13,7 @@ export function Ask({
   returns?: string;
 }) {
   return (
-    <fun ask args={args.map(([name]) => name)}>
+    <fun ask args={args}>
       {children}
     </fun>
   );

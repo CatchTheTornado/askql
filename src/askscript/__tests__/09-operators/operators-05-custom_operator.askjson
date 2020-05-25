@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": [],
+    "args": [
+      "list",
+      null
+    ],
     "returns": "string"
   },
   [
@@ -13,11 +16,17 @@
         "fun",
         {
           "args": [
+            "list",
+            null,
             [
+              "list",
+              null,
               "a",
               "float"
             ],
             [
+              "list",
+              null,
               "b",
               "float"
             ]
@@ -29,11 +38,15 @@
           {
             "name": "not",
             "args": [
+              "list",
+              null,
               [
                 "call",
                 {
                   "name": "equals",
                   "args": [
+                    "list",
+                    null,
                     [
                       "ref",
                       {
@@ -71,6 +84,8 @@
         {
           "name": "<>",
           "args": [
+            "list",
+            null,
             [
               "ref",
               {

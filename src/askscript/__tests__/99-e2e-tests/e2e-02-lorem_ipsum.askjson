@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "const",
@@ -16,7 +19,11 @@
     {
       "name": "capitalize",
       "args": [
+        "list",
+        null,
         [
+          "list",
+          null,
           "t",
           "string"
         ]
@@ -31,16 +38,22 @@
           {
             "name": "concat",
             "args": [
+              "list",
+              null,
               [
                 "call",
                 {
                   "name": "upperCase",
                   "args": [
+                    "list",
+                    null,
                     [
                       "call",
                       {
                         "name": "at",
                         "args": [
+                          "list",
+                          null,
                           [
                             "ref",
                             {
@@ -59,6 +72,8 @@
                 {
                   "name": "subStr",
                   "args": [
+                    "list",
+                    null,
                     [
                       "ref",
                       {
@@ -88,11 +103,15 @@
     {
       "name": "each",
       "args": [
+        "list",
+        null,
         [
           "call",
           {
             "name": "split",
             "args": [
+              "list",
+              null,
               [
                 "ref",
                 {
@@ -107,19 +126,29 @@
           "fun",
           {
             "args": [
+              "list",
+              null,
               [
+                "list",
+                null,
                 "t",
                 "char"
               ],
               [
+                "list",
+                null,
                 "index",
                 "number"
               ],
               [
+                "list",
+                null,
                 "firstArrayElement",
                 "boolean"
               ],
               [
+                "list",
+                null,
                 "lastArrayElement",
                 "boolean"
               ]
@@ -136,6 +165,8 @@
                 {
                   "name": "capitalize",
                   "args": [
+                    "list",
+                    null,
                     [
                       "ref",
                       {
@@ -157,6 +188,8 @@
                 }
               ],
               "else": [
+                "list",
+                null,
                 [
                   "assign",
                   {
@@ -166,6 +199,8 @@
                       {
                         "name": "+",
                         "args": [
+                          "list",
+                          null,
                           [
                             "ref",
                             {
@@ -177,6 +212,8 @@
                             {
                               "name": "concat",
                               "args": [
+                                "list",
+                                null,
                                 [
                                   "ref",
                                   {
@@ -203,6 +240,8 @@
                   {
                     "name": "+",
                     "args": [
+                      "list",
+                      null,
                       [
                         "ref",
                         {

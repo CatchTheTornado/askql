@@ -1,9 +1,9 @@
-import * as path from 'path';
 import * as fs from 'fs';
-import { Options, resources, runUntyped } from '../askvm';
-import { parseToJSON } from '../askscript';
-import { fromAskScriptAst, createElement } from '../askjsx';
+import * as path from 'path';
 import * as util from 'util';
+import { createElement, fromAskScriptAst } from '../askjsx';
+import { parseToAst } from '../askscript';
+import { Options, resources, runUntyped } from '../askvm';
 
 const myLogger = util.debuglog('');
 
@@ -12,7 +12,7 @@ export async function e2e(
   environment: Options,
   args?: any[]
 ): Promise<any> {
-  const ast = parseToJSON(script);
+  const ast = parseToAst(script);
   const askCode = fromAskScriptAst(ast, createElement);
 
   return runUntyped(environment, askCode, args);

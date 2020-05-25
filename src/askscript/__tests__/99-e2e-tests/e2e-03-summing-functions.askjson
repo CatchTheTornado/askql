@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "const",
@@ -9,6 +12,8 @@
       "name": "covid",
       "type": "any",
       "value": [
+        "list",
+        null,
         [
           "code",
           {
@@ -87,12 +92,16 @@
     {
       "name": "log",
       "args": [
+        "list",
+        null,
         "map: ",
         [
           "call",
           {
             "name": "map",
             "args": [
+              "list",
+              null,
               [
                 "ref",
                 {
@@ -103,7 +112,11 @@
                 "fun",
                 {
                   "args": [
+                    "list",
+                    null,
                     [
+                      "list",
+                      null,
                       "c",
                       "any"
                     ]
@@ -118,6 +131,8 @@
                       {
                         "name": "at",
                         "args": [
+                          "list",
+                          null,
                           [
                             "ref",
                             {
@@ -147,11 +162,15 @@
         {
           "name": "sum",
           "args": [
+            "list",
+            null,
             [
               "call",
               {
                 "name": "map",
                 "args": [
+                  "list",
+                  null,
                   [
                     "ref",
                     {
@@ -162,7 +181,11 @@
                     "fun",
                     {
                       "args": [
+                        "list",
+                        null,
                         [
+                          "list",
+                          null,
                           "c",
                           "any"
                         ]
@@ -177,6 +200,8 @@
                           {
                             "name": "at",
                             "args": [
+                              "list",
+                              null,
                               [
                                 "ref",
                                 {
@@ -208,11 +233,15 @@
         {
           "name": "sum",
           "args": [
+            "list",
+            null,
             [
               "call",
               {
                 "name": "map",
                 "args": [
+                  "list",
+                  null,
                   [
                     "ref",
                     {
@@ -223,7 +252,11 @@
                     "fun",
                     {
                       "args": [
+                        "list",
+                        null,
                         [
+                          "list",
+                          null,
                           "a",
                           "any"
                         ]
@@ -238,6 +271,8 @@
                           {
                             "name": "at",
                             "args": [
+                              "list",
+                              null,
                               [
                                 "ref",
                                 {
@@ -269,11 +304,15 @@
         {
           "name": "sum",
           "args": [
+            "list",
+            null,
             [
               "call",
               {
                 "name": "map",
                 "args": [
+                  "list",
+                  null,
                   [
                     "ref",
                     {
@@ -284,7 +323,11 @@
                     "fun",
                     {
                       "args": [
+                        "list",
+                        null,
                         [
+                          "list",
+                          null,
                           "a",
                           "any"
                         ]
@@ -299,6 +342,8 @@
                           {
                             "name": "at",
                             "args": [
+                              "list",
+                              null,
                               [
                                 "ref",
                                 {
@@ -330,7 +375,11 @@
         {
           "name": "sum",
           "args": [
+            "list",
+            null,
             [
+              "list",
+              null,
               [
                 "ref",
                 {
@@ -360,6 +409,8 @@
     {
       "name": "log",
       "args": [
+        "list",
+        null,
         "Total new infected - ",
         [
           "ref",
@@ -375,6 +426,8 @@
     {
       "name": "log",
       "args": [
+        "list",
+        null,
         "Total new deaths - ",
         [
           "ref",
@@ -390,6 +443,8 @@
     {
       "name": "log",
       "args": [
+        "list",
+        null,
         "Total new recovered - ",
         [
           "ref",
@@ -405,6 +460,8 @@
     {
       "name": "log",
       "args": [
+        "list",
+        null,
         "Total - ",
         [
           "ref",

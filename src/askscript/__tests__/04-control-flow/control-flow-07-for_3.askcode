@@ -1,1 +1,1 @@
-ask(let('nums',1,2,3,5,7),for(undefined,undefined,call(get('fun1'),get('i')),call(get('fun2'),get('i'))))
+ask(let('nums',list(1,2,3,5,7)),for(list(let('i',0)),list(call(get('<'),get('i'),call(get('length'),get('nums')))),list(let('i',call(get('+'),get('i'),1))),block(list(let('i',0)),call(get('fun1'),get('i')),call(get('fun2'),get('i')),list(let('i',call(get('+'),get('i'),1))))))

@@ -22,9 +22,14 @@
         {
           "name": "fun2",
           "args": [
+            "list",
+            null,
             34,
             "adfs",
-            []
+            [
+              "list",
+              null
+            ]
           ]
         }
       ]
@@ -39,14 +44,21 @@
         {
           "name": "fun3",
           "args": [
+            "list",
+            null,
             [
               "call",
               {
                 "name": "fun2",
                 "args": [
+                  "list",
+                  null,
                   34,
                   "adfs",
-                  []
+                  [
+                    "list",
+                    null
+                  ]
                 ]
               }
             ]
@@ -64,16 +76,22 @@
         {
           "name": "toUpperCase",
           "args": [
+            "list",
+            null,
             [
               "call",
               {
                 "name": "concat",
                 "args": [
+                  "list",
+                  null,
                   [
                     "call",
                     {
                       "name": "firstName",
                       "args": [
+                        "list",
+                        null,
                         [
                           "ref",
                           {

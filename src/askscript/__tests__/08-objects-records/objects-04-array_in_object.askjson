@@ -1,24 +1,26 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "o",
-        "type": "any",
-        "value": {
-          "jsxValue": {
-            "name": "Arizona",
-            "numbers": [
-              113998,
-              2020
-            ]
-          }
-        }
-      }
+      "name": "o",
+      "type": "any",
+      "value": [
+        "code",
+        {
+          "object": true
+        },
+        "name",
+        "Arizona",
+        "numbers",
+        [
+          113998,
+          2020
+        ]
+      ]
     }
   ]
-}
+]

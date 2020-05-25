@@ -1,40 +1,36 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "if",
     {
-      "name": "if",
-      "props": {
-        "condition": 5,
-        "else": [
+      "condition": 5,
+      "else": [
+        [
+          "return",
           {
-            "name": "return",
-            "props": {
-              "value": {
-                "name": "ref",
-                "props": {
-                  "name": "no"
-                }
+            "value": [
+              "ref",
+              {
+                "name": "no"
               }
-            }
+            ]
           }
         ]
-      },
-      "children": [
-        {
-          "name": "return",
-          "props": {
-            "value": {
-              "name": "ref",
-              "props": {
-                "name": "yes"
-              }
-            }
-          }
-        }
       ]
-    }
+    },
+    [
+      "return",
+      {
+        "value": [
+          "ref",
+          {
+            "name": "yes"
+          }
+        ]
+      }
+    ]
   ]
-}
+]

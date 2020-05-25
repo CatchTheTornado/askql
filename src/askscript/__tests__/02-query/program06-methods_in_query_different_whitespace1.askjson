@@ -1,44 +1,41 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
-    {
-      "name": "query",
-      "children": [
-        {
-          "name": "node",
-          "props": {
-            "name": "firstName",
-            "value": {
-              "name": "call",
-              "props": {
-                "name": "concat",
-                "args": [
-                  {
-                    "name": "call",
-                    "props": {
-                      "name": "toLower",
-                      "args": [
-                        {
-                          "name": "ref",
-                          "props": {
-                            "name": "firstName"
-                          }
-                        }
-                      ]
-                    }
-                  },
-                  " ",
-                  "is my ",
-                  "name"
-                ]
-              }
-            }
+  [
+    "query",
+    {},
+    [
+      "node",
+      {
+        "name": "firstName",
+        "value": [
+          "call",
+          {
+            "name": "concat",
+            "args": [
+              [
+                "call",
+                {
+                  "name": "toLower",
+                  "args": [
+                    [
+                      "ref",
+                      {
+                        "name": "firstName"
+                      }
+                    ]
+                  ]
+                }
+              ],
+              " ",
+              "is my ",
+              "name"
+            ]
           }
-        }
-      ]
-    }
+        ]
+      }
+    ]
   ]
-}
+]

@@ -1,64 +1,75 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "call",
     {
-      "name": "call",
-      "props": {
-        "name": "ceil",
-        "args": [
+      "name": "ceil",
+      "args": [
+        [
+          "call",
           {
-            "name": "call",
-            "props": {
-              "name": "divideBy",
-              "args": [
+            "name": "divideBy",
+            "args": [
+              [
+                "call",
                 {
-                  "name": "call",
-                  "props": {
-                    "name": "toInt",
-                    "args": [
+                  "name": "toInt",
+                  "args": [
+                    [
+                      "call",
                       {
                         "name": "call",
-                        "props": {
-                          "name": "call",
-                          "args": [
+                        "args": [
+                          [
+                            "call",
                             {
-                              "name": "call",
-                              "props": {
-                                "name": "toString",
-                                "args": [
+                              "name": "toString",
+                              "args": [
+                                [
+                                  "call",
                                   {
-                                    "name": "call",
-                                    "props": {
-                                      "name": "plus",
-                                      "args": [
+                                    "name": "plus",
+                                    "args": [
+                                      [
+                                        "call",
                                         {
-                                          "name": "call",
-                                          "props": {
-                                            "name": "times",
-                                            "args": [
+                                          "name": "times",
+                                          "args": [
+                                            [
+                                              "ref",
                                               {
-                                                "name": "ref",
-                                                "props": {
-                                                  "name": "score"
-                                                }
-                                              },
-                                              2
-                                            ]
-                                          }
-                                        },
-                                        1
-                                      ]
-                                    }
+                                                "name": "score"
+                                              }
+                                            ],
+                                            2
+                                          ]
+                                        }
+                                      ],
+                                      1
+                                    ]
                                   }
                                 ]
-                              }
-                            },
+                              ]
+                            }
+                          ],
+                          [
+                            "fun",
                             {
-                              "name": "fun",
-                              "props": {
+                              "args": [
+                                [
+                                  "s",
+                                  "string"
+                                ]
+                              ],
+                              "returns": "string"
+                            },
+                            [
+                              "fun",
+                              {
+                                "name": "double",
                                 "args": [
                                   [
                                     "s",
@@ -67,70 +78,53 @@
                                 ],
                                 "returns": "string"
                               },
-                              "children": [
+                              [
+                                "call",
                                 {
-                                  "name": "fun",
-                                  "props": {
-                                    "name": "double",
-                                    "args": [
-                                      [
-                                        "s",
-                                        "string"
-                                      ]
-                                    ],
-                                    "returns": "string"
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "call",
-                                      "props": {
-                                        "name": "concat",
-                                        "args": [
-                                          {
-                                            "name": "ref",
-                                            "props": {
-                                              "name": "s"
-                                            }
-                                          },
-                                          {
-                                            "name": "ref",
-                                            "props": {
-                                              "name": "s"
-                                            }
-                                          }
-                                        ]
-                                      }
-                                    }
-                                  ]
-                                },
-                                {
-                                  "name": "call",
-                                  "props": {
-                                    "name": "double",
-                                    "args": [
+                                  "name": "concat",
+                                  "args": [
+                                    [
+                                      "ref",
                                       {
-                                        "name": "ref",
-                                        "props": {
-                                          "name": "s"
-                                        }
+                                        "name": "s"
+                                      }
+                                    ],
+                                    [
+                                      "ref",
+                                      {
+                                        "name": "s"
                                       }
                                     ]
-                                  }
+                                  ]
                                 }
                               ]
-                            }
+                            ],
+                            [
+                              "call",
+                              {
+                                "name": "double",
+                                "args": [
+                                  [
+                                    "ref",
+                                    {
+                                      "name": "s"
+                                    }
+                                  ]
+                                ]
+                              }
+                            ]
                           ]
-                        }
+                        ]
                       }
                     ]
-                  }
-                },
-                6
-              ]
-            }
+                  ]
+                }
+              ],
+              6
+            ]
           }
         ]
-      }
+      ]
     }
   ]
-}
+]

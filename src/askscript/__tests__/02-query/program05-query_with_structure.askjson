@@ -1,63 +1,58 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
-    {
-      "name": "query",
-      "children": [
-        {
-          "name": "node",
-          "props": {
-            "name": "firstName",
-            "value": {
-              "name": "ref",
-              "props": {
-                "name": "firstName"
-              }
-            }
+  [
+    "query",
+    {},
+    [
+      "node",
+      {
+        "name": "firstName",
+        "value": [
+          "ref",
+          {
+            "name": "firstName"
           }
-        },
-        {
-          "name": "node",
-          "props": {
-            "name": "lastName",
-            "value": {
-              "name": "ref",
-              "props": {
-                "name": "lastName"
-              }
-            }
+        ]
+      }
+    ],
+    [
+      "node",
+      {
+        "name": "lastName",
+        "value": [
+          "ref",
+          {
+            "name": "lastName"
           }
-        },
+        ]
+      }
+    ],
+    [
+      "node",
+      {
+        "name": "friends",
+        "value": [
+          "ref",
+          {
+            "name": "friends"
+          }
+        ]
+      },
+      [
+        "node",
         {
-          "name": "node",
-          "props": {
-            "name": "friends",
-            "value": {
-              "name": "ref",
-              "props": {
-                "name": "friends"
-              }
-            }
-          },
-          "children": [
+          "name": "id",
+          "value": [
+            "ref",
             {
-              "name": "node",
-              "props": {
-                "name": "id",
-                "value": {
-                  "name": "ref",
-                  "props": {
-                    "name": "id"
-                  }
-                }
-              }
+              "name": "id"
             }
           ]
         }
       ]
-    }
+    ]
   ]
-}
+]

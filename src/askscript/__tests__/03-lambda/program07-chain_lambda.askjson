@@ -1,85 +1,79 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "fun",
     {
-      "name": "fun",
-      "props": {
-        "name": "double",
+      "name": "double",
+      "args": [
+        [
+          "s",
+          "string"
+        ]
+      ],
+      "returns": "string"
+    },
+    [
+      "call",
+      {
+        "name": "concat",
         "args": [
           [
-            "s",
-            "string"
-          ]
-        ],
-        "returns": "string"
-      },
-      "children": [
-        {
-          "name": "call",
-          "props": {
-            "name": "concat",
-            "args": [
-              {
-                "name": "ref",
-                "props": {
-                  "name": "s"
-                }
-              },
-              {
-                "name": "ref",
-                "props": {
-                  "name": "s"
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "call",
-      "props": {
-        "name": "call",
-        "args": [
-          {
-            "name": "ref",
-            "props": {
-              "name": "text"
+            "ref",
+            {
+              "name": "s"
             }
-          },
-          {
-            "name": "fun",
-            "props": {
-              "args": [
-                [
-                  "s",
-                  "string"
-                ]
-              ],
-              "returns": "string"
-            },
-            "children": [
-              {
-                "name": "call",
-                "props": {
-                  "name": "double",
-                  "args": [
-                    {
-                      "name": "ref",
-                      "props": {
-                        "name": "s"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
+          ],
+          [
+            "ref",
+            {
+              "name": "s"
+            }
+          ]
         ]
       }
+    ]
+  ],
+  [
+    "call",
+    {
+      "name": "call",
+      "args": [
+        [
+          "ref",
+          {
+            "name": "text"
+          }
+        ],
+        [
+          "fun",
+          {
+            "args": [
+              [
+                "s",
+                "string"
+              ]
+            ],
+            "returns": "string"
+          },
+          [
+            "call",
+            {
+              "name": "double",
+              "args": [
+                [
+                  "ref",
+                  {
+                    "name": "s"
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      ]
     }
   ]
-}
+]

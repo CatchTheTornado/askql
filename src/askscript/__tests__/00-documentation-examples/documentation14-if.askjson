@@ -1,41 +1,37 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "if",
     {
-      "name": "if",
-      "props": {
-        "condition": {
-          "name": "call",
-          "props": {
-            "name": "lessThan",
-            "args": [
-              {
-                "name": "ref",
-                "props": {
-                  "name": "n"
-                }
-              },
-              2
-            ]
-          }
-        }
-      },
-      "children": [
+      "condition": [
+        "call",
         {
-          "name": "return",
-          "props": {
-            "value": {
-              "name": "ref",
-              "props": {
+          "name": "lessThan",
+          "args": [
+            [
+              "ref",
+              {
                 "name": "n"
               }
-            }
-          }
+            ],
+            2
+          ]
         }
       ]
-    }
+    },
+    [
+      "return",
+      {
+        "value": [
+          "ref",
+          {
+            "name": "n"
+          }
+        ]
+      }
+    ]
   ]
-}
+]

@@ -1,27 +1,34 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "o",
-        "type": "any",
-        "value": {
-          "jsxValue": {
-            "name": "Arizona",
-            "someFacts": {
-              "jsxValue": {
-                "areaInSqMi": 113998,
-                "westernState": true,
-                "capital": "Phoenix"
-              }
-            }
-          }
-        }
-      }
+      "name": "o",
+      "type": "any",
+      "value": [
+        "code",
+        {
+          "object": true
+        },
+        "name",
+        "Arizona",
+        "someFacts",
+        [
+          "code",
+          {
+            "object": true
+          },
+          "areaInSqMi",
+          113998,
+          "westernState",
+          true,
+          "capital",
+          "Phoenix"
+        ]
+      ]
     }
   ]
-}
+]

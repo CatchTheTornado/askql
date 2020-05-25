@@ -1,21 +1,23 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "capitals",
-        "type": "record(string)",
-        "value": {
-          "jsxValue": {
-            "France": "Paris",
-            "france": "paris"
-          }
-        }
-      }
+      "name": "capitals",
+      "type": "record(string)",
+      "value": [
+        "code",
+        {
+          "object": true
+        },
+        "France",
+        "Paris",
+        "france",
+        "paris"
+      ]
     }
   ]
-}
+]

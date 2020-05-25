@@ -1,37 +1,34 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
-    {
-      "name": "query",
-      "children": [
-        {
-          "name": "node",
-          "props": {
-            "name": "firstName",
-            "value": {
-              "name": "ref",
-              "props": {
-                "name": "firstName"
-              }
-            }
+  [
+    "query",
+    {},
+    [
+      "node",
+      {
+        "name": "firstName",
+        "value": [
+          "ref",
+          {
+            "name": "firstName"
           }
-        },
-        {
-          "name": "node",
-          "props": {
-            "name": "lastName",
-            "value": {
-              "name": "ref",
-              "props": {
-                "name": "lastName"
-              }
-            }
+        ]
+      }
+    ],
+    [
+      "node",
+      {
+        "name": "lastName",
+        "value": [
+          "ref",
+          {
+            "name": "lastName"
           }
-        }
-      ]
-    }
+        ]
+      }
+    ]
   ]
-}
+]

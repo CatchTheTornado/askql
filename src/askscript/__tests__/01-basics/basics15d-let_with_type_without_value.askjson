@@ -1,15 +1,13 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "a",
-        "type": "int"
-      }
+      "name": "a",
+      "type": "int"
     }
   ]
-}
+]

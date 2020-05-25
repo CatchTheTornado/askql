@@ -55,14 +55,19 @@ async function askRunner(
     return testResults;
   }
 
-  const askJson = parseToJSON(source);
+  const askScriptAst = parseToJSON(source);
+  const askJson = fromAskScriptAst(askScriptAst, (name, props, ...children) => [
+    name,
+    props,
+    ...children,
+  ]);
   const askJsonTargetPath = getTargetPath(testPath, 'askjson', '../src');
   await mkdir(dirname(askJsonTargetPath), { recursive: true });
   await writeFile(askJsonTargetPath, JSON.stringify(askJson, null, 2), {
     encoding: 'utf-8',
   });
 
-  const askCode = fromAskScriptAst(askJson);
+  const askCode = parseAskScript(source);
   const askCodeSource = askCodeToSource(askCode);
   const askCodeTargetPath = getTargetPath(testPath, 'askcode', '../src');
   await mkdir(dirname(askCodeTargetPath), { recursive: true });

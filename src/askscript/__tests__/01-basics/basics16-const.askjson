@@ -1,16 +1,14 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "const",
     {
-      "name": "const",
-      "props": {
-        "name": "a",
-        "type": "any",
-        "value": 1
-      }
+      "name": "a",
+      "type": "any",
+      "value": 1
     }
   ]
-}
+]

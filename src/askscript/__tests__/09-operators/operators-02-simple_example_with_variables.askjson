@@ -1,36 +1,34 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "a",
-        "type": "any",
-        "value": 1
-      }
-    },
+      "name": "a",
+      "type": "any",
+      "value": 1
+    }
+  ],
+  [
+    "call",
     {
-      "name": "call",
-      "props": {
-        "name": "+",
-        "args": [
+      "name": "+",
+      "args": [
+        [
+          "ref",
           {
-            "name": "ref",
-            "props": {
-              "name": "a"
-            }
-          },
+            "name": "a"
+          }
+        ],
+        [
+          "ref",
           {
-            "name": "ref",
-            "props": {
-              "name": "bFromEnv"
-            }
+            "name": "bFromEnv"
           }
         ]
-      }
+      ]
     }
   ]
-}
+]

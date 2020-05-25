@@ -1,24 +1,20 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "fun",
     {
-      "name": "fun",
-      "props": {
-        "name": "f",
-        "args": [
-          [
-            "n",
-            "int"
-          ]
-        ],
-        "returns": "string"
-      },
-      "children": [
-        ""
-      ]
-    }
+      "name": "f",
+      "args": [
+        [
+          "n",
+          "int"
+        ]
+      ],
+      "returns": "string"
+    },
+    ""
   ]
-}
+]

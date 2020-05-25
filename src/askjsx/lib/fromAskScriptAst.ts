@@ -1,10 +1,18 @@
-import { AskCodeOrValue } from '../../askcode';
-import { createElement } from './jsx';
-import { AskJSON } from '../../askscript';
+import type { AskCodeOrValue } from '../../askcode';
+import type { AskJSON } from '../../askscript';
 
-export function fromAskScriptAst(ast: AskJSON): AskCodeOrValue {
+type AstReducer = (
+  name: string | Function,
+  propsOrNull: Record<string, AskCodeOrValue> | null,
+  ...children: AskCodeOrValue[]
+) => AskCodeOrValue;
+
+export function fromAskScriptAst(
+  ast: AskJSON | AskJSON[],
+  reducer: AstReducer
+): AskCodeOrValue {
   if (Array.isArray(ast)) {
-    return ast.map(fromAskScriptAst) as any;
+    return ast.map((ast) => fromAskScriptAst(ast, reducer));
   }
 
   if (ast == null || typeof ast !== 'object') {
@@ -15,10 +23,10 @@ export function fromAskScriptAst(ast: AskJSON): AskCodeOrValue {
     const object = ast.jsxValue;
     const objectArgs: any[] = [];
     for (const key in object) {
-      objectArgs.push(key, fromAskScriptAst(object[key]));
+      objectArgs.push(key, fromAskScriptAst(object[key], reducer));
     }
 
-    return createElement('code', { object: true }, ...objectArgs);
+    return reducer('code', { object: true }, ...objectArgs);
   }
 
   const { name, props, children = [] } = ast;
@@ -26,11 +34,13 @@ export function fromAskScriptAst(ast: AskJSON): AskCodeOrValue {
   // Rewrite properties
   const newProps: Record<string, any> = {};
   for (const key in props) {
-    newProps[key] = fromAskScriptAst(props[key]);
+    newProps[key] = fromAskScriptAst(props[key], reducer);
   }
 
   // Rewrite children
-  const newChildren = children.map(fromAskScriptAst);
+  const newChildren = (children as any[]).map((child) =>
+    fromAskScriptAst(child, reducer)
+  );
 
-  return createElement(name, newProps, ...newChildren);
+  return reducer(name, newProps, ...newChildren);
 }

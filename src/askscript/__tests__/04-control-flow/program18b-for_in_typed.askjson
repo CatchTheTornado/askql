@@ -1,82 +1,78 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "sum",
-        "type": "float",
-        "value": 0
-      }
-    },
+      "name": "sum",
+      "type": "float",
+      "value": 0
+    }
+  ],
+  [
+    "for",
     {
-      "name": "for",
-      "props": {
-        "key": {
-          "name": "set",
-          "props": {
-            "name": "index",
-            "type": "int"
-          }
-        },
-        "in": {
-          "name": "ref",
-          "props": {
-            "name": "itemPrices"
-          }
-        }
-      },
-      "children": [
+      "key": [
+        "set",
         {
-          "name": "assign",
-          "props": {
-            "name": "sum",
-            "value": {
-              "name": "call",
-              "props": {
-                "name": "plus",
-                "args": [
-                  {
-                    "name": "ref",
-                    "props": {
-                      "name": "sum"
-                    }
-                  },
-                  {
-                    "name": "call",
-                    "props": {
-                      "name": "at",
-                      "args": [
-                        {
-                          "name": "ref",
-                          "props": {
-                            "name": "itemPrices"
-                          }
-                        },
-                        {
-                          "name": "ref",
-                          "props": {
-                            "name": "index"
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
-          }
+          "name": "index",
+          "type": "int"
+        }
+      ],
+      "in": [
+        "ref",
+        {
+          "name": "itemPrices"
         }
       ]
     },
-    {
-      "name": "ref",
-      "props": {
-        "name": "sum"
+    [
+      "assign",
+      {
+        "name": "sum",
+        "value": [
+          "call",
+          {
+            "name": "plus",
+            "args": [
+              [
+                "ref",
+                {
+                  "name": "sum"
+                }
+              ],
+              [
+                "call",
+                {
+                  "name": "at",
+                  "args": [
+                    [
+                      "ref",
+                      {
+                        "name": "itemPrices"
+                      }
+                    ],
+                    [
+                      "ref",
+                      {
+                        "name": "index"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            ]
+          }
+        ]
       }
+    ]
+  ],
+  [
+    "ref",
+    {
+      "name": "sum"
     }
   ]
-}
+]

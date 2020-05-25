@@ -1,34 +1,32 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": [],
     "returns": "float"
   },
-  "children": [
+  [
+    "call",
     {
-      "name": "call",
-      "props": {
-        "name": "fun1",
-        "args": [
+      "name": "fun1",
+      "args": [
+        [
+          "call",
           {
-            "name": "call",
-            "props": {
-              "name": "fun2",
-              "args": [
+            "name": "fun2",
+            "args": [
+              [
+                "call",
                 {
-                  "name": "call",
-                  "props": {
-                    "name": "fun3",
-                    "args": [
-                      2.4
-                    ]
-                  }
+                  "name": "fun3",
+                  "args": [
+                    2.4
+                  ]
                 }
               ]
-            }
+            ]
           }
         ]
-      }
+      ]
     }
   ]
-}
+]

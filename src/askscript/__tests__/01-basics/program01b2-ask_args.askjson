@@ -1,6 +1,6 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": [
       [
         "n",
@@ -16,12 +16,10 @@
       ]
     ]
   },
-  "children": [
+  [
+    "ref",
     {
-      "name": "ref",
-      "props": {
-        "name": "thisIsFloat"
-      }
+      "name": "thisIsFloat"
     }
   ]
-}
+]

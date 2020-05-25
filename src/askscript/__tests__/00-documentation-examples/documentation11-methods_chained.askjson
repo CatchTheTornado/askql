@@ -1,69 +1,67 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "return",
     {
-      "name": "return",
-      "props": {
-        "value": {
-          "name": "call",
-          "props": {
-            "name": "multiply",
-            "args": [
-              7,
+      "value": [
+        "call",
+        {
+          "name": "multiply",
+          "args": [
+            7,
+            [
+              "call",
               {
-                "name": "call",
-                "props": {
-                  "name": "plus",
-                  "args": [
-                    8,
+                "name": "plus",
+                "args": [
+                  8,
+                  [
+                    "call",
                     {
-                      "name": "call",
-                      "props": {
-                        "name": "minus",
-                        "args": [
-                          1,
-                          4
-                        ]
-                      }
+                      "name": "minus",
+                      "args": [
+                        1,
+                        4
+                      ]
                     }
                   ]
-                }
+                ]
               }
             ]
-          }
+          ]
         }
-      }
-    },
+      ]
+    }
+  ],
+  [
+    "call",
     {
-      "name": "call",
-      "props": {
-        "name": "multiply",
-        "args": [
-          2,
+      "name": "multiply",
+      "args": [
+        2,
+        [
+          "call",
           {
-            "name": "call",
-            "props": {
-              "name": "plus",
-              "args": [
-                3,
+            "name": "plus",
+            "args": [
+              3,
+              [
+                "call",
                 {
-                  "name": "call",
-                  "props": {
-                    "name": "minus",
-                    "args": [
-                      4,
-                      1
-                    ]
-                  }
+                  "name": "minus",
+                  "args": [
+                    4,
+                    1
+                  ]
                 }
               ]
-            }
+            ]
           }
         ]
-      }
+      ]
     }
   ]
-}
+]

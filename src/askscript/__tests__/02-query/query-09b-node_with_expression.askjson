@@ -1,73 +1,72 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
-    {
-      "name": "query",
-      "children": [
+  [
+    "query",
+    {},
+    [
+      "node",
+      {
+        "name": "users",
+        "value": [
+          "call",
+          {
+            "name": "where",
+            "args": [
+              [
+                "call",
+                {
+                  "name": "knex",
+                  "args": [
+                    [
+                      "ref",
+                      {
+                        "name": "users"
+                      }
+                    ]
+                  ]
+                }
+              ],
+              [
+                "code",
+                {
+                  "object": true
+                },
+                "email",
+                "hi@example.com",
+                "firstName",
+                "Luke"
+              ]
+            ]
+          }
+        ]
+      },
+      [
+        "node",
         {
-          "name": "node",
-          "props": {
-            "name": "users",
-            "value": {
-              "name": "call",
-              "props": {
-                "name": "where",
-                "args": [
-                  {
-                    "name": "call",
-                    "props": {
-                      "name": "knex",
-                      "args": [
-                        {
-                          "name": "ref",
-                          "props": {
-                            "name": "users"
-                          }
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    "jsxValue": {
-                      "email": "hi@example.com",
-                      "firstName": "Luke"
-                    }
-                  }
-                ]
-              }
+          "name": "firstName",
+          "value": [
+            "ref",
+            {
+              "name": "firstName"
             }
-          },
-          "children": [
+          ]
+        }
+      ],
+      [
+        "node",
+        {
+          "name": "lastName",
+          "value": [
+            "ref",
             {
-              "name": "node",
-              "props": {
-                "name": "firstName",
-                "value": {
-                  "name": "ref",
-                  "props": {
-                    "name": "firstName"
-                  }
-                }
-              }
-            },
-            {
-              "name": "node",
-              "props": {
-                "name": "lastName",
-                "value": {
-                  "name": "ref",
-                  "props": {
-                    "name": "lastName"
-                  }
-                }
-              }
+              "name": "lastName"
             }
           ]
         }
       ]
-    }
+    ]
   ]
-}
+]

@@ -1,35 +1,33 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
-    "Hello world!",
+  "Hello world!",
+  [
+    "return",
     {
-      "name": "return",
-      "props": {
-        "value": {
-          "name": "call",
-          "props": {
-            "name": "plus",
-            "args": [
+      "value": [
+        "call",
+        {
+          "name": "plus",
+          "args": [
+            [
+              "ref",
               {
-                "name": "ref",
-                "props": {
-                  "name": "n"
-                }
-              },
-              1
-            ]
-          }
+                "name": "n"
+              }
+            ],
+            1
+          ]
         }
-      }
-    },
+      ]
+    }
+  ],
+  [
+    "ref",
     {
-      "name": "ref",
-      "props": {
-        "name": "hello"
-      }
+      "name": "hello"
     }
   ]
-}
+]

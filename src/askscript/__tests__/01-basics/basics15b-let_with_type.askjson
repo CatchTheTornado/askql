@@ -1,56 +1,54 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "a",
-        "type": "int",
-        "value": 1
-      }
-    },
+      "name": "a",
+      "type": "int",
+      "value": 1
+    }
+  ],
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "b",
-        "type": "float",
-        "value": 1.5
-      }
-    },
+      "name": "b",
+      "type": "float",
+      "value": 1.5
+    }
+  ],
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "c",
-        "type": "bool",
-        "value": false
-      }
-    },
+      "name": "c",
+      "type": "bool",
+      "value": false
+    }
+  ],
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "d",
-        "type": "string",
-        "value": "asdf"
-      }
-    },
+      "name": "d",
+      "type": "string",
+      "value": "asdf"
+    }
+  ],
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "e",
-        "type": "empty",
-        "value": null
-      }
-    },
+      "name": "e",
+      "type": "empty",
+      "value": null
+    }
+  ],
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "f",
-        "type": "any",
-        "value": 2.3
-      }
+      "name": "f",
+      "type": "any",
+      "value": 2.3
     }
   ]
-}
+]

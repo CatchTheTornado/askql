@@ -1,25 +1,24 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "remote",
     {
-      "name": "remote",
-      "props": {
-        "url": "/",
-        "values": {
-          "jsxValue": {}
-        }
-      },
-      "children": [
+      "url": "/",
+      "values": [
+        "code",
         {
-          "name": "ref",
-          "props": {
-            "name": "hello"
-          }
+          "object": true
         }
       ]
-    }
+    },
+    [
+      "ref",
+      {
+        "name": "hello"
+      }
+    ]
   ]
-}
+]

@@ -1,110 +1,107 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
-    {
-      "name": "query",
-      "children": [
-        {
-          "name": "node",
-          "props": {
-            "name": "firstField",
-            "value": {
-              "name": "ref",
-              "props": {
-                "name": "otherField"
-              }
-            }
+  [
+    "query",
+    {},
+    [
+      "node",
+      {
+        "name": "firstField",
+        "value": [
+          "ref",
+          {
+            "name": "otherField"
           }
-        },
-        {
-          "name": "node",
-          "props": {
-            "name": "secondField",
-            "value": {
-              "name": "call",
-              "props": {
-                "name": "fun2",
-                "args": [
-                  34,
-                  "adfs",
-                  []
-                ]
-              }
-            }
+        ]
+      }
+    ],
+    [
+      "node",
+      {
+        "name": "secondField",
+        "value": [
+          "call",
+          {
+            "name": "fun2",
+            "args": [
+              34,
+              "adfs",
+              []
+            ]
           }
-        },
-        {
-          "name": "node",
-          "props": {
-            "name": "thirdField",
-            "value": {
-              "name": "call",
-              "props": {
-                "name": "fun3",
-                "args": [
-                  {
-                    "name": "call",
-                    "props": {
-                      "name": "fun2",
-                      "args": [
-                        34,
-                        "adfs",
-                        []
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
+        ]
+      }
+    ],
+    [
+      "node",
+      {
+        "name": "thirdField",
+        "value": [
+          "call",
+          {
+            "name": "fun3",
+            "args": [
+              [
+                "call",
+                {
+                  "name": "fun2",
+                  "args": [
+                    34,
+                    "adfs",
+                    []
+                  ]
+                }
+              ]
+            ]
           }
-        },
-        {
-          "name": "node",
-          "props": {
-            "name": "upperCaseFullName",
-            "value": {
-              "name": "call",
-              "props": {
-                "name": "upperCase",
-                "args": [
-                  {
-                    "name": "call",
-                    "props": {
-                      "name": "concat",
-                      "args": [
-                        {
-                          "name": "call",
-                          "props": {
-                            "name": "firstName",
-                            "args": [
-                              {
-                                "name": "ref",
-                                "props": {
-                                  "name": "fullName"
-                                }
-                              }
-                            ]
-                          }
-                        },
-                        " ",
-                        {
-                          "name": "ref",
-                          "props": {
-                            "name": "lastName"
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
+        ]
+      }
+    ],
+    [
+      "node",
+      {
+        "name": "upperCaseFullName",
+        "value": [
+          "call",
+          {
+            "name": "upperCase",
+            "args": [
+              [
+                "call",
+                {
+                  "name": "concat",
+                  "args": [
+                    [
+                      "call",
+                      {
+                        "name": "firstName",
+                        "args": [
+                          [
+                            "ref",
+                            {
+                              "name": "fullName"
+                            }
+                          ]
+                        ]
+                      }
+                    ],
+                    " ",
+                    [
+                      "ref",
+                      {
+                        "name": "lastName"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            ]
           }
-        }
-      ]
-    }
+        ]
+      }
+    ]
   ]
-}
+]

@@ -1,31 +1,27 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "fun",
     {
-      "name": "fun",
-      "props": {
-        "name": "three",
-        "args": [],
-        "returns": "int"
-      },
-      "children": [
-        {
-          "name": "return",
-          "props": {
-            "value": 3
-          }
-        }
-      ]
+      "name": "three",
+      "args": [],
+      "returns": "int"
     },
-    {
-      "name": "call",
-      "props": {
-        "name": "three",
-        "args": []
+    [
+      "return",
+      {
+        "value": 3
       }
+    ]
+  ],
+  [
+    "call",
+    {
+      "name": "three",
+      "args": []
     }
   ]
-}
+]

@@ -1,99 +1,93 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": [],
     "returns": "string"
   },
-  "children": [
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "<>",
-        "type": "any",
-        "value": {
-          "name": "fun",
-          "props": {
-            "args": [
-              [
-                "a",
-                "float"
-              ],
-              [
-                "b",
-                "float"
-              ]
+      "name": "<>",
+      "type": "any",
+      "value": [
+        "fun",
+        {
+          "args": [
+            [
+              "a",
+              "float"
             ],
-            "returns": "bool"
-          },
-          "children": [
-            {
-              "name": "call",
-              "props": {
-                "name": "not",
-                "args": [
-                  {
-                    "name": "call",
-                    "props": {
-                      "name": "equals",
-                      "args": [
-                        {
-                          "name": "ref",
-                          "props": {
-                            "name": "a"
-                          }
-                        },
-                        {
-                          "name": "ref",
-                          "props": {
-                            "name": "b"
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "set",
-      "props": {
-        "name": "a",
-        "type": "any",
-        "value": 3
-      }
-    },
-    {
-      "name": "if",
-      "props": {
-        "condition": {
-          "name": "call",
-          "props": {
-            "name": "<>",
+            [
+              "b",
+              "float"
+            ]
+          ],
+          "returns": "bool"
+        },
+        [
+          "call",
+          {
+            "name": "not",
             "args": [
-              {
-                "name": "ref",
-                "props": {
-                  "name": "a"
+              [
+                "call",
+                {
+                  "name": "equals",
+                  "args": [
+                    [
+                      "ref",
+                      {
+                        "name": "a"
+                      }
+                    ],
+                    [
+                      "ref",
+                      {
+                        "name": "b"
+                      }
+                    ]
+                  ]
                 }
-              },
-              5
+              ]
             ]
           }
-        }
-      },
-      "children": [
+        ]
+      ]
+    }
+  ],
+  [
+    "set",
+    {
+      "name": "a",
+      "type": "any",
+      "value": 3
+    }
+  ],
+  [
+    "if",
+    {
+      "condition": [
+        "call",
         {
-          "name": "return",
-          "props": {
-            "value": "It works!"
-          }
+          "name": "<>",
+          "args": [
+            [
+              "ref",
+              {
+                "name": "a"
+              }
+            ],
+            5
+          ]
         }
       ]
     },
-    "Ouch."
-  ]
-}
+    [
+      "return",
+      {
+        "value": "It works!"
+      }
+    ]
+  ],
+  "Ouch."
+]

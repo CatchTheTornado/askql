@@ -1,107 +1,101 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "fun",
     {
-      "name": "fun",
-      "props": {
-        "name": "factorial",
-        "args": [
-          [
-            "n",
-            "int"
-          ]
-        ],
-        "returns": "int"
-      },
-      "children": [
-        {
-          "name": "if",
-          "props": {
-            "condition": {
-              "name": "call",
-              "props": {
-                "name": "lessThan",
-                "args": [
-                  {
-                    "name": "ref",
-                    "props": {
-                      "name": "n"
-                    }
-                  },
-                  2
-                ]
-              }
-            }
-          },
-          "children": [
-            {
-              "name": "return",
-              "props": {
-                "value": {
-                  "name": "ref",
-                  "props": {
-                    "name": "n"
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "name": "call",
-          "props": {
-            "name": "times",
+      "name": "factorial",
+      "args": [
+        [
+          "n",
+          "int"
+        ]
+      ],
+      "returns": "int"
+    },
+    [
+      "if",
+      {
+        "condition": [
+          "call",
+          {
+            "name": "lessThan",
             "args": [
-              {
-                "name": "ref",
-                "props": {
+              [
+                "ref",
+                {
                   "name": "n"
                 }
-              },
-              {
-                "name": "call",
-                "props": {
-                  "name": "factorial",
-                  "args": [
-                    {
-                      "name": "call",
-                      "props": {
-                        "name": "minus",
-                        "args": [
-                          {
-                            "name": "ref",
-                            "props": {
-                              "name": "n"
-                            }
-                          },
-                          1
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
+              ],
+              2
             ]
           }
+        ]
+      },
+      [
+        "return",
+        {
+          "value": [
+            "ref",
+            {
+              "name": "n"
+            }
+          ]
         }
       ]
-    },
-    {
-      "name": "call",
-      "props": {
-        "name": "factorial",
+    ],
+    [
+      "call",
+      {
+        "name": "times",
         "args": [
-          {
-            "name": "ref",
-            "props": {
-              "name": "score"
+          [
+            "ref",
+            {
+              "name": "n"
             }
-          }
+          ],
+          [
+            "call",
+            {
+              "name": "factorial",
+              "args": [
+                [
+                  "call",
+                  {
+                    "name": "minus",
+                    "args": [
+                      [
+                        "ref",
+                        {
+                          "name": "n"
+                        }
+                      ],
+                      1
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
         ]
       }
+    ]
+  ],
+  [
+    "call",
+    {
+      "name": "factorial",
+      "args": [
+        [
+          "ref",
+          {
+            "name": "score"
+          }
+        ]
+      ]
     }
   ]
-}
+]

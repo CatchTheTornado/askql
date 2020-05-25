@@ -1,18 +1,19 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "o",
-        "type": "any",
-        "value": {
-          "jsxValue": {}
+      "name": "o",
+      "type": "any",
+      "value": [
+        "code",
+        {
+          "object": true
         }
-      }
+      ]
     }
   ]
-}
+]

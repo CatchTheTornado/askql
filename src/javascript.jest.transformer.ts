@@ -12,6 +12,7 @@ export function process(src: string, path: string) {
   }
 
   if (path.endsWith('.ts') || path.endsWith('.tsx')) {
+    // FIXME this does not fail on type errors!
     return ts.transpile(
       src,
       tsConfig.compilerOptions as Omit<ts.CompilerOptions, 'jsx'>,

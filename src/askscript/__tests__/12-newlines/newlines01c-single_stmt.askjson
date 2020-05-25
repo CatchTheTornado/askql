@@ -1,18 +1,16 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "call",
     {
-      "name": "call",
-      "props": {
-        "name": "concat",
-        "args": [
-          "factorial",
-          " is cool"
-        ]
-      }
+      "name": "concat",
+      "args": [
+        "factorial",
+        " is cool"
+      ]
     }
   ]
-}
+]

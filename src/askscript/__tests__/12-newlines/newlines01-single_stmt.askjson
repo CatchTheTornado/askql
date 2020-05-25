@@ -1,14 +1,12 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "ref",
     {
-      "name": "ref",
-      "props": {
-        "name": "hello"
-      }
+      "name": "hello"
     }
   ]
-}
+]

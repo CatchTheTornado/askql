@@ -1,81 +1,77 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "fun",
     {
-      "name": "fun",
-      "props": {
-        "name": "plus",
-        "args": [
-          [
-            "a",
-            "int"
-          ],
-          [
-            "b",
-            "float"
-          ],
-          [
-            "c",
-            "int"
-          ]
+      "name": "plus",
+      "args": [
+        [
+          "a",
+          "int"
         ],
-        "returns": "any"
-      },
-      "children": [
-        {
-          "name": "return",
-          "props": {
-            "value": {
-              "name": "call",
-              "props": {
-                "name": "plus",
-                "args": [
-                  {
-                    "name": "call",
-                    "props": {
-                      "name": "plus",
-                      "args": [
-                        {
-                          "name": "ref",
-                          "props": {
-                            "name": "a"
-                          }
-                        },
-                        {
-                          "name": "ref",
-                          "props": {
-                            "name": "b"
-                          }
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    "name": "ref",
-                    "props": {
-                      "name": "c"
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        }
-      ]
+        [
+          "b",
+          "float"
+        ],
+        [
+          "c",
+          "int"
+        ]
+      ],
+      "returns": "any"
     },
-    {
-      "name": "call",
-      "props": {
-        "name": "plus",
-        "args": [
-          2,
-          3.6,
-          4
+    [
+      "return",
+      {
+        "value": [
+          "call",
+          {
+            "name": "plus",
+            "args": [
+              [
+                "call",
+                {
+                  "name": "plus",
+                  "args": [
+                    [
+                      "ref",
+                      {
+                        "name": "a"
+                      }
+                    ],
+                    [
+                      "ref",
+                      {
+                        "name": "b"
+                      }
+                    ]
+                  ]
+                }
+              ],
+              [
+                "ref",
+                {
+                  "name": "c"
+                }
+              ]
+            ]
+          }
         ]
       }
+    ]
+  ],
+  [
+    "call",
+    {
+      "name": "plus",
+      "args": [
+        2,
+        3.6,
+        4
+      ]
     }
   ]
-}
+]

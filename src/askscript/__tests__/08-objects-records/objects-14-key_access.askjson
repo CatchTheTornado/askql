@@ -1,82 +1,86 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "capitals",
-        "type": "record(string)",
-        "value": {
-          "jsxValue": {
-            "France": "Paris",
-            "Germany": "Berlin",
-            "Spain": "Madrid",
-            "anywhere": "any town"
-          }
-        }
-      }
-    },
+      "name": "capitals",
+      "type": "record(string)",
+      "value": [
+        "code",
+        {
+          "object": true
+        },
+        "France",
+        "Paris",
+        "Germany",
+        "Berlin",
+        "Spain",
+        "Madrid",
+        "anywhere",
+        "any town"
+      ]
+    }
+  ],
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "paris",
-        "type": "any",
-        "value": {
-          "name": "call",
-          "props": {
-            "name": "at",
-            "args": [
+      "name": "paris",
+      "type": "any",
+      "value": [
+        "call",
+        {
+          "name": "at",
+          "args": [
+            [
+              "ref",
               {
-                "name": "ref",
-                "props": {
-                  "name": "capitals"
-                }
-              },
-              "France"
-            ]
-          }
+                "name": "capitals"
+              }
+            ],
+            "France"
+          ]
         }
-      }
-    },
+      ]
+    }
+  ],
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "berlin",
-        "type": "string",
-        "value": {
-          "name": "call",
-          "props": {
-            "name": "at",
-            "args": [
+      "name": "berlin",
+      "type": "string",
+      "value": [
+        "call",
+        {
+          "name": "at",
+          "args": [
+            [
+              "ref",
               {
-                "name": "ref",
-                "props": {
-                  "name": "capitals"
-                }
-              },
-              "Germany"
-            ]
-          }
+                "name": "capitals"
+              }
+            ],
+            "Germany"
+          ]
         }
-      }
-    },
+      ]
+    }
+  ],
+  [
+    "call",
     {
-      "name": "call",
-      "props": {
-        "name": "at",
-        "args": [
+      "name": "at",
+      "args": [
+        [
+          "ref",
           {
-            "name": "ref",
-            "props": {
-              "name": "capitals"
-            }
-          },
-          "anywhere"
-        ]
-      }
+            "name": "capitals"
+          }
+        ],
+        "anywhere"
+      ]
     }
   ]
-}
+]

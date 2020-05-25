@@ -1,8 +1,7 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": [],
     "returns": "string"
-  },
-  "children": []
-}
+  }
+]

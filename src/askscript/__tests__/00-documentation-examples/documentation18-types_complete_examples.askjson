@@ -1,69 +1,67 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "i",
-        "type": "int",
-        "value": 12
-      }
-    },
+      "name": "i",
+      "type": "int",
+      "value": 12
+    }
+  ],
+  [
+    "assign",
     {
-      "name": "assign",
-      "props": {
-        "name": "i",
-        "value": 98
-      }
-    },
+      "name": "i",
+      "value": 98
+    }
+  ],
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "s",
-        "type": "string",
-        "value": "hello"
-      }
-    },
+      "name": "s",
+      "type": "string",
+      "value": "hello"
+    }
+  ],
+  [
+    "assign",
     {
-      "name": "assign",
-      "props": {
-        "name": "s",
-        "value": "bye"
-      }
-    },
+      "name": "s",
+      "value": "bye"
+    }
+  ],
+  [
+    "const",
     {
-      "name": "const",
-      "props": {
-        "name": "f",
-        "type": "float",
-        "value": 1.2
-      }
-    },
+      "name": "f",
+      "type": "float",
+      "value": 1.2
+    }
+  ],
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "b",
-        "type": "any",
-        "value": "sdf"
-      }
-    },
+      "name": "b",
+      "type": "any",
+      "value": "sdf"
+    }
+  ],
+  [
+    "assign",
     {
-      "name": "assign",
-      "props": {
-        "name": "b",
-        "value": 3
-      }
-    },
+      "name": "b",
+      "value": 3
+    }
+  ],
+  [
+    "const",
     {
-      "name": "const",
-      "props": {
-        "name": "a",
-        "type": "any",
-        "value": "asdf"
-      }
+      "name": "a",
+      "type": "any",
+      "value": "asdf"
     }
   ]
-}
+]

@@ -1,57 +1,53 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "fun",
     {
-      "name": "fun",
-      "props": {
-        "name": "sum",
+      "name": "sum",
+      "args": [
+        [
+          "a",
+          "int"
+        ],
+        [
+          "b",
+          "int"
+        ]
+      ],
+      "returns": "int"
+    },
+    [
+      "call",
+      {
+        "name": "plus",
         "args": [
           [
-            "a",
-            "int"
+            "ref",
+            {
+              "name": "a"
+            }
           ],
           [
-            "b",
-            "int"
+            "ref",
+            {
+              "name": "b"
+            }
           ]
-        ],
-        "returns": "int"
-      },
-      "children": [
-        {
-          "name": "call",
-          "props": {
-            "name": "plus",
-            "args": [
-              {
-                "name": "ref",
-                "props": {
-                  "name": "a"
-                }
-              },
-              {
-                "name": "ref",
-                "props": {
-                  "name": "b"
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "call",
-      "props": {
-        "name": "sum",
-        "args": [
-          2,
-          3
         ]
       }
+    ]
+  ],
+  [
+    "call",
+    {
+      "name": "sum",
+      "args": [
+        2,
+        3
+      ]
     }
   ]
-}
+]

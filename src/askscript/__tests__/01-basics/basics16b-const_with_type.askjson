@@ -1,48 +1,46 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "const",
     {
-      "name": "const",
-      "props": {
-        "name": "a",
-        "type": "int",
-        "value": 1
-      }
-    },
+      "name": "a",
+      "type": "int",
+      "value": 1
+    }
+  ],
+  [
+    "const",
     {
-      "name": "const",
-      "props": {
-        "name": "b",
-        "type": "float",
-        "value": 1.5
-      }
-    },
+      "name": "b",
+      "type": "float",
+      "value": 1.5
+    }
+  ],
+  [
+    "const",
     {
-      "name": "const",
-      "props": {
-        "name": "c",
-        "type": "bool",
-        "value": false
-      }
-    },
+      "name": "c",
+      "type": "bool",
+      "value": false
+    }
+  ],
+  [
+    "const",
     {
-      "name": "const",
-      "props": {
-        "name": "d",
-        "type": "string",
-        "value": "asdf"
-      }
-    },
+      "name": "d",
+      "type": "string",
+      "value": "asdf"
+    }
+  ],
+  [
+    "const",
     {
-      "name": "const",
-      "props": {
-        "name": "e",
-        "type": "any",
-        "value": 2.3
-      }
+      "name": "e",
+      "type": "any",
+      "value": 2.3
     }
   ]
-}
+]

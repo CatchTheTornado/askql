@@ -1,24 +1,22 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "a",
-        "type": "int",
-        "value": 1
-      }
-    },
+      "name": "a",
+      "type": "int",
+      "value": 1
+    }
+  ],
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "b",
-        "type": "float",
-        "value": 1.5
-      }
+      "name": "b",
+      "type": "float",
+      "value": 1.5
     }
   ]
-}
+]

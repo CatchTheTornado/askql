@@ -1,48 +1,45 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
-    {
-      "name": "query",
-      "children": [
-        {
-          "name": "node",
-          "props": {
-            "name": "fullName",
-            "value": {
-              "name": "call",
-              "props": {
-                "name": "upperCase",
-                "args": [
-                  {
-                    "name": "call",
-                    "props": {
-                      "name": "concat",
-                      "args": [
-                        {
-                          "name": "ref",
-                          "props": {
-                            "name": "firstName"
-                          }
-                        },
-                        " ",
-                        {
-                          "name": "ref",
-                          "props": {
-                            "name": "lastName"
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
+  [
+    "query",
+    {},
+    [
+      "node",
+      {
+        "name": "fullName",
+        "value": [
+          "call",
+          {
+            "name": "upperCase",
+            "args": [
+              [
+                "call",
+                {
+                  "name": "concat",
+                  "args": [
+                    [
+                      "ref",
+                      {
+                        "name": "firstName"
+                      }
+                    ],
+                    " ",
+                    [
+                      "ref",
+                      {
+                        "name": "lastName"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            ]
           }
-        }
-      ]
-    }
+        ]
+      }
+    ]
   ]
-}
+]

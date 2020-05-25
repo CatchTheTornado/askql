@@ -1,117 +1,111 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "fun",
     {
-      "name": "fun",
-      "props": {
-        "name": "square",
+      "name": "square",
+      "args": [
+        [
+          "a",
+          "int"
+        ]
+      ],
+      "returns": "int"
+    },
+    [
+      "call",
+      {
+        "name": "times",
         "args": [
           [
-            "a",
-            "int"
+            "ref",
+            {
+              "name": "a"
+            }
+          ],
+          [
+            "ref",
+            {
+              "name": "a"
+            }
           ]
-        ],
-        "returns": "int"
-      },
-      "children": [
-        {
-          "name": "call",
-          "props": {
-            "name": "times",
+        ]
+      }
+    ],
+    [
+      "if",
+      {
+        "condition": [
+          "call",
+          {
+            "name": "check",
             "args": [
-              {
-                "name": "ref",
-                "props": {
+              [
+                "ref",
+                {
                   "name": "a"
                 }
-              },
-              {
-                "name": "ref",
-                "props": {
-                  "name": "a"
-                }
-              }
+              ]
             ]
           }
-        },
+        ]
+      },
+      [
+        "return",
         {
-          "name": "if",
-          "props": {
-            "condition": {
-              "name": "call",
-              "props": {
-                "name": "check",
-                "args": [
-                  {
-                    "name": "ref",
-                    "props": {
-                      "name": "a"
-                    }
-                  }
-                ]
-              }
-            }
-          },
-          "children": [
-            {
-              "name": "return",
-              "props": {
-                "value": 2
-              }
-            }
-          ]
-        },
-        {
-          "name": "return",
-          "props": {
-            "value": {
-              "name": "ref",
-              "props": {
-                "name": "a"
-              }
-            }
-          }
+          "value": 2
         }
       ]
-    },
-    {
-      "name": "call",
-      "props": {
-        "name": "plus",
-        "args": [
+    ],
+    [
+      "return",
+      {
+        "value": [
+          "ref",
           {
-            "name": "call",
-            "props": {
-              "name": "square",
-              "args": [
-                {
-                  "name": "ref",
-                  "props": {
-                    "name": "a"
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "name": "call",
-            "props": {
-              "name": "square",
-              "args": [
-                {
-                  "name": "ref",
-                  "props": {
-                    "name": "a"
-                  }
-                }
-              ]
-            }
+            "name": "a"
           }
         ]
       }
+    ]
+  ],
+  [
+    "call",
+    {
+      "name": "plus",
+      "args": [
+        [
+          "call",
+          {
+            "name": "square",
+            "args": [
+              [
+                "ref",
+                {
+                  "name": "a"
+                }
+              ]
+            ]
+          }
+        ],
+        [
+          "call",
+          {
+            "name": "square",
+            "args": [
+              [
+                "ref",
+                {
+                  "name": "a"
+                }
+              ]
+            ]
+          }
+        ]
+      ]
     }
   ]
-}
+]

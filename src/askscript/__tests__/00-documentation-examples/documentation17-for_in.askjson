@@ -1,27 +1,24 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "for",
     {
-      "name": "for",
-      "props": {
-        "key": {
-          "name": "const",
-          "props": {
-            "name": "index",
-            "type": "any"
-          }
-        },
-        "in": {
-          "name": "ref",
-          "props": {
-            "name": "priceList"
-          }
+      "key": [
+        "const",
+        {
+          "name": "index",
+          "type": "any"
         }
-      },
-      "children": []
+      ],
+      "in": [
+        "ref",
+        {
+          "name": "priceList"
+        }
+      ]
     }
   ]
-}
+]

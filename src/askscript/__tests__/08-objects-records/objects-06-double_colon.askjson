@@ -1,55 +1,57 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "lastName",
-        "type": "string",
-        "value": "Czerwinski"
-      }
-    },
+      "name": "lastName",
+      "type": "string",
+      "value": "Czerwinski"
+    }
+  ],
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "o",
-        "type": "any",
-        "value": {
-          "jsxValue": {
-            "firstName": {
-              "name": "call",
-              "props": {
-                "name": "toLower",
-                "args": [
-                  {
-                    "name": "ref",
-                    "props": {
-                      "name": "firstName"
-                    }
-                  }
-                ]
-              }
-            },
-            "lastName": {
-              "name": "call",
-              "props": {
-                "name": "toUpper",
-                "args": [
-                  {
-                    "name": "ref",
-                    "props": {
-                      "name": "lastName"
-                    }
-                  }
-                ]
-              }
-            }
+      "name": "o",
+      "type": "any",
+      "value": [
+        "code",
+        {
+          "object": true
+        },
+        "firstName",
+        [
+          "call",
+          {
+            "name": "toLower",
+            "args": [
+              [
+                "ref",
+                {
+                  "name": "firstName"
+                }
+              ]
+            ]
           }
-        }
-      }
+        ],
+        "lastName",
+        [
+          "call",
+          {
+            "name": "toUpper",
+            "args": [
+              [
+                "ref",
+                {
+                  "name": "lastName"
+                }
+              ]
+            ]
+          }
+        ]
+      ]
     }
   ]
-}
+]

@@ -1,38 +1,34 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "while",
     {
-      "name": "while",
-      "props": {
-        "condition": {
-          "name": "call",
-          "props": {
-            "name": "lessThan",
-            "args": [
-              {
-                "name": "call",
-                "props": {
-                  "name": "rand",
-                  "args": []
-                }
-              },
-              0.5
-            ]
-          }
-        }
-      },
-      "children": [
+      "condition": [
+        "call",
         {
-          "name": "call",
-          "props": {
-            "name": "doSomething",
-            "args": []
-          }
+          "name": "lessThan",
+          "args": [
+            [
+              "call",
+              {
+                "name": "rand",
+                "args": []
+              }
+            ],
+            0.5
+          ]
         }
       ]
-    }
+    },
+    [
+      "call",
+      {
+        "name": "doSomething",
+        "args": []
+      }
+    ]
   ]
-}
+]

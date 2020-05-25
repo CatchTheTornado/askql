@@ -1,23 +1,21 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "call",
     {
-      "name": "call",
-      "props": {
-        "name": "plus",
-        "args": [
+      "name": "plus",
+      "args": [
+        [
+          "ref",
           {
-            "name": "ref",
-            "props": {
-              "name": "a"
-            }
-          },
-          3
-        ]
-      }
+            "name": "a"
+          }
+        ],
+        3
+      ]
     }
   ]
-}
+]

@@ -1,72 +1,70 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "x",
-        "type": "any",
-        "value": 3
-      }
-    },
+      "name": "x",
+      "type": "any",
+      "value": 3
+    }
+  ],
+  [
+    "set",
     {
-      "name": "set",
-      "props": {
-        "name": "y",
-        "type": "any",
-        "value": -0.4
-      }
-    },
+      "name": "y",
+      "type": "any",
+      "value": -0.4
+    }
+  ],
+  [
+    "call",
     {
-      "name": "call",
-      "props": {
-        "name": "*",
-        "args": [
+      "name": "*",
+      "args": [
+        [
+          "call",
           {
-            "name": "call",
-            "props": {
-              "name": "+",
-              "args": [
+            "name": "+",
+            "args": [
+              [
+                "ref",
                 {
-                  "name": "ref",
-                  "props": {
-                    "name": "x"
-                  }
-                },
+                  "name": "x"
+                }
+              ],
+              [
+                "ref",
                 {
-                  "name": "ref",
-                  "props": {
-                    "name": "y"
-                  }
+                  "name": "y"
                 }
               ]
-            }
-          },
+            ]
+          }
+        ],
+        [
+          "call",
           {
-            "name": "call",
-            "props": {
-              "name": "-",
-              "args": [
+            "name": "-",
+            "args": [
+              [
+                "ref",
                 {
-                  "name": "ref",
-                  "props": {
-                    "name": "x"
-                  }
-                },
+                  "name": "x"
+                }
+              ],
+              [
+                "ref",
                 {
-                  "name": "ref",
-                  "props": {
-                    "name": "y"
-                  }
+                  "name": "y"
                 }
               ]
-            }
+            ]
           }
         ]
-      }
+      ]
     }
   ]
-}
+]

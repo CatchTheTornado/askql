@@ -1,6 +1,6 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": [
       [
         "maxAge",
@@ -11,6 +11,5 @@
         "string"
       ]
     ]
-  },
-  "children": []
-}
+  }
+]

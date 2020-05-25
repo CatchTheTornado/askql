@@ -1,50 +1,47 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "const",
     {
-      "name": "const",
-      "props": {
-        "name": "result",
-        "type": "any",
-        "value": {
-          "name": "query",
-          "children": [
-            {
-              "name": "node",
-              "props": {
-                "name": "firstName",
-                "value": {
-                  "name": "ref",
-                  "props": {
-                    "name": "firstName"
-                  }
-                }
+      "name": "result",
+      "type": "any",
+      "value": [
+        "query",
+        {},
+        [
+          "node",
+          {
+            "name": "firstName",
+            "value": [
+              "ref",
+              {
+                "name": "firstName"
               }
-            },
-            {
-              "name": "node",
-              "props": {
-                "name": "lastName",
-                "value": {
-                  "name": "ref",
-                  "props": {
-                    "name": "lastName"
-                  }
-                }
+            ]
+          }
+        ],
+        [
+          "node",
+          {
+            "name": "lastName",
+            "value": [
+              "ref",
+              {
+                "name": "lastName"
               }
-            }
-          ]
-        }
-      }
-    },
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  [
+    "ref",
     {
-      "name": "ref",
-      "props": {
-        "name": "result"
-      }
+      "name": "result"
     }
   ]
-}
+]

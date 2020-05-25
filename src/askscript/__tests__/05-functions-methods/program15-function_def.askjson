@@ -1,79 +1,75 @@
-{
-  "name": "ask",
-  "props": {
+[
+  "ask",
+  {
     "args": []
   },
-  "children": [
+  [
+    "fun",
     {
-      "name": "fun",
-      "props": {
-        "name": "square",
+      "name": "square",
+      "args": [
+        [
+          "a",
+          "int"
+        ]
+      ],
+      "returns": "int"
+    },
+    [
+      "call",
+      {
+        "name": "times",
         "args": [
           [
-            "a",
-            "int"
+            "ref",
+            {
+              "name": "a"
+            }
+          ],
+          [
+            "ref",
+            {
+              "name": "a"
+            }
           ]
-        ],
-        "returns": "int"
-      },
-      "children": [
-        {
-          "name": "call",
-          "props": {
-            "name": "times",
-            "args": [
-              {
-                "name": "ref",
-                "props": {
-                  "name": "a"
-                }
-              },
-              {
-                "name": "ref",
-                "props": {
-                  "name": "a"
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "call",
-      "props": {
-        "name": "plus",
-        "args": [
-          {
-            "name": "call",
-            "props": {
-              "name": "square",
-              "args": [
-                {
-                  "name": "ref",
-                  "props": {
-                    "name": "a"
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "name": "call",
-            "props": {
-              "name": "square",
-              "args": [
-                {
-                  "name": "ref",
-                  "props": {
-                    "name": "a"
-                  }
-                }
-              ]
-            }
-          }
         ]
       }
+    ]
+  ],
+  [
+    "call",
+    {
+      "name": "plus",
+      "args": [
+        [
+          "call",
+          {
+            "name": "square",
+            "args": [
+              [
+                "ref",
+                {
+                  "name": "a"
+                }
+              ]
+            ]
+          }
+        ],
+        [
+          "call",
+          {
+            "name": "square",
+            "args": [
+              [
+                "ref",
+                {
+                  "name": "a"
+                }
+              ]
+            ]
+          }
+        ]
+      ]
     }
   ]
-}
+]

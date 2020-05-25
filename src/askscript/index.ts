@@ -1,5 +1,5 @@
 import { AskCodeOrValue } from '../askcode';
-import { fromAskScriptAst } from '../askjsx';
+import { fromAskScriptAst, createElement } from '../askjsx';
 
 export type AskJSON = any; // TODO(lc)
 
@@ -42,5 +42,8 @@ export function parse(
   options?: any,
   debugPrint?: boolean
 ): AskCodeOrValue {
-  return fromAskScriptAst(parseToJSON(code, options, debugPrint));
+  return fromAskScriptAst(
+    parseToJSON(code, options, debugPrint),
+    createElement
+  );
 }

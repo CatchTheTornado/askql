@@ -1,0 +1,58 @@
+[
+  "ask",
+  {
+    "args": []
+  },
+  [
+    "call",
+    {
+      "name": "test",
+      "args": [
+        "hello",
+        [
+          "fun",
+          {
+            "args": [],
+            "returns": "any"
+          },
+          [
+            "call",
+            {
+              "name": "log",
+              "args": [
+                "Hello!"
+              ]
+            }
+          ],
+          [
+            "call",
+            {
+              "name": "toBe",
+              "args": [
+                [
+                  "call",
+                  {
+                    "name": "expect",
+                    "args": [
+                      [
+                        "call",
+                        {
+                          "name": "+",
+                          "args": [
+                            2,
+                            2
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                4
+              ]
+            }
+          ]
+        ]
+      ]
+    }
+  ]
+]

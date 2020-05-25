@@ -46,6 +46,8 @@ const askql = require("askql");
 })();
 ```
 
+[More examples](https://github.com/xFAANG/askql/tree/master/src/askscript/__tests__)
+
 ## Development & Contributing
 
 ### Instalation

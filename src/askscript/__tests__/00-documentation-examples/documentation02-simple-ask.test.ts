@@ -1,5 +1,5 @@
-import environment = require('./.environment');
+import program from 'documentation02-simple-ask.ask';
 
 test('documentation02-simple-ask', async () => {
-  await expect(runUntyped(environment, source, [0, ''])).resolves.toBe(null);
+  await expect(program([0, ''])).resolves.toBe(null);
 });

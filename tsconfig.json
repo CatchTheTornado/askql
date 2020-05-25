@@ -1,3 +1,16 @@
 {
-  "files": ["src/interface.d.ts"]
+  "compileOnSave": true,
+  "compilerOptions": {
+    "inlineSourceMap": true,
+    "jsx": "react",
+    "jsxFactory": "askjsx.createElement",
+    "module": "commonjs",
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "target": "es2016"
+  },
+  "include": ["./src/**.ts", "./src/**/*.ts", "@types/interface.d.ts"],
+  "exclude": ["**/drafts/**", "**/node_modules/**"]
 }

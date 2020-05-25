@@ -7,8 +7,8 @@ type FirstArg<T extends (arg: any, ...rest: any[]) => any> = T extends (
 
 declare namespace JSX {
   interface IntrinsicElements {
-    ask: FirstArg<typeof import('./askjsx').Ask>;
-    call: FirstArg<typeof import('./askjsx').Call>;
+    ask: FirstArg<typeof import('../src/askjsx').Ask>;
+    call: FirstArg<typeof import('../src/askjsx').Call>;
     code: {
       ask?: true;
       block?: true;
@@ -30,21 +30,21 @@ declare namespace JSX {
       set?: true;
       while?: true;
     };
-    const: FirstArg<typeof import('./askjsx').Const>;
-    fragment: FirstArg<typeof import('./askjsx').Fragment>;
-    fun: FirstArg<typeof import('./askjsx').Fun>;
-    if: FirstArg<typeof import('./askjsx').If>;
-    node: FirstArg<typeof import('./askjsx').Node>;
-    query: FirstArg<typeof import('./askjsx').Query>;
-    ref: FirstArg<typeof import('./askjsx').Ref>;
-    return: FirstArg<typeof import('./askjsx').Return>;
-    set: FirstArg<typeof import('./askjsx').Set>;
+    const: FirstArg<typeof import('../src/askjsx').Const>;
+    fragment: FirstArg<typeof import('../src/askjsx').Fragment>;
+    fun: FirstArg<typeof import('../src/askjsx').Fun>;
+    if: FirstArg<typeof import('../src/askjsx').If>;
+    node: FirstArg<typeof import('../src/askjsx').Node>;
+    query: FirstArg<typeof import('../src/askjsx').Query>;
+    ref: FirstArg<typeof import('../src/askjsx').Ref>;
+    return: FirstArg<typeof import('../src/askjsx').Return>;
+    set: FirstArg<typeof import('../src/askjsx').Set>;
     v: { children?: any | any[] };
   }
 }
 
 declare module '*.ask' {
-  const source: string;
+  const source: Function;
   export default source;
 }
 
@@ -54,7 +54,7 @@ declare module '*.pegjs' {
 }
 
 declare module 'askvm' {
-  const source: typeof import('./askvm');
+  const source: typeof import('../src/askvm');
   export = source;
 }
 
@@ -62,6 +62,3 @@ declare module 'fs.promises' {
   const source: typeof import('fs/promises');
   export = source;
 }
-
-declare var runUntyped: Function;
-declare var source: string;

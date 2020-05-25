@@ -184,7 +184,12 @@ export = async function testFileRunner(
     {}
   );
 
-  environment.global.askvm = async (source, [...args], resolve, reject) => {
+  environment.global.askvm = async (
+    source: any,
+    [...args],
+    resolve: Function,
+    reject: Function
+  ) => {
     try {
       // console.log('source', source);
       const code = parseAskScript(source);
@@ -213,7 +218,7 @@ export = async function testFileRunner(
       config,
       Object.assign(environment, {
         global: Object.assign(environment.global, {
-          runUntyped: (envValue, source: string, args?: any[]) => {
+          runUntyped: (envValue: any, source: string, args?: any[]) => {
             // console.log(1, envValue);
             // console.log(2, source);
 
@@ -226,7 +231,7 @@ export = async function testFileRunner(
                   Object.entries(envValue.resources ?? {}).map(([key, val]): [
                     string,
                     Resource<any, any>
-                  ] => [key, resource(val)])
+                  ] => [key, resource(val as any)])
                 ),
               }
             );

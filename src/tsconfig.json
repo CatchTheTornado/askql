@@ -1,18 +1,14 @@
 {
+  "extends": "../tsconfig",
   "compilerOptions": {
+    "inlineSourceMap": true,
     "jsx": "react",
     "jsxFactory": "askjsx.createElement",
     "module": "commonjs",
     "outDir": "../dist",
+    "esModuleInterop": true,
     "resolveJsonModule": true,
-    "inlineSourceMap": true,
     "strict": true,
     "target": "es2016"
-  },
-  "files": [
-    "interface.d.ts",
-    "build.jest.testRunner.ts",
-    "javascript.jest.transformer.ts",
-    "jest-build-test.ts"
-  ]
+  }
 }

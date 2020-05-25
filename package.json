@@ -10,7 +10,7 @@
     "tsc": "tsc",
     "prebuild": "rm -rf dist && tsc",
     "build": "jest --config jest.build.config.js --no-cache",
-    "postbuild": "cp README.md dist && rm dist/tsconfig.json && cd dist && chmod +x *.js"
+    "postbuild": "cp README.md dist && cd dist && chmod +x *.js"
   },
   "bin": {
     "askql": "dist/cli.js",

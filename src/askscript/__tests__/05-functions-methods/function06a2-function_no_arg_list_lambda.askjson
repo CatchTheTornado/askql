@@ -1,7 +1,10 @@
 [
   "ask",
   {
-    "args": []
+    "args": [
+      "list",
+      null
+    ]
   },
   [
     "const",
@@ -9,6 +12,8 @@
       "name": "arr",
       "type": "any",
       "value": [
+        "list",
+        null,
         1,
         2,
         3,
@@ -21,6 +26,8 @@
     {
       "name": "map",
       "args": [
+        "list",
+        null,
         [
           "ref",
           {
@@ -30,7 +37,10 @@
         [
           "fun",
           {
-            "args": [],
+            "args": [
+              "list",
+              null
+            ],
             "returns": "any"
           },
           [

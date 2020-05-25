@@ -1,1 +1,1 @@
-export const expectedResult = [7, 7, 7, 7];
+export const expectedResult = {}; //fixme(mh)

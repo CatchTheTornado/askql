@@ -1,6 +1,7 @@
-import fetch from 'node-fetch';
 import { isValue } from '../../../askcode';
 import { any, resource, runUntyped } from '../../lib';
+
+const fetch = (global as any).fetch;
 
 export const remote = resource({
   type: any,

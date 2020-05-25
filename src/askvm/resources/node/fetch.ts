@@ -1,5 +1,6 @@
-import fetchFun from 'node-fetch';
 import { any, resource } from '../../lib';
+
+const fetchFun = (global as any).fetch;
 
 export const fetch = resource({
   type: any,

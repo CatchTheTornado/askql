@@ -1,1 +1,1 @@
-ask(for(let('index',undefined),get('priceList')))
+ask(forIn(let('index'),get('priceList'),block()))

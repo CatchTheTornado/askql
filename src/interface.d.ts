@@ -15,6 +15,8 @@ declare namespace JSX {
       call?: true;
       children?: any | any[];
       for?: true;
+      forIn?: true;
+      forOf?: true;
       fragment?: true;
       fun?: true;
       get?: true;

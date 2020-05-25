@@ -24,7 +24,7 @@ export function createElement(
     }
     return toAskCode({
       name: propKeys[0],
-      params: flatten(children),
+      params: flatten(children).filter((x) => typeof x !== 'undefined'),
     });
   }
 

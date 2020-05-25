@@ -30,4 +30,10 @@ export const resources: Resources = {
       console.log('I am doing something.');
     },
   }),
+
+  rand: resource({
+    resolver: async (): Promise<number> => {
+      return Math.random();
+    },
+  }),
 };

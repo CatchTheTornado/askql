@@ -1,1 +1,1 @@
-ask(let('a',undefined))
+ask(let('a'))

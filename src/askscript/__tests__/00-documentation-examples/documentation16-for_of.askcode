@@ -1,1 +1,1 @@
-ask(for(let('price',undefined),undefined))
+ask(forOf(let('price'),get('priceList'),block()))

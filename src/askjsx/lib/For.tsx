@@ -1,22 +1,23 @@
-import * as askjsx from './jsx';
 import { AskCodeOrValue } from '../../askcode';
-import { Values } from '../../askvm';
+import * as askjsx from './jsx';
 askjsx;
 
 export function For({
   key,
   in: inProp,
+  of: ofProp,
   children,
 }: {
   key: AskCodeOrValue;
-  in: AskCodeOrValue;
+  in?: AskCodeOrValue;
+  of?: AskCodeOrValue;
   children: AskCodeOrValue[];
 }) {
   return (
-    <code for>
+    <code forIn={!!inProp || undefined} forOf={!!ofProp || undefined}>
       {key}
-      {inProp}
-      {children}
+      {inProp ?? ofProp}
+      <code block>{children}</code>
     </code>
   );
 }

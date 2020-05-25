@@ -5,6 +5,7 @@ askjsx;
 export function While({
   condition,
   args,
+  children,
 }: {
   condition: AskCodeOrValue;
   args: AskCodeOrValue;
@@ -14,6 +15,7 @@ export function While({
     <code while>
       {condition}
       {args}
+      <code block>{children}</code>
     </code>
   );
 }

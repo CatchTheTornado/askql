@@ -1,0 +1,1 @@
+ask(let('square',fun(let('b',get('$0')),call(get('times'),get('b'),get('b')),if(call(get('check'),get('b')),block(return(2)),block()),return(call(get('times'),get('b'),get('b'))))),call(get('plus'),call(get('square'),get('b')),call(get('square'),get('c'))))

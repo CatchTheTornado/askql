@@ -1,5 +1,26 @@
 {
   const ask = require('./askscript.grammar.pegjs.classes');
+
+
+
+  /**
+   * Checks all operValues use the same operator, otherwise throws an error.
+   *
+   * In AskScript for different operators in one expression user must use braces to state precedence explicitly.
+   */
+  function assertAllOperatorsMatch(operValues) {
+    if (operValues.length == 0) return;
+
+    const operator = operValues[0].operator;
+
+    for (const operValue of operValues) {
+      if (operValue.operator.text != operator.text)
+        expected(
+          `Expected all operators in an expression to be the same ('${operator.text}'), got '${operValue.operator.text}' instead.`
+        );
+    }
+  }
+
 }
 
 
@@ -68,11 +89,9 @@ variableDefinition_type = ws* ':' ws* t:type { return t }
 
 // === value ===
 
-value = f:factor aEL:addExpr* {  return new ask.Value(f, aEL) }
-addExpr = c:('+'/'-') f:factor { return new ask.AddExpr(c, f) }
+value = e:nonArithmExpression opVals:operValue* {  assertAllOperatorsMatch(opVals); return new ask.Value(e, opVals) }
+operValue = op:operator ws* v:nonArithmExpression { return new ask.OperNAValue(op, v) }
 
-factor = e:nonArithmExpression mL:mulExpr* {  return new ask.Factor(e, mL) }
-mulExpr = c:('*'/'/') e:nonArithmExpression { return new ask.MulExpr(c, e) }
 
 // === non-arithm expressions ===
 nonArithmExpression = 
@@ -258,7 +277,10 @@ emptyLine = wsnonl* nl
 
 // === literals ===
 identifier = [_$a-zA-Z][_$a-zA-Z0-9]* { return new ask.Identifier(text()) } // TODO(lc): add Unicode here one day
-operator   = [-<>+*/^%=&|]+ {            return new ask.Identifier(text()) }
+
+// operators consist of chars: -<>+*/^%=&|, but they cannot contain // sequence
+operator = ([-<>+*^%=&|] / ([/] &[^/]))+   {       return new ask.Identifier(text()) }
+
 null = 'null' { return new ask.Null() }
 boolean = true / false
 true = 'true' { return new ask.True() }

@@ -1,6 +1,6 @@
 ask {
     const plus = fun(a:int, b,c:int): float {
-		return a:plus(b):plus(c)
+	  return a:plus(b):plus(c)
 	}
-	plus(2, 3.6, 4)
+  plus(2, 3.6, 4)
 }

@@ -1,16 +1,16 @@
 ask {
-	let arr1: array(int) = [1,
+  let arr1: array(int) = [1,
                           2,
                           3]
-	let arr2 = [
+  let arr2 = [
 1, 
 2, 
 3]
-	let arr3 = [
+  let arr3 = [
                 1.3, 
                 1.4, 
                 1.5]
-	let arr4 = [
+  let arr4 = [
     'asdf', 
     'qwer', 
     'tyui'

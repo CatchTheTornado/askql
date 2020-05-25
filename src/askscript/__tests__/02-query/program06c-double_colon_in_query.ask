@@ -1,6 +1,6 @@
 ask {
-	query {
-		firstName :: toUpperCase
+  query {
+	  firstName :: toUpperCase
         lastName :: toLowerCase:concat(' ', 'is my ', 'name; ', 'lastName :: toLowerCase is a shorthand to: lastName : lastName:toLowerCase')
 	}
 }

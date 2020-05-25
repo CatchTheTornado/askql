@@ -1,5 +1,5 @@
 ask {
-	query {
-		fullName: firstName :concat(' ', lastName) :toUpperCase
+  query {
+	  fullName: firstName :concat(' ', lastName) :toUpperCase
 	}
 }

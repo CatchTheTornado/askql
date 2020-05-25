@@ -6,7 +6,7 @@ ask {
   let result = ''
 
   lorem:split(' '):each( fun(t: char, index: number, firstArrayElement: boolean, lastArrayElement: boolean) {
-		const cap = capitalize(t)
+	  const cap = capitalize(t)
     if (last) {
       result = result :+ (cap)
     } else {

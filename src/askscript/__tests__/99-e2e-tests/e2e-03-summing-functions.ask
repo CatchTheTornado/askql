@@ -1,19 +1,19 @@
 ask {
-	const covid = [ 
+  const covid = [ 
 		{country: 'USA', newInfected: 69128, newDeaths: 1047, newRecovered: 19342  },
 		{country: 'Spain', newInfected: 13598, newDeaths: 217, newRecovered: 578  },
 		{country: 'Russia', newInfected: 1551, newDeaths: 93, newRecovered: 178  },
 		{country: 'Italy', newInfected: 992, newDeaths: 262, newRecovered: 688  },
 		{country: 'UK', newInfected: 3687, newDeaths: 428, newRecovered: 19342  }		
 	]
-	log('map: ', covid:map(fun(c) { return c.newInfected}))
-	const totalNewInfected = covid:map(fun(c) { return c.newInfected}):sum()
-	const totalNewDeaths = covid:map(fun(a) { return a.newDeaths }):sum
-	const totalnewRecovered = covid:map(fun(a) { return a.newRecovered }):sum
-	const total = [totalNewInfected, totalNewDeaths, totalnewRecovered]:sum()
-	log('Total new infected - ', totalNewInfected)
-	log('Total new deaths - ', totalNewDeaths)
-	log('Total new recovered - ', totalnewRecovered)
-	log('Total - ', total)
-	return { totalNewDeaths, totalNewInfected, totalnewRecovered, total }
+  log('map: ', covid:map(fun(c) { return c.newInfected}))
+  const totalNewInfected = covid:map(fun(c) { return c.newInfected}):sum()
+  const totalNewDeaths = covid:map(fun(a) { return a.newDeaths }):sum
+  const totalnewRecovered = covid:map(fun(a) { return a.newRecovered }):sum
+  const total = [totalNewInfected, totalNewDeaths, totalnewRecovered]:sum()
+  log('Total new infected - ', totalNewInfected)
+  log('Total new deaths - ', totalNewDeaths)
+  log('Total new recovered - ', totalnewRecovered)
+  log('Total - ', total)
+  return { totalNewDeaths, totalNewInfected, totalnewRecovered, total }
 }

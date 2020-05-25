@@ -1,9 +1,9 @@
 ask {
   const result = query {
-		firstName
-		lastName
-		friends {
-				id
+	  firstName
+	  lastName
+	  friends {
+			  id
 		}
 	}
   result

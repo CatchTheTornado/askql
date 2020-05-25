@@ -5,15 +5,16 @@
 
 # AskQL
 
-AskQL is a query language that can express every data request
+AskQL is a query language that can express any data request. 
+Send executable code instead of JSONs.
 
 ## Why and what for?
 
-- next milestone after GraphQL
-- sending code to servers without the need to deploy
-- new safe query language
-- 4 - 6 kB of robust code
-- compiled to clean functional code
+* next milestone after GraphQL
+* send code to servers without the need to deploy
+* new safe query language
+* 4 - 6 kB of robust code
+* compiled to clean functional code
 
 ### Prerequisites
 
@@ -65,7 +66,7 @@ const askql = require("askql");
 4) Link the project to askql command
    `npm link`
 
-Now it should be able to enter the console! (We use REPL for that)
+Now you should be able to launch the interpreter (We use REPL for that).
 `askql`
 
 ### Usage
@@ -96,7 +97,7 @@ float ask(4.2)
 4.2
 ```
 
-3. Let's say we have a table of philosophers and their scores let's say in the meaning of their contribution for computer science!
+3. Let's say we have a table of philosophers and their contribution to compute science as a score:
 
 ```
 🦄 scorePerPhilosopher
@@ -123,13 +124,11 @@ int ask(call(get('max'),get('scorePerPhilosopher')))
 
 Nice!
 
-5. Write first query
-   A query can be a multiliner!
-   For that we write first:
+5. Write a first query, it can be multi-liner. First step:
 
 `.editor`
 
-and as second we write the first query:
+second step, we write the query:
 
 ```
 query {
@@ -137,7 +136,7 @@ query {
 }
 ```
 
-and here you have your answer:
+and here we have the answer:
 
 ```
 any ask(query(node('philosophers',f(get('philosophers')))))

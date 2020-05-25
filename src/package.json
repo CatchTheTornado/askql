@@ -1,6 +1,6 @@
 {
   "name": "askql",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AskQL is a query language that can express every data request",
   "main": "index.js",
   "bin": {

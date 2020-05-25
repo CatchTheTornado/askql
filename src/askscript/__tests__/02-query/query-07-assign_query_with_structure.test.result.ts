@@ -1,12 +1,12 @@
 export const expectedResult = {
-  "firstName": "Luke",
-  "lastName": "Skywalker",
-  "friends": [
+  firstName: 'Luke',
+  lastName: 'Skywalker',
+  friends: [
     {
-      "id": 0
+      id: 0,
     },
     {
-      "id": 1
-    }
-  ]
+      id: 1,
+    },
+  ],
 };

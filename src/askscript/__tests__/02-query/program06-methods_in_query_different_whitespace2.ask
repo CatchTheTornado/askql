@@ -1,5 +1,5 @@
 ask {
 	query {
-		firstName:firstName :toLower: concat(' ', 'is my ', 'name')
+		firstName:firstName :toLowerCase: concat(' ', 'is my ', 'name')
 	}
 }

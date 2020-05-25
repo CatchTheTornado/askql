@@ -4,6 +4,7 @@ export const values: Values = {
   firstName: 'Luke',
   middleName: 'LukeLuke',
   lastName: 'Skywalker',
+  fullName: 'Luke Skywalker',
   parents: [
     {
       firstName: 'Padmé',
@@ -26,6 +27,7 @@ export const values: Values = {
       lastName: 'Skywalker',
     },
   ],
+  otherField: 'otherFieldValue',
 };
 
 export const resources: Resources = {
@@ -42,6 +44,18 @@ export const resources: Resources = {
   fun3: resource<string, [string]>({
     resolver: async (s: string): Promise<string> => {
       return '(-' + s + '-)';
+    },
+  }),
+
+  knex: resource<string, [string]>({
+    resolver: async (x: any): Promise<any> => {
+      return [x];
+    },
+  }),
+
+  where: resource<string, [string]>({
+    resolver: async ([x]: any, ...args: any[]): Promise<any> => {
+      return x;
     },
   }),
 };

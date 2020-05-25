@@ -72,7 +72,7 @@
             "value": [
               "call",
               {
-                "name": "upperCase",
+                "name": "toUpperCase",
                 "args": [
                   [
                     "call",

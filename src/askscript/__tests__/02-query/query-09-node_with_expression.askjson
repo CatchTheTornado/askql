@@ -9,7 +9,7 @@
     [
       "node",
       {
-        "name": "users",
+        "name": "friends",
         "value": [
           "call",
           {
@@ -23,7 +23,7 @@
                     [
                       "ref",
                       {
-                        "name": "users"
+                        "name": "friends"
                       }
                     ]
                   ]

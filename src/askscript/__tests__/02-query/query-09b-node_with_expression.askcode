@@ -1,1 +1,1 @@
-ask(query(node('users',f(call(get('where'),call(get('knex'),get('users')),object('email','hi@example.com','firstName','Luke'))),node('firstName',f(get('firstName'))),node('lastName',f(get('lastName'))))))
+ask(query(node('friends',f(call(get('where'),call(get('knex'),get('friends')),object('email','hi@example.com','firstName','Luke'))),node('firstName',f(get('firstName'))),node('lastName',f(get('lastName'))))))

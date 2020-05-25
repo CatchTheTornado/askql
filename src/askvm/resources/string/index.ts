@@ -1,4 +1,5 @@
 export * from './concat';
-export { toString } from './toString';
-export * from './upperCase';
 export * from './size';
+export * from './toLowerCase';
+export * from './toString';
+export * from './toUpperCase';

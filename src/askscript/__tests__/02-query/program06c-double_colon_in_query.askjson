@@ -13,7 +13,7 @@
         "value": [
           "call",
           {
-            "name": "toUpper",
+            "name": "toUpperCase",
             "args": [
               [
                 "ref",
@@ -38,7 +38,7 @@
               [
                 "call",
                 {
-                  "name": "toLower",
+                  "name": "toLowerCase",
                   "args": [
                     [
                       "ref",
@@ -52,7 +52,7 @@
               " ",
               "is my ",
               "name; ",
-              "lastName :: toLower is a shorthand to: lastName : lastName:toLower"
+              "lastName :: toLowerCase is a shorthand to: lastName : lastName:toLowerCase"
             ]
           }
         ]

@@ -1,1 +1,1 @@
-ask(query(node('firstName',f(call(get('concat'),call(get('toLower'),get('firstName')),' ','is my ','name')))))
+ask(query(node('firstName',f(call(get('concat'),call(get('toLowerCase'),get('firstName')),' ','is my ','name')))))

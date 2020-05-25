@@ -1,3 +1,3 @@
-// AskVM Error:
-//   Assertion error: no jsx component for "node"
-export const expectedResult = null;
+export const expectedResult = {
+  firstName: 'luke is my name',
+};

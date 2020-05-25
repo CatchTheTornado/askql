@@ -18,7 +18,7 @@
               [
                 "call",
                 {
-                  "name": "toLower",
+                  "name": "toLowerCase",
                   "args": [
                     [
                       "ref",

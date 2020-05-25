@@ -1,7 +1,7 @@
 ask {
-    while(n:lessThan(2)) {
-        return n
-    }
-    
-    return x
+  while(n:lessThan(2)) {
+    return n
+  }
+  
+  return n
 }

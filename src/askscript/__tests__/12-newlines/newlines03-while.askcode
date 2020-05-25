@@ -1,1 +1,1 @@
-ask(while(call(get('lessThan'),get('n'),2),undefined),return(get('x')))
+ask(while(call(get('lessThan'),get('n'),2),block(return(get('n')))),return(get('x')))

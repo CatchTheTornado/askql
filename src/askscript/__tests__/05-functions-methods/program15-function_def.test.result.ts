@@ -1,3 +1,1 @@
-// AskVM Error:
-//   Unknown identifier 'plus'!
-export const expectedResult = null;
+export const expectedResult = 10.579999999999998;

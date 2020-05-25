@@ -1,3 +1,5 @@
-// AskVM Error:
-//   Invalid JSX name typed: undefined
-export const expectedResult = null;
+export const expectedResult = {
+  name: 'Arizona',
+  areaInSqMi: 113998,
+  westernState: true,
+};

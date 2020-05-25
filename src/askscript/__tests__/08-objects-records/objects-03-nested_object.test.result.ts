@@ -1,3 +1,8 @@
-// AskVM Error:
-//   Assertion error: name cannot be null
-export const expectedResult = null;
+export const expectedResult = {
+  name: 'Arizona',
+  someFacts: {
+    areaInSqMi: 113998,
+    westernState: true,
+    capital: 'Phoenix',
+  },
+};

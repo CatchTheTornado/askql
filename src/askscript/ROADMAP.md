@@ -2,6 +2,8 @@
 
 ## Remove tabs from the codebase - lets stick with identation of two spaces
 
+## Divide up for into: for, forIn, forOf
+
 ## Allow values at the top level of program
 
 ```

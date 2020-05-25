@@ -1,3 +1,1 @@
-// AskVM Error:
-//   Over ops limit!
-export const expectedResult = null;
+export const expectedResult = 9.6;

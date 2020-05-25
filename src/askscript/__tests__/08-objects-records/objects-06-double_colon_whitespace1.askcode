@@ -1,1 +1,1 @@
-ask(let('lastName','Czerwinski'),let('o',object('firstName',call(get('toLower'),get('firstName')),'lastName',call(get('toUpper'),get('lastName')))))
+ask(let('lastName','Czerwinski'),let('o',object('firstName',call(get('toLowerCase'),get('firstName')),'lastName',call(get('toUpperCase'),get('lastName')))))

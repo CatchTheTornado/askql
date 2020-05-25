@@ -1,3 +1,1 @@
-// AskVM Error:
-//   Unknown identifier '/'!
-export const expectedResult = null;
+export const expectedResult = 0.0000248015873015873;

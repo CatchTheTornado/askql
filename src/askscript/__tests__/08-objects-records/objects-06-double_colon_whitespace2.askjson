@@ -33,7 +33,7 @@
         [
           "call",
           {
-            "name": "toLower",
+            "name": "toLowerCase",
             "args": [
               [
                 "ref",
@@ -48,7 +48,7 @@
         [
           "call",
           {
-            "name": "toUpper",
+            "name": "toUpperCase",
             "args": [
               [
                 "ref",
@@ -63,7 +63,7 @@
         [
           "call",
           {
-            "name": "toUpper",
+            "name": "toUpperCase",
             "args": [
               [
                 "ref",

@@ -1,4 +1,4 @@
 ask {
     let lastName:string = 'Czerwinski'
-    let o = { firstName::toLower, lastName: :toUpper }
+    let o = { firstName::toLowerCase, lastName: :toUpperCase }
 }

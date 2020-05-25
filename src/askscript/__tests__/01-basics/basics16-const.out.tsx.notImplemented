@@ -1,8 +1,0 @@
-import * as askjsx from '../../../askjsx';
-askjsx;
-
-export const expectedOutput = (
-  <ask>
-    <const name={'a'} type={'any'} value={1} />
-  </ask>
-);

@@ -37,14 +37,17 @@ async function askRunner(
 ): Promise<TestResults> {
   const testResults: TestResults = {
     starts: passed(),
-    compiles: null,
-    computes: null,
   };
 
   // console.log({ env: process.env.NODE_ENV, testPath });
   if (process.env.NODE_ENV === 'test' && !testPath.endsWith('.ask')) {
     return testResults;
   }
+
+  Object.assign(testResults, {
+    compiles: null,
+    computes: null,
+  });
 
   // console.log(1, Object.keys(jestEnvironment.global));
   // const { process } = jestEnvironment.global;
@@ -108,7 +111,7 @@ async function askRunner(
   // console.log({ resultPath, file: resultStat.isFile() });
   const resultPath = join(testPath, `../${name}.test.result.ts`);
   if (existsSync(resultPath)) {
-    // console.log('source', source);
+    // console.log('source for result', source);
     // const code = askCode;
     const code = parseAskCode(askCodeSource);
     const result = await runUntyped(environment, code, args);

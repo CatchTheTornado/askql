@@ -1,8 +1,0 @@
-import * as askjsx from '../../../askjsx';
-askjsx;
-
-export const expectedOutput = (
-  <ask>
-    <set name={'a'} type={'int'} />
-  </ask>
-);

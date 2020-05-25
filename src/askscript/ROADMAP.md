@@ -1,5 +1,17 @@
 # Assorted plans
 
+## Allow values at the top level of program
+
+```
+'Hello world'
+```
+
+should compute just fine at the top level, same as
+
+```
+[5,6]
+```
+
 ## Operators cannot have any hardcoded priority
 
 ```

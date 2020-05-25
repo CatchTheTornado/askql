@@ -1,14 +1,13 @@
 module.exports = {
-  testEnvironment: 'node',
   displayName: 'test',
   moduleFileExtensions: ['ask', 'ts', 'tsx', 'pegjs', 'js'],
+  testEnvironment: 'node',
   testMatch: [
-    '<rootDir>/src/**/*.([jt]s?(x)|ask|pegjs)',
-    '<rootDir>/src/*.([jt]s?(x)|ask|pegjs)',
+    '<rootDir>/src/**/*.(ask|pegjs|[jt]s?(x))',
+    '<rootDir>/src/*.(ask|pegjs|[jt]s?(x))',
   ],
   testRunner: './dist/test.jest.testRunner',
   transform: {
-    '^.+\\.([jt]sx?|pegjs)$': './dist/javascript.jest.transformer',
-    '^.+\\.(ask)$': './dist/askcode.jest.transformer',
+    '^.+\\.(ask|pegjs|[jt]sx?)$': './dist/javascript.jest.transformer',
   },
 };

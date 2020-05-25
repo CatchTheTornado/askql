@@ -64,9 +64,23 @@
       "return",
       {
         "value": [
-          "ref",
+          "call",
           {
-            "name": "a"
+            "name": "times",
+            "args": [
+              [
+                "ref",
+                {
+                  "name": "a"
+                }
+              ],
+              [
+                "ref",
+                {
+                  "name": "a"
+                }
+              ]
+            ]
           }
         ]
       }

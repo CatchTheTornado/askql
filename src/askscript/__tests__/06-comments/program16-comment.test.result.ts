@@ -1,3 +1,1 @@
-// AskVM Error:
-//   Unknown identifier 'call'!
-export const expectedResult = null;
+export const expectedResult = 50;

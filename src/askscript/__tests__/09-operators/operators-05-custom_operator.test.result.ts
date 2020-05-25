@@ -1,3 +1,1 @@
-// AskVM Error:
-//   Unknown identifier 'equals'!
-export const expectedResult = null;
+export const expectedResult = 'It works!';

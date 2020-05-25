@@ -1,3 +1,1 @@
-// AskVM Error:
-//   Assertion error: no jsx component for "const"
-export const expectedResult = null;
+export const expectedResult = [[], [1, 2, 3]];

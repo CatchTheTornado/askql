@@ -8,6 +8,8 @@ export const values: Values = {
   n: 1.9,
   a: 5,
   b: 10,
+
+  x: 1.23,
 };
 
 export const resources: Resources = {

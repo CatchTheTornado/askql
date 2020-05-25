@@ -5,9 +5,9 @@
 
 // === ask { ===
 
-ask = lineWithoutCode* aH:askHeader aB:askBody askFooter lineWithoutCode* eof {
-  return new ask.Ask(aH, aB);
-}
+ask = 
+    lineWithoutCode* aH:askHeader aB:askBody askFooter lineWithoutCode* eof { return new ask.Ask(aH, aB); }
+  / lineWithoutCode* ws* v:value ws* lineWithoutCode* eof { return v }
 
 askForRepl = lineWithoutCode* ws* 'ask' aL:askHeader_argList? aRT:askHeader_retType? ws* '{' .*
 

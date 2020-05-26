@@ -63,7 +63,7 @@ const askql = require("askql");
 
 ## Development & Contributing
 
-### Instalation
+### Installation
 
 1. Clone the repository
 

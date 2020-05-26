@@ -10,11 +10,23 @@ Send executable code instead of JSONs.
 
 ## Why and what for?
 
-* next milestone after GraphQL
-* send code to servers without the need to deploy
-* new safe query language
+<img 
+    src="https://xfaang-assets.s3.eu-west-3.amazonaws.com/diagrams/REST_API_approach.png" 
+    align="center"
+    title="Rest"
+    height=50%
+    width=50%><img 
+    src="https://xfaang-assets.s3.eu-west-3.amazonaws.com/diagrams/AskQL_approach.png" 
+    align="center"
+    title="AskQL"
+    height=50%
+    width=50%>
+
+* Next milestone after GraphQL
+* Send code to servers without the need to deploy
+* New safe query language
 * 4 - 6 kB of robust code
-* compiled to clean functional code
+* Compiled to clean functional code
 
 ### Prerequisites
 
@@ -63,10 +75,10 @@ const askql = require("askql");
 3. Build the project
    `npm run build`
 
-4) Link the project to askql command
+4. Link the project to askql command
    `npm link`
 
-Now you should be able to launch the interpreter (We use REPL for that).
+Now you should be able to launch the interpreter (we use REPL for that).
 `askql`
 
 ### Usage
@@ -81,7 +93,7 @@ string ask('Hello world')
 'Hello world'
 ```
 
-In the response you get a compiled version of the program what is send asynchronously to the AskVM
+In the response you get a compiled version of the program that is sent asynchronously to the AskVM.
 
 2. There are two number types
 
@@ -97,7 +109,7 @@ float ask(4.2)
 4.2
 ```
 
-3. Let's say we have a table of philosophers and their contribution to compute science as a score:
+3. Let's say we have a table of philosophers and their contribution to computer science as a score:
 
 ```
 🦄 scorePerPhilosopher
@@ -112,9 +124,7 @@ any ask(get('scorePerPhilosopher'))
 }
 ```
 
-Awesome!
-
-4. Now let's find the max score with a simple query:
+Now let's find out the max score with a simple query:
 
 ```
 🦄 max(scorePerPhilosopher)
@@ -124,7 +134,7 @@ int ask(call(get('max'),get('scorePerPhilosopher')))
 
 Nice!
 
-5. Write a first query, it can be multi-liner. First step:
+4. Write a first query, it can be a multi-liner. First step:
 
 `.editor`
 
@@ -145,7 +155,7 @@ any ask(query(node('philosophers',f(get('philosophers')))))
 }
 ```
 
-6. Exit the console!
+5. Exit the console!
 
 `ctrl + d`
 
@@ -165,6 +175,12 @@ https://www.notion.so/AskQL-Documentation-cd065c579d0c44d381ddddc4682f5736
 
 #### CLI
 
+## FAQ
+
+### What's the difference between ask {<askcode>} and eval(<jscode>)?
+
+JavaScript's eval( <javascript> ) is terrible at ensuring security. Query programs are executed against the same environment as your own programs. In AskQL, ask { <askscript> } runs on AskVM which is a separate execution context that you define yourself with the exact set of resources, values and limits the each incoming program needs.
+
 ## Troubleshooting
 
 ## Contributing
@@ -179,6 +195,7 @@ The code in this project is licensed under MIT license.
 
 - Marcin Hagmajer (ex-Facebook)
 - Łukasz Czerwiński (ex-Google)
+
 <a href="https://xfaang.com" align="left">
   <img 
     src="https://xfaang-assets.s3.eu-west-3.amazonaws.com/logo/logo.png" 

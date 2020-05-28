@@ -138,6 +138,9 @@ async function askRunner(
       expectedResult: any;
     }>(resultPath);
     const isCorrect = compareAsJson(result, expectedResult);
+    if ('ASK_PRINT_RESULT' in process.env && process.env.ASK_PRINT_RESULT) {
+      console.log(`RESULT: ${JSON.stringify(result, null, 2)}`);
+    }
     testResults.computes = assertionResult({
       status: isCorrect ? 'passed' : 'failed',
       title: 'produces the expected result',

@@ -89,7 +89,12 @@ variableDefinition_type = ws* ':' ws* t:type { return t }
 // === value ===
 
 value = e:nonArithmExpression opVals:operValue* {  assertAllOperatorsMatch(opVals); return new ask.Value(e, opVals) }
-operValue = op:operator ws* v:nonArithmExpression { return new ask.OperNAValue(op, v) }
+
+// We don't allow newline before an operator because:
+//   123
+//   -123
+// should be treated as 2 statements not as '123 - 123'.
+operValue = wsnonl* op:operator ws* v:nonArithmExpression { return new ask.OperNAValue(op, v) }
 
 
 // === non-arithm expressions ===

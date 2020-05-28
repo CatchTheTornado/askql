@@ -72,6 +72,74 @@
                 4
               ]
             }
+          ],
+          [
+            "call",
+            {
+              "name": "toBe",
+              "args": [
+                "list",
+                null,
+                [
+                  "call",
+                  {
+                    "name": "expect",
+                    "args": [
+                      "list",
+                      null,
+                      [
+                        "call",
+                        {
+                          "name": "+",
+                          "args": [
+                            "list",
+                            null,
+                            2,
+                            2
+                          ],
+                          "isOperator": true
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                4
+              ]
+            }
+          ],
+          [
+            "call",
+            {
+              "name": "toBe",
+              "args": [
+                "list",
+                null,
+                [
+                  "call",
+                  {
+                    "name": "expect",
+                    "args": [
+                      "list",
+                      null,
+                      [
+                        "call",
+                        {
+                          "name": "+",
+                          "args": [
+                            "list",
+                            null,
+                            3,
+                            8
+                          ],
+                          "isOperator": true
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                11
+              ]
+            }
           ]
         ]
       ]

@@ -2,9 +2,8 @@ ask {
   test('hello', fun () {
     log('Hello!')
     
-    //
-    // 2 + 2 didn't work here anyway
-    //  
+    expect(2 + 2):toBe(4)
     expect(2 :+ (2)):toBe(4)
+    expect(3 + 8):toBe(11)
   })
 }

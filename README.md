@@ -5,7 +5,7 @@
 
 # AskQL
 
-AskQL is a query language that can express any data request. 
+AskQL is a query language that can express any data request.
 Send executable code instead of JSONs.
 
 ## Why and what for?
@@ -22,11 +22,11 @@ Send executable code instead of JSONs.
     height=50%
     width=50%>
 
-* Next milestone after GraphQL
-* Send code to servers without the need to deploy
-* New safe query language
-* 4 - 6 kB of robust code
-* Compiled to clean functional code
+- Next milestone after GraphQL
+- Send code to servers without the need to deploy
+- New safe query language
+- 4 - 6 kB of robust code
+- Compiled to clean functional code
 
 ### Prerequisites
 
@@ -47,7 +47,7 @@ npm install askql
 Sample index.js file:
 
 ```js
-const askql = require("askql");
+const askql = require('askql');
 
 (async () => {
   const result = await askql.runUntyped(
@@ -173,7 +173,17 @@ https://www.notion.so/AskQL-Documentation-cd065c579d0c44d381ddddc4682f5736
 
 #### Test server
 
-#### CLI
+#### CLI (AskScript interpreter)
+
+In order to run CLI:
+
+1.  Build the code:
+
+        npm run build
+
+1.  Run:
+
+        node dist/cli.js
 
 ## FAQ
 

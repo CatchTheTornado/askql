@@ -168,14 +168,13 @@ You can find all the examples in `__test__` folders
 
 ### Documetation
 
-Find AskQL documentation [here](https://www.notion.so/AskQL-Documentation-cd065c579d0c44d381ddddc4682f5736).<br><br>
+Find AskQL documentation [here](https://www.notion.so/AskQL-Documentation-cd065c579d0c44d381ddddc4682f5736).<br>
 
-The Documentation is divided into 5 parts:<br>
-[AskQL Overview](https://www.notion.so/AskQL-Overview-c95f3370be104466bfb3e3bca3ce7db4)<br>
-[AskQL Quick Guide](https://www.notion.so/AskQL-Quick-Guide-0c5f8659957d47978d63f6afb85170ab)<br>
-[AskScript - Human Friendly Language for AskScript](https://www.notion.so/AskScript-Human-Friendly-Language-for-AskQL-7c5e382df87a4015b44985391861f6a2)<br>
-[AskVM - Runtime Environment for AskQL](https://www.notion.so/AskVM-Runtime-Environment-for-AskQL-cf4c34bfc7df4e0c8d35ae6213e6f344)
-<br>
+The Documentation is divided into 4 parts:<br>
+* [AskQL Overview](https://www.notion.so/AskQL-Overview-c95f3370be104466bfb3e3bca3ce7db4)
+* [AskQL Quick Guide](https://www.notion.so/AskQL-Quick-Guide-0c5f8659957d47978d63f6afb85170ab)
+* [AskScript - Human Friendly Language for AskScript](https://www.notion.so/AskScript-Human-Friendly-Language-for-AskQL-7c5e382df87a4015b44985391861f6a2)
+* [AskVM - Runtime Environment for AskQL](https://www.notion.so/AskVM-Runtime-Environment-for-AskQL-cf4c34bfc7df4e0c8d35ae6213e6f344)
 
 ### Try It Yourself
 Do not hesitate to try it out yourself! You can also find fellow AskQL devs in our [Discord community](https://discord.gg/pYdzypH).

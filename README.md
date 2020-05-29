@@ -3,7 +3,7 @@
      title="AskQL Logo" width="200">
 </a>
 
-# [AskQL](https://askql.org/)
+# [🦄 AskQL](https://askql.org/)
 
 AskQL is a new query and programming language. 
 <br>Send executable code instead of JSONs.

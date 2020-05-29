@@ -5,7 +5,7 @@
 
 # [AskQL](https://askql.org/)
 
-AskQL is a new query and programming language. 
+AskQL is a new query and programming language that can express any data request.
 <br>Send executable code instead of JSONs.
 
 * Asynchronous by default
@@ -50,7 +50,7 @@ npm install askql
 Sample index.js file:
 
 ```js
-const askql = require("askql");
+const askql = require('askql');
 
 (async () => {
   const result = await askql.runUntyped(

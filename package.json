@@ -6,6 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "jest --config jest.test.config.js --no-cache",
+    "ask": "ASK_PRINT_RESULT=1 jest --config jest.test.config.js --no-cache",
     "check": "tsc --noEmit",
     "tsc": "tsc",
     "prebuild": "rm -rf dist && tsc",

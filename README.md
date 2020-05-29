@@ -3,10 +3,14 @@
      title="AskQL Logo" width="200">
 </a>
 
-# AskQL
+# [AskQL](https://askql.org/)
 
-AskQL is a query language that can express any data request.
-Send executable code instead of JSONs.
+AskQL is a new query and programming language that can express any data request.
+<br>Send executable code instead of JSONs.
+
+* Asynchronous by default
+* Processes only immutable data
+* Based entirely on the functional programming paradigm
 
 ## Why and what for?
 
@@ -22,11 +26,10 @@ Send executable code instead of JSONs.
     height=50%
     width=50%>
 
-- Next milestone after GraphQL
-- Send code to servers without the need to deploy
-- New safe query language
-- 4 - 6 kB of robust code
-- Compiled to clean functional code
+* Next milestone after GraphQL and REST API
+* Send code to servers without the need to deploy
+* New safe query language
+* Compiled to clean functional code
 
 ### Prerequisites
 
@@ -59,7 +62,7 @@ const askql = require('askql');
 })();
 ```
 
-[More examples](https://github.com/xFAANG/askql/tree/master/src/askscript/__tests__)
+[👉 More examples](https://github.com/xFAANG/askql/tree/master/src/askscript/__tests__)
 
 ## Development & Contributing
 
@@ -163,11 +166,19 @@ any ask(query(node('philosophers',f(get('philosophers')))))
 
 You can find all the examples in `__test__` folders
 
-### Quick Guide
+### Documetation
 
-https://www.notion.so/AskQL-Documentation-cd065c579d0c44d381ddddc4682f5736
+Find AskQL documentation [here](https://www.notion.so/AskQL-Documentation-cd065c579d0c44d381ddddc4682f5736).<br>
+
+The Documentation is divided into 4 parts:<br>
+* [AskQL Overview](https://www.notion.so/AskQL-Overview-c95f3370be104466bfb3e3bca3ce7db4)
+* [AskQL Quick Guide](https://www.notion.so/AskQL-Quick-Guide-0c5f8659957d47978d63f6afb85170ab)
+* [AskScript - Human Friendly Language for AskScript](https://www.notion.so/AskScript-Human-Friendly-Language-for-AskQL-7c5e382df87a4015b44985391861f6a2)
+* [AskVM - Runtime Environment for AskQL](https://www.notion.so/AskVM-Runtime-Environment-for-AskQL-cf4c34bfc7df4e0c8d35ae6213e6f344)
 
 ### Try It Yourself
+Do not hesitate to try it out yourself! You can also find fellow AskQL devs in our [Discord community](https://discord.gg/pYdzypH).
+<br>
 
 ### Tools
 

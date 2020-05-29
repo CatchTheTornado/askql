@@ -175,6 +175,8 @@ https://www.notion.so/AskQL-Documentation-cd065c579d0c44d381ddddc4682f5736
 
 #### CLI (AskScript interpreter)
 
+Similar to `python` or `node`, AskScript CLI allows the user to type AskScript programs and get immediate result.
+
 In order to run CLI:
 
 1.  Build the code:
@@ -185,11 +187,36 @@ In order to run CLI:
 
         node dist/cli.js
 
+Every input is treated as an AskScript program. For convenience, CLI expects just the body of your program, without `ask{` `}`.
+
+The editor has 2 modes - a default single-line mode and a multiline mode.
+
+In order to enter the multiline mode, please type `.editor`.
+
+At the end of your multiline input please press Ctrl+D.
+
+        $ node dist/cli.js
+        🦄 .editor
+        // Entering editor mode (^D to finish, ^C to cancel)
+        const a = 'Hello'
+        a:concat(' world')
+
+        (Ctrl+D pressed)
+
+Result:
+
+        string ask(let('a','Hello'),call(get('concat'),get('a'),' world'))
+        'Hello world'
+
+As the output CLI always prints AskCode (which would be sent to an AskVM machine if the code was executed over the network) and the result of the AskScript program.
+
 ## FAQ
 
-### What's the difference between ask {<askcode>} and eval(<jscode>)?
+### What's the difference between `ask { <askcode> }` and `eval( <javascript> )`?
 
-JavaScript's eval( <javascript> ) is terrible at ensuring security. Query programs are executed against the same environment as your own programs. In AskQL, ask { <askscript> } runs on AskVM which is a separate execution context that you define yourself with the exact set of resources, values and limits the each incoming program needs.
+JavaScript's `eval( <javascript> )` is terrible at ensuring security. One can execute there _any_ code on _any_ resources available in Javascript. Moreover there is no control over time of execution or stack size limit.
+
+On contrary, Ask's `ask { <askscript> }` runs by default on a secure, sandboxed AskVM, which has a separate execution context. We have built in control mechanisms that only allow using external resources you configured. Ask programs are also run with the limits on execution time and stack size restrictions you define.
 
 ## Troubleshooting
 

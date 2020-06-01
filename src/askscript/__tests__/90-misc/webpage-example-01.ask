@@ -1,0 +1,15 @@
+ask {
+  const sumOfSquares = fun (a:int): int {
+    const square = fun (a: int): int {
+      a:times(a) // equivalent of times(a, a) or a*a
+    }
+    2* a:square
+  }
+
+  score :times(3) :plus(1) :toString :call(fun(s) {
+    const double = fun(s:string):string {
+      s:concat(s)
+    }
+    s:double // same as s:double()
+  }) :toInt :sumOfSquares
+}

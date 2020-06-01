@@ -1,0 +1,231 @@
+[
+  "ask",
+  {
+    "args": [
+      "list",
+      null
+    ]
+  },
+  [
+    "fun",
+    {
+      "name": "sumOfSquares",
+      "args": [
+        "list",
+        null,
+        [
+          "list",
+          null,
+          "a",
+          "int"
+        ]
+      ],
+      "returns": "int"
+    },
+    [
+      "fun",
+      {
+        "name": "square",
+        "args": [
+          "list",
+          null,
+          [
+            "list",
+            null,
+            "a",
+            "int"
+          ]
+        ],
+        "returns": "int"
+      },
+      [
+        "call",
+        {
+          "name": "times",
+          "args": [
+            "list",
+            null,
+            [
+              "ref",
+              {
+                "name": "a"
+              }
+            ],
+            [
+              "ref",
+              {
+                "name": "a"
+              }
+            ]
+          ]
+        }
+      ]
+    ],
+    [
+      "call",
+      {
+        "name": "*",
+        "args": [
+          "list",
+          null,
+          2,
+          [
+            "call",
+            {
+              "name": "square",
+              "args": [
+                "list",
+                null,
+                [
+                  "ref",
+                  {
+                    "name": "a"
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      }
+    ]
+  ],
+  [
+    "call",
+    {
+      "name": "sumOfSquares",
+      "args": [
+        "list",
+        null,
+        [
+          "call",
+          {
+            "name": "toInt",
+            "args": [
+              "list",
+              null,
+              [
+                "call",
+                {
+                  "name": "call",
+                  "args": [
+                    "list",
+                    null,
+                    [
+                      "call",
+                      {
+                        "name": "toString",
+                        "args": [
+                          "list",
+                          null,
+                          [
+                            "call",
+                            {
+                              "name": "plus",
+                              "args": [
+                                "list",
+                                null,
+                                [
+                                  "call",
+                                  {
+                                    "name": "times",
+                                    "args": [
+                                      "list",
+                                      null,
+                                      [
+                                        "ref",
+                                        {
+                                          "name": "score"
+                                        }
+                                      ],
+                                      3
+                                    ]
+                                  }
+                                ],
+                                1
+                              ]
+                            }
+                          ]
+                        ]
+                      }
+                    ],
+                    [
+                      "fun",
+                      {
+                        "args": [
+                          "list",
+                          null,
+                          [
+                            "list",
+                            null,
+                            "s",
+                            "any"
+                          ]
+                        ],
+                        "returns": "any"
+                      },
+                      [
+                        "fun",
+                        {
+                          "name": "double",
+                          "args": [
+                            "list",
+                            null,
+                            [
+                              "list",
+                              null,
+                              "s",
+                              "string"
+                            ]
+                          ],
+                          "returns": "string"
+                        },
+                        [
+                          "call",
+                          {
+                            "name": "concat",
+                            "args": [
+                              "list",
+                              null,
+                              [
+                                "ref",
+                                {
+                                  "name": "s"
+                                }
+                              ],
+                              [
+                                "ref",
+                                {
+                                  "name": "s"
+                                }
+                              ]
+                            ]
+                          }
+                        ]
+                      ],
+                      [
+                        "call",
+                        {
+                          "name": "double",
+                          "args": [
+                            "list",
+                            null,
+                            [
+                              "ref",
+                              {
+                                "name": "s"
+                              }
+                            ]
+                          ]
+                        }
+                      ]
+                    ]
+                  ]
+                }
+              ]
+            ]
+          }
+        ]
+      ]
+    }
+  ]
+]

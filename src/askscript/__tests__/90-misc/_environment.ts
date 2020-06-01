@@ -16,6 +16,8 @@ export const values: Values = {
 
   b: 5,
   c: 8,
+
+  score: 2,
 };
 
 export const resources: Resources = {

@@ -63,8 +63,7 @@ statement =     lineWithoutCode* wsnonl* s:statement_NoWs wsnonl* (';'? (lineCom
 lastStatement = lineWithoutCode* wsnonl* s:statement_NoWs wsnonl* (';'? (lineComment / wsnonl* nl) / ';'?) { return s }
 statement_NoWs = 
     s:(
-      functionDefinition
-      / variableDefinition
+      variableDefinition
       / if
       / while
       / forOf
@@ -109,9 +108,7 @@ nonArithmExpression =
 
 brackets = '(' ws* v:value ws* ')' { return v }
 
-// === function definition ===
-
-functionDefinition = fS:functionSignature ws* '=' ws* fO:functionObject {                             return new ask.FunctionDefinition(fS, fO) }
+// === function object ===
 
 functionObject = fH:functionHeader cB:codeBlock functionFooter {                                      return new ask.FunctionObject(fH, cB) }
 
@@ -223,6 +220,11 @@ nonEmptyTypeList =
     ws* t:type ws* ',' tL:nonEmptyTypeList { return tL.unshift(t), tL }
   / ws* t:type { return [t] }
 
+// FIXME:
+// - types should allow any functional expression, because we can define our own types
+// - function type
+// - fix src/askscript/__tests__/00-documentation-examples/documentation24-function_type.ask
+// - fix src/askscript/__tests__/00-documentation-examples/documentation01-complete_example.ask
 type = 
     'array(' t:type ')'  {  return new ask.ArrayType(t) }
   / 'map(' t:type ')' {     return new ask.MapType(t) }
@@ -279,7 +281,7 @@ emptyLine = wsnonl* nl
 identifier = [_$a-zA-Z][_$a-zA-Z0-9]* { return new ask.Identifier(text()) } // TODO(lc): add Unicode here one day
 
 // operators consist of chars: -<>+*/^%=&|, but they cannot contain // sequence
-operator = ([-<>+*^%=&|] / ([/] &[^/]))+   {       return new ask.Identifier(text()) }
+operator = ([-<>+*^%=&|] / ([/] &[^/]))+   { return new ask.Identifier(text(), true) }
 
 null = 'null' { return new ask.Null() }
 boolean = true / false

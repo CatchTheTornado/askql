@@ -1,0 +1,7 @@
+ask {
+  const a = 1
+  const b = 1.5
+  const c = false
+  const d = 'asdf'
+  const e = 2.3
+}

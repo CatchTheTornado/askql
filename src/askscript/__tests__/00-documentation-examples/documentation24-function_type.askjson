@@ -7,21 +7,27 @@
     ]
   },
   [
-    "fun",
+    "const",
     {
       "name": "f",
-      "args": [
-        "list",
-        null,
-        [
-          "list",
-          null,
-          "n",
-          "int"
-        ]
-      ],
-      "returns": "string"
-    },
-    ""
+      "type": "any",
+      "value": [
+        "fun",
+        {
+          "args": [
+            "list",
+            null,
+            [
+              "list",
+              null,
+              "n",
+              "int"
+            ]
+          ],
+          "returns": "string"
+        },
+        ""
+      ]
+    }
   ]
 ]

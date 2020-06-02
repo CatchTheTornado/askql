@@ -7,28 +7,62 @@
     ]
   },
   [
-    "fun",
+    "const",
     {
       "name": "factorial",
-      "args": [
-        "list",
-        null,
+      "type": "any",
+      "value": [
+        "fun",
+        {
+          "args": [
+            "list",
+            null,
+            [
+              "list",
+              null,
+              "n",
+              "int"
+            ]
+          ],
+          "returns": "int"
+        },
         [
-          "list",
-          null,
-          "n",
-          "int"
-        ]
-      ],
-      "returns": "int"
-    },
-    [
-      "if",
-      {
-        "condition": [
+          "if",
+          {
+            "condition": [
+              "call",
+              {
+                "name": "lessThan",
+                "args": [
+                  "list",
+                  null,
+                  [
+                    "ref",
+                    {
+                      "name": "n"
+                    }
+                  ],
+                  2
+                ]
+              }
+            ]
+          },
+          [
+            "return",
+            {
+              "value": [
+                "ref",
+                {
+                  "name": "n"
+                }
+              ]
+            }
+          ]
+        ],
+        [
           "call",
           {
-            "name": "lessThan",
+            "name": "multiply",
             "args": [
               "list",
               null,
@@ -38,111 +72,89 @@
                   "name": "n"
                 }
               ],
-              2
+              [
+                "call",
+                {
+                  "name": "factorial",
+                  "args": [
+                    "list",
+                    null,
+                    [
+                      "call",
+                      {
+                        "name": "minus",
+                        "args": [
+                          "list",
+                          null,
+                          [
+                            "ref",
+                            {
+                              "name": "n"
+                            }
+                          ],
+                          1
+                        ]
+                      }
+                    ]
+                  ]
+                }
+              ]
             ]
           }
         ]
-      },
-      [
-        "return",
-        {
-          "value": [
-            "ref",
-            {
-              "name": "n"
-            }
-          ]
-        }
       ]
-    ],
-    [
-      "call",
-      {
-        "name": "multiply",
-        "args": [
-          "list",
-          null,
-          [
-            "ref",
-            {
-              "name": "n"
-            }
-          ],
-          [
-            "call",
-            {
-              "name": "factorial",
-              "args": [
-                "list",
-                null,
-                [
-                  "call",
-                  {
-                    "name": "minus",
-                    "args": [
-                      "list",
-                      null,
-                      [
-                        "ref",
-                        {
-                          "name": "n"
-                        }
-                      ],
-                      1
-                    ]
-                  }
-                ]
-              ]
-            }
-          ]
-        ]
-      }
-    ]
+    }
   ],
   [
-    "fun",
+    "const",
     {
       "name": "sum",
-      "args": [
-        "list",
-        null,
-        [
-          "list",
-          null,
-          "a",
-          "int"
-        ],
-        [
-          "list",
-          null,
-          "b",
-          "int"
-        ]
-      ],
-      "returns": "int"
-    },
-    [
-      "call",
-      {
-        "name": "plus",
-        "args": [
-          "list",
-          null,
-          [
-            "ref",
-            {
-              "name": "a"
-            }
+      "type": "any",
+      "value": [
+        "fun",
+        {
+          "args": [
+            "list",
+            null,
+            [
+              "list",
+              null,
+              "a",
+              "int"
+            ],
+            [
+              "list",
+              null,
+              "b",
+              "int"
+            ]
           ],
-          [
-            "ref",
-            {
-              "name": "b"
-            }
-          ]
+          "returns": "int"
+        },
+        [
+          "call",
+          {
+            "name": "plus",
+            "args": [
+              "list",
+              null,
+              [
+                "ref",
+                {
+                  "name": "a"
+                }
+              ],
+              [
+                "ref",
+                {
+                  "name": "b"
+                }
+              ]
+            ]
+          }
         ]
-      }
-    ]
+      ]
+    }
   ],
   [
     "const",

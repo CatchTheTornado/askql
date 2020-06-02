@@ -20,6 +20,8 @@ import {
 import { getTargetPath } from './node-utils';
 import { fromEntries } from './utils';
 import jasmine2 = require('jest-jasmine2');
+import * as prettier from 'prettier';
+import * as prettierPluginAskScript from './prettier-plugin-askscript';
 
 function compareAsJson(a: any, b: any): boolean {
   return JSON.stringify(a) === JSON.stringify(b);
@@ -51,11 +53,17 @@ async function askRunner(
 
   // console.log(1, Object.keys(jestEnvironment.global));
   // const { process } = jestEnvironment.global;
-  const source = await readFile(testPath, { encoding: 'utf-8' });
+  let source = await readFile(testPath, {
+    encoding: 'utf-8',
+  });
   // console.log('source', source);
   if (source == null) {
     // skip further assertions
     return testResults;
+  }
+
+  if (process.env.ASK_PRINT_SOURCE) {
+    console.log(source);
   }
 
   const askScriptAst = parseToAst(source);
@@ -64,7 +72,9 @@ async function askRunner(
     'ask.ast.json',
     '../src'
   );
-  await mkdir(dirname(askScriptAstTargetPath), { recursive: true });
+  await mkdir(dirname(askScriptAstTargetPath), {
+    recursive: true,
+  });
   await writeFile(
     askScriptAstTargetPath,
     JSON.stringify(askScriptAst, null, 2),
@@ -79,10 +89,41 @@ async function askRunner(
     ...children,
   ]);
   const askJsonTargetPath = getTargetPath(testPath, 'askjson', '../src');
-  await mkdir(dirname(askJsonTargetPath), { recursive: true });
+  await mkdir(dirname(askJsonTargetPath), {
+    recursive: true,
+  });
   await writeFile(askJsonTargetPath, JSON.stringify(askJson, null, 2), {
     encoding: 'utf-8',
   });
+
+  const askFormatted = prettier.format(source, {
+    parser: 'askscript' as prettier.BuiltInParserName,
+    plugins: [prettierPluginAskScript],
+    // TODO load options from file
+  });
+  const askFormattedPath = getTargetPath(
+    testPath,
+    'ask.formatted.ask',
+    '../src'
+  );
+  await mkdir(dirname(askFormattedPath), {
+    recursive: true,
+  });
+  await writeFile(askFormattedPath, askFormatted, {
+    encoding: 'utf-8',
+  });
+
+  // TODO check that if we format again we get the same thing
+
+  if (process.env.ASK_PRINT_SOURCE) {
+    console.log('\n[PRETTIER]:');
+  }
+
+  source = askFormatted; // use formatted source for testing
+
+  if (process.env.ASK_PRINT_SOURCE) {
+    console.log(source);
+  }
 
   const askCode = parseAskScript(source);
   const askCodeSource = askCodeToSource(askCode);
@@ -91,7 +132,9 @@ async function askRunner(
   );
   // console.log({ askCodeSource1: askCodeSource, askCodeSource2 });
   const askCodeTargetPath = getTargetPath(testPath, 'askcode', '../src');
-  await mkdir(dirname(askCodeTargetPath), { recursive: true });
+  await mkdir(dirname(askCodeTargetPath), {
+    recursive: true,
+  });
   await writeFile(askCodeTargetPath, askCodeSource, {
     encoding: 'utf-8',
   });

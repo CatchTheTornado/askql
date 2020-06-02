@@ -7,43 +7,49 @@
     ]
   },
   [
-    "fun",
+    "const",
     {
       "name": "square",
-      "args": [
-        "list",
-        null,
-        [
-          "list",
-          null,
-          "a",
-          "int"
-        ]
-      ],
-      "returns": "int"
-    },
-    [
-      "call",
-      {
-        "name": "times",
-        "args": [
-          "list",
-          null,
-          [
-            "ref",
-            {
-              "name": "a"
-            }
+      "type": "any",
+      "value": [
+        "fun",
+        {
+          "args": [
+            "list",
+            null,
+            [
+              "list",
+              null,
+              "a",
+              "int"
+            ]
           ],
-          [
-            "ref",
-            {
-              "name": "a"
-            }
-          ]
+          "returns": "int"
+        },
+        [
+          "call",
+          {
+            "name": "times",
+            "args": [
+              "list",
+              null,
+              [
+                "ref",
+                {
+                  "name": "a"
+                }
+              ],
+              [
+                "ref",
+                {
+                  "name": "a"
+                }
+              ]
+            ]
+          }
         ]
-      }
-    ]
+      ]
+    }
   ],
   [
     "call",

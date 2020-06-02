@@ -33,7 +33,8 @@
             "name": "bFromEnv"
           }
         ]
-      ]
+      ],
+      "isOperator": true
     }
   ]
 ]

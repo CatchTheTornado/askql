@@ -48,7 +48,8 @@
                   "name": "y"
                 }
               ]
-            ]
+            ],
+            "isOperator": true
           }
         ],
         [
@@ -70,7 +71,8 @@
                   "name": "y"
                 }
               ]
-            ]
+            ],
+            "isOperator": true
           }
         ]
       ]

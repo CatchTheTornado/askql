@@ -7,74 +7,26 @@
     ]
   },
   [
-    "fun",
+    "const",
     {
       "name": "square",
-      "args": [
-        "list",
-        null,
-        [
-          "list",
-          null,
-          "b",
-          "int"
-        ]
-      ],
-      "returns": "int"
-    },
-    [
-      "call",
-      {
-        "name": "times",
-        "args": [
-          "list",
-          null,
-          [
-            "ref",
-            {
-              "name": "b"
-            }
-          ],
-          [
-            "ref",
-            {
-              "name": "b"
-            }
-          ]
-        ]
-      }
-    ],
-    [
-      "if",
-      {
-        "condition": [
-          "call",
-          {
-            "name": "check",
-            "args": [
+      "type": "any",
+      "value": [
+        "fun",
+        {
+          "args": [
+            "list",
+            null,
+            [
               "list",
               null,
-              [
-                "ref",
-                {
-                  "name": "b"
-                }
-              ]
+              "b",
+              "int"
             ]
-          }
-        ]
-      },
-      [
-        "return",
-        {
-          "value": 2
-        }
-      ]
-    ],
-    [
-      "return",
-      {
-        "value": [
+          ],
+          "returns": "int"
+        },
+        [
           "call",
           {
             "name": "times",
@@ -95,9 +47,63 @@
               ]
             ]
           }
+        ],
+        [
+          "if",
+          {
+            "condition": [
+              "call",
+              {
+                "name": "check",
+                "args": [
+                  "list",
+                  null,
+                  [
+                    "ref",
+                    {
+                      "name": "b"
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          [
+            "return",
+            {
+              "value": 2
+            }
+          ]
+        ],
+        [
+          "return",
+          {
+            "value": [
+              "call",
+              {
+                "name": "times",
+                "args": [
+                  "list",
+                  null,
+                  [
+                    "ref",
+                    {
+                      "name": "b"
+                    }
+                  ],
+                  [
+                    "ref",
+                    {
+                      "name": "b"
+                    }
+                  ]
+                ]
+              }
+            ]
+          }
         ]
-      }
-    ]
+      ]
+    }
   ],
   [
     "call",

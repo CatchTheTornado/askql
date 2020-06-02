@@ -7,21 +7,27 @@
     ]
   },
   [
-    "fun",
+    "const",
     {
       "name": "func",
-      "args": [
-        "list",
-        null
-      ],
-      "returns": "any"
-    },
-    [
-      "return",
-      {
-        "value": 5
-      }
-    ]
+      "type": "any",
+      "value": [
+        "fun",
+        {
+          "args": [
+            "list",
+            null
+          ],
+          "returns": "any"
+        },
+        [
+          "return",
+          {
+            "value": 5
+          }
+        ]
+      ]
+    }
   ],
   [
     "call",

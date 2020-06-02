@@ -58,10 +58,12 @@
                                             null,
                                             2,
                                             3
-                                          ]
+                                          ],
+                                          "isOperator": true
                                         }
                                       ]
-                                    ]
+                                    ],
+                                    "isOperator": true
                                   }
                                 ],
                                 [
@@ -80,26 +82,32 @@
                                             null,
                                             4,
                                             5
-                                          ]
+                                          ],
+                                          "isOperator": true
                                         }
                                       ],
                                       6
-                                    ]
+                                    ],
+                                    "isOperator": true
                                   }
                                 ]
-                              ]
+                              ],
+                              "isOperator": true
                             }
                           ],
                           7
-                        ]
+                        ],
+                        "isOperator": true
                       }
                     ],
                     8
-                  ]
+                  ],
+                  "isOperator": true
                 }
               ],
               9
-            ]
+            ],
+            "isOperator": true
           }
         ],
         [
@@ -111,10 +119,12 @@
               null,
               10,
               11
-            ]
+            ],
+            "isOperator": true
           }
         ]
-      ]
+      ],
+      "isOperator": true
     }
   ]
 ]

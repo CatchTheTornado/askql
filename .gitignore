@@ -1,8 +1,8 @@
-dist
-drafts
 node_modules
 
-src/askscript/.vscode/
+/dist
+/drafts
+/false
 
 .vscode/
 

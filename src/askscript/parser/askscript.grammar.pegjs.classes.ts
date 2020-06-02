@@ -54,7 +54,6 @@ export class AskBody {
 
 export class Statement {
   statement:
-    | FunctionDefinition
     | VariableDefinition
     | If
     | While
@@ -67,7 +66,6 @@ export class Statement {
 
   constructor(
     statement:
-      | FunctionDefinition
       | VariableDefinition
       | If
       | While
@@ -236,35 +234,6 @@ export class NonArithmValue {
   }
 }
 
-export class FunctionDefinition {
-  functionSignature: FunctionSignature;
-  functionObject: FunctionObject;
-
-  constructor(
-    functionSignature: FunctionSignature,
-    functionObject: FunctionObject
-  ) {
-    this.functionSignature = functionSignature;
-    this.functionObject = functionObject;
-  }
-
-  print(): LooseObject {
-    let output = {
-      name: 'fun',
-      props: {
-        name: this.functionSignature.identifier.text,
-        args: this.functionObject.functionHeader.argumentList.print(),
-        returns: this.functionObject.functionHeader.returnType.print(),
-      },
-      children: this.functionObject.statementList.map((statement) =>
-        statement.print()
-      ),
-    };
-
-    return output;
-  }
-}
-
 export class FunctionSignature {
   modifier: Const | Let;
   identifier: Identifier;
@@ -408,7 +377,7 @@ export class ForOf {
 
   print(): LooseObject {
     let output = {
-      name: 'for',
+      name: 'forOf',
       props: {
         key: this.variableDeclaration.print(),
         of: this.value.print(),
@@ -436,7 +405,7 @@ export class ForIn {
 
   print(): LooseObject {
     let output = {
-      name: 'for',
+      name: 'forIn',
       props: {
         key: this.variableDeclaration.print(),
         in: this.value.print(),
@@ -537,6 +506,11 @@ export class FunctionCall {
         args: this.callArgList.map((value) => value.print()),
       },
     };
+
+    if (this.identifier.isOperator) {
+      (output.props as any).isOperator = true;
+    }
+
     return output;
   }
 }
@@ -733,9 +707,7 @@ export class Let {
  * (which should be treated in JSX exactly like an identifier).
  */
 export class Identifier {
-  text: string;
-
-  constructor(text: string) {
+  constructor(public text: string, public isOperator: boolean = false) {
     this.text = text;
   }
 

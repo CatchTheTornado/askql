@@ -1,0 +1,4 @@
+ask {
+  return multiply(7, plus(8, minus(1, 4)))
+  multiply(2, plus(3, minus(4, 1)))
+}

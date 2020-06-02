@@ -1,0 +1,5 @@
+ask {
+  while (lessThan(rand(), 0.5)) {
+    doSomething()
+  }
+}

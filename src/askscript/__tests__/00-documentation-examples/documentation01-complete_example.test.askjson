@@ -57,7 +57,8 @@
                             null,
                             2,
                             2
-                          ]
+                          ],
+                          "isOperator": true
                         }
                       ]
                     ]

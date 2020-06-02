@@ -7,76 +7,82 @@
     ]
   },
   [
-    "fun",
+    "const",
     {
       "name": "plus",
-      "args": [
-        "list",
-        null,
-        [
-          "list",
-          null,
-          "a",
-          "any"
-        ],
-        [
-          "list",
-          null,
-          "b",
-          "any"
-        ],
-        [
-          "list",
-          null,
-          "c",
-          "any"
-        ]
-      ],
-      "returns": "float"
-    },
-    [
-      "return",
-      {
-        "value": [
-          "call",
-          {
-            "name": "plus",
-            "args": [
+      "type": "any",
+      "value": [
+        "fun",
+        {
+          "args": [
+            "list",
+            null,
+            [
               "list",
               null,
-              [
-                "call",
-                {
-                  "name": "plus",
-                  "args": [
-                    "list",
-                    null,
-                    [
-                      "ref",
-                      {
-                        "name": "a"
-                      }
-                    ],
-                    [
-                      "ref",
-                      {
-                        "name": "b"
-                      }
-                    ]
+              "a",
+              "any"
+            ],
+            [
+              "list",
+              null,
+              "b",
+              "any"
+            ],
+            [
+              "list",
+              null,
+              "c",
+              "any"
+            ]
+          ],
+          "returns": "float"
+        },
+        [
+          "return",
+          {
+            "value": [
+              "call",
+              {
+                "name": "plus",
+                "args": [
+                  "list",
+                  null,
+                  [
+                    "call",
+                    {
+                      "name": "plus",
+                      "args": [
+                        "list",
+                        null,
+                        [
+                          "ref",
+                          {
+                            "name": "a"
+                          }
+                        ],
+                        [
+                          "ref",
+                          {
+                            "name": "b"
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  [
+                    "ref",
+                    {
+                      "name": "c"
+                    }
                   ]
-                }
-              ],
-              [
-                "ref",
-                {
-                  "name": "c"
-                }
-              ]
+                ]
+              }
             ]
           }
         ]
-      }
-    ]
+      ]
+    }
   ],
   [
     "call",

@@ -1,0 +1,9 @@
+ask {
+  query {
+    firstName : get('firstName')
+    lastName : get('lastName')
+    friends : get('friends') {
+      id : get('id')
+    }
+  }
+}

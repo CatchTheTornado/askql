@@ -93,7 +93,8 @@
               }
             ],
             5
-          ]
+          ],
+          "isOperator": true
         }
       ]
     },

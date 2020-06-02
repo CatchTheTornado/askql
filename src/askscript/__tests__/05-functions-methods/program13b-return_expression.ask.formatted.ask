@@ -1,0 +1,5 @@
+ask {
+  'Hello world!'
+  return plus(get('n'), 1)
+  get('hello')
+}

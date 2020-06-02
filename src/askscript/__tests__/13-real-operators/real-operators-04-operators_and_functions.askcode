@@ -1,1 +1,1 @@
-ask(let('x',3),let('y',-0.4),call(get('times'),call(get('+'),get('x'),get('y')),call(get('-'),get('x'),get('y'))))
+ask(let('x',3),let('y',-0.4),call(get('times'),call(get('+'),call(get('get'),'x'),call(get('get'),'y')),call(get('-'),call(get('get'),'x'),call(get('get'),'y'))))

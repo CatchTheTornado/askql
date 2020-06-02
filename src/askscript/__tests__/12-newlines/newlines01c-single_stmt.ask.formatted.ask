@@ -1,0 +1,3 @@
+ask {
+  concat('factorial', ' is cool')
+}

@@ -1,0 +1,8 @@
+ask {
+  query {
+    firstField : get('otherField')
+    secondField : fun2(34, 'adfs', [])
+    thirdField : fun3(fun2(34, 'adfs', []))
+    upperCaseFullName : toUpperCase(concat(firstName(get('fullName')), ' ', get('lastName')))
+  }
+}

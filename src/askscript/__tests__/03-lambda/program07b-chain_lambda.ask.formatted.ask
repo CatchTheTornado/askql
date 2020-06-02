@@ -1,8 +1,0 @@
-ask {
-  ceil(divideBy(toInt(call(toString(plus(times(get('score'), 2), 1)), fun(s: string): string {
-    const double = fun(s: string): string {
-      concat(get('s'), get('s'))
-    }
-    double(get('s'))
-  })), 6))
-}

@@ -1,3 +1,0 @@
-ask {
-  square(get('a'))
-}

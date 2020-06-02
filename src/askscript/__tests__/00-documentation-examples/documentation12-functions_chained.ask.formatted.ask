@@ -1,3 +1,0 @@
-ask: float {
-  fun1(fun2(fun3(2.4)))
-}

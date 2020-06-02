@@ -1,7 +1,0 @@
-ask {
-  let sum = 0
-  for (let itemPrice of get('itemPrices')) {
-    sum = plus(get('sum'), get('itemPrice'))
-  }
-  get('sum')
-}

@@ -101,17 +101,18 @@ async function askRunner(
     plugins: [prettierPluginAskScript],
     // TODO load options from file
   });
-  const askFormattedPath = getTargetPath(
-    testPath,
-    'ask.formatted.ask',
-    '../src'
-  );
-  await mkdir(dirname(askFormattedPath), {
-    recursive: true,
-  });
-  await writeFile(askFormattedPath, askFormatted, {
-    encoding: 'utf-8',
-  });
+
+  // const askFormattedPath = getTargetPath(
+  //   testPath,
+  //   'ask.formatted.ask',
+  //   '../src'
+  // );
+  // await mkdir(dirname(askFormattedPath), {
+  //   recursive: true,
+  // });
+  // await writeFile(askFormattedPath, askFormatted, {
+  //   encoding: 'utf-8',
+  // });
 
   // TODO check that if we format again we get the same thing
 

@@ -1,3 +1,0 @@
-ask {
-  let capitals = {France: 'Paris', france: 'paris'}
-}

@@ -1,5 +1,0 @@
-ask {
-  const f = fun(n: int): string {
-    ''
-  }
-}

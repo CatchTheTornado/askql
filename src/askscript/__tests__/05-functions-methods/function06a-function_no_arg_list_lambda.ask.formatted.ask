@@ -1,6 +1,0 @@
-ask {
-  const arr = [1, 2, 3, 4]
-  map(get('arr'), fun: any {
-    7
-  })
-}

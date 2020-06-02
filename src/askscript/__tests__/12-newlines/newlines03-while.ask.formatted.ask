@@ -1,6 +1,0 @@
-ask {
-  while (lessThan(get('n'), 2)) {
-    return get('n')
-  }
-  return get('x')
-}

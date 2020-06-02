@@ -1,3 +1,0 @@
-ask {
-  factorial(get('score'))
-}

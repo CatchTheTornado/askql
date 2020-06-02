@@ -1,6 +1,0 @@
-ask {
-  let capitals = {France: 'Paris', Germany: 'Berlin', Spain: 'Madrid', anywhere: 'any town'}
-  let paris = at(get('capitals'), 'France')
-  let berlin = at(get('capitals'), 'Germany')
-  at(get('capitals'), 'anywhere')
-}

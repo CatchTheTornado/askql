@@ -1,7 +1,0 @@
-ask {
-  if (5) {
-    return get('yes')
-  }else {
-    return get('no')
-  }
-}

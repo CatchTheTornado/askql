@@ -1,4 +1,0 @@
-ask {
-  let a = 1
-  (get('a')+get('bFromEnv'))
-}

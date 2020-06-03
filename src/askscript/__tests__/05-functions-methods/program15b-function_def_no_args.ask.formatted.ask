@@ -1,6 +1,0 @@
-ask {
-  const three = fun: int {
-    return 3
-  }
-  three()
-}

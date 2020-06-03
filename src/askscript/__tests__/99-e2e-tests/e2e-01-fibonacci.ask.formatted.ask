@@ -1,9 +1,0 @@
-ask {
-  const factorial = fun(n: int): int {
-    if (lessThan(get('n'), 2)) {
-      return get('n')
-    }
-    times(get('n'), factorial(minus(get('n'), 1)))
-  }
-  factorial(get('score'))
-}

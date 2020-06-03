@@ -1,5 +1,0 @@
-ask {
-  query {
-    firstName : concat(toLowerCase(get('firstName')), ' ', 'is my ', 'name')
-  }
-}

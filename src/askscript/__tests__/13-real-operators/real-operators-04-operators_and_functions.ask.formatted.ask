@@ -1,5 +1,0 @@
-ask {
-  let x = 3
-  let y = -0.4
-  times((get('x')+get('y')), (get('x')-get('y')))
-}

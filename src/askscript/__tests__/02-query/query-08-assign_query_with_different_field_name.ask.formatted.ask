@@ -1,9 +1,0 @@
-ask {
-  const result = query {
-    firstField : get('middleName')
-    secondField : fun2(34, 'adfs', [])
-    thirdField : fun3(fun2(34, 'adfs', []))
-    upperCaseFullName : toUpperCase(concat(get('firstName'), ' ', get('lastName')))
-  }
-  get('result')
-}

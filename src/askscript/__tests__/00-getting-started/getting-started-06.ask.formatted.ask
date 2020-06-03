@@ -1,5 +1,0 @@
-ask {
-  query {
-    fullName : toUpperCase(concat(get('firstName'), ' ', get('lastName')))
-  }
-}

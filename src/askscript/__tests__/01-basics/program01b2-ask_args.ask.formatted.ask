@@ -1,3 +1,0 @@
-ask(n: int, thisIsFloat: float, thisIsString: string) {
-  get('thisIsFloat')
-}

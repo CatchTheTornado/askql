@@ -1,6 +1,0 @@
-ask {
-  query {
-    firstName : get('firstName')
-    lastName : get('lastName')
-  }
-}

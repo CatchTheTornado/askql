@@ -11,3 +11,4 @@ src/askscript/parser/askscript.grammar.js
 askql-*.tgz
 
 *.ask.ast.json
+*.ask.formatted.ask

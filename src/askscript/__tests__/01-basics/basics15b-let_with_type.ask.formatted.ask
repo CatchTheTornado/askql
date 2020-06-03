@@ -1,8 +1,0 @@
-ask {
-  let a = 1
-  let b = 1.5
-  let c = false
-  let d = 'asdf'
-  let e = null
-  let f = 2.3
-}

@@ -1,5 +1,0 @@
-ask {
-  for (const price of get('priceList')) {
-
-  }
-}

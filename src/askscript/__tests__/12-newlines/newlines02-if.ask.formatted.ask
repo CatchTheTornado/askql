@@ -1,6 +1,0 @@
-ask {
-  if (lessThan(get('n'), 2)) {
-    return get('a')
-  }
-  return get('b')
-}

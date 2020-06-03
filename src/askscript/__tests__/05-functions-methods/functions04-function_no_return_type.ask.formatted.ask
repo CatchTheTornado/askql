@@ -1,6 +1,0 @@
-ask {
-  const plus = fun(a: int, b: float, c: int): any {
-    return plus(plus(get('a'), get('b')), get('c'))
-  }
-  plus(2, 3.6, 4)
-}

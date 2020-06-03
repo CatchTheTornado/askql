@@ -1,5 +1,0 @@
-ask {
-  call(fun: any {
-    5
-  })
-}

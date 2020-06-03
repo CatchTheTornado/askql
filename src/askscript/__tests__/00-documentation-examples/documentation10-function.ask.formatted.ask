@@ -1,6 +1,0 @@
-ask: string {
-  if (checkThis()) {
-    return 'your string'
-  }
-  'my string'
-}

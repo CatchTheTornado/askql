@@ -1,0 +1,4 @@
+ask {
+  let lastName = 'Czerwinski'
+  let o = {firstName: toLowerCase(get('firstName')), lastName: toUpperCase(get('lastName'))}
+}

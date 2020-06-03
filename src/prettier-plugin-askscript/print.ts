@@ -1,8 +1,9 @@
 import { Doc, doc, FastPath } from 'prettier';
 import { AskScriptAst } from '../askscript';
+import jsesc from 'jsesc';
 
 // doc.builders API https://github.com/prettier/prettier/blob/master/commands.md
-const { concat, dedent, hardline, indent, join } = doc.builders;
+const { concat, hardline, indent, join } = doc.builders;
 
 export function print(
   path: FastPath<AskScriptAst>,
@@ -16,7 +17,7 @@ export function print(
   }
 
   if (typeof node === 'string') {
-    return concat(["'", node, "'"]);
+    return concat(["'", jsesc(node), "'"]);
   }
 
   if (node == null || typeof node !== 'object') {
@@ -25,9 +26,12 @@ export function print(
   }
 
   if ('jsxValue' in node) {
-    const object = node.jsxValue;
+    const value = node.jsxValue;
+    if (value == null || typeof value !== 'object') {
+      return path.call(print, 'jsxValue');
+    }
     const contents: Doc[] = [];
-    for (const key in object) {
+    for (const key in value) {
       contents.push(concat([key, ': ', path.call(print, 'jsxValue', key)]));
     }
     return concat(['{', join(', ', contents), '}']);
@@ -46,17 +50,26 @@ export function print(
   switch (name) {
     case 'ask':
     case 'fun': {
-      const args = (props.args as [string, string][])
-        .map(([name, type]) => `${name}: ${type}`)
-        .join(', ');
-      if (props.returns != null && typeof props.returns !== 'string') {
-        throw new Error('fun:props.returns expected string');
-      }
-      const { returns } = props;
+      const args =
+        'args' in props
+          ? join(
+              ', ',
+              path.map(
+                (argPath) => {
+                  const [name] = argPath.getValue() as [string, string];
+                  return concat([name, ': ', argPath.call(print, 1)]);
+                },
+                'props',
+                'args'
+              )
+            )
+          : '';
+      const returns =
+        'returns' in props ? path.call(print, 'props', 'returns') : '';
       return concat([
         name,
-        args ? `(${args})` : '',
-        returns ? `: ${returns}` : '',
+        args && concat(['(', args, ')']),
+        returns && concat([': ', returns]),
         ' {',
         indentChildren('children'),
         '}',
@@ -67,13 +80,14 @@ export function print(
       if (typeof props.name !== 'string') {
         throw new Error('call:props.name expected string');
       }
+      const type = 'type' in props ? path.call(print, 'props', 'type') : '';
+      const value = 'value' in props ? path.call(print, 'props', 'value') : '';
       return concat([
         'const',
         ' ',
         props.name,
-        'value' in props
-          ? concat([' = ', path.call(print, 'props', 'value')])
-          : '',
+        type && concat([': ', type]),
+        value && concat([' = ', value]),
       ]);
     }
 

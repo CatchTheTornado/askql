@@ -1,4 +1,9 @@
-import { AskCode, AskCodeOrValue, isAskCode } from '../../askcode';
+import {
+  AskCode,
+  AskCodeOrValue,
+  isAskCode,
+  askCodeToSource,
+} from '../../askcode';
 import { Resources, resource, Resource } from './resource';
 import { JSONable, typed, TypedValue, untyped } from './typed';
 

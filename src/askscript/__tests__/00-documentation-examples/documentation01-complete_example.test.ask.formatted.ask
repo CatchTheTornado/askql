@@ -1,0 +1,6 @@
+ask {
+  test('hello', fun: any {
+    log('Hello!')
+    toBe(expect((2+2)), 4)
+  })
+}

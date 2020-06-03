@@ -234,22 +234,6 @@ export class NonArithmValue {
   }
 }
 
-export class FunctionSignature {
-  modifier: Const | Let;
-  identifier: Identifier;
-  typeNullable: Type;
-
-  constructor(
-    modifier: Const | Let,
-    identifier: Identifier,
-    typeNullable: Type
-  ) {
-    this.modifier = modifier;
-    this.identifier = identifier;
-    this.typeNullable = typeNullable;
-  }
-}
-
 export class FunctionObject {
   functionHeader: FunctionHeader;
   statementList: Statement[];
@@ -535,40 +519,7 @@ export class KeyAccessApplied {
   }
 }
 
-export class Type {
-  identifier: Identifier;
-
-  constructor(identifier: Identifier) {
-    this.identifier = identifier;
-  }
-
-  print(): string {
-    let output = this.identifier.text;
-    return output;
-  }
-}
-
-export class ArrayType extends Type {
-  constructor(type: Type) {
-    super(type.identifier);
-  }
-
-  print(): string {
-    let output = 'array(' + super.print() + ')';
-    return output;
-  }
-}
-
-export class MapType extends Type {
-  constructor(type: Type) {
-    super(type.identifier);
-  }
-
-  print(): string {
-    let output = 'record(' + super.print() + ')';
-    return output;
-  }
-}
+export type Type = FunctionCall | Identifier;
 
 export class ValueLiteral {
   value: Null | True | False | Float | Int | StringLiteral | Array | Map;
@@ -602,6 +553,7 @@ export class StringLiteral {
     const REGULAR_TEXT = 0;
     const ESCAPE_CHARACTER = 1;
     const ESCAPE_UNICODE = 2;
+    const ESCAPE_HEXADECIMAL = 3;
 
     let state = REGULAR_TEXT;
     let stateUnicodeSequence = '';
@@ -623,6 +575,9 @@ export class StringLiteral {
           } else if (c == 'u') {
             state = ESCAPE_UNICODE;
             stateUnicodeSequence = ''; // we empty the container for our Unicode sequence
+          } else if (c == 'x') {
+            state = ESCAPE_HEXADECIMAL;
+            stateUnicodeSequence = ''; // we empty the container for our Unicode sequence
           } else {
             //This shouldn't happen unless someone used escaping for the wrong character.
             //Maybe we should issue a warning.
@@ -636,6 +591,16 @@ export class StringLiteral {
           stateUnicodeSequence += c;
           if (stateUnicodeSequence.length == 4) {
             let c2 = String.fromCodePoint(parseInt(stateUnicodeSequence, 16));
+            unescapedText += c2;
+            stateUnicodeSequence = '';
+            state = REGULAR_TEXT;
+          }
+          break;
+
+        case ESCAPE_HEXADECIMAL:
+          stateUnicodeSequence += c;
+          if (stateUnicodeSequence.length == 2) {
+            let c2 = String.fromCharCode(parseInt(stateUnicodeSequence, 16));
             unescapedText += c2;
             stateUnicodeSequence = '';
             state = REGULAR_TEXT;
@@ -869,7 +834,7 @@ export class RemoteHeader {
 }
 
 export const nullValue = new NonArithmValue(new ValueLiteral(new Null()), []);
-export const anyType = new Type(new Identifier('any'));
+export const anyType = new Identifier('any');
 
 interface LooseObject {
   [key: string]: any;

@@ -82,16 +82,31 @@
                                   "list",
                                   null,
                                   "s",
-                                  "string"
+                                  [
+                                    "ref",
+                                    {
+                                      "name": "string"
+                                    }
+                                  ]
                                 ]
                               ],
-                              "returns": "string"
+                              "returns": [
+                                "ref",
+                                {
+                                  "name": "string"
+                                }
+                              ]
                             },
                             [
                               "const",
                               {
                                 "name": "double",
-                                "type": "any",
+                                "type": [
+                                  "ref",
+                                  {
+                                    "name": "any"
+                                  }
+                                ],
                                 "value": [
                                   "fun",
                                   {
@@ -102,10 +117,20 @@
                                         "list",
                                         null,
                                         "s",
-                                        "string"
+                                        [
+                                          "ref",
+                                          {
+                                            "name": "string"
+                                          }
+                                        ]
                                       ]
                                     ],
-                                    "returns": "string"
+                                    "returns": [
+                                      "ref",
+                                      {
+                                        "name": "string"
+                                      }
+                                    ]
                                   },
                                   [
                                     "call",

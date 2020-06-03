@@ -8,16 +8,47 @@
         "list",
         null,
         "arg1",
-        "int"
+        [
+          "ref",
+          {
+            "name": "int"
+          }
+        ]
       ]
     ],
-    "returns": "string"
+    "returns": [
+      "ref",
+      {
+        "name": "string"
+      }
+    ]
   },
   [
     "const",
     {
       "name": "factorial",
-      "type": "any",
+      "type": [
+        "call",
+        {
+          "name": "fun",
+          "args": [
+            "list",
+            null,
+            [
+              "ref",
+              {
+                "name": "int"
+              }
+            ],
+            [
+              "ref",
+              {
+                "name": "int"
+              }
+            ]
+          ]
+        }
+      ],
       "value": [
         "fun",
         {
@@ -28,10 +59,20 @@
               "list",
               null,
               "n",
-              "int"
+              [
+                "ref",
+                {
+                  "name": "int"
+                }
+              ]
             ]
           ],
-          "returns": "int"
+          "returns": [
+            "ref",
+            {
+              "name": "int"
+            }
+          ]
         },
         [
           "if",
@@ -116,7 +157,34 @@
     "const",
     {
       "name": "sum",
-      "type": "any",
+      "type": [
+        "call",
+        {
+          "name": "fun",
+          "args": [
+            "list",
+            null,
+            [
+              "ref",
+              {
+                "name": "int"
+              }
+            ],
+            [
+              "ref",
+              {
+                "name": "int"
+              }
+            ],
+            [
+              "ref",
+              {
+                "name": "int"
+              }
+            ]
+          ]
+        }
+      ],
       "value": [
         "fun",
         {
@@ -127,16 +195,31 @@
               "list",
               null,
               "a",
-              "int"
+              [
+                "ref",
+                {
+                  "name": "int"
+                }
+              ]
             ],
             [
               "list",
               null,
               "b",
-              "int"
+              [
+                "ref",
+                {
+                  "name": "int"
+                }
+              ]
             ]
           ],
-          "returns": "int"
+          "returns": [
+            "ref",
+            {
+              "name": "int"
+            }
+          ]
         },
         [
           "call",
@@ -167,7 +250,12 @@
     "const",
     {
       "name": "one",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": 1
     }
   ],

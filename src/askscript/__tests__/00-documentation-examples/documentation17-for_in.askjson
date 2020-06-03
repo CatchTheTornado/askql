@@ -13,7 +13,12 @@
         "const",
         {
           "name": "index",
-          "type": "any"
+          "type": [
+            "ref",
+            {
+              "name": "any"
+            }
+          ]
         }
       ],
       "in": [

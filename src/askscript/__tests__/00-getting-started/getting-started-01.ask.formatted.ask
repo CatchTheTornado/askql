@@ -1,0 +1,3 @@
+ask {
+  get('hello')
+}

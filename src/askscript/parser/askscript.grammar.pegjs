@@ -111,10 +111,7 @@ brackets = '(' ws* v:value ws* ')' { return v }
 // === function object ===
 
 functionObject = fH:functionHeader cB:codeBlock functionFooter {                                      return new ask.FunctionObject(fH, cB) }
-
-functionSignature = m:modifier ws+ i:identifier tD:functionHeader_typeDecl? {                         return new ask.FunctionSignature(m, i, tD) }
 functionHeader = 'fun' aL:argBrackets? rTD:functionHeader_returnTypeDecl? ws* '{' ws* lineComment? {  return new ask.FunctionHeader(aL === null ? [] : aL, rTD === null ? ask.anyType : rTD) }
-functionHeader_typeDecl = ws* ':' ws* t1:functionType { return t1 } // this is the optional variable type declaration
 functionHeader_returnTypeDecl = ws* ':' ws* t2:type { return t2 } // this is the optional return type declaration
 
 functionFooter = blockFooter
@@ -210,25 +207,9 @@ methodCallAppliedArgList = ws* '(' cAL:callArgList ')' { return cAL }
 
 // === simple elements ===
 
-functionType = 
-  type ws* '(' ws* typeList ws* ')'
-  / type
-typeList = 
-    tL:nonEmptyTypeList { return tL }
-  / '' {                  return [] }
-nonEmptyTypeList = 
-    ws* t:type ws* ',' tL:nonEmptyTypeList { return tL.unshift(t), tL }
-  / ws* t:type { return [t] }
-
-// FIXME:
-// - types should allow any functional expression, because we can define our own types
-// - function type
-// - fix src/askscript/__tests__/00-documentation-examples/documentation24-function_type.ask
-// - fix src/askscript/__tests__/00-documentation-examples/documentation01-complete_example.ask
-type = 
-    'array(' t:type ')'  {  return new ask.ArrayType(t) }
-  / 'map(' t:type ')' {     return new ask.MapType(t) }
-  / i:identifier {          return new ask.Type(i) }
+// TODO:
+// - [ ] function type sugar (a1, a2, a3, ...) -> retType for fun(retType, a1, a2, a3(, true))
+type = t:(functionCall/identifier) { return t }
 
 
 valueLiteral = 
@@ -301,6 +282,7 @@ escape =
       "'"
     / '\\'  // this is one backslash
     / 'u' hex hex hex hex
+    / 'x' hex hex
 
 // digits (dec and hex)
 hex = [0-9A-Fa-f]

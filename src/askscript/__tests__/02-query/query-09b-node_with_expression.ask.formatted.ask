@@ -1,0 +1,8 @@
+ask {
+  query {
+    friends : where(knex(get('friends')), {email: 'hi@example.com', firstName: 'Luke'}) {
+      firstName : get('firstName')
+      lastName : get('lastName')
+    }
+  }
+}

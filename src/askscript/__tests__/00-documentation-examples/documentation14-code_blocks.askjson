@@ -10,7 +10,12 @@
     "const",
     {
       "name": "factorial",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "fun",
         {
@@ -21,10 +26,20 @@
               "list",
               null,
               "n",
-              "int"
+              [
+                "ref",
+                {
+                  "name": "int"
+                }
+              ]
             ]
           ],
-          "returns": "int"
+          "returns": [
+            "ref",
+            {
+              "name": "int"
+            }
+          ]
         },
         [
           "if",
@@ -109,7 +124,12 @@
     "const",
     {
       "name": "sum",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "fun",
         {
@@ -120,16 +140,31 @@
               "list",
               null,
               "a",
-              "int"
+              [
+                "ref",
+                {
+                  "name": "int"
+                }
+              ]
             ],
             [
               "list",
               null,
               "b",
-              "int"
+              [
+                "ref",
+                {
+                  "name": "int"
+                }
+              ]
             ]
           ],
-          "returns": "int"
+          "returns": [
+            "ref",
+            {
+              "name": "int"
+            }
+          ]
         },
         [
           "call",
@@ -160,7 +195,12 @@
     "const",
     {
       "name": "one",
-      "type": "int",
+      "type": [
+        "ref",
+        {
+          "name": "int"
+        }
+      ],
       "value": 1
     }
   ],
@@ -168,7 +208,12 @@
     "set",
     {
       "name": "list",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "list",
         null,

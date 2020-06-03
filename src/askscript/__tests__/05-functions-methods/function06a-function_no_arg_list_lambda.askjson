@@ -10,7 +10,12 @@
     "const",
     {
       "name": "arr",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "list",
         null,
@@ -41,7 +46,12 @@
               "list",
               null
             ],
-            "returns": "any"
+            "returns": [
+              "ref",
+              {
+                "name": "any"
+              }
+            ]
           },
           7
         ]

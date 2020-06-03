@@ -1,0 +1,10 @@
+ask {
+  const result = query {
+    firstName : get('firstName')
+    lastName : get('lastName')
+    friends : get('friends') {
+      id : get('id')
+    }
+  }
+  get('result')
+}

@@ -1,0 +1,4 @@
+ask {
+  let lastName = 'Czerwinski'
+  let o = {firstName: get('firstName'), lastName: get('lastName')}
+}

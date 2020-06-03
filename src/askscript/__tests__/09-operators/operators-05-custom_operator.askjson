@@ -5,13 +5,23 @@
       "list",
       null
     ],
-    "returns": "string"
+    "returns": [
+      "ref",
+      {
+        "name": "string"
+      }
+    ]
   },
   [
     "set",
     {
       "name": "<>",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "fun",
         {
@@ -22,16 +32,31 @@
               "list",
               null,
               "a",
-              "float"
+              [
+                "ref",
+                {
+                  "name": "float"
+                }
+              ]
             ],
             [
               "list",
               null,
               "b",
-              "float"
+              [
+                "ref",
+                {
+                  "name": "float"
+                }
+              ]
             ]
           ],
-          "returns": "bool"
+          "returns": [
+            "ref",
+            {
+              "name": "bool"
+            }
+          ]
         },
         [
           "call",
@@ -72,7 +97,12 @@
     "set",
     {
       "name": "a",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": 3
     }
   ],

@@ -10,7 +10,12 @@
     "const",
     {
       "name": "f",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "fun",
         {
@@ -21,10 +26,20 @@
               "list",
               null,
               "n",
-              "int"
+              [
+                "ref",
+                {
+                  "name": "int"
+                }
+              ]
             ]
           ],
-          "returns": "string"
+          "returns": [
+            "ref",
+            {
+              "name": "string"
+            }
+          ]
         },
         ""
       ]

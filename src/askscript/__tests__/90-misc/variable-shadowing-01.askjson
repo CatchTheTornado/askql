@@ -10,7 +10,12 @@
     "const",
     {
       "name": "square",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "fun",
         {
@@ -21,10 +26,20 @@
               "list",
               null,
               "b",
-              "int"
+              [
+                "ref",
+                {
+                  "name": "int"
+                }
+              ]
             ]
           ],
-          "returns": "int"
+          "returns": [
+            "ref",
+            {
+              "name": "int"
+            }
+          ]
         },
         [
           "call",

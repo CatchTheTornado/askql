@@ -1,0 +1,3 @@
+ask {
+  let capitals = {France: 'Paris', Germany: 'Berlin', Spain: 'Madrid'}
+}

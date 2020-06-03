@@ -10,7 +10,12 @@
     "set",
     {
       "name": "lastName",
-      "type": "string",
+      "type": [
+        "ref",
+        {
+          "name": "string"
+        }
+      ],
       "value": "Czerwinski"
     }
   ],
@@ -18,7 +23,12 @@
     "set",
     {
       "name": "hobby",
-      "type": "string",
+      "type": [
+        "ref",
+        {
+          "name": "string"
+        }
+      ],
       "value": "choir music"
     }
   ],
@@ -26,7 +36,12 @@
     "set",
     {
       "name": "o",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "code",
         {

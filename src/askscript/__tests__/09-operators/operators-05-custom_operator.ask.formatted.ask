@@ -1,0 +1,10 @@
+ask: string {
+  let <> = fun(a: float, b: float): bool {
+    not(equals(get('a'), get('b')))
+  }
+  let a = 3
+  if ((get('a')<>5)) {
+    return 'It works!'
+  }
+  'Ouch.'
+}

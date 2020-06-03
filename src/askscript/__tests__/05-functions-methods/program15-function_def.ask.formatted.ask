@@ -1,0 +1,6 @@
+ask {
+  const square = fun(a: int): int {
+    times(get('a'), get('a'))
+  }
+  plus(square(get('a')), square(get('a')))
+}

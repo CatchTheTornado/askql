@@ -1,0 +1,6 @@
+ask {
+  query {
+    firstName : toUpperCase(get('firstName'))
+    lastName : concat(toLowerCase(get('lastName')), ' ', 'is my ', 'name; ', 'lastName :: toLowerCase is a shorthand to: lastName : lastName:toLowerCase')
+  }
+}

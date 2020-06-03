@@ -41,7 +41,6 @@ async function askRunner(
     starts: passed(),
   };
 
-  // console.log({ env: process.env.NODE_ENV, testPath });
   if (process.env.NODE_ENV === 'test' && !testPath.endsWith('.ask')) {
     return testResults;
   }
@@ -51,12 +50,10 @@ async function askRunner(
     computes: null,
   });
 
-  // console.log(1, Object.keys(jestEnvironment.global));
-  // const { process } = jestEnvironment.global;
   let source = await readFile(testPath, {
     encoding: 'utf-8',
   });
-  // console.log('source', source);
+
   if (source == null) {
     // skip further assertions
     return testResults;

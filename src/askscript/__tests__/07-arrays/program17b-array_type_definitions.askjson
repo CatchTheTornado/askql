@@ -10,7 +10,22 @@
     "set",
     {
       "name": "arr1",
-      "type": "array(int)",
+      "type": [
+        "call",
+        {
+          "name": "array",
+          "args": [
+            "list",
+            null,
+            [
+              "ref",
+              {
+                "name": "int"
+              }
+            ]
+          ]
+        }
+      ],
       "value": [
         "list",
         null,
@@ -24,7 +39,12 @@
     "set",
     {
       "name": "arr2",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "list",
         null,
@@ -38,7 +58,12 @@
     "set",
     {
       "name": "arr3",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "list",
         null,
@@ -52,7 +77,12 @@
     "set",
     {
       "name": "arr4",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "list",
         null,

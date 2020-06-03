@@ -10,7 +10,22 @@
     "set",
     {
       "name": "capitals",
-      "type": "record(string)",
+      "type": [
+        "call",
+        {
+          "name": "map",
+          "args": [
+            "list",
+            null,
+            [
+              "ref",
+              {
+                "name": "string"
+              }
+            ]
+          ]
+        }
+      ],
       "value": [
         "code",
         {
@@ -31,7 +46,12 @@
     "set",
     {
       "name": "paris",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "call",
         {
@@ -55,7 +75,12 @@
     "set",
     {
       "name": "berlin",
-      "type": "string",
+      "type": [
+        "ref",
+        {
+          "name": "string"
+        }
+      ],
       "value": [
         "call",
         {

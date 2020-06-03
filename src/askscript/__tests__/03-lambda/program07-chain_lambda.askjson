@@ -20,7 +20,12 @@
               "list",
               null
             ],
-            "returns": "any"
+            "returns": [
+              "ref",
+              {
+                "name": "any"
+              }
+            ]
           },
           5
         ]

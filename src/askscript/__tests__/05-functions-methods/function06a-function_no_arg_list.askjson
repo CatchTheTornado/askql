@@ -10,7 +10,12 @@
     "const",
     {
       "name": "func",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "fun",
         {
@@ -18,7 +23,12 @@
             "list",
             null
           ],
-          "returns": "any"
+          "returns": [
+            "ref",
+            {
+              "name": "any"
+            }
+          ]
         },
         [
           "return",

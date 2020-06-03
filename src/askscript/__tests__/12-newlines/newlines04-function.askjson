@@ -10,7 +10,12 @@
     "const",
     {
       "name": "plus",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "fun",
         {
@@ -21,22 +26,42 @@
               "list",
               null,
               "a",
-              "any"
+              [
+                "ref",
+                {
+                  "name": "any"
+                }
+              ]
             ],
             [
               "list",
               null,
               "b",
-              "any"
+              [
+                "ref",
+                {
+                  "name": "any"
+                }
+              ]
             ],
             [
               "list",
               null,
               "c",
-              "any"
+              [
+                "ref",
+                {
+                  "name": "any"
+                }
+              ]
             ]
           ],
-          "returns": "float"
+          "returns": [
+            "ref",
+            {
+              "name": "float"
+            }
+          ]
         },
         [
           "return",
@@ -44,14 +69,14 @@
             "value": [
               "call",
               {
-                "name": "plus",
+                "name": "sum",
                 "args": [
                   "list",
                   null,
                   [
                     "call",
                     {
-                      "name": "plus",
+                      "name": "sum",
                       "args": [
                         "list",
                         null,

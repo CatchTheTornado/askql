@@ -1,0 +1,7 @@
+ask {
+  let sum = 0
+  for (let index in get('itemPrices')) {
+    sum = plus(get('sum'), at(get('itemPrices'), get('index')))
+  }
+  get('sum')
+}

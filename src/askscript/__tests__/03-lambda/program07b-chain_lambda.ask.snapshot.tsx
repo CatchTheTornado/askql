@@ -1,35 +1,5 @@
 export = (
   <ask args={<list />}>
-    <let
-      name="useFor"
-      type={<ref name="any" />}
-      value={
-        <fun
-          args={
-            <list>
-              <list>
-                {"x"}
-                <ref name="any" />
-              </list>
-              <list>
-                {"f"}
-                <ref name="any" />
-              </list>
-            </list>
-          }
-          returns={<ref name="any" />}
-        >
-          <call
-            name="f"
-            args={
-              <list>
-                <ref name="x" />
-              </list>
-            }
-          />
-        </fun>
-      }
-    />
     <call
       name="ceil"
       args={

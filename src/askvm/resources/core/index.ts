@@ -21,4 +21,5 @@ export { node, query } from './query';
 export { returnRes as return } from './return';
 export { trueRes as true } from './true';
 export { typedRes as typed } from './typed';
+export * from './useFor';
 export { whileRes as while } from './while';

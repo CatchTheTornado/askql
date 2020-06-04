@@ -5,8 +5,6 @@ export const returnRes = resource({
   async compute(options, code) {
     const result = await runUntyped(options, code.params![0]);
 
-    console.log('return', options);
-
     for (
       let prototype: Options | undefined = options;
       prototype;

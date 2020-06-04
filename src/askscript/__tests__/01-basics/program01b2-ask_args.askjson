@@ -8,19 +8,34 @@
         "list",
         null,
         "n",
-        "int"
+        [
+          "ref",
+          {
+            "name": "int"
+          }
+        ]
       ],
       [
         "list",
         null,
         "thisIsFloat",
-        "float"
+        [
+          "ref",
+          {
+            "name": "float"
+          }
+        ]
       ],
       [
         "list",
         null,
         "thisIsString",
-        "string"
+        [
+          "ref",
+          {
+            "name": "string"
+          }
+        ]
       ]
     ]
   },

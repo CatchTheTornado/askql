@@ -82,49 +82,80 @@
                                   "list",
                                   null,
                                   "s",
-                                  "string"
+                                  [
+                                    "ref",
+                                    {
+                                      "name": "string"
+                                    }
+                                  ]
                                 ]
                               ],
-                              "returns": "string"
-                            },
-                            [
-                              "fun",
-                              {
-                                "name": "double",
-                                "args": [
-                                  "list",
-                                  null,
-                                  [
-                                    "list",
-                                    null,
-                                    "s",
-                                    "string"
-                                  ]
-                                ],
-                                "returns": "string"
-                              },
-                              [
-                                "call",
+                              "returns": [
+                                "ref",
                                 {
-                                  "name": "concat",
-                                  "args": [
-                                    "list",
-                                    null,
-                                    [
-                                      "ref",
-                                      {
-                                        "name": "s"
-                                      }
-                                    ],
-                                    [
-                                      "ref",
-                                      {
-                                        "name": "s"
-                                      }
-                                    ]
-                                  ]
+                                  "name": "string"
                                 }
                               ]
+                            },
+                            [
+                              "const",
+                              {
+                                "name": "double",
+                                "type": [
+                                  "ref",
+                                  {
+                                    "name": "any"
+                                  }
+                                ],
+                                "value": [
+                                  "fun",
+                                  {
+                                    "args": [
+                                      "list",
+                                      null,
+                                      [
+                                        "list",
+                                        null,
+                                        "s",
+                                        [
+                                          "ref",
+                                          {
+                                            "name": "string"
+                                          }
+                                        ]
+                                      ]
+                                    ],
+                                    "returns": [
+                                      "ref",
+                                      {
+                                        "name": "string"
+                                      }
+                                    ]
+                                  },
+                                  [
+                                    "call",
+                                    {
+                                      "name": "concat",
+                                      "args": [
+                                        "list",
+                                        null,
+                                        [
+                                          "ref",
+                                          {
+                                            "name": "s"
+                                          }
+                                        ],
+                                        [
+                                          "ref",
+                                          {
+                                            "name": "s"
+                                          }
+                                        ]
+                                      ]
+                                    }
+                                  ]
+                                ]
+                              }
                             ],
                             [
                               "call",

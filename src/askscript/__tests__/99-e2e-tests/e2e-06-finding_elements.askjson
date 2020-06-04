@@ -10,7 +10,12 @@
     "const",
     {
       "name": "covid",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "list",
         null,
@@ -110,10 +115,20 @@
                 "list",
                 null,
                 "c",
-                "any"
+                [
+                  "ref",
+                  {
+                    "name": "any"
+                  }
+                ]
               ]
             ],
-            "returns": "any"
+            "returns": [
+              "ref",
+              {
+                "name": "any"
+              }
+            ]
           },
           [
             "return",
@@ -181,7 +196,8 @@
                         ]
                       }
                     ]
-                  ]
+                  ],
+                  "isOperator": true
                 }
               ]
             }

@@ -7,13 +7,18 @@
     ]
   },
   [
-    "for",
+    "forOf",
     {
       "key": [
         "const",
         {
           "name": "price",
-          "type": "any"
+          "type": [
+            "ref",
+            {
+              "name": "any"
+            }
+          ]
         }
       ],
       "of": [

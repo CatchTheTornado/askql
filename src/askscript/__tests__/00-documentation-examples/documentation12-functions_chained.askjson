@@ -5,7 +5,12 @@
       "list",
       null
     ],
-    "returns": "float"
+    "returns": [
+      "ref",
+      {
+        "name": "float"
+      }
+    ]
   },
   [
     "call",

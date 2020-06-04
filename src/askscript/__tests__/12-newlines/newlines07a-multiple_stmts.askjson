@@ -10,7 +10,12 @@
     "set",
     {
       "name": "a",
-      "type": "int",
+      "type": [
+        "ref",
+        {
+          "name": "int"
+        }
+      ],
       "value": 1
     }
   ],
@@ -18,7 +23,12 @@
     "set",
     {
       "name": "b",
-      "type": "float",
+      "type": [
+        "ref",
+        {
+          "name": "float"
+        }
+      ],
       "value": 1.5
     }
   ]

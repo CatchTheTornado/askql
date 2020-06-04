@@ -54,7 +54,6 @@ export class AskBody {
 
 export class Statement {
   statement:
-    | FunctionDefinition
     | VariableDefinition
     | If
     | While
@@ -67,7 +66,6 @@ export class Statement {
 
   constructor(
     statement:
-      | FunctionDefinition
       | VariableDefinition
       | If
       | While
@@ -236,51 +234,6 @@ export class NonArithmValue {
   }
 }
 
-export class FunctionDefinition {
-  functionSignature: FunctionSignature;
-  functionObject: FunctionObject;
-
-  constructor(
-    functionSignature: FunctionSignature,
-    functionObject: FunctionObject
-  ) {
-    this.functionSignature = functionSignature;
-    this.functionObject = functionObject;
-  }
-
-  print(): LooseObject {
-    let output = {
-      name: 'fun',
-      props: {
-        name: this.functionSignature.identifier.text,
-        args: this.functionObject.functionHeader.argumentList.print(),
-        returns: this.functionObject.functionHeader.returnType.print(),
-      },
-      children: this.functionObject.statementList.map((statement) =>
-        statement.print()
-      ),
-    };
-
-    return output;
-  }
-}
-
-export class FunctionSignature {
-  modifier: Const | Let;
-  identifier: Identifier;
-  typeNullable: Type;
-
-  constructor(
-    modifier: Const | Let,
-    identifier: Identifier,
-    typeNullable: Type
-  ) {
-    this.modifier = modifier;
-    this.identifier = identifier;
-    this.typeNullable = typeNullable;
-  }
-}
-
 export class FunctionObject {
   functionHeader: FunctionHeader;
   statementList: Statement[];
@@ -408,7 +361,7 @@ export class ForOf {
 
   print(): LooseObject {
     let output = {
-      name: 'for',
+      name: 'forOf',
       props: {
         key: this.variableDeclaration.print(),
         of: this.value.print(),
@@ -436,7 +389,7 @@ export class ForIn {
 
   print(): LooseObject {
     let output = {
-      name: 'for',
+      name: 'forIn',
       props: {
         key: this.variableDeclaration.print(),
         in: this.value.print(),
@@ -537,6 +490,11 @@ export class FunctionCall {
         args: this.callArgList.map((value) => value.print()),
       },
     };
+
+    if (this.identifier.isOperator) {
+      (output.props as any).isOperator = true;
+    }
+
     return output;
   }
 }
@@ -561,40 +519,7 @@ export class KeyAccessApplied {
   }
 }
 
-export class Type {
-  identifier: Identifier;
-
-  constructor(identifier: Identifier) {
-    this.identifier = identifier;
-  }
-
-  print(): string {
-    let output = this.identifier.text;
-    return output;
-  }
-}
-
-export class ArrayType extends Type {
-  constructor(type: Type) {
-    super(type.identifier);
-  }
-
-  print(): string {
-    let output = 'array(' + super.print() + ')';
-    return output;
-  }
-}
-
-export class MapType extends Type {
-  constructor(type: Type) {
-    super(type.identifier);
-  }
-
-  print(): string {
-    let output = 'record(' + super.print() + ')';
-    return output;
-  }
-}
+export type Type = FunctionCall | Identifier;
 
 export class ValueLiteral {
   value: Null | True | False | Float | Int | StringLiteral | Array | Map;
@@ -628,6 +553,7 @@ export class StringLiteral {
     const REGULAR_TEXT = 0;
     const ESCAPE_CHARACTER = 1;
     const ESCAPE_UNICODE = 2;
+    const ESCAPE_HEXADECIMAL = 3;
 
     let state = REGULAR_TEXT;
     let stateUnicodeSequence = '';
@@ -649,6 +575,9 @@ export class StringLiteral {
           } else if (c == 'u') {
             state = ESCAPE_UNICODE;
             stateUnicodeSequence = ''; // we empty the container for our Unicode sequence
+          } else if (c == 'x') {
+            state = ESCAPE_HEXADECIMAL;
+            stateUnicodeSequence = ''; // we empty the container for our Unicode sequence
           } else {
             //This shouldn't happen unless someone used escaping for the wrong character.
             //Maybe we should issue a warning.
@@ -662,6 +591,16 @@ export class StringLiteral {
           stateUnicodeSequence += c;
           if (stateUnicodeSequence.length == 4) {
             let c2 = String.fromCodePoint(parseInt(stateUnicodeSequence, 16));
+            unescapedText += c2;
+            stateUnicodeSequence = '';
+            state = REGULAR_TEXT;
+          }
+          break;
+
+        case ESCAPE_HEXADECIMAL:
+          stateUnicodeSequence += c;
+          if (stateUnicodeSequence.length == 2) {
+            let c2 = String.fromCharCode(parseInt(stateUnicodeSequence, 16));
             unescapedText += c2;
             stateUnicodeSequence = '';
             state = REGULAR_TEXT;
@@ -733,9 +672,7 @@ export class Let {
  * (which should be treated in JSX exactly like an identifier).
  */
 export class Identifier {
-  text: string;
-
-  constructor(text: string) {
+  constructor(public text: string, public isOperator: boolean = false) {
     this.text = text;
   }
 
@@ -897,7 +834,7 @@ export class RemoteHeader {
 }
 
 export const nullValue = new NonArithmValue(new ValueLiteral(new Null()), []);
-export const anyType = new Type(new Identifier('any'));
+export const anyType = new Identifier('any');
 
 interface LooseObject {
   [key: string]: any;

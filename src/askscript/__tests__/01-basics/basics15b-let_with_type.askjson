@@ -10,7 +10,12 @@
     "set",
     {
       "name": "a",
-      "type": "int",
+      "type": [
+        "ref",
+        {
+          "name": "int"
+        }
+      ],
       "value": 1
     }
   ],
@@ -18,7 +23,12 @@
     "set",
     {
       "name": "b",
-      "type": "float",
+      "type": [
+        "ref",
+        {
+          "name": "float"
+        }
+      ],
       "value": 1.5
     }
   ],
@@ -26,7 +36,12 @@
     "set",
     {
       "name": "c",
-      "type": "bool",
+      "type": [
+        "ref",
+        {
+          "name": "bool"
+        }
+      ],
       "value": false
     }
   ],
@@ -34,7 +49,12 @@
     "set",
     {
       "name": "d",
-      "type": "string",
+      "type": [
+        "ref",
+        {
+          "name": "string"
+        }
+      ],
       "value": "asdf"
     }
   ],
@@ -42,7 +62,12 @@
     "set",
     {
       "name": "e",
-      "type": "empty",
+      "type": [
+        "ref",
+        {
+          "name": "empty"
+        }
+      ],
       "value": null
     }
   ],
@@ -50,7 +75,12 @@
     "set",
     {
       "name": "f",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": 2.3
     }
   ]

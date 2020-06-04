@@ -7,76 +7,107 @@
     ]
   },
   [
-    "fun",
+    "const",
     {
       "name": "plus",
-      "args": [
-        "list",
-        null,
-        [
-          "list",
-          null,
-          "a",
-          "any"
-        ],
-        [
-          "list",
-          null,
-          "b",
-          "any"
-        ],
-        [
-          "list",
-          null,
-          "c",
-          "any"
-        ]
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
       ],
-      "returns": "float"
-    },
-    [
-      "return",
-      {
-        "value": [
-          "call",
-          {
-            "name": "sum",
-            "args": [
+      "value": [
+        "fun",
+        {
+          "args": [
+            "list",
+            null,
+            [
               "list",
               null,
-              [
-                "call",
-                {
-                  "name": "sum",
-                  "args": [
-                    "list",
-                    null,
-                    [
-                      "ref",
-                      {
-                        "name": "a"
-                      }
-                    ],
-                    [
-                      "ref",
-                      {
-                        "name": "b"
-                      }
-                    ]
-                  ]
-                }
-              ],
+              "a",
               [
                 "ref",
                 {
-                  "name": "c"
+                  "name": "any"
+                }
+              ]
+            ],
+            [
+              "list",
+              null,
+              "b",
+              [
+                "ref",
+                {
+                  "name": "any"
+                }
+              ]
+            ],
+            [
+              "list",
+              null,
+              "c",
+              [
+                "ref",
+                {
+                  "name": "any"
                 }
               ]
             ]
+          ],
+          "returns": [
+            "ref",
+            {
+              "name": "float"
+            }
+          ]
+        },
+        [
+          "return",
+          {
+            "value": [
+              "call",
+              {
+                "name": "sum",
+                "args": [
+                  "list",
+                  null,
+                  [
+                    "call",
+                    {
+                      "name": "sum",
+                      "args": [
+                        "list",
+                        null,
+                        [
+                          "ref",
+                          {
+                            "name": "a"
+                          }
+                        ],
+                        [
+                          "ref",
+                          {
+                            "name": "b"
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  [
+                    "ref",
+                    {
+                      "name": "c"
+                    }
+                  ]
+                ]
+              }
+            ]
           }
         ]
-      }
-    ]
+      ]
+    }
   ],
   [
     "call",

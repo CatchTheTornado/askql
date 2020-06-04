@@ -40,14 +40,14 @@
         "value": [
           "call",
           {
-            "name": "plus",
+            "name": "sum",
             "args": [
               "list",
               null,
               [
                 "call",
                 {
-                  "name": "plus",
+                  "name": "sum",
                   "args": [
                     "list",
                     null,

@@ -1,1 +1,1 @@
-ask(let('lastName','Czerwinski'),let('hobby','choir music'),let('o',object('firstName',call(get('toLowerCase'),get('firstName')),'lastName',call(get('toUpperCase'),get('lastName')),'hobby',call(get('toUpperCase'),get('hobby')))))
+ask(let('lastName','Czerwinski'),let('hobby','choir music'),let('o',object('firstName',call(get('toLowerCase'),call(get('get'),'firstName')),'lastName',call(get('toUpperCase'),call(get('get'),'lastName')),'hobby',call(get('toUpperCase'),call(get('get'),'hobby')))))

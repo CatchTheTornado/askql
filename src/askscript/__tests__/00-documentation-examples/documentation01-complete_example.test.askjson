@@ -21,7 +21,12 @@
               "list",
               null
             ],
-            "returns": "any"
+            "returns": [
+              "ref",
+              {
+                "name": "any"
+              }
+            ]
           },
           [
             "call",
@@ -57,7 +62,8 @@
                             null,
                             2,
                             2
-                          ]
+                          ],
+                          "isOperator": true
                         }
                       ]
                     ]

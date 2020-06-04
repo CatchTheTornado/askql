@@ -9,19 +9,29 @@
   [
     "set",
     {
-      "name": "sum",
-      "type": "float",
+      "name": "mySum",
+      "type": [
+        "ref",
+        {
+          "name": "float"
+        }
+      ],
       "value": 0
     }
   ],
   [
-    "for",
+    "forOf",
     {
       "key": [
         "set",
         {
           "name": "itemPrice",
-          "type": "any"
+          "type": [
+            "ref",
+            {
+              "name": "any"
+            }
+          ]
         }
       ],
       "of": [
@@ -34,7 +44,7 @@
     [
       "assign",
       {
-        "name": "sum",
+        "name": "mySum",
         "value": [
           "call",
           {
@@ -45,7 +55,7 @@
               [
                 "ref",
                 {
-                  "name": "sum"
+                  "name": "mySum"
                 }
               ],
               [
@@ -63,7 +73,7 @@
   [
     "ref",
     {
-      "name": "sum"
+      "name": "mySum"
     }
   ]
 ]

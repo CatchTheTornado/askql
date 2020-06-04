@@ -1,1 +1,1 @@
-ask(if(call(get('lessThan'),get('n'),2),block(return(get('n'))),block()))
+ask(if(call(get('lessThan'),call(get('get'),'n'),2),block(return(call(get('get'),'n'))),block()))

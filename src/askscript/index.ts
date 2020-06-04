@@ -1,12 +1,11 @@
 import { AskCodeOrValue } from '../askcode';
 import { fromAskScriptAst, createElement } from '../askjsx';
 
+export type AskScriptAstSimpleValue = null | boolean | number | string;
+
 export type AskScriptAstValue =
-  | null
-  | boolean
-  | number
-  | string
-  | { jsxValue: Record<string, AskScriptAstValue> }
+  | AskScriptAstSimpleValue
+  | { jsxValue: Record<string, AskScriptAstValue> | AskScriptAstSimpleValue }
   | AskScriptAstValue[];
 
 export type AskScriptAst =

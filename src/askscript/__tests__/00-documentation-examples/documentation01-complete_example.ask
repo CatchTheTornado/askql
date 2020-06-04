@@ -1,6 +1,6 @@
 ask(arg1:int):string {
 
-  const factorial = fun(n:int):int {
+  const factorial: int(int) = fun(n:int):int {
 	  if (n:lessThan(2)) {
 	    return n
 	  }

@@ -10,7 +10,12 @@
     "const",
     {
       "name": "a",
-      "type": "float"
+      "type": [
+        "ref",
+        {
+          "name": "float"
+        }
+      ]
     }
   ]
 ]

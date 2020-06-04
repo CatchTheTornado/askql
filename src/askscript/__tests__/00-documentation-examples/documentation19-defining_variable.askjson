@@ -10,7 +10,12 @@
     "set",
     {
       "name": "i",
-      "type": "int",
+      "type": [
+        "ref",
+        {
+          "name": "int"
+        }
+      ],
       "value": 12
     }
   ],
@@ -18,7 +23,12 @@
     "set",
     {
       "name": "s",
-      "type": "string",
+      "type": [
+        "ref",
+        {
+          "name": "string"
+        }
+      ],
       "value": "hello"
     }
   ],
@@ -26,7 +36,12 @@
     "const",
     {
       "name": "f",
-      "type": "float",
+      "type": [
+        "ref",
+        {
+          "name": "float"
+        }
+      ],
       "value": 1.2
     }
   ],
@@ -34,7 +49,12 @@
     "set",
     {
       "name": "b",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": "sdf"
     }
   ],
@@ -42,7 +62,12 @@
     "const",
     {
       "name": "a",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": "asdf"
     }
   ]

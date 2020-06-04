@@ -10,7 +10,12 @@
     "const",
     {
       "name": "arr",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "list",
         null,

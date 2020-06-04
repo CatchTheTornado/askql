@@ -1,5 +1,5 @@
 ask {
-  const sum:int(int, int) = fun(a:int, b:int):int {
+  const sum:fun(int, int, int) = fun(a:int, b:int):int {
 	  a:plus(b)
   }
 	

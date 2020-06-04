@@ -1,17 +1,20 @@
-import { any, resource, runUntyped } from '../../lib';
+import { any, resource, runUntyped, Options } from '../../lib';
 
 export const returnRes = resource({
   type: any,
   async compute(options, code) {
     const result = await runUntyped(options, code.params![0]);
 
+    console.log('return', options);
+
     for (
-      let { prototype } = options;
+      let prototype: Options | undefined = options;
       prototype;
       prototype = prototype?.prototype
     ) {
       prototype.result = result;
-      if (prototype.code?.name === 'fun') {
+      const name = prototype.code?.name;
+      if (name === 'fun' || name === 'ask') {
         break;
       }
     }

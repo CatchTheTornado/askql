@@ -9,7 +9,7 @@
   [
     "set",
     {
-      "name": "sum",
+      "name": "mySum",
       "type": [
         "ref",
         {
@@ -44,7 +44,7 @@
     [
       "assign",
       {
-        "name": "sum",
+        "name": "mySum",
         "value": [
           "call",
           {
@@ -55,7 +55,7 @@
               [
                 "ref",
                 {
-                  "name": "sum"
+                  "name": "mySum"
                 }
               ],
               [
@@ -89,7 +89,7 @@
   [
     "ref",
     {
-      "name": "sum"
+      "name": "mySum"
     }
   ]
 ]

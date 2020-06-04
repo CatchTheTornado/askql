@@ -13,16 +13,10 @@
       "type": [
         "call",
         {
-          "name": "fun",
+          "name": "string",
           "args": [
             "list",
             null,
-            [
-              "ref",
-              {
-                "name": "string"
-              }
-            ],
             [
               "ref",
               {

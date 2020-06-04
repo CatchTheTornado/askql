@@ -1,9 +1,4 @@
-import {
-  AskCode,
-  AskCodeOrValue,
-  isAskCode,
-  askCodeToSource,
-} from '../../askcode';
+import { AskCode, AskCodeOrValue, isAskCode } from '../../askcode';
 import { Resources, resource, Resource } from './resource';
 import { JSONable, typed, TypedValue, untyped } from './typed';
 
@@ -38,19 +33,8 @@ export async function run(
   }
 
   const { resources = {}, values = {} } = options;
+
   const { name } = code;
-
-  if (name in values) {
-    const value = typed(values[name]);
-
-    if (value.type.name === 'code' && args) {
-      const code = value.value as AskCode;
-      return await run(options, code, args);
-    }
-
-    return value;
-  }
-
   if (name in resources) {
     if (!(resources[name] instanceof Resource)) {
       console.error('???', resources[name]);
@@ -59,7 +43,18 @@ export async function run(
     return typed(await resources[name].compute(options, code, args));
   }
 
-  throw new Error(`Unknown identifier '${name}'!`);
+  if (!(name in values)) {
+    throw new Error(`Unknown identifier '${name}'!`);
+  }
+
+  const value = typed(values[name]);
+
+  if (value.type.name === 'code' && args) {
+    const code = value.value as AskCode;
+    return await run(options, code, args);
+  }
+
+  return value;
 }
 
 export async function runUntyped(

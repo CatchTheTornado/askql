@@ -30,16 +30,10 @@
       "type": [
         "call",
         {
-          "name": "fun",
+          "name": "int",
           "args": [
             "list",
             null,
-            [
-              "ref",
-              {
-                "name": "int"
-              }
-            ],
             [
               "ref",
               {
@@ -160,16 +154,10 @@
       "type": [
         "call",
         {
-          "name": "fun",
+          "name": "int",
           "args": [
             "list",
             null,
-            [
-              "ref",
-              {
-                "name": "int"
-              }
-            ],
             [
               "ref",
               {

@@ -10,7 +10,12 @@
     "const",
     {
       "name": "covid",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "list",
         null,
@@ -118,10 +123,20 @@
                       "list",
                       null,
                       "c",
-                      "any"
+                      [
+                        "ref",
+                        {
+                          "name": "any"
+                        }
+                      ]
                     ]
                   ],
-                  "returns": "any"
+                  "returns": [
+                    "ref",
+                    {
+                      "name": "any"
+                    }
+                  ]
                 },
                 [
                   "return",
@@ -156,7 +171,12 @@
     "const",
     {
       "name": "totalNewInfected",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "call",
         {
@@ -187,10 +207,20 @@
                           "list",
                           null,
                           "c",
-                          "any"
+                          [
+                            "ref",
+                            {
+                              "name": "any"
+                            }
+                          ]
                         ]
                       ],
-                      "returns": "any"
+                      "returns": [
+                        "ref",
+                        {
+                          "name": "any"
+                        }
+                      ]
                     },
                     [
                       "return",
@@ -227,7 +257,12 @@
     "const",
     {
       "name": "totalNewDeaths",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "call",
         {
@@ -258,10 +293,20 @@
                           "list",
                           null,
                           "a",
-                          "any"
+                          [
+                            "ref",
+                            {
+                              "name": "any"
+                            }
+                          ]
                         ]
                       ],
-                      "returns": "any"
+                      "returns": [
+                        "ref",
+                        {
+                          "name": "any"
+                        }
+                      ]
                     },
                     [
                       "return",
@@ -298,7 +343,12 @@
     "const",
     {
       "name": "totalnewRecovered",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "call",
         {
@@ -329,10 +379,20 @@
                           "list",
                           null,
                           "a",
-                          "any"
+                          [
+                            "ref",
+                            {
+                              "name": "any"
+                            }
+                          ]
                         ]
                       ],
-                      "returns": "any"
+                      "returns": [
+                        "ref",
+                        {
+                          "name": "any"
+                        }
+                      ]
                     },
                     [
                       "return",
@@ -369,7 +429,12 @@
     "const",
     {
       "name": "total",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "call",
         {

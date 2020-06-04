@@ -1,1 +1,1 @@
-ask('Hello world!',return(get('n')),get('hello'))
+ask('Hello world!',return(call(get('get'),'n')),call(get('get'),'hello'))

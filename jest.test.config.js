@@ -7,7 +7,7 @@ module.exports = {
     '**/?(*.)+(spec|test).[jt]s?(x)',
     '**/*.(ask|pegjs)',
   ],
-  testPathIgnorePatterns: ['<rootDir>/drafts/'],
+  testPathIgnorePatterns: ['<rootDir>/drafts/', '.*\\.ask\\.formatted\\.ask'],
   testRunner: './dist/test.jest.testRunner',
   transform: {
     '^.+\\.(ask|pegjs|[jt]sx?)$': './dist/javascript.jest.transformer',

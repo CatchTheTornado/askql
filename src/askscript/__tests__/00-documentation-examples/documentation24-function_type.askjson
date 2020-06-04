@@ -7,21 +7,52 @@
     ]
   },
   [
-    "fun",
+    "const",
     {
       "name": "f",
-      "args": [
-        "list",
-        null,
-        [
-          "list",
-          null,
-          "n",
-          "int"
-        ]
+      "type": [
+        "call",
+        {
+          "name": "string",
+          "args": [
+            "list",
+            null,
+            [
+              "ref",
+              {
+                "name": "int"
+              }
+            ]
+          ]
+        }
       ],
-      "returns": "string"
-    },
-    ""
+      "value": [
+        "fun",
+        {
+          "args": [
+            "list",
+            null,
+            [
+              "list",
+              null,
+              "n",
+              [
+                "ref",
+                {
+                  "name": "int"
+                }
+              ]
+            ]
+          ],
+          "returns": [
+            "ref",
+            {
+              "name": "string"
+            }
+          ]
+        },
+        ""
+      ]
+    }
   ]
 ]

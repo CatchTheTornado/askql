@@ -10,7 +10,22 @@
     "set",
     {
       "name": "capitals",
-      "type": "record(string)",
+      "type": [
+        "call",
+        {
+          "name": "map",
+          "args": [
+            "list",
+            null,
+            [
+              "ref",
+              {
+                "name": "string"
+              }
+            ]
+          ]
+        }
+      ],
       "value": [
         "code",
         {

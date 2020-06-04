@@ -1,6 +1,6 @@
 ask(arg1:int):string {
 
-  const factorial = fun(n:int):int {
+  const factorial: int(int) = fun(n:int):int {
 	  if (n:lessThan(2)) {
 	    return n
 	  }
@@ -8,11 +8,11 @@ ask(arg1:int):string {
 	  n:multiply(factorial(n:minus(1)))
 	}
 	
-  const sum:int(int, int) = fun(a:int, b:int):int {
+  const sum: int(int, int) = fun(a:int, b:int):int {
 	  a:plus(b)
   }
 	
-  const one = 1
+  const one: int = 1
 	
   sum(one, arg1:factorial):toString
 }

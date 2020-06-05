@@ -12,3 +12,4 @@ askql-*.tgz
 
 *.ask.ast.json
 *.ask.formatted.ask
+/.idea/

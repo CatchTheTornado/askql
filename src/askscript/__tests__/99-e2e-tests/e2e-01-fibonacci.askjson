@@ -7,28 +7,77 @@
     ]
   },
   [
-    "fun",
+    "const",
     {
       "name": "factorial",
-      "args": [
-        "list",
-        null,
-        [
-          "list",
-          null,
-          "n",
-          "int"
-        ]
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
       ],
-      "returns": "int"
-    },
-    [
-      "if",
-      {
-        "condition": [
+      "value": [
+        "fun",
+        {
+          "args": [
+            "list",
+            null,
+            [
+              "list",
+              null,
+              "n",
+              [
+                "ref",
+                {
+                  "name": "int"
+                }
+              ]
+            ]
+          ],
+          "returns": [
+            "ref",
+            {
+              "name": "int"
+            }
+          ]
+        },
+        [
+          "if",
+          {
+            "condition": [
+              "call",
+              {
+                "name": "lessThan",
+                "args": [
+                  "list",
+                  null,
+                  [
+                    "ref",
+                    {
+                      "name": "n"
+                    }
+                  ],
+                  2
+                ]
+              }
+            ]
+          },
+          [
+            "return",
+            {
+              "value": [
+                "ref",
+                {
+                  "name": "n"
+                }
+              ]
+            }
+          ]
+        ],
+        [
           "call",
           {
-            "name": "lessThan",
+            "name": "times",
             "args": [
               "list",
               null,
@@ -38,66 +87,38 @@
                   "name": "n"
                 }
               ],
-              2
+              [
+                "call",
+                {
+                  "name": "factorial",
+                  "args": [
+                    "list",
+                    null,
+                    [
+                      "call",
+                      {
+                        "name": "minus",
+                        "args": [
+                          "list",
+                          null,
+                          [
+                            "ref",
+                            {
+                              "name": "n"
+                            }
+                          ],
+                          1
+                        ]
+                      }
+                    ]
+                  ]
+                }
+              ]
             ]
           }
         ]
-      },
-      [
-        "return",
-        {
-          "value": [
-            "ref",
-            {
-              "name": "n"
-            }
-          ]
-        }
       ]
-    ],
-    [
-      "call",
-      {
-        "name": "times",
-        "args": [
-          "list",
-          null,
-          [
-            "ref",
-            {
-              "name": "n"
-            }
-          ],
-          [
-            "call",
-            {
-              "name": "factorial",
-              "args": [
-                "list",
-                null,
-                [
-                  "call",
-                  {
-                    "name": "minus",
-                    "args": [
-                      "list",
-                      null,
-                      [
-                        "ref",
-                        {
-                          "name": "n"
-                        }
-                      ],
-                      1
-                    ]
-                  }
-                ]
-              ]
-            }
-          ]
-        ]
-      }
-    ]
+    }
   ],
   [
     "call",

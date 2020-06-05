@@ -5,13 +5,16 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest --config jest.test.config.js --no-cache",
+    "test": "jest --config jest.test.config.js",
     "ask": "ASK_PRINT_RESULT=1 jest --config jest.test.config.js --no-cache",
     "check": "tsc --noEmit",
     "tsc": "tsc",
+    "tsc:test": "tsc && npm run test --no-cache",
+    "build:test": "npm run build && npm run test --no-cache",
     "prebuild": "rm -rf dist && tsc",
     "build": "jest --config jest.build.config.js --no-cache",
-    "postbuild": "cp README.md dist && cd dist && chmod +x *.js"
+    "postbuild": "cp README.md dist && cd dist && chmod +x *.js",
+    "prettier": "prettier --plugin=./dist/prettier-plugin-askscript"
   },
   "bin": {
     "askql": "dist/cli.js",
@@ -35,6 +38,7 @@
     "@types/express": "^4.17.6",
     "@types/glob": "^7.1.1",
     "@types/jest": "^25.2.1",
+    "@types/jsesc": "^2.5.1",
     "@types/node": "^14.0.1",
     "@types/node-fetch": "^2.5.7",
     "@types/pegjs": "^0.10.1",
@@ -45,6 +49,7 @@
     "fs.promises": "0.1.2",
     "glob": "^7.1.6",
     "jest": "^25.4.0",
+    "jsesc": "^3.0.1",
     "node-fetch": "^2.6.0",
     "pegjs": "0.10.0",
     "prettier": "^2.0.5",

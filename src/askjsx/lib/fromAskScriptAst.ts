@@ -24,7 +24,11 @@ export function fromAskScriptAst(
   }
 
   if ('jsxValue' in ast) {
-    const object = ast.jsxValue;
+    const value = ast.jsxValue;
+    if (value == null || typeof value !== 'object') {
+      return value;
+    }
+    const object = value;
     const objectArgs: any[] = [];
     for (const key in object) {
       objectArgs.push(key, fromAskScriptAst(object[key], reducer));

@@ -10,7 +10,12 @@
     "set",
     {
       "name": "x",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": 3
     }
   ],
@@ -18,7 +23,12 @@
     "set",
     {
       "name": "y",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": -0.4
     }
   ],
@@ -48,7 +58,8 @@
                   "name": "y"
                 }
               ]
-            ]
+            ],
+            "isOperator": true
           }
         ],
         [
@@ -70,10 +81,12 @@
                   "name": "y"
                 }
               ]
-            ]
+            ],
+            "isOperator": true
           }
         ]
-      ]
+      ],
+      "isOperator": true
     }
   ]
 ]

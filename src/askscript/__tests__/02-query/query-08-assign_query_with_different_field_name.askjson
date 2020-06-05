@@ -10,7 +10,12 @@
     "const",
     {
       "name": "result",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "query",
         {},

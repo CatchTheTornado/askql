@@ -1,1 +1,1 @@
-ask(query(node('firstName',f(call(get('toUpperCase'),get('firstName')))),node('lastName',f(call(get('concat'),call(get('toLowerCase'),get('lastName')),' ','is my ','name; ','lastName :: toLowerCase is a shorthand to: lastName : lastName:toLowerCase')))))
+ask(query(node('firstName',f(call(get('toUpperCase'),call(get('get'),'firstName')))),node('lastName',f(call(get('concat'),call(get('toLowerCase'),call(get('get'),'lastName')),' ','is my ','name; ','lastName :: toLowerCase is a shorthand to: lastName : lastName:toLowerCase')))))

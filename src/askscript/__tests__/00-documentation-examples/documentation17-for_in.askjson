@@ -7,13 +7,18 @@
     ]
   },
   [
-    "for",
+    "forIn",
     {
       "key": [
         "const",
         {
           "name": "index",
-          "type": "any"
+          "type": [
+            "ref",
+            {
+              "name": "any"
+            }
+          ]
         }
       ],
       "in": [

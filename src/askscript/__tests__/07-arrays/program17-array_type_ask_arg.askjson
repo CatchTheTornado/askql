@@ -8,7 +8,22 @@
         "list",
         null,
         "arr",
-        "array(int)"
+        [
+          "call",
+          {
+            "name": "array",
+            "args": [
+              "list",
+              null,
+              [
+                "ref",
+                {
+                  "name": "int"
+                }
+              ]
+            ]
+          }
+        ]
       ]
     ]
   }

@@ -1,1 +1,1 @@
-ask(call(get('factorial'),get('score')))
+ask(call(get('factorial'),call(get('get'),'score')))

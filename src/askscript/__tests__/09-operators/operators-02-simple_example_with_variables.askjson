@@ -10,7 +10,12 @@
     "set",
     {
       "name": "a",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": 1
     }
   ],
@@ -33,7 +38,8 @@
             "name": "bFromEnv"
           }
         ]
-      ]
+      ],
+      "isOperator": true
     }
   ]
 ]

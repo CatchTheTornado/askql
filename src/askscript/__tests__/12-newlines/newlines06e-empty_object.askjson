@@ -10,7 +10,12 @@
     "set",
     {
       "name": "o",
-      "type": "any",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
       "value": [
         "code",
         {

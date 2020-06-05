@@ -1,8 +1,8 @@
-dist
-drafts
 node_modules
 
-src/askscript/.vscode/
+/dist
+/drafts
+/false
 
 .vscode/
 
@@ -11,3 +11,5 @@ src/askscript/parser/askscript.grammar.js
 askql-*.tgz
 
 *.ask.ast.json
+*.ask.formatted.ask
+/.idea/

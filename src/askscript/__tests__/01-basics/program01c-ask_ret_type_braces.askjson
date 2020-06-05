@@ -5,6 +5,11 @@
       "list",
       null
     ],
-    "returns": "string"
+    "returns": [
+      "ref",
+      {
+        "name": "string"
+      }
+    ]
   }
 ]

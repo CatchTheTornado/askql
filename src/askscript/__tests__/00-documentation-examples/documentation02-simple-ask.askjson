@@ -8,13 +8,23 @@
         "list",
         null,
         "maxAge",
-        "int"
+        [
+          "ref",
+          {
+            "name": "int"
+          }
+        ]
       ],
       [
         "list",
         null,
         "userName",
-        "string"
+        [
+          "ref",
+          {
+            "name": "string"
+          }
+        ]
       ]
     ]
   }

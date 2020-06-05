@@ -1,0 +1,33 @@
+[
+  "ask",
+  {
+    "args": [
+      "list",
+      null
+    ]
+  },
+  [
+    "set",
+    {
+      "name": "a",
+      "type": "int",
+      "value": 1
+    }
+  ],
+  [
+    "set",
+    {
+      "name": "b",
+      "type": "float",
+      "value": 1.5
+    }
+  ],
+  [
+    "set",
+    {
+      "name": "c",
+      "type": "bool",
+      "value": false
+    }
+  ]
+]

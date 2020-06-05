@@ -1,7 +1,6 @@
 node_modules
 
 /dist
-/drafts
 /false
 
 .vscode/
@@ -13,3 +12,8 @@ askql-*.tgz
 *.ask.ast.json
 *.ask.formatted.ask
 /.idea/
+
+# drafts folders
+/drafts
+/src/drafts
+/src/askscript/drafts

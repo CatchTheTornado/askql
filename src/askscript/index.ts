@@ -60,5 +60,6 @@ export function parse(
   options?: any,
   debugPrint?: boolean
 ): AskCodeOrValue {
-  return fromAskScriptAst(parseToAst(code, options, debugPrint), createElement);
+  const ast = parseToAst(code, options, debugPrint);
+  return fromAskScriptAst(ast, createElement);
 }

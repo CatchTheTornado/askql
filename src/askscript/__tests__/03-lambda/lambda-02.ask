@@ -1,0 +1,4 @@
+ask {
+  let myFun = fun { $0 }
+  call(myFun, 5)
+}

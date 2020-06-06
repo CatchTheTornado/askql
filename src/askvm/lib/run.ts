@@ -1,4 +1,5 @@
 import { AskCode, AskCodeOrValue, isAskCode } from '../../askcode';
+import { asyncMap } from '../../utils';
 import { Resource, Resources } from './resource';
 import { JSONable, typed, TypedValue, untyped } from './typed';
 
@@ -24,6 +25,7 @@ export async function run(
   args?: any[]
 ): Promise<TypedValue<JSONable>> {
   if (!isAskCode(code)) {
+    console.log('not askcode', code);
     return typed(code);
   }
 
@@ -38,9 +40,17 @@ export async function run(
   if (name in values) {
     const value = typed(values[name]);
 
-    if (value.type.name === 'code' && args) {
-      const code = value.value as AskCode;
-      return await run(options, code, args);
+    if (value.type.name === 'code') {
+      const callCode = value.value as AskCode;
+      const callParams = code.params;
+      const callArgs = callParams
+        ? await asyncMap(callParams, (child) => run(options, child))
+        : args;
+
+      if (callArgs) {
+        console.log('callArgs', callArgs);
+        return await run(options, callCode, callArgs);
+      }
     }
 
     return value;

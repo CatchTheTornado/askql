@@ -1,1 +1,1 @@
-ask(call(get('factorial'),4))
+ask(call('factorial',4))

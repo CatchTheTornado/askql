@@ -7,18 +7,16 @@ askjsx;
 export function Call({
   name = '',
   args = [],
-  children: fun = [],
 }: {
   name?: string;
   args?: AskCodeOrValue[];
-  children?: AskCodeOrValue[];
 }) {
   assert(isString(name), 'name');
   // assert(isStringArray(args), 'args');
   return (
     <code call>
-      {name ? <Ref name={name} /> : fun}
-      {'params' in args ? (args as any).params : args}
+      {name}
+      {'params' in args ? (args as any).params : args /* FIXME(mh) */}
     </code>
   );
 }

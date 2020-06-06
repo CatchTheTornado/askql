@@ -1,1 +1,1 @@
-call(get('toUpperCase'),'Hello world!')
+call('toUpperCase','Hello world!')

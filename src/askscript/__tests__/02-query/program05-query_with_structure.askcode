@@ -1,1 +1,1 @@
-ask(query(node('firstName',f(call(get('get'),'firstName'))),node('lastName',f(call(get('get'),'lastName'))),node('friends',f(call(get('get'),'friends')),node('id',f(call(get('get'),'id'))))))
+ask(query(node('firstName',f(call('get','firstName'))),node('lastName',f(call('get','lastName'))),node('friends',f(call('get','friends')),node('id',f(call('get','id'))))))

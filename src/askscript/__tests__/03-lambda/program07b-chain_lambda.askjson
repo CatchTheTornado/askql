@@ -7,6 +7,50 @@
     ]
   },
   [
+    "const",
+    {
+      "name": "useFor",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
+      "value": [
+        "fun",
+        {
+          "args": [
+            "list",
+            null,
+            [
+              "list",
+              null,
+              "value",
+              [
+                "ref",
+                {
+                  "name": "any"
+                }
+              ]
+            ]
+          ],
+          "returns": [
+            "ref",
+            {
+              "name": "any"
+            }
+          ]
+        },
+        [
+          "ref",
+          {
+            "name": "value"
+          }
+        ]
+      ]
+    }
+  ],
+  [
     "call",
     {
       "name": "ceil",
@@ -30,7 +74,7 @@
                     [
                       "call",
                       {
-                        "name": "call",
+                        "name": "useFor",
                         "args": [
                           "list",
                           null,

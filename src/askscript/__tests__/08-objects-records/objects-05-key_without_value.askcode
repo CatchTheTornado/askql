@@ -1,1 +1,1 @@
-ask(let('lastName','Czerwinski'),let('o',object('firstName',call(get('get'),'firstName'),'lastName',call(get('get'),'lastName'))))
+ask(let('lastName','Czerwinski'),let('o',object('firstName',call('get','firstName'),'lastName',call('get','lastName'))))

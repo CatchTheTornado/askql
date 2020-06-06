@@ -1,0 +1,26 @@
+[
+  "ask",
+  {
+    "args": [
+      "list",
+      null
+    ]
+  },
+  [
+    "call",
+    {
+      "name": "call",
+      "args": [
+        "list",
+        null,
+        [
+          "ref",
+          {
+            "name": "toString"
+          }
+        ],
+        2
+      ]
+    }
+  ]
+]

@@ -10,7 +10,14 @@ export type Context = Record<string, any>;
 
 const values = {
   hello: 'Hi! This is a local AskVM running a REPL',
-  philosophers: ['Aristotle', 'Kant', 'Plato', 'Russel', 'Turing', 'Wittgenstein'],
+  philosophers: [
+    'Aristotle',
+    'Kant',
+    'Plato',
+    'Russel',
+    'Turing',
+    'Wittgenstein',
+  ],
   scorePerPhilosopher: {
     Aristotle: 385,
     Kant: 42,
@@ -47,8 +54,8 @@ export const replOptions: ReplOptions = {
         return undefined;
       }
 
+      const parsedCode = askscript.parse(`ask {\n${code}\n}`);
       try {
-        const parsedCode = askscript.parse(`ask {\n${code}\n}`);
         const { type, value } = await run(options, parsedCode);
         console.log(
           chalk.blueBright(type.name),
@@ -56,6 +63,7 @@ export const replOptions: ReplOptions = {
         );
         return value;
       } catch (e) {
+        console.log(chalk.grey(askCodeToSource(parsedCode)));
         throw e;
       }
     })().then(

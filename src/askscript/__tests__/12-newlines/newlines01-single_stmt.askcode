@@ -1,1 +1,1 @@
-ask(call(get('get'),'hello'))
+ask(call('get','hello'))

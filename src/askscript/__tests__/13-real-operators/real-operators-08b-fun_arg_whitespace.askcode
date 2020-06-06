@@ -1,1 +1,1 @@
-ask(call(get('square'),call(get('+'),4,5)))
+ask(call('square',call('+',4,5)))

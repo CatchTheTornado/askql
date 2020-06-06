@@ -1,0 +1,4 @@
+ask {
+  let myFun = fun { $0 }
+  5:myFun
+}

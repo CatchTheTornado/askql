@@ -1,1 +1,1 @@
-ask(if(call(get('checkThis')),block(return('your string')),block()),'my string')
+ask(if(call('checkThis'),block(return('your string')),block()),'my string')

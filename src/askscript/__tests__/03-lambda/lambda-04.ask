@@ -1,0 +1,5 @@
+ask {
+  // const useFor = fun(value, fn) { fn(value) }
+  // useFor(2, toString)
+  call(toString, 2)
+}

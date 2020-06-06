@@ -1,1 +1,1 @@
-call(get('plus'),2,5)
+call('plus',2,5)

@@ -1,0 +1,3 @@
+ask {
+  call(fun { 5 })
+}

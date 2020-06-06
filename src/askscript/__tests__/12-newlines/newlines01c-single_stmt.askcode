@@ -1,1 +1,1 @@
-ask(call(get('concat'),'factorial',' is cool'))
+ask(call('concat','factorial',' is cool'))

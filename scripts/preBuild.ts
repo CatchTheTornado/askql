@@ -1,3 +1,11 @@
-import rimraf from 'rimraf';
+import { removeRecursive } from "./utils";
 
-rimraf('./dist',error => { if (error) throw error;});
+async function main() {
+    try {
+        await removeRecursive('./dist/');
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+main();

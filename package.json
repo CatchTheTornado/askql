@@ -11,11 +11,10 @@
     "tsc": "tsc",
     "tsc:test": "tsc && npm run test --no-cache",
     "build:test": "npm run build && npm run test --no-cache",
-    "prebuild": "tsc -p scripts/tsconfig.json && node scripts/scriptsDist/preBuild.js && tsc",
+    "prebuild": "ts-node scripts/preBuild.ts && tsc",
     "build": "jest --config jest.build.config.js --no-cache",
-    "postbuild": "node scripts/scriptsDist/postBuild.js",
-    "prettier": "prettier --plugin=./dist/prettier-plugin-askscript",
-    "build:configScripts": "tsc -p scripts/tsconfig.json"
+    "postbuild": "ts-node scripts/postBuild.ts",
+    "prettier": "prettier --plugin=./dist/prettier-plugin-askscript"
   },
   "bin": {
     "askql": "dist/cli.js",

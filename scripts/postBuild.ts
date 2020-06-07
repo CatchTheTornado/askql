@@ -1,7 +1,5 @@
-import fs from 'fs';
-import rimraf from 'rimraf';
+import {promises} from 'fs';
 
-rimraf(__dirname,error => { if (error) throw error;});
-
-fs.copyFileSync('README.md', 'dist/README.md');
-console.log('README.md was copied to dist');
+promises.copyFile('README.md', 'dist/README.md')
+    .then(() => console.log('README.md was copied to dist'))
+    .catch(err => { if (err) throw err;});

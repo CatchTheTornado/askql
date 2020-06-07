@@ -1,0 +1,18 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "askjsx.createElement",
+    "module": "commonjs",
+    "outDir": "scriptsDist",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "target": "es2016"
+  },
+  "include": [
+    "./**.ts"
+  ]
+}

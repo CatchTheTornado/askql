@@ -11,10 +11,11 @@
     "tsc": "tsc",
     "tsc:test": "tsc && npm run test --no-cache",
     "build:test": "npm run build && npm run test --no-cache",
-    "prebuild": "rimraf dist && tsc",
+    "prebuild": "tsc -p scripts/tsconfig.json && node scripts/scriptsDist/preBuild.js && tsc",
     "build": "jest --config jest.build.config.js --no-cache",
-    "postbuild": "node ./config/postBuild.js",
-    "prettier": "prettier --plugin=./dist/prettier-plugin-askscript"
+    "postbuild": "node scripts/scriptsDist/postBuild.js",
+    "prettier": "prettier --plugin=./dist/prettier-plugin-askscript",
+    "build:configScripts": "tsc -p scripts/tsconfig.json"
   },
   "bin": {
     "askql": "dist/cli.js",
@@ -42,6 +43,7 @@
     "@types/node": "^14.0.1",
     "@types/node-fetch": "^2.5.7",
     "@types/pegjs": "^0.10.1",
+    "@types/rimraf": "^3.0.0",
     "babel-jest": "^25.4.0",
     "babel-plugin-inline-import": "^3.0.0",
     "chalk": "^4.0.0",

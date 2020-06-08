@@ -1,0 +1,6 @@
+/dist
+/idea
+/node_modules
+/@types
+/testingP
+*-lock

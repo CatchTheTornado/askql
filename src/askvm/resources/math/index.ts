@@ -2,12 +2,14 @@ import { divideBy } from './divideBy';
 import { minus } from './minus';
 import { sum } from './sum';
 import { times } from './times';
+import { lessThan } from './lessThan';
 
 Object.assign(exports, {
   '+': sum,
   '-': minus,
   '*': times,
   '/': divideBy,
+  '<': lessThan
 });
 
 export * from './ceil';

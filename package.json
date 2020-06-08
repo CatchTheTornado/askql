@@ -18,6 +18,17 @@
     "prettier:check": "prettier --config prettier.config.js --check .",
     "prettier:scripts": "prettier --write ./scripts"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "bin": {
     "askql": "dist/cli.js",
     "askqlServer": "dist/demoServer.js"
@@ -51,8 +62,10 @@
     "express": "^4.17.1",
     "fs.promises": "0.1.2",
     "glob": "^7.1.6",
+    "husky": "^4.2.5",
     "jest": "^25.4.0",
     "jsesc": "^3.0.1",
+    "lint-staged": "^10.2.9",
     "node-fetch": "^2.6.0",
     "pegjs": "0.10.0",
     "prettier": "^2.0.5",

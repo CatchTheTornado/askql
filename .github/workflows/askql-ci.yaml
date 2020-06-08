@@ -17,11 +17,23 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-node@v1
+          with:
+            node-version: "12.x"
 
-      # Runs a single command using the runners shell
       - name: Checkout and install dependencies
         run: npm install
 
-      # Runs a set of commands using the runners shell
+      - name: Format
+          run: npm run format
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4.1.2
+        with:
+          commit_message: Apply formatting changes
+          branch: ${{ github.head_ref }}
+
       - name: build:test
         run: npm run build:test

@@ -1,0 +1,25 @@
+{
+  "ts-node": {
+    "transpileOnly": true
+  },
+  "compileOnSave": true,
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "askjsx.createElement",
+    "module": "commonjs",
+    "outDir": "tmp",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "target": "es2016"
+  },
+  "include": [
+    "src/prettier-plugin-askscript/*.ts",
+    "src/prettier-plugin-askscript/**/*.ts",
+    "./src/package.json",
+    "@types/interface.d.ts"
+  ],
+  "exclude": ["**/drafts/**", "**/node_modules/**"]
+}

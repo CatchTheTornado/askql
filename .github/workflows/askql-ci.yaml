@@ -4,9 +4,9 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
@@ -20,14 +20,14 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       - uses: actions/setup-node@v1
-          with:
-            node-version: "12.x"
+        with:
+          node-version: "12.x"
 
       - name: Checkout and install dependencies
         run: npm install
 
       - name: Format
-          run: npm run format
+        run: npm run format
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.1.2

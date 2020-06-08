@@ -29,11 +29,5 @@ jobs:
       - name: Format
         run: npm run format
 
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4.1.2
-        with:
-          commit_message: Apply formatting changes
-          branch: ${{ github.head_ref }}
-
       - name: build:test
         run: npm run build:test

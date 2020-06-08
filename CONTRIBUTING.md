@@ -14,10 +14,11 @@ chatrooms, and mailing lists.
 
 1.  Fork the repo.
 
-1. Clone the repo:
+1.  Clone the repo:
 
-        git clone https://github.com/{yourGithubUsername}/askql.git
-   **_Don't forget to replace {yourGithubUsername} with your github username._** 
+         git clone https://github.com/{yourGithubUsername}/askql.git
+
+    **_Don't forget to replace {yourGithubUsername} with your github username._**
 
 1.  Turn _off_ autocrlf in your Git.  
     This is advised because some of the test files have Windows line endings on purpose and we would like to keep them there.

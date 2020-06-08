@@ -10,7 +10,14 @@ export type Context = Record<string, any>;
 
 const values = {
   hello: 'Hi! This is a local AskVM running a REPL',
-  philosophers: ['Aristotle', 'Kant', 'Plato', 'Russel', 'Turing', 'Wittgenstein'],
+  philosophers: [
+    'Aristotle',
+    'Kant',
+    'Plato',
+    'Russel',
+    'Turing',
+    'Wittgenstein',
+  ],
   scorePerPhilosopher: {
     Aristotle: 385,
     Kant: 42,

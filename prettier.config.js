@@ -14,6 +14,7 @@ module.exports = {
       files: '*.ask',
       options: {
         parser: 'askscript',
+        plugins: ['./dist/prettier-plugin-askscript'],
         // semi: true,
       },
     },

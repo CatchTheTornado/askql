@@ -14,7 +14,8 @@
     "prebuild": "ts-node scripts/preBuild.ts && tsc",
     "build": "jest --config jest.build.config.js --no-cache",
     "postbuild": "ts-node scripts/postBuild.ts",
-    "prettier": "prettier --plugin=./dist/prettier-plugin-askscript",
+    "prettier": "prettier --write --config prettier.config.js .",
+    "prettier:check": "prettier --config prettier.config.js --check .",
     "prettier:scripts": "prettier --write ./scripts"
   },
   "bin": {

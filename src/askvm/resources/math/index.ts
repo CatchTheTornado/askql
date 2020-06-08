@@ -9,7 +9,7 @@ Object.assign(exports, {
   '-': minus,
   '*': times,
   '/': divideBy,
-  '<': lessThan
+  '<': lessThan,
 });
 
 export * from './ceil';

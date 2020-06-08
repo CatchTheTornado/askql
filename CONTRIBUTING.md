@@ -46,6 +46,8 @@ chatrooms, and mailing lists.
 
 The versioning scheme we use is [SemVer](http://semver.org/).
 
+All commits in PR are squashed on merge. Please use [Conventional Commits](https://www.conventionalcommits.org/) when naming your PR.
+
 [news]: https://github.com/xFAANG/askql/blob/master/NEWS.md
 [commit]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 

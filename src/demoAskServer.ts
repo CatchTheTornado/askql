@@ -8,6 +8,9 @@ import { parse as parseAskScript } from './askscript';
 
 import chalk = require('chalk');
 import cors = require('cors');
+import { customAlphabet } from 'nanoid'
+
+const nanoid = customAlphabet('1234567890abcdef', 8);
 
 const values = {
   clientNames: ['a', 'b', 'c', 'd', 'r', 'f', 'g'],
@@ -46,16 +49,19 @@ app.post('/compile/js', async (req, res) => {
   let askCode;
   let askCodeSource;
 
+  const id = nanoid();
+
   try {
-    console.log(chalk.grey(`➡️ ${code}`));
+    console.log(id + ' -- ' + new Date().toString());
+    console.log(id + ' -- ' + chalk.grey(`➡️ ${code}`));
 
     askCode = parseAskScript(code);
 
     askCodeSource = askCodeToSource(askCode);
   } catch (e) {
-    console.error(new Date().toString());
-    console.error(code);
-    console.error(e);
+    console.error(id + ' -- ' + (new Date().toString()));
+    console.error(id + ' -- ' + code);
+    console.error(id + ' -- ' + e);
     console.error('\n\n');
 
     // res.status(400);
@@ -68,13 +74,14 @@ app.post('/compile/js', async (req, res) => {
   try {
     const result = await runUntyped(baseEnvironment, askCode, []);
 
-    console.log(chalk.grey(`⬅️ ${JSON.stringify(result)}`));
+    console.log(id + ' -- ' + chalk.grey(`⬅️ ${JSON.stringify(result)}`));
+    console.log('\n\n');
     res.json({ askCodeSource, data: `document.write('<pre style="color:blue; font-weight: bold; white-space: pre-wrap;">' + JSON.stringify(${JSON.stringify(result, null, 2)}, null, 2) + '</pre>');`, language: 'js' });
     // res.json({ askCodeSource, data: result, language: 'ask' });
   } catch (e) {
-    console.error(new Date().toString());
-    console.error(code);
-    console.error(e);
+    console.error(id + ' -- ' + (new Date().toString()));
+    console.error(id + ' -- ' + code);
+    console.error(id + ' -- ' + e);
     console.error('\n\n');
     // res.json({ askCodeSource, error: e.toString() });
     // res.status(400);

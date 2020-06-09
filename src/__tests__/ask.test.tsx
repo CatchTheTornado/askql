@@ -16,7 +16,13 @@ test('creates the basic function', async () => {
 
 test('creates function with arguments', async () => {
   const f = (
-    <fun args={['a']}>
+    <fun
+      args={
+        <list>
+          <list>a</list>
+        </list>
+      }
+    >
       <ref name="a" />
     </fun>
   );
@@ -80,7 +86,14 @@ test('if and return', async () => {
 test('jsx', async () => {
   const call = (arg: string) => (
     <ask>
-      <fun name="test" args={['a']}>
+      <fun
+        name="test"
+        args={
+          <list>
+            <list>a</list>
+          </list>
+        }
+      >
         <if condition={<ref name="a" />} then={<return value="YES" />} />
         NO
       </fun>

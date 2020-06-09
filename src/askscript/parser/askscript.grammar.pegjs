@@ -14,10 +14,26 @@
     const operator = operValues[0].operator;
 
     for (const operValue of operValues) {
-      if (operValue.operator.text != operator.text)
-        expected(
-          `Expected all operators in an expression to be the same ('${operator.text}'), got '${operValue.operator.text}' instead.`
-        );
+      if (operValue.operator.text != operator.text) {
+        
+        const descr = 
+          `Expected all operators in an expression to be the same ` + 
+          `(e.g. a${operator.text}b${operator.text}c), ` +
+
+          `but ${input.substring(peg$savedPos, peg$currPos)}, which uses operator '${operValue.operator.text}', found instead. ` +
+
+          `Use brackets to separate different operators, `+
+          `e.g. a${operator.text}b${operator.text}(c${operValue.operator.text}d)`;
+
+        const expectedDescr = 'all operators in an expression to be the same';
+        const foundDescr = input.substring(peg$savedPos, peg$currPos);
+
+        throw new peg$SyntaxError(
+          descr,
+          expectedDescr,
+          foundDescr,
+          location());
+      }
     }
   }
 

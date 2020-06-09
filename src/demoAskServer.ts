@@ -39,9 +39,9 @@ app.get('/', async (req, res) => {
   res.send('<html><head><title>AskQL</title></head><body><p><b>Ask</b> me anything!</p><p><a href="http://askql.org/">AskQL website</a></p></body></html>');
 });
 
-app.post('/ask', async (req, res) => {
-  const data: any = req.body;
-  const { code } = data;
+app.post('/compile/js', async (req, res) => {
+  const { data } = req.body;
+  const code = data;
 
   let askCode;
   let askCodeSource;
@@ -57,7 +57,11 @@ app.post('/ask', async (req, res) => {
     console.error(code);
     console.error(e);
     console.error('\n\n');
-    res.json({ error: e.toString() });
+
+    // res.status(400);
+
+    // res.json({ error: e.toString() });
+    res.json({ data: `document.write('<pre style="color:red; white-space: pre-wrap;">' + ${JSON.stringify(e.toString(), null, 2)} + '</pre>');`, language: 'js' });
     return;
   }
 
@@ -65,17 +69,20 @@ app.post('/ask', async (req, res) => {
     const result = await runUntyped(baseEnvironment, askCode, []);
 
     console.log(chalk.grey(`⬅️ ${JSON.stringify(result)}`));
-    res.json({ askCodeSource, result });
+    res.json({ askCodeSource, data: `document.write('<pre style="color:blue; font-weight: bold; white-space: pre-wrap;">' + JSON.stringify(${JSON.stringify(result, null, 2)}, null, 2) + '</pre>');`, language: 'js' });
+    // res.json({ askCodeSource, data: result, language: 'ask' });
   } catch (e) {
     console.error(new Date().toString());
     console.error(code);
     console.error(e);
     console.error('\n\n');
-    res.json({ askCodeSource, error: e.toString() });
+    // res.json({ askCodeSource, error: e.toString() });
+    // res.status(400);
+    res.json({ askCodeSource, data: `document.write('<pre style="color:red; white-space: pre-wrap;">' + ${JSON.stringify(e.toString(), null, 2)} + '</pre>');`, language: 'js' });
   }
 });
 
-const port = 80;
+const port = 4000;
 app.listen(port, () => {
   console.log(chalk.grey(`AskQL listening at http://localhost:${port}`));
 });

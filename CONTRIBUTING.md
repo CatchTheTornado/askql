@@ -47,6 +47,16 @@ All commits in PR are squashed on merge. Please use [Conventional Commits](https
 [news]: https://github.com/xFAANG/askql/blob/master/NEWS.md
 [commit]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 
+### Before you commit
+
+There are a few things to check before you commit:
+
+1. <p>Did you format your code correctly?</p><p>We are using Prettier to check code style. When you commit, git will validate whether your changes keep the style. Please reformat the code using Prettier before committing (when using VS Code we suggest installing Prettier - Code formatter extension and turning on autoformatting before save).</p>
+
+1. <p>Did you write tests for your change?</p>  <p>We advise to try to write tests for every change of behavior in AskQL components.</p>
+
+1. <p>Did you run <b>all</b> the tests?</p>  <p>Run <code>npm test</code> to check if all tests pass. Note that while your own tests may pass, your change might be breaking existing tests.</p>
+
 ## License
 
 Any contributions you make will be under the MIT Software License.

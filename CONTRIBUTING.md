@@ -20,11 +20,6 @@ chatrooms, and mailing lists.
 
     **_Don't forget to replace {yourGithubUsername} with your github username._**
 
-1.  Turn _off_ autocrlf in your Git.  
-    This is advised because some of the test files have Windows line endings on purpose and we would like to keep them there.
-
-        git config core.autocrlf false
-
 1.  Install dependencies:
 
         npm i
@@ -33,7 +28,7 @@ chatrooms, and mailing lists.
 
         npm test
 
-1.  Make your change, with new passing tests. Check out `prettierrc.js`
+1.  Make your change, with new passing tests. Check out `prettier.config.js`
 
 1.  Mention how your changes affect the project to other developers and users in the
     [`NEWS.md`][news] file.

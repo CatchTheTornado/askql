@@ -1,0 +1,8 @@
+ask:string {
+    let a = 3
+    if (a <= 5) {
+        return 'It works!'
+    }
+
+    'Ouch.'
+}

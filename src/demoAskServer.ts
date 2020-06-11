@@ -15,6 +15,7 @@ const nanoid = customAlphabet("1234567890abcdef", 8);
 const values = {
   clientNames: ["a", "b", "c", "d", "r", "f", "g"],
   hello: "Hi! This is a AskVM server!",
+  helloD: () => "Hello, this is AskQL server! It's " + new Date().toString(),
   revPerClient: {
     a: 426,
     b: 35,
@@ -25,6 +26,20 @@ const values = {
     g: 53,
   },
   test: 15,
+
+  score: 5,
+  firstName: "Luke",
+  lastName: "Skywalker",
+  parents: [
+    {
+      firstName: "Padmé",
+      lastName: "Amidala",
+    },
+    {
+      firstName: "Anakin",
+      lastName: "Skywalker",
+    },
+  ],
 };
 
 const baseEnvironment = {

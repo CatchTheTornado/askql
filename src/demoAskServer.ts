@@ -1,21 +1,21 @@
 #!/usr/bin/env node
 
-import express = require("express");
-import bodyParser = require("body-parser");
-import { askCodeToSource } from "./askcode";
-import { resources, runUntyped } from "./askvm";
-import { parse as parseAskScript } from "./askscript";
+import express = require('express');
+import bodyParser = require('body-parser');
+import { askCodeToSource } from './askcode';
+import { resources as builtInResources, runUntyped } from './askvm';
+import { resource, any } from './askvm/lib';
+import { parse as parseAskScript } from './askscript';
 
-import chalk = require("chalk");
-import cors = require("cors");
-import { customAlphabet } from "nanoid";
+import chalk = require('chalk');
+import cors = require('cors');
+import { customAlphabet } from 'nanoid';
 
-const nanoid = customAlphabet("1234567890abcdef", 8);
+const nanoid = customAlphabet('1234567890abcdef', 8);
 
 const values = {
-  clientNames: ["a", "b", "c", "d", "r", "f", "g"],
-  hello: "Hi! This is a AskVM server!",
-  helloD: () => "Hello, this is AskQL server! It's " + new Date().toString(),
+  clientNames: ['a', 'b', 'c', 'd', 'r', 'f', 'g'],
+  hello: 'Hi! This is a AskVM server!',
   revPerClient: {
     a: 426,
     b: 35,
@@ -28,18 +28,36 @@ const values = {
   test: 15,
 
   score: 5,
-  firstName: "Luke",
-  lastName: "Skywalker",
+  firstName: 'Luke',
+  lastName: 'Skywalker',
   parents: [
     {
-      firstName: "Padmé",
-      lastName: "Amidala",
+      firstName: 'Padmé',
+      lastName: 'Amidala',
     },
     {
-      firstName: "Anakin",
-      lastName: "Skywalker",
+      firstName: 'Anakin',
+      lastName: 'Skywalker',
     },
   ],
+};
+
+const resources = {
+  ...builtInResources,
+
+  myLessThan: resource({
+    type: any,
+    async resolver(a: number, b: number): Promise<boolean> {
+      return a < b;
+    },
+  }),
+
+  date: resource({
+    type: any,
+    async resolver(a: string): Promise<string> {
+      return a + new Date().toString();
+    },
+  }),
 };
 
 const baseEnvironment = {
@@ -52,14 +70,14 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", async (req, res) => {
-  res.type("html");
+app.get('/', async (req, res) => {
+  res.type('html');
   res.send(
     '<html><head><title>AskQL</title></head><body><p><b>Ask</b> me anything!</p><p><a href="http://askql.org/">AskQL website</a></p></body></html>'
   );
 });
 
-app.post("/compile/js", async (req, res) => {
+app.post('/compile/js', async (req, res) => {
   const { data } = req.body;
   const code = data;
 
@@ -69,17 +87,17 @@ app.post("/compile/js", async (req, res) => {
   const id = nanoid();
 
   try {
-    console.log(id + " -- " + new Date().toString());
-    console.log(id + " -- " + chalk.grey(`➡️ ${code}`));
+    console.log(id + ' -- ' + new Date().toString());
+    console.log(id + ' -- ' + chalk.grey(`➡️ ${code}`));
 
     askCode = parseAskScript(code);
 
     askCodeSource = askCodeToSource(askCode);
   } catch (e) {
-    console.error(id + " -- " + new Date().toString());
-    console.error(id + " -- " + code);
-    console.error(id + " -- " + e);
-    console.error("\n\n");
+    console.error(id + ' -- ' + new Date().toString());
+    console.error(id + ' -- ' + code);
+    console.error(id + ' -- ' + e);
+    console.error('\n\n');
 
     // res.status(400);
 
@@ -90,7 +108,7 @@ app.post("/compile/js", async (req, res) => {
         null,
         2
       )} + '</pre>');`,
-      language: "js",
+      language: 'js',
     });
     return;
   }
@@ -98,8 +116,8 @@ app.post("/compile/js", async (req, res) => {
   try {
     const result = await runUntyped(baseEnvironment, askCode, []);
 
-    console.log(id + " -- " + chalk.grey(`⬅️ ${JSON.stringify(result)}`));
-    console.log("\n\n");
+    console.log(id + ' -- ' + chalk.grey(`⬅️ ${JSON.stringify(result)}`));
+    console.log('\n\n');
     res.json({
       askCodeSource,
       data: `document.write('<pre style="color:blue; font-weight: bold; white-space: pre-wrap;">' + JSON.stringify(${JSON.stringify(
@@ -107,14 +125,14 @@ app.post("/compile/js", async (req, res) => {
         null,
         2
       )}, null, 2) + '</pre>');`,
-      language: "js",
+      language: 'js',
     });
     // res.json({ askCodeSource, data: result, language: 'ask' });
   } catch (e) {
-    console.error(id + " -- " + new Date().toString());
-    console.error(id + " -- " + code);
-    console.error(id + " -- " + e);
-    console.error("\n\n");
+    console.error(id + ' -- ' + new Date().toString());
+    console.error(id + ' -- ' + code);
+    console.error(id + ' -- ' + e);
+    console.error('\n\n');
     // res.json({ askCodeSource, error: e.toString() });
     // res.status(400);
     res.json({
@@ -124,7 +142,7 @@ app.post("/compile/js", async (req, res) => {
         null,
         2
       )} + '</pre>');`,
-      language: "js",
+      language: 'js',
     });
   }
 });

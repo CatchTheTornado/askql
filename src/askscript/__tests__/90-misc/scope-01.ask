@@ -1,0 +1,7 @@
+ask {
+  let b: int = 2
+  if (true) {
+    b = 4
+  }
+  b
+}

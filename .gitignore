@@ -17,3 +17,6 @@ askql-*.tgz
 /drafts
 /src/drafts
 /src/askscript/drafts
+
+# macOS
+.DS_Store

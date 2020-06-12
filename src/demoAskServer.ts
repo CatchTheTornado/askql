@@ -40,6 +40,8 @@ const values = {
       lastName: 'Skywalker',
     },
   ],
+
+  counter: 0,
 };
 
 const resources = {
@@ -56,6 +58,21 @@ const resources = {
     type: any,
     async resolver(a: string): Promise<string> {
       return a + new Date().toString();
+    },
+  }),
+
+  getCounter: resource({
+    type: any,
+    async resolver(): Promise<number> {
+      return values.counter;
+    },
+  }),
+
+  increaseCounter: resource({
+    type: any,
+    async resolver(): Promise<number> {
+      values.counter++;
+      return values.counter;
     },
   }),
 };

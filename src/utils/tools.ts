@@ -8,11 +8,11 @@ import { Options, resources, runUntyped } from '../askvm';
 const myLogger = util.debuglog('');
 
 export async function e2e(
-  script: string,
+  askScriptCode: string,
   environment: Options,
   args?: any[]
 ): Promise<any> {
-  const ast = parseToAst(script);
+  const ast = parseToAst(askScriptCode);
   const askCode = fromAskScriptAst(ast, createElement);
 
   return runUntyped(environment, askCode, args);

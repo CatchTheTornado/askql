@@ -3,7 +3,7 @@ import { minus } from './minus';
 import { sum } from './sum';
 import { times } from './times';
 import { lessThan } from './lessThan';
-import { lessOrEq } from './lessOrEq';
+import { lessThanOrEqual } from './lessThanOrEqual';
 
 Object.assign(exports, {
   '+': sum,
@@ -11,14 +11,14 @@ Object.assign(exports, {
   '*': times,
   '/': divideBy,
   '<': lessThan,
-  '<=': lessOrEq,
+  '<=': lessThanOrEqual,
 });
 
 export * from './ceil';
 export * from './floor';
 export * from './divideBy';
 export * from './lessThan';
-export * from './lessOrEq';
+export * from './lessThanOrEqual';
 export * from './max';
 export * from './minus';
 export { sum as plus, sum } from './sum';

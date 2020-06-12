@@ -125,9 +125,9 @@ async function askRunner(
 
   const askCode = parseAskScript(source);
   const askCodeSource = askCodeToSource(askCode);
-  const askCodeSource2 = askCodeToSource(
-    fromAskScriptAst(askScriptAst, createElement)
-  );
+  // const askCodeSource2 = askCodeToSource(
+  //   fromAskScriptAst(askScriptAst, createElement)
+  // );
   // console.log({ askCodeSource1: askCodeSource, askCodeSource2 });
   const askCodeTargetPath = getTargetPath(testPath, 'askcode', '../src');
   await mkdir(dirname(askCodeTargetPath), {

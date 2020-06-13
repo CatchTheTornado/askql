@@ -3,6 +3,7 @@ import { minus } from './minus';
 import { sum } from './sum';
 import { times } from './times';
 import { lessThan } from './lessThan';
+import { greaterThan } from './greaterThan';
 
 Object.assign(exports, {
   '+': sum,
@@ -10,12 +11,14 @@ Object.assign(exports, {
   '*': times,
   '/': divideBy,
   '<': lessThan,
+  '>': greaterThan,
 });
 
 export * from './ceil';
 export * from './floor';
 export * from './divideBy';
 export * from './lessThan';
+export * from './greaterThan';
 export * from './max';
 export * from './minus';
 export { sum as plus, sum } from './sum';

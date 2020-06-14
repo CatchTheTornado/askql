@@ -50,7 +50,7 @@
     "@babel/preset-typescript": "7.10.1",
     "@types/express": "4.17.6",
     "@types/glob": "7.1.2",
-    "@types/jest": "25.2.3",
+    "@types/jest": "26.0.0",
     "@types/jsesc": "2.5.1",
     "@types/node": "14.0.13",
     "@types/node-fetch": "2.5.7",

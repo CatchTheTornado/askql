@@ -27,7 +27,7 @@ describe(`askExpressMiddleware`, () => {
 
   describe('the middleware', () => {
     it('should respond with the queried resource', async (done) => {
-      const askScript = 'hello';
+      const askScript = 'ask(hello)';
       mockRequest.body = {
         code: askScript,
       };

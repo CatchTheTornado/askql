@@ -19,7 +19,6 @@ export function askExpressMiddleware(
         { values, resources },
         parse(askScriptCode)
       );
-      console.log('Here #@$');
       response.json(queryResponse);
     } catch (err) {
       if (passError) {

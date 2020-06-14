@@ -25,7 +25,6 @@ export function askExpressMiddleware(
       if (passError) {
         return next(err);
       }
-      console.error(err);
     }
 
     if (callNext) {

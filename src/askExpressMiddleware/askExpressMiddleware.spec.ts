@@ -19,43 +19,45 @@ describe(`askExpressMiddleware`, () => {
   beforeEach(() => {
     middlware = askExpressMiddleware(values);
     mockNext = jest.fn() as jest.Mock<NextFunction>;
-    mockRequest = {} as jest.Mock<Request>;
+    mockRequest = ({
+      body: {},
+    } as unknown) as jest.Mock<Request>;
     mockResponse = ({
       json: jest.fn(),
     } as unknown) as jest.Mock<Response>;
   });
 
-  describe('the middleware', () => {
-    it('should respond with the queried resource', async (done) => {
-      const askScript = 'ask(hello)';
-      mockRequest.body = {
-        code: askScript,
-      };
-      await middlware(mockRequest, mockResponse, mockNext);
-      expect(mockResponse.json).toHaveBeenCalledWith(values.hello);
-      done();
-    });
+  it('should respond with the queried resource', async (done) => {
+    // const askScript = `ask(query(node('hello',f(call(get('toUpperCase'),call(get('get'),'hello'))))))`;
+    const askScript = `ask(f(call(get('toUpperCase'), call(get('get'),'hello'))))`;
+    const expectedValue = values.hello.toUpperCase();
 
-    it('should run next without arguments', () => {
-      middlware(mockRequest, mockResponse, mockNext);
+    mockRequest.body.code = askScript;
 
-      expect(mockNext).toHaveBeenCalledWith();
-    });
+    await middlware(mockRequest, mockResponse, mockNext);
+    expect(mockResponse.json).toHaveBeenCalledWith(expectedValue);
+    done();
+  });
 
-    it('should not run next if passed callNext false', () => {
-      const errorProneMiddleware = askExpressMiddleware({}, false);
-      errorProneMiddleware(mockRequest, mockResponse, mockNext);
-      expect(mockNext).not.toHaveBeenCalled();
-    });
+  it('should run next without arguments', () => {
+    middlware(mockRequest, mockResponse, mockNext);
 
-    it('should run next with error when passed the error argument', () => {
-      // TODO::mock the logic and return an error
-      const errorProneMiddleware = askExpressMiddleware({}, true, true);
-      const expectedError = new TypeError(
-        `Cannot read property 'code' of undefined`
-      );
-      errorProneMiddleware(mockRequest, mockResponse, mockNext);
-      expect(mockNext).toHaveBeenCalledWith(expectedError);
-    });
+    expect(mockNext).toHaveBeenCalledWith();
+  });
+
+  it('should not run next if passed callNext false', () => {
+    const errorProneMiddleware = askExpressMiddleware({}, false);
+    errorProneMiddleware(mockRequest, mockResponse, mockNext);
+    expect(mockNext).not.toHaveBeenCalled();
+  });
+
+  it('should run next with error when passed the error argument', () => {
+    const errorProneMiddleware = askExpressMiddleware({}, true, true);
+    mockRequest.body = undefined; // should cause an error
+    const expectedError = new TypeError(
+      `Cannot read property 'code' of undefined`
+    );
+    errorProneMiddleware(mockRequest, mockResponse, mockNext);
+    expect(mockNext).toHaveBeenCalledWith(expectedError);
   });
 });

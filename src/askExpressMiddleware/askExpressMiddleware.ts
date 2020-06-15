@@ -7,7 +7,7 @@ export function askExpressMiddleware(
   values: any,
   config: AskExpressMiddlewareConfig = {
     callNext: true,
-    passError: false
+    passError: false,
   }
 ) {
   return async function (

@@ -1,4 +1,7 @@
-import {askExpressMiddleware, AskExpressMiddlewareConfig} from './askExpressMiddleware';
+import {
+  askExpressMiddleware,
+  AskExpressMiddlewareConfig,
+} from './askExpressMiddleware';
 import { NextFunction } from 'express';
 
 describe(`askExpressMiddleware`, () => {
@@ -8,7 +11,7 @@ describe(`askExpressMiddleware`, () => {
 
   const config: AskExpressMiddlewareConfig = {
     callNext: true,
-    passError: false
+    passError: false,
   };
 
   let middlware, mockRequest, mockResponse, mockNext;
@@ -43,13 +46,16 @@ describe(`askExpressMiddleware`, () => {
   });
 
   it('should not run next if passed callNext false', () => {
-    const errorProneMiddleware = askExpressMiddleware({}, {callNext: false});
+    const errorProneMiddleware = askExpressMiddleware({}, { callNext: false });
     errorProneMiddleware(mockRequest, mockResponse, mockNext);
     expect(mockNext).not.toHaveBeenCalled();
   });
 
   it('should run next with error when passed the error argument', () => {
-    const errorProneMiddleware = askExpressMiddleware({}, {callNext: true, passError: true});
+    const errorProneMiddleware = askExpressMiddleware(
+      {},
+      { callNext: true, passError: true }
+    );
     mockRequest.body = undefined; // should cause an error
     const expectedError = new TypeError(
       `Cannot read property 'code' of undefined`

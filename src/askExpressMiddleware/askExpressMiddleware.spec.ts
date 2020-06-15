@@ -1,19 +1,16 @@
-import { runUntyped } from '../askvm';
-import { askExpressMiddleware } from './askExpressMiddleware';
+import {askExpressMiddleware, AskExpressMiddlewareConfig} from './askExpressMiddleware';
 import { NextFunction } from 'express';
 
-jest.mock('../askvm', () => {
-  return {
-    ...jest.requireActual('../askvm'),
-    runUntyped: jest.fn(),
-  };
-});
-
-const values = {
-  hello: 'Hello World!',
-};
-
 describe(`askExpressMiddleware`, () => {
+  const values = {
+    hello: 'Hello world, this is AskQL 🦄',
+  };
+
+  const config: AskExpressMiddlewareConfig = {
+    callNext: true,
+    passError: false
+  };
+
   let middlware, mockRequest, mockResponse, mockNext;
 
   beforeEach(() => {
@@ -46,13 +43,13 @@ describe(`askExpressMiddleware`, () => {
   });
 
   it('should not run next if passed callNext false', () => {
-    const errorProneMiddleware = askExpressMiddleware({}, false);
+    const errorProneMiddleware = askExpressMiddleware({}, {callNext: false});
     errorProneMiddleware(mockRequest, mockResponse, mockNext);
     expect(mockNext).not.toHaveBeenCalled();
   });
 
   it('should run next with error when passed the error argument', () => {
-    const errorProneMiddleware = askExpressMiddleware({}, true, true);
+    const errorProneMiddleware = askExpressMiddleware({}, {callNext: true, passError: true});
     mockRequest.body = undefined; // should cause an error
     const expectedError = new TypeError(
       `Cannot read property 'code' of undefined`

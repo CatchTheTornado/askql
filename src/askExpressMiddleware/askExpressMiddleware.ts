@@ -5,8 +5,10 @@ import { Request, Response } from 'express';
 
 export function askExpressMiddleware(
   values: any,
-  callNext = true,
-  passError = false
+  config: AskExpressMiddlewareConfig = {
+    callNext: true,
+    passError: false
+  }
 ) {
   return async function (
     request: Request,
@@ -21,15 +23,20 @@ export function askExpressMiddleware(
       );
       response.json(queryResponse);
     } catch (err) {
-      if (passError) {
+      if (config.passError) {
         return next(err);
       }
     }
 
-    if (callNext) {
+    if (config.callNext) {
       return next();
     }
 
     return;
   };
+}
+
+export interface AskExpressMiddlewareConfig {
+  callNext?: boolean;
+  passError?: boolean;
 }

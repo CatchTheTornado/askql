@@ -3,7 +3,7 @@ import {
   AskExpressMiddlewareConfig,
 } from './askExpressMiddleware';
 import { NextFunction } from 'express';
-import {resources} from "../askvm";
+import { resources } from '../askvm';
 
 describe(`askExpressMiddleware`, () => {
   const values = {
@@ -18,7 +18,7 @@ describe(`askExpressMiddleware`, () => {
   let middlware, mockRequest, mockResponse, mockNext;
 
   beforeEach(() => {
-    middlware = askExpressMiddleware({values, resources});
+    middlware = askExpressMiddleware({ values, resources });
     mockNext = jest.fn() as jest.Mock<NextFunction>;
     mockRequest = ({
       body: {},

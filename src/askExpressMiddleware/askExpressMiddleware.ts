@@ -1,6 +1,6 @@
 import { NextFunction } from 'express';
-import {runUntyped, Resources, Values} from '../askvm';
-import {parse} from '../askcode';
+import { runUntyped, Resources, Values } from '../askvm';
+import { parse } from '../askcode';
 import { Request, Response } from 'express';
 
 export function askExpressMiddleware(
@@ -17,10 +17,7 @@ export function askExpressMiddleware(
   ) {
     try {
       const askScriptCode = request.body.code;
-      const queryResponse = await runUntyped(
-              environment,
-        parse(askScriptCode)
-      );
+      const queryResponse = await runUntyped(environment, parse(askScriptCode));
       response.json(queryResponse);
     } catch (err) {
       if (config.passError) {

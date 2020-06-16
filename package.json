@@ -28,6 +28,9 @@
   "lint-staged": {
     "*": [
       "prettier --write"
+    ],
+    "*.{.js,.tsx,.ts}": [
+      "eslint --fix"
     ]
   },
   "bin": {

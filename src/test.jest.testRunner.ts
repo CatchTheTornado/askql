@@ -5,10 +5,11 @@ import type { Config } from '@jest/types';
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs.promises';
 import type { RuntimeType } from 'jest-runtime';
+import * as micromatch from 'micromatch';
 import { basename, dirname, join } from 'path';
-import micromatch from 'micromatch';
+import * as prettier from 'prettier';
 import { askCodeToSource, parse as parseAskCode } from './askcode';
-import { fromAskScriptAst, createElement } from './askjsx';
+import { createElement, fromAskScriptAst } from './askjsx';
 import { parse as parseAskScript, parseToAst } from './askscript';
 import {
   extendOptions,
@@ -19,10 +20,9 @@ import {
   runUntyped,
 } from './askvm';
 import { getTargetPath } from './node-utils';
+import * as prettierPluginAskScript from './prettier-plugin-askscript';
 import { fromEntries } from './utils';
 import jasmine2 = require('jest-jasmine2');
-import * as prettier from 'prettier';
-import * as prettierPluginAskScript from './prettier-plugin-askscript';
 
 function compareAsJson(a: any, b: any): boolean {
   return JSON.stringify(a) === JSON.stringify(b);
@@ -267,19 +267,7 @@ export = async function testFileRunner(
     }
   };
 
-  // !micromatch.any(testPath, [
-  //   // '**/__tests__/**/*.[jt]s?(x)',
-  //   '**/?(*.)+(spec|test).[jt]s?(x)',
-  // ]);
-
-  // console.log('!', {
-  //   testPath,
-  //   isMatch: micromatch.isMatch(testPath, [
-  //     '**/__tests__/**/*.[jt]s?(x)',
-  //     '**/?(*.)+(spec|test).[jt]s?(x)',
-  //   ]),
-  // });
-
+  // the list below should correspond to the config in /jest.test.config.js
   if (
     micromatch.isMatch(testPath, [
       '**/__tests__/**/*.[jt]s?(x)',
@@ -328,9 +316,12 @@ export = async function testFileRunner(
   }
   const testResults: AssertionResult[] = Object.entries<
     undefined | null | AssertionResult
-  >(
-    await askRunner(globalConfig, config, environment, runtime, testPath)
-  ).map(([name, testResult]) => ({ ...(testResult || todo()), title: name }));
+  >(await askRunner(globalConfig, config, environment, runtime, testPath)).map(
+    ([name, testResult]) => ({
+      ...(testResult || todo()),
+      title: name,
+    })
+  );
   return Object.assign(createEmptyTestResult(), {
     testResults,
     failureMessage: testResults

@@ -8,9 +8,14 @@ module.exports = {
     '**/*.(ask|pegjs)',
   ],
   testPathIgnorePatterns: [
-    '<rootDir>/drafts/',
+    '_environment.ts',
     '.*\\.ask\\.formatted\\.ask',
+    '.*\\.test.args.ts',
+    '.*\\.test.result.ts',
     '<rootDir>/dist/',
+    '<rootDir>/drafts/',
+    '<rootDir>/src/__tests__/lib.ts',
+    '<rootDir>/src/askscript/__tests__/tools/run_ask_file.ts',
   ],
   testRunner: './dist/test.jest.testRunner',
   transform: {

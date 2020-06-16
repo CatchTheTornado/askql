@@ -6,6 +6,7 @@ import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs.promises';
 import type { RuntimeType } from 'jest-runtime';
 import { basename, dirname, join } from 'path';
+import micromatch from 'micromatch';
 import { askCodeToSource, parse as parseAskCode } from './askcode';
 import { fromAskScriptAst, createElement } from './askjsx';
 import { parse as parseAskScript, parseToAst } from './askscript';
@@ -266,7 +267,25 @@ export = async function testFileRunner(
     }
   };
 
-  if (/.*\.(spec|test)\.ts(x)?/.test(testPath)) {
+  // !micromatch.any(testPath, [
+  //   // '**/__tests__/**/*.[jt]s?(x)',
+  //   '**/?(*.)+(spec|test).[jt]s?(x)',
+  // ]);
+
+  // console.log('!', {
+  //   testPath,
+  //   isMatch: micromatch.isMatch(testPath, [
+  //     '**/__tests__/**/*.[jt]s?(x)',
+  //     '**/?(*.)+(spec|test).[jt]s?(x)',
+  //   ]),
+  // });
+
+  if (
+    micromatch.isMatch(testPath, [
+      '**/__tests__/**/*.[jt]s?(x)',
+      '**/?(*.)+(spec|test).[jt]s?(x)',
+    ])
+  ) {
     const askFile = join(
       dirname(testPath),
       `${basename(testPath, '.test.ts')}.ask`

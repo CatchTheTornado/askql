@@ -7,159 +7,52 @@
     ]
   },
   [
-    "const",
+    "set",
     {
-      "name": "square",
+      "name": "b",
       "type": [
         "ref",
         {
-          "name": "any"
+          "name": "int"
         }
       ],
-      "value": [
-        "fun",
-        {
-          "args": [
-            "list",
-            null,
-            [
-              "list",
-              null,
-              "b",
-              [
-                "ref",
-                {
-                  "name": "int"
-                }
-              ]
-            ]
-          ],
-          "returns": [
-            "ref",
-            {
-              "name": "int"
-            }
-          ]
-        },
-        [
-          "call",
-          {
-            "name": "times",
-            "args": [
-              "list",
-              null,
-              [
-                "ref",
-                {
-                  "name": "b"
-                }
-              ],
-              [
-                "ref",
-                {
-                  "name": "b"
-                }
-              ]
-            ]
-          }
-        ],
-        [
-          "if",
-          {
-            "condition": [
-              "call",
-              {
-                "name": "check",
-                "args": [
-                  "list",
-                  null,
-                  [
-                    "ref",
-                    {
-                      "name": "b"
-                    }
-                  ]
-                ]
-              }
-            ]
-          },
-          [
-            "return",
-            {
-              "value": 2
-            }
-          ]
-        ],
-        [
-          "return",
-          {
-            "value": [
-              "call",
-              {
-                "name": "times",
-                "args": [
-                  "list",
-                  null,
-                  [
-                    "ref",
-                    {
-                      "name": "b"
-                    }
-                  ],
-                  [
-                    "ref",
-                    {
-                      "name": "b"
-                    }
-                  ]
-                ]
-              }
-            ]
-          }
-        ]
-      ]
+      "value": 2
     }
   ],
   [
-    "call",
+    "if",
     {
-      "name": "plus",
-      "args": [
-        "list",
-        null,
-        [
-          "call",
+      "condition": true
+    },
+    [
+      "set",
+      {
+        "name": "b",
+        "type": [
+          "ref",
           {
-            "name": "square",
-            "args": [
-              "list",
-              null,
-              [
-                "ref",
-                {
-                  "name": "b"
-                }
-              ]
-            ]
+            "name": "string"
           }
         ],
-        [
-          "call",
+        "value": "text"
+      }
+    ],
+    [
+      "return",
+      {
+        "value": [
+          "ref",
           {
-            "name": "square",
-            "args": [
-              "list",
-              null,
-              [
-                "ref",
-                {
-                  "name": "c"
-                }
-              ]
-            ]
+            "name": "b"
           }
         ]
-      ]
+      }
+    ]
+  ],
+  [
+    "return",
+    {
+      "value": -1
     }
   ]
 ]

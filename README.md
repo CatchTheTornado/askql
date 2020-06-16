@@ -241,10 +241,10 @@ If you didn't find answers to your questions here, write on ourour [Discord comm
 
 The code in this project is licensed under MIT license.
 
-## Core Team
+## Core Developers
 
-- Marcin Hagmajer (ex-Facebook)
-- Łukasz Czerwiński (ex-Google)
+- [Marcin Hagmajer](https://github.com/mhagmajer/) (ex-Facebook)
+- [Łukasz Czerwiński](https://github.com/czerwinskilukasz1/) (ex-Google)
 
 <a href="https://xfaang.com" align="left">
   <img 

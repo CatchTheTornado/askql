@@ -7,3 +7,7 @@
 *.ask.json
 *.test.result.ts
 *.ask.ast.json
+*.askjson
+*.askcode
+.prettierignore
+.gitignore

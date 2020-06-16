@@ -52,6 +52,8 @@ If you are a new contributor:
 
 3. **If you don't know** how to start, it most probably means we should have written more pointers :) In such case, **we** need **your** help - your feedback!
 
+4. Remember good practices with global gitignore file configuration. If you don't know how to configure global gitignore see [this Gist](https://gist.github.com/subfuzion/db7f57fff2fb6998a16c). We recommend to exclude your local configuration files for your system and code editor.
+
    So be brave and reach out to us, either by tagging one of the [Core Developers](README.md#core-developers) by their username in your chosen issue or by writing on the [Discord community](https://discord.gg/pYdzypH).
 
    We will be very very happy to help you start, and your feedback will improve the pointers for the future new contributors and make _their_ start smoother.

@@ -1,1 +1,1 @@
-ask(let('square',fun(let('b',get('$0')),call(get('times'),call(get('get'),'b'),call(get('get'),'b')),if(call(get('check'),call(get('get'),'b')),block(return(2)),block()),return(call(get('times'),call(get('get'),'b'),call(get('get'),'b'))))),call(get('plus'),call(get('square'),call(get('get'),'b')),call(get('square'),call(get('get'),'c'))))
+ask(let('b',2),if(true,block(let('b','text'),return(call(get('get'),'b'))),block()),return(-1))

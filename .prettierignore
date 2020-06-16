@@ -10,3 +10,4 @@
 *.askjson
 *.askcode
 .prettierignore
+.gitignore

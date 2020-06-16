@@ -266,7 +266,7 @@ export = async function testFileRunner(
     }
   };
 
-  if (testPath.endsWith('.test.ts')) {
+  if (/.*\.(spec|test)\.ts(x)?/.test(testPath)) {
     const askFile = join(
       dirname(testPath),
       `${basename(testPath, '.test.ts')}.ask`

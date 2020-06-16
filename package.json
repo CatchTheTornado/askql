@@ -6,15 +6,28 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "jest --config jest.test.config.js",
+    "test:dev": "jest --watch --config jest.test.config.js",
     "ask": "ASK_PRINT_RESULT=1 jest --config jest.test.config.js --no-cache",
     "check": "tsc --noEmit",
     "tsc": "tsc",
     "tsc:test": "tsc && npm run test --no-cache",
     "build:test": "npm run build && npm run test --no-cache",
-    "prebuild": "rm -rf dist && tsc",
+    "prebuild": "ts-node scripts/preBuild.ts && tsc",
     "build": "jest --config jest.build.config.js --no-cache",
-    "postbuild": "cp README.md dist && cd dist && chmod +x *.js",
-    "prettier": "prettier --plugin=./dist/prettier-plugin-askscript"
+    "postbuild": "ts-node scripts/postBuild.ts",
+    "prettier": "prettier --write --config prettier.config.js .",
+    "prettier:check": "prettier --config prettier.config.js --check .",
+    "prettier:scripts": "prettier --write ./scripts"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --write"
+    ]
   },
   "bin": {
     "askql": "dist/cli.js",
@@ -31,29 +44,33 @@
   "homepage": "https://askql.org/",
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
-    "@babel/preset-react": "^7.9.4",
-    "@babel/preset-typescript": "^7.9.0",
-    "@types/express": "^4.17.6",
-    "@types/glob": "^7.1.1",
-    "@types/jest": "^25.2.1",
-    "@types/jsesc": "^2.5.1",
-    "@types/node": "^14.0.1",
-    "@types/node-fetch": "^2.5.7",
-    "@types/pegjs": "^0.10.1",
-    "babel-jest": "^25.4.0",
-    "babel-plugin-inline-import": "^3.0.0",
-    "chalk": "^4.0.0",
-    "express": "^4.17.1",
+    "@babel/core": "7.10.2",
+    "@babel/preset-env": "7.10.2",
+    "@babel/preset-react": "7.10.1",
+    "@babel/preset-typescript": "7.10.1",
+    "@types/express": "4.17.6",
+    "@types/glob": "7.1.2",
+    "@types/jest": "26.0.0",
+    "@types/jsesc": "2.5.1",
+    "@types/node": "14.0.13",
+    "@types/node-fetch": "2.5.7",
+    "@types/pegjs": "0.10.2",
+    "@types/rimraf": "3.0.0",
+    "babel-jest": "26.0.1",
+    "babel-plugin-inline-import": "3.0.0",
+    "chalk": "4.1.0",
+    "express": "4.17.1",
     "fs.promises": "0.1.2",
-    "glob": "^7.1.6",
-    "jest": "^25.4.0",
-    "jsesc": "^3.0.1",
-    "node-fetch": "^2.6.0",
+    "glob": "7.1.6",
+    "husky": "4.2.5",
+    "jest": "26.0.1",
+    "jsesc": "3.0.1",
+    "lint-staged": "10.2.10",
+    "node-fetch": "2.6.0",
     "pegjs": "0.10.0",
-    "prettier": "^2.0.5",
-    "ts-node": "^8.10.1",
-    "typescript": "^3.9.2"
+    "prettier": "2.0.5",
+    "rimraf": "3.0.2",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.5"
   }
 }

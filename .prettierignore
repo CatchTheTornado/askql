@@ -1,0 +1,13 @@
+/.idea
+/@types
+/dist
+/drafts
+/node_modules
+*.ask
+*.ask.json
+*.test.result.ts
+*.ask.ast.json
+*.askjson
+*.askcode
+.prettierignore
+.gitignore

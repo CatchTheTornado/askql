@@ -18,5 +18,11 @@
     "./src/package.json",
     "@types/interface.d.ts"
   ],
-  "exclude": ["**/drafts/**", "**/node_modules/**"]
+  "exclude": [
+    "**/drafts/**",
+    "**/node_modules/**",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/__tests__/*"
+  ]
 }

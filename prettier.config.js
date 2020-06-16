@@ -5,8 +5,7 @@ module.exports = {
       options: {
         parser: 'typescript',
         singleQuote: true,
-        // trailingComma: 'es5',
-        // arrowParens: 'always',
+        endOfLine: 'lf',
       },
     },
     {
@@ -14,7 +13,7 @@ module.exports = {
       files: '*.ask',
       options: {
         parser: 'askscript',
-        // semi: true,
+        plugins: ['./dist/prettier-plugin-askscript'],
       },
     },
   ],

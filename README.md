@@ -8,9 +8,9 @@
 AskQL is a new query and programming language that can express any data request.
 <br>Send executable code instead of JSONs.
 
-* Asynchronous by default
-* Processes only immutable data
-* Based entirely on the functional programming paradigm
+- Asynchronous by default
+- Processes only immutable data
+- Based entirely on the functional programming paradigm
 
 ## Why and what for?
 
@@ -26,10 +26,10 @@ AskQL is a new query and programming language that can express any data request.
     height=50%
     width=50%>
 
-* Next milestone after GraphQL and REST API
-* Send code to servers without the need to deploy
-* New safe query language
-* Compiled to clean functional code
+- Next milestone after GraphQL and REST API
+- Send code to servers without the need to deploy
+- New safe query language
+- Compiled to clean functional code
 
 ### Prerequisites
 
@@ -50,7 +50,7 @@ npm install askql
 Sample index.js file:
 
 ```js
-const askql = require('askql');
+const askql = require("askql");
 
 (async () => {
   const result = await askql.runUntyped(
@@ -66,23 +66,86 @@ const askql = require('askql');
 
 ## Development & Contributing
 
-### Installation
+Please find all important information here:
+
+[Contributing guidelines](https://github.com/xFAANG/askql/blob/master/CONTRIBUTING.md)
+
+## Installation from source
 
 1. Clone the repository
 
 `git clone git@github.com:xFAANG/askql.git`
 
-2. Install dependencies
+2. Install dependencies:
    `npm i`
 
-3. Build the project
+3. Build the project:
    `npm run build`
 
-4. Link the project to askql command
+4. Link the project to askql command:
    `npm link`
 
-Now you should be able to launch the interpreter (we use REPL for that).
-`askql`
+5. Now you should be able to launch the interpreter (we use REPL for that):
+   `askql`
+
+## Code examples
+
+You can find all the examples in `__tests__` folders (e.g. [👉 AskScript tests](https://github.com/xFAANG/askql/tree/master/src/askscript/__tests__)) or in the Usage section below.
+
+## Documentation
+
+Find AskQL documentation [here](https://www.notion.so/AskQL-Documentation-cd065c579d0c44d381ddddc4682f5736).<br>
+
+The Documentation is divided into 4 parts:<br>
+
+- [AskQL Overview](https://www.notion.so/AskQL-Overview-c95f3370be104466bfb3e3bca3ce7db4)
+- [AskQL Quick Guide](https://www.notion.so/AskQL-Quick-Guide-0c5f8659957d47978d63f6afb85170ab)
+- [AskScript - Human Friendly Language for AskScript](https://www.notion.so/AskScript-Human-Friendly-Language-for-AskQL-7c5e382df87a4015b44985391861f6a2)
+- [AskVM - Runtime Environment for AskQL](https://www.notion.so/AskVM-Runtime-Environment-for-AskQL-cf4c34bfc7df4e0c8d35ae6213e6f344)
+
+### Try It Yourself
+
+Do not hesitate to try it out yourself! You can also find fellow AskQL devs in our [Discord community](https://discord.gg/pYdzypH).
+<br>
+
+## Tools
+
+#### CLI (AskScript interpreter)
+
+Similar to `python` or `node`, AskScript CLI allows the user to type AskScript programs and get immediate result.
+
+In order to run CLI:
+
+1.  Build the code:
+
+        npm run build
+
+1.  Run:
+
+        node dist/cli.js
+
+Every input is treated as an AskScript program. For convenience, CLI expects just the body of your program, without `ask{` `}`.
+
+The editor has 2 modes - a default single-line mode and a multiline mode.
+
+In order to enter the multiline mode, please type `.editor`.
+
+At the end of your multiline input please press Ctrl+D.
+
+        $ node dist/cli.js
+        🦄 .editor
+        // Entering editor mode (^D to finish, ^C to cancel)
+        const a = 'Hello'
+        a:concat(' world')
+
+        (Ctrl+D pressed)
+
+Result:
+
+        string ask(let('a','Hello'),call(get('concat'),get('a'),' world'))
+        'Hello world'
+
+As the output CLI always prints AskCode (which would be sent to an AskVM machine if the code was executed over the network) and the result of the AskScript program.
 
 ### Usage
 
@@ -162,65 +225,6 @@ any ask(query(node('philosophers',f(get('philosophers')))))
 
 `ctrl + d`
 
-### Examples
-
-You can find all the examples in `__test__` folders
-
-### Documetation
-
-Find AskQL documentation [here](https://www.notion.so/AskQL-Documentation-cd065c579d0c44d381ddddc4682f5736).<br>
-
-The Documentation is divided into 4 parts:<br>
-* [AskQL Overview](https://www.notion.so/AskQL-Overview-c95f3370be104466bfb3e3bca3ce7db4)
-* [AskQL Quick Guide](https://www.notion.so/AskQL-Quick-Guide-0c5f8659957d47978d63f6afb85170ab)
-* [AskScript - Human Friendly Language for AskScript](https://www.notion.so/AskScript-Human-Friendly-Language-for-AskQL-7c5e382df87a4015b44985391861f6a2)
-* [AskVM - Runtime Environment for AskQL](https://www.notion.so/AskVM-Runtime-Environment-for-AskQL-cf4c34bfc7df4e0c8d35ae6213e6f344)
-
-### Try It Yourself
-Do not hesitate to try it out yourself! You can also find fellow AskQL devs in our [Discord community](https://discord.gg/pYdzypH).
-<br>
-
-### Tools
-
-#### Test server
-
-#### CLI (AskScript interpreter)
-
-Similar to `python` or `node`, AskScript CLI allows the user to type AskScript programs and get immediate result.
-
-In order to run CLI:
-
-1.  Build the code:
-
-        npm run build
-
-1.  Run:
-
-        node dist/cli.js
-
-Every input is treated as an AskScript program. For convenience, CLI expects just the body of your program, without `ask{` `}`.
-
-The editor has 2 modes - a default single-line mode and a multiline mode.
-
-In order to enter the multiline mode, please type `.editor`.
-
-At the end of your multiline input please press Ctrl+D.
-
-        $ node dist/cli.js
-        🦄 .editor
-        // Entering editor mode (^D to finish, ^C to cancel)
-        const a = 'Hello'
-        a:concat(' world')
-
-        (Ctrl+D pressed)
-
-Result:
-
-        string ask(let('a','Hello'),call(get('concat'),get('a'),' world'))
-        'Hello world'
-
-As the output CLI always prints AskCode (which would be sent to an AskVM machine if the code was executed over the network) and the result of the AskScript program.
-
 ## FAQ
 
 ### What's the difference between `ask { <askcode> }` and `eval( <javascript> )`?
@@ -231,18 +235,16 @@ On contrary, Ask's `ask { <askscript> }` runs by default on a secure, sandboxed 
 
 ## Troubleshooting
 
-## Contributing
-
-[Contributing guidelines](https://github.com/xFAANG/askql/blob/master/CONTRIBUTING.md)
+If you didn't find answers to your questions here, write on ourour [Discord community](https://discord.gg/pYdzypH). We will both help you with the first steps and discuss more advanced topics.
 
 ## License
 
 The code in this project is licensed under MIT license.
 
-## Core Team
+## Core Developers
 
-- Marcin Hagmajer (ex-Facebook)
-- Łukasz Czerwiński (ex-Google)
+- [Marcin Hagmajer](https://github.com/mhagmajer/) (ex-Facebook)
+- [Łukasz Czerwiński](https://github.com/czerwinskilukasz1/) (ex-Google)
 
 <a href="https://xfaang.com" align="left">
   <img 

@@ -2,13 +2,13 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
 import { createElement, fromAskScriptAst } from '../askjsx';
-import { parseToAst } from '../askscript';
+import { parseToAst, AskScriptCode } from '../askscript';
 import { Options, resources, runUntyped } from '../askvm';
 
 const myLogger = util.debuglog('');
 
 export async function e2e(
-  askScriptCode: string,
+  askScriptCode: AskScriptCode,
   environment: Options,
   args?: any[]
 ): Promise<any> {

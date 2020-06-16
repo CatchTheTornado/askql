@@ -3,6 +3,8 @@ import { fromAskScriptAst, createElement } from '../askjsx';
 
 export type AskScriptAstSimpleValue = null | boolean | number | string;
 
+export type AskScriptCode = string;
+
 export type AskScriptAstValue =
   | AskScriptAstSimpleValue
   | { jsxValue: Record<string, AskScriptAstValue> | AskScriptAstSimpleValue }

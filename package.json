@@ -18,7 +18,7 @@
     "prettier": "prettier --write --config prettier.config.js .",
     "prettier:check": "prettier --config prettier.config.js --check .",
     "prettier:scripts": "prettier --write ./scripts",
-    "lint": "eslint"
+    "lint": "eslint . --ext .ts"
   },
   "husky": {
     "hooks": {

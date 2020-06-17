@@ -19,7 +19,7 @@
     "prettier:check": "prettier --config prettier.config.js --check .",
     "prettier:scripts": "prettier --write ./scripts",
     "lint:js": "eslint . --ext .js,.tsx,.ts",
-    "lint:js:fix": "npm run lint --fix"
+    "lint:js:fix": "npm run lint:js --fix"
   },
   "husky": {
     "hooks": {

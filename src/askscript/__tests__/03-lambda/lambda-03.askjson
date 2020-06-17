@@ -1,0 +1,63 @@
+[
+  "ask",
+  {
+    "args": [
+      "list",
+      null
+    ]
+  },
+  [
+    "set",
+    {
+      "name": "myFun",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
+      "value": [
+        "fun",
+        {
+          "args": [
+            "list",
+            null
+          ],
+          "returns": [
+            "call",
+            {
+              "name": "get",
+              "args": [
+                "list",
+                null,
+                "any"
+              ]
+            }
+          ]
+        },
+        [
+          "call",
+          {
+            "name": "get",
+            "args": [
+              "list",
+              null,
+              "$0"
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  [
+    "call",
+    {
+      "name": "myFun",
+      "args": [
+        "list",
+        null,
+        5
+      ]
+    }
+  ]
+]

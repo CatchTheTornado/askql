@@ -9,14 +9,19 @@
   [
     "call",
     {
-      "name": "times",
+      "name": "call",
       "args": [
         "list",
         null,
         [
-          "ref",
+          "call",
           {
-            "name": "score"
+            "name": "get",
+            "args": [
+              "list",
+              null,
+              "toString"
+            ]
           }
         ],
         2

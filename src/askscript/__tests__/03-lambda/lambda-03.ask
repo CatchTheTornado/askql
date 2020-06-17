@@ -1,0 +1,6 @@
+ask() {
+  let myFun = fun(): get('any') {
+    get('$0')
+  }
+  myFun(5)
+}

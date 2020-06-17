@@ -18,6 +18,13 @@ function logValue<T>(message: string, value: T): T {
   return value;
 }
 
+/**
+ * Returns the result of evaluating `code` as a resource. For simple values, returns them
+ * and for functions it runs them.
+ * @param options environment options
+ * @param code resource call (AskCode instance) or a simple value
+ * @param args optional arguments for call if `code` computes to a function and should be called
+ */
 export async function run(
   options: Options,
   code: AskCodeOrValue,
@@ -36,11 +43,10 @@ export async function run(
   const { name } = code;
 
   if (name in values) {
-    const value = typed(values[name]);
-
-    if (value.type.name === 'code' && args) {
-      const code = value.value as AskCode;
-      return await run(options, code, args);
+    const value = values[name];
+    if (isAskCode(value)) {
+      // this is calling it with the arguments which are call arguments
+      return run(options, value as AskCode, args);
     }
 
     return value;
@@ -54,6 +60,7 @@ export async function run(
     return typed(await resources[name].compute(options, code, args));
   }
 
+  console.log('values', values);
   throw new Error(`Unknown identifier '${name}'!`);
 }
 

@@ -18,6 +18,6 @@ module.exports = {
     'no-useless-catch': 'off',
     'no-useless-escape': 'off',
     'valid-typeof': 'off',
-    '@typescript-eslint/no-unused-vars': [1, { args: 'after-used' }],
+    '@typescript-eslint/no-unused-vars': [1, { args: 'none' }],
   },
 };

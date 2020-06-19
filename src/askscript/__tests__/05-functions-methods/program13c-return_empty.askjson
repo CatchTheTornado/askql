@@ -10,7 +10,16 @@
   [
     "return",
     {
-      "value": null
+      "value": [
+        "call",
+        {
+          "name": "null",
+          "args": [
+            "list",
+            null
+          ]
+        }
+      ]
     }
   ],
   [

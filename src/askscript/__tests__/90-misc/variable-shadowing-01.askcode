@@ -1,1 +1,1 @@
-ask(let('b',2),if(true,block(let('b','text'),return(call(get('get'),'b'))),block()),return(-1))
+ask(let('b',2),if(call(get('true')),block(let('b','text'),return(call(get('get'),'b'))),block()),return(-1))

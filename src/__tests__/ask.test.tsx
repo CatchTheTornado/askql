@@ -4,7 +4,7 @@ import { ask } from './lib';
 askjsx;
 
 test('returns true', async () => {
-  const context = ask(<ref name="true" />);
+  const context = ask(<call name="true" />);
   await expect(context).resolves.toBe(true);
 });
 

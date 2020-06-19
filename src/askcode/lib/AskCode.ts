@@ -3,6 +3,13 @@ import { Reducer } from './reduce';
 export type Value = Exclude<null | boolean | number | string | object, AskCode>;
 export type AskCodeOrValue = AskCode | Value;
 
+/**
+ * Represents computation the resource specified by name with the given params.
+ * Resources are part of the runtime environment to be passed into `run`.
+ *
+ * Undefined params should be treated as referencing the resource.
+ * Defined params should be treated as calling the resource.
+ */
 export class AskCode {
   constructor(
     /**

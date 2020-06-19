@@ -1,1 +1,1 @@
-ask(let('n',get('$0')),let('thisIsFloat',get('$1')),let('thisIsString',get('$2')),null)
+ask(let('n',get('$0')),let('thisIsFloat',get('$1')),let('thisIsString',get('$2')),call(get('null')))

@@ -1,1 +1,1 @@
-ask(let('maxAge',get('$0')),let('userName',get('$1')),null)
+ask(let('maxAge',get('$0')),let('userName',get('$1')),call(get('null')))

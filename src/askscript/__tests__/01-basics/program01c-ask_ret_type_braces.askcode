@@ -1,1 +1,1 @@
-ask(null)
+ask(call(get('null')))

@@ -3,14 +3,12 @@ import { any, extendOptions, resource, run } from '../../lib';
 export const fun = resource({
   type: any,
   async compute(options, code, args) {
-    // console.log(code.name, code.params, 'args:', args);
-
     if (!args) {
       return code; // TODO typed needs to understand AskCode
     }
 
     options = extendOptions(options, {
-      code,
+      code, // currently executed code available as value
     });
 
     // add simple argument resolvers in the scope

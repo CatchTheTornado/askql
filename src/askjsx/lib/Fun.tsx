@@ -30,7 +30,7 @@ export function Fun({
       {args.map(({ params: [arg, type] }: any, index: any) => (
         <Set name={arg} value={<Ref name={`$${index}`} />} />
       ))}
-      {expressions.length > 0 ? expressions : null}
+      {expressions.length > 0 ? expressions : <call name="null" />}
     </code>
   );
 

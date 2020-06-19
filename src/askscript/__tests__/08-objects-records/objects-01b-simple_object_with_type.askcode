@@ -1,1 +1,1 @@
-ask(let('o',object('name','Arizona','areaInSqMi',113998,'westernState',true)))
+ask(let('o',object('name','Arizona','areaInSqMi',113998,'westernState',call(get('true')))))

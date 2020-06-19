@@ -1,1 +1,1 @@
-ask(true)
+ask(call(get('true')))

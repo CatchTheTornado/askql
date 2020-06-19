@@ -1,1 +1,10 @@
-null
+[
+  "call",
+  {
+    "name": "null",
+    "args": [
+      "list",
+      null
+    ]
+  }
+]

@@ -3,8 +3,6 @@ import { any, resource, run, runUntyped } from '../../lib';
 export const letRes = resource({
   type: any,
   async compute(options, code, args) {
-    // console.log(code.name, code.params, 'args:', args);
-
     const { params: children = [] } = code;
 
     const key: any = await runUntyped(options, children[0]); // FIXME any

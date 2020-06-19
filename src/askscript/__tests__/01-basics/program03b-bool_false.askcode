@@ -1,1 +1,1 @@
-ask(false)
+ask(call(get('false')))

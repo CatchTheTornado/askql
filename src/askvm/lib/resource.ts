@@ -32,11 +32,9 @@ export class Resource<T, A extends any[]> {
   }
 
   async compute(options: RunOptions, code: AskCode, args?: A): Promise<T> {
-    const resolverArgs =
-      args ??
-      (await asyncMap(code.params ?? [], (param) =>
-        runUntyped(options, param)
-      ));
+    const resolverArgs = await asyncMap(code.params ?? args ?? [], (param) =>
+      runUntyped(options, param)
+    );
 
     return this.resolver(...untyped(typed(resolverArgs, this.argsType)));
   }

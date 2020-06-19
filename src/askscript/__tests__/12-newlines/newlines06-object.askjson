@@ -26,7 +26,16 @@
         "areaInSqMi",
         113998,
         "westernState",
-        true
+        [
+          "call",
+          {
+            "name": "true",
+            "args": [
+              "list",
+              null
+            ]
+          }
+        ]
       ]
     }
   ]

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+
+	{{#if gtm}}
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id={{gtm}}"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+		gtag('config', '{{gtm}}');
+	</script>
+	{{/if}}
+
+	<title>{{title}}</title>
+	{{#if packageJson.description}}
+	<meta name="description" content="{{packageJson.description}}" />
+	{{/if}}
+	{{#if packageJson.keywords}}
+	<meta name="keywords" content="{{packageJson.keywords}}" />
+	{{/if}}
+	{{#if packageJson.repository}}
+	<link rel="canonical" href="{{packageJson.repository.url}}" />
+	{{/if}}
+	<link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body class="clear-transmations">
+
+	<div class="wrapper">
+		<header class="header">
+			<div id="logo" class="gr-adapt bkg-primary">
+				<a href="http://askql.org" title="AskQL" target="_blank">
+					<img style="height:25px;" class="inline-block" src="img/askql_logo_blue-noshadow2.png" />
+				</a>
+			</div>
+
+			<div id="title" class="gr-adapt">
+				<h1 class="header__title">
+					AskScript Playground
+					{{#if packageJson.version}}
+					<span class="small">{{packageJson.version}}</span>
+					{{/if}}
+				</h1>
+			</div>
+
+			<div class="gr-grow">
+				Feel cordially invited to contribute to the AskQL project! If you see a bug, please submit it on <a
+					href="https://github.com/xFAANG/askql/issues" target="_blank">AskQL
+					Github</a> :)
+				<br />
+				You can always reach out to us and <em>ask</em> questions or discuss topics related to AskQL on our <a
+					href="https://discord.gg/pYdzypH" target="_blank">IRC-like chat on Discord</a>!
+				<br />
+				<br />
+				Available resources: see Values and Resources <a
+					href="https://github.com/xFAANG/askql/blob/ask_server/src/demoAskServer.ts#L15">here</a>
+			</div>
+
+		</header>
+		<div class="main">
+			<div id="editor_wrapper">
+				<div id="editor_menu"><a href="#" id="run">Run! (Ctrl+S)</a></div>
+				<pre id="editor">ask { hello } </pre>
+			</div>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/ace.js" type="text/javascript"
+				charset="utf-8"></script>
+			<script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
+			<script>
+				const editor = registerAskScriptEditor("editor", "run", "{{askscriptServerUrl}}");
+			</script>
+			<aside class="aside" id="result">"Hi! This is an AskVM server!"</aside>
+		</div>
+		<footer class="footer">
+			<p>Brought to you by <a href="http://xfaang.com">xFAANG</a></p>
+			<p>Distributed under MIT license</p>
+		</footer>
+	</div>
+
+
+</body>
+
+</html>

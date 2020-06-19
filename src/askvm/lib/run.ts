@@ -1,4 +1,4 @@
-import { AskCode, AskCodeOrValue, isAskCode } from '../../askcode';
+import { AskCode, AskCodeOrValue, isAskCode, toAskCode } from '../../askcode';
 import { Resource, Resources } from './resource';
 import { JSONable, typed, TypedValue, untyped } from './typed';
 
@@ -63,8 +63,18 @@ export async function run(
       return typed(code);
     }
 
-    // console.log('computing', code.name, code.params, 'args:', args);
-    return typed(await resources[name].compute(options, code, args));
+    const codeWithArgs = code.params
+      ? code
+      : toAskCode({ ...code, params: args });
+
+    // console.log(
+    //   'computing',
+    //   codeWithArgs.name,
+    //   codeWithArgs.params,
+    //   'args:',
+    //   args
+    // );
+    return typed(await resources[name].compute(options, codeWithArgs, args));
   }
 
   // console.log('resources', resources);

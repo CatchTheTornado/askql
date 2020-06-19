@@ -1,0 +1,88 @@
+[
+  "ask",
+  {
+    "args": [
+      "list",
+      null
+    ]
+  },
+  [
+    "call",
+    {
+      "name": "find",
+      "args": [
+        "list",
+        null,
+        [
+          "ref",
+          {
+            "name": "philosophers"
+          }
+        ],
+        [
+          "fun",
+          {
+            "args": [
+              "list",
+              null
+            ],
+            "returns": [
+              "ref",
+              {
+                "name": "any"
+              }
+            ]
+          },
+          [
+            "call",
+            {
+              "name": "is",
+              "args": [
+                "list",
+                null,
+                [
+                  "call",
+                  {
+                    "name": "at",
+                    "args": [
+                      "list",
+                      null,
+                      [
+                        "ref",
+                        {
+                          "name": "$0"
+                        }
+                      ],
+                      [
+                        "ref",
+                        {
+                          "name": "scorePerPhilosopher"
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                [
+                  "call",
+                  {
+                    "name": "max",
+                    "args": [
+                      "list",
+                      null,
+                      [
+                        "ref",
+                        {
+                          "name": "scorePerPhilosopher"
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      ]
+    }
+  ]
+]

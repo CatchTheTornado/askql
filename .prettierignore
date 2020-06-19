@@ -11,3 +11,4 @@
 *.askcode
 .prettierignore
 .gitignore
+.eslintignore

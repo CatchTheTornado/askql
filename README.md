@@ -1,7 +1,8 @@
-<a href="https://askql.org" align="center">
-  <img src="https://xfaang-assets.s3.eu-west-3.amazonaws.com/logo/askql-logo-OW-cut.png" align="right"
-     title="AskQL Logo" width="200">
-</a>
+<p align="center">
+  <a href="https://askql.org">
+    <img src="https://xfaang-assets.s3.eu-west-3.amazonaws.com/logo/askql-logo-OW-cut.png" title="AskQL Logo" width="200">
+  </a>
+</p>
 
 # [AskQL](https://askql.org/)
 
@@ -231,7 +232,6 @@ string ask(call(get('find'),get('philosophers'),fun(let('name',get('$0')),call(g
 'Turing'
 ```
 
-
 6. Exit the console!
 
 `ctrl + d`
@@ -241,7 +241,6 @@ string ask(call(get('find'),get('philosophers'),fun(let('name',get('$0')),call(g
 ### Playground
 
 Here is the link to our [AskQL playground](http://cli.askql.org:3000/)!
-
 
 ## FAQ
 

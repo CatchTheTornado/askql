@@ -5,7 +5,12 @@ import cors from 'cors';
 import express from 'express';
 
 import { askCodeToSource } from './askcode';
-import { resources, runUntyped } from './askvm';
+import {
+  resources as builtInResources,
+  runUntyped,
+  resource,
+  Resources,
+} from './askvm';
 import { parse as parseAskScript, AskScriptCode } from './askscript';
 
 import chalk = require('chalk');
@@ -25,11 +30,51 @@ const values = {
     f: 136,
     g: 53,
   },
-  test: 15,
+
+  firstName: 'Luke',
+  middleName: 'LukeLuke',
+  lastName: 'Skywalker',
+  fullName: 'Luke Skywalker',
+  parents: [
+    {
+      firstName: 'Padmé',
+      lastName: 'Amidala',
+    },
+    {
+      firstName: 'Anakin',
+      lastName: 'Skywalker',
+    },
+  ],
+  friends: [
+    {
+      id: 0,
+      firstName: 'Padmé',
+      lastName: 'Amidala',
+    },
+    {
+      id: 1,
+      firstName: 'Anakin',
+      lastName: 'Skywalker',
+    },
+  ],
+};
+
+export const customResources: Resources = {
+  withSmile: resource<string, [string]>({
+    resolver: async (s: string): Promise<string> => {
+      return ':) ' + s + ' :)';
+    },
+  }),
+
+  hi: resource<string, []>({
+    resolver: async (): Promise<string> => {
+      return "Hi, this is AskQL server! It's " + new Date().toString();
+    },
+  }),
 };
 
 const baseEnvironment = {
-  resources,
+  resources: { ...builtInResources, ...customResources },
   values,
 };
 

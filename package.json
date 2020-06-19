@@ -42,10 +42,7 @@
     "url": "https://github.com/xFAANG/askql/issues"
   },
   "homepage": "https://askql.org/",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "nanoid": "^3.1.10"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "7.10.2",
     "@babel/preset-env": "7.10.2",
@@ -64,6 +61,7 @@
     "babel-jest": "26.0.1",
     "babel-plugin-inline-import": "3.0.0",
     "chalk": "4.1.0",
+    "cors": "^2.8.5",
     "express": "4.17.1",
     "fs.promises": "0.1.2",
     "glob": "7.1.6",
@@ -72,6 +70,7 @@
     "jsesc": "3.0.1",
     "lint-staged": "10.2.10",
     "micromatch": "^4.0.2",
+    "nanoid": "^3.1.10",
     "node-fetch": "2.6.0",
     "pegjs": "0.10.0",
     "prettier": "2.0.5",

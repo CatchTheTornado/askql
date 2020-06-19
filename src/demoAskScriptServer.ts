@@ -17,7 +17,7 @@ import { customAlphabet } from 'nanoid';
 const nanoid = customAlphabet('1234567890abcdef', 8);
 
 const values = {
-  clientNames: ['a', 'b', 'c', 'd', 'r', 'f', 'g'],
+  clientNames: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
   hello: 'Hi! This is a AskVM server running on localhost',
   revPerClient: {
     a: 426,

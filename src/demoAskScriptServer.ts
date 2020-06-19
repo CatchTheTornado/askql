@@ -103,7 +103,7 @@ app.post('/askscript', async (req, res) => {
   }
 });
 
-const port = 4000;
+const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(chalk.grey(`AskQL listening at http://localhost:${port}`));
 });

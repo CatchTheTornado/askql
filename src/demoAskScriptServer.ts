@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';

@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import express = require('express');
 import bodyParser = require('body-parser');
 import { parse } from './askcode';
@@ -66,7 +64,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/ask', [logRequestMiddleware, askMiddleware, logResultsMiddleware]);
 
-const port = 80;
+const port = 1234;
 app.listen(port, () => {
   console.log(chalk.grey(`AskQL listening at http://localhost:${port}`));
 });

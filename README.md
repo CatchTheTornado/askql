@@ -238,6 +238,10 @@ string ask(call(get('find'),get('philosophers'),fun(let('name',get('$0')),call(g
 
 7. You finished the AskScript tutorial, congratulations! 🎉
 
+### Playground
+
+Here is the link to our [AskQL playground](http://cli.askql.org:3000/)!
+
 
 ## FAQ
 

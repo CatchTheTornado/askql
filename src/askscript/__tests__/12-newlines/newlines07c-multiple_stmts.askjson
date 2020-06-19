@@ -42,7 +42,16 @@
           "name": "bool"
         }
       ],
-      "value": false
+      "value": [
+        "call",
+        {
+          "name": "false",
+          "args": [
+            "list",
+            null
+          ]
+        }
+      ]
     }
   ],
   [
@@ -68,7 +77,16 @@
           "name": "empty"
         }
       ],
-      "value": null
+      "value": [
+        "call",
+        {
+          "name": "null",
+          "args": [
+            "list",
+            null
+          ]
+        }
+      ]
     }
   ],
   [

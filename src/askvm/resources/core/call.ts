@@ -5,20 +5,11 @@ import { toAskCode, isAskCode } from '../../../askcode';
 export const call = resource({
   type: any,
   async compute(options, code, args) {
-    console.log(code.name, code.params, 'args:', args);
-
-    if (!code.params && !args) {
-      return code;
-    }
-
     if (code.params && !Array.isArray(code.params)) {
       throw new Error(`Expecting array, got: ${code.params}`);
     }
     const [funChild, ...argChildren] = code.params ?? args ?? [];
-    const fun =
-      isAskCode(funChild) && !funChild.params
-        ? funChild
-        : await runUntyped(options, funChild);
+    const fun = await runUntyped(options, funChild);
     if (!isAskCode(fun)) {
       throw new Error(`Cannot call ${String(fun)}`);
     }

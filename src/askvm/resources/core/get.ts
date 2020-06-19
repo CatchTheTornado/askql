@@ -4,8 +4,6 @@ import { any, resource, run, runUntyped, typed } from '../../lib';
 export const get = resource({
   type: any,
   async compute(options, code, args) {
-    console.log(code.name, code.params, 'args:', args);
-
     if (!code.params && !args) {
       return code;
     }

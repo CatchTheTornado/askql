@@ -688,22 +688,22 @@ export class Identifier {
 }
 
 export class Null {
-  print(): null {
-    let output = null;
+  print(): LooseObject {
+    let output = new FunctionCall(new Identifier('null'), []).print();
     return output;
   }
 }
 
 export class True {
-  print(): boolean {
-    let output = true;
+  print(): LooseObject {
+    let output = new FunctionCall(new Identifier('true'), []).print();
     return output;
   }
 }
 
 export class False {
-  print(): boolean {
-    let output = false;
+  print(): LooseObject {
+    let output = new FunctionCall(new Identifier('false'), []).print();
     return output;
   }
 }

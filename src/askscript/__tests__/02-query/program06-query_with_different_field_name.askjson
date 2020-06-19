@@ -94,19 +94,9 @@
                     "list",
                     null,
                     [
-                      "call",
+                      "ref",
                       {
-                        "name": "firstName",
-                        "args": [
-                          "list",
-                          null,
-                          [
-                            "ref",
-                            {
-                              "name": "fullName"
-                            }
-                          ]
-                        ]
+                        "name": "firstName"
                       }
                     ],
                     " ",

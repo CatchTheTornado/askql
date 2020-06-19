@@ -22,7 +22,16 @@
   [
     "if",
     {
-      "condition": true
+      "condition": [
+        "call",
+        {
+          "name": "true",
+          "args": [
+            "list",
+            null
+          ]
+        }
+      ]
     },
     [
       "set",

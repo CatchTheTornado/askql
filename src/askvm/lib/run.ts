@@ -19,11 +19,11 @@ function logValue<T>(message: string, value: T): T {
 }
 
 /**
- * Returns the result of evaluating `code` as a resource. For simple values, returns them
- * and for functions it runs them.
- * @param options environment options
+ * Returns the result of evaluating `code`. For simple values, returns them
+ * and for resources it runs them.
+ * @param options the runtime environment options
  * @param code resource call (AskCode instance) or a simple value
- * @param args optional arguments for call if `code` computes to a function and should be called
+ * @param args optional runtime arguments (apply in case of code has no params of its own)
  */
 export async function run(
   options: Options,
@@ -45,7 +45,7 @@ export async function run(
   if (name in values) {
     const value = values[name];
     if (isAskCode(value)) {
-      // this is calling it with the arguments which are call arguments
+      // calling the resource referenced by the value with the arguments
       return run(options, value as AskCode, args);
     }
 
@@ -54,13 +54,21 @@ export async function run(
 
   if (name in resources) {
     if (!(resources[name] instanceof Resource)) {
-      console.error('resource', resources[name]);
+      // console.error('resource', resources[name]);
       throw new Error(`Invalid resource "${name}"`);
     }
+
+    if (!code.params && !args) {
+      // this resource is just being referenced, so we return the AskCode
+      return typed(code);
+    }
+
+    // console.log('computing', code.name, code.params, 'args:', args);
     return typed(await resources[name].compute(options, code, args));
   }
 
-  console.log('values', values);
+  // console.log('resources', resources);
+  // console.log('values', values);
   throw new Error(`Unknown identifier '${name}'!`);
 }
 

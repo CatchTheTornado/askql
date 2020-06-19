@@ -1,1 +1,1 @@
-ask(let('arr',get('$0')),null)
+ask(let('arr',get('$0')),call(get('null')))

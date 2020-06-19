@@ -42,4 +42,13 @@ test('find', async () => {
   await expect(ask(`call(fun(revPerClient))`)).resolves.toBe(
     values.revPerClient
   );
+
+  expect(await ask(`call(find, clientNames, fun(is(get('$0'), 'A')))`)).toBe(
+    'A'
+  );
+  expect(
+    await ask(
+      `call(get('find'), call(get('get'), 'clientNames'), fun(is(get('$0'), 'A')))`
+    )
+  ).toBe('A');
 });

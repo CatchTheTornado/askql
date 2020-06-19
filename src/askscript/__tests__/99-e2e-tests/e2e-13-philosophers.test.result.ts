@@ -1,1 +1,1 @@
-export const expectedResult = 'Aristotle';
+export const expectedResult = 'Turing';

@@ -72,6 +72,9 @@ test('code2vm', async () => {
   expect(await vm(`empty()`)).toBe(null);
 
   expect(await vm(`ask(call(get('call'),fun(5)))`)).toBe(5);
+
+  expect(await vm(`call(fun(get('$0')), 2)`)).toBe(2);
+  expect(await vm(`call(fun(call(times, get('$0'), 2)), 2)`)).toBe(4);
 });
 
 test('types', async () => {

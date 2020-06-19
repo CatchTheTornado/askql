@@ -24,7 +24,18 @@
           {
             "args": [
               "list",
-              null
+              null,
+              [
+                "list",
+                null,
+                "name",
+                [
+                  "ref",
+                  {
+                    "name": "any"
+                  }
+                ]
+              ]
             ],
             "returns": [
               "ref",
@@ -50,13 +61,13 @@
                       [
                         "ref",
                         {
-                          "name": "$0"
+                          "name": "scorePerPhilosopher"
                         }
                       ],
                       [
                         "ref",
                         {
-                          "name": "scorePerPhilosopher"
+                          "name": "name"
                         }
                       ]
                     ]

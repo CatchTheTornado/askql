@@ -1,1 +1,1 @@
-ask(call(get('find'),call(get('get'),'philosophers'),fun(call(get('is'),call(get('at'),call(get('get'),'$0'),call(get('get'),'scorePerPhilosopher')),call(get('max'),call(get('get'),'scorePerPhilosopher'))))))
+ask(call(get('find'),call(get('get'),'philosophers'),fun(let('name',get('$0')),call(get('is'),call(get('at'),call(get('get'),'scorePerPhilosopher'),call(get('get'),'name')),call(get('max'),call(get('get'),'scorePerPhilosopher'))))))

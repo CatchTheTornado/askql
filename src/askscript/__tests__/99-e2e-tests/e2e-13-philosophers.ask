@@ -1,3 +1,5 @@
 ask {
-  find(philosophers, fun { is($0:at(scorePerPhilosopher), max(scorePerPhilosopher)) })
+  find(philosophers, fun(name) {
+    scorePerPhilosopher:at(name):is(max(scorePerPhilosopher))
+  })    
 }

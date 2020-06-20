@@ -7,47 +7,174 @@
     ]
   },
   [
+    "let",
+    {
+      "name": "f",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
+      "value": [
+        "fun",
+        {
+          "args": [
+            "list",
+            null,
+            [
+              "list",
+              null,
+              "n",
+              [
+                "ref",
+                {
+                  "name": "any"
+                }
+              ]
+            ]
+          ],
+          "returns": [
+            "ref",
+            {
+              "name": "any"
+            }
+          ]
+        },
+        [
+          "call",
+          {
+            "name": "log",
+            "args": [
+              "list",
+              null,
+              [
+                "ref",
+                {
+                  "name": "n"
+                }
+              ]
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  [
+    "let",
+    {
+      "name": "n",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
+      "value": 1
+    }
+  ],
+  [
     "while",
     {
       "condition": [
         "call",
         {
-          "name": "lessThan",
+          "name": "<",
           "args": [
             "list",
             null,
             [
-              "ref",
+              "call",
               {
-                "name": "n"
+                "name": "*",
+                "args": [
+                  "list",
+                  null,
+                  [
+                    "ref",
+                    {
+                      "name": "n"
+                    }
+                  ],
+                  [
+                    "ref",
+                    {
+                      "name": "n"
+                    }
+                  ]
+                ],
+                "isOperator": true
               }
             ],
-            2
-          ]
+            10
+          ],
+          "isOperator": true
         }
       ]
     },
     [
-      "return",
+      "call",
       {
+        "name": "log",
+        "args": [
+          "list",
+          null,
+          "before",
+          [
+            "ref",
+            {
+              "name": "n"
+            }
+          ]
+        ]
+      }
+    ],
+    [
+      "assign",
+      {
+        "name": "n",
         "value": [
-          "ref",
+          "call",
           {
-            "name": "n"
+            "name": "+",
+            "args": [
+              "list",
+              null,
+              [
+                "ref",
+                {
+                  "name": "n"
+                }
+              ],
+              1
+            ],
+            "isOperator": true
           }
+        ]
+      }
+    ],
+    [
+      "call",
+      {
+        "name": "log",
+        "args": [
+          "list",
+          null,
+          "after",
+          [
+            "ref",
+            {
+              "name": "n"
+            }
+          ]
         ]
       }
     ]
   ],
   [
-    "return",
+    "ref",
     {
-      "value": [
-        "ref",
-        {
-          "name": "n"
-        }
-      ]
+      "name": "n"
     }
   ]
 ]

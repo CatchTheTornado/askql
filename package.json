@@ -45,6 +45,9 @@
     "url": "https://github.com/xFAANG/askql/issues"
   },
   "homepage": "https://askql.org/",
+  "engines": {
+    "node": ">=12.14.0"
+  },
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "7.10.2",

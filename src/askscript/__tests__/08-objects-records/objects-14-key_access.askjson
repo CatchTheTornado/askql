@@ -7,7 +7,7 @@
     ]
   },
   [
-    "set",
+    "let",
     {
       "name": "capitals",
       "type": [
@@ -43,7 +43,7 @@
     }
   ],
   [
-    "set",
+    "let",
     {
       "name": "paris",
       "type": [
@@ -72,7 +72,7 @@
     }
   ],
   [
-    "set",
+    "let",
     {
       "name": "berlin",
       "type": [

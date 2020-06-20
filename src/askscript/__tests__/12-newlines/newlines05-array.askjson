@@ -7,7 +7,7 @@
     ]
   },
   [
-    "set",
+    "let",
     {
       "name": "arr1",
       "type": [
@@ -36,7 +36,7 @@
     }
   ],
   [
-    "set",
+    "let",
     {
       "name": "arr2",
       "type": [
@@ -55,7 +55,7 @@
     }
   ],
   [
-    "set",
+    "let",
     {
       "name": "arr3",
       "type": [
@@ -74,7 +74,7 @@
     }
   ],
   [
-    "set",
+    "let",
     {
       "name": "arr4",
       "type": [

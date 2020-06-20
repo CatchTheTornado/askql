@@ -7,7 +7,7 @@
     ]
   },
   [
-    "set",
+    "let",
     {
       "name": "mySum",
       "type": [
@@ -23,7 +23,7 @@
     "forOf",
     {
       "key": [
-        "set",
+        "let",
         {
           "name": "itemPrice",
           "type": [

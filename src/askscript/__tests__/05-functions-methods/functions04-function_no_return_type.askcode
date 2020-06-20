@@ -1,1 +1,1 @@
-ask(let('plus',fun(let('a',get('$0')),let('b',get('$1')),let('c',get('$2')),return(call(get('sum'),call(get('sum'),call(get('get'),'a'),call(get('get'),'b')),call(get('get'),'c'))))),call(get('plus'),2,3.6,4))
+ask(const('plus',fun(let('a',get('$0')),let('b',get('$1')),let('c',get('$2')),return(call(get('sum'),call(get('sum'),call(get('get'),'a'),call(get('get'),'b')),call(get('get'),'c'))))),call(get('plus'),2,3.6,4))

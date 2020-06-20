@@ -9,13 +9,21 @@
   [
     "let",
     {
-      "name": "a",
+      "name": "b",
       "type": [
         "ref",
         {
           "name": "int"
         }
-      ]
+      ],
+      "value": 2
+    }
+  ],
+  [
+    "assign",
+    {
+      "name": "c",
+      "value": 4
     }
   ]
 ]

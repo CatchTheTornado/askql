@@ -1,1 +1,1 @@
-ask(let('a'))
+ask(const('a'))

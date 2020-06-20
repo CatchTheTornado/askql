@@ -31,15 +31,16 @@ declare namespace JSX {
       set?: true;
       while?: true;
     };
+    assign: FirstArg<typeof import('../src/askjsx').Assign>;
     const: FirstArg<typeof import('../src/askjsx').Const>;
     fragment: FirstArg<typeof import('../src/askjsx').Fragment>;
     fun: FirstArg<typeof import('../src/askjsx').Fun>;
     if: FirstArg<typeof import('../src/askjsx').If>;
+    let: FirstArg<typeof import('../src/askjsx').Let>;
     node: FirstArg<typeof import('../src/askjsx').Node>;
     query: FirstArg<typeof import('../src/askjsx').Query>;
     ref: FirstArg<typeof import('../src/askjsx').Ref>;
     return: FirstArg<typeof import('../src/askjsx').Return>;
-    set: FirstArg<typeof import('../src/askjsx').Set>;
     v: { children?: any | any[] };
   }
 }

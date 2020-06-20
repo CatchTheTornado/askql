@@ -1,0 +1,4 @@
+ask {
+  let b: int = 2
+  c = 4
+}

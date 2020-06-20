@@ -34,34 +34,17 @@
       ]
     },
     [
-      "let",
+      "assign",
       {
         "name": "b",
-        "type": [
-          "ref",
-          {
-            "name": "string"
-          }
-        ],
-        "value": "text"
-      }
-    ],
-    [
-      "return",
-      {
-        "value": [
-          "ref",
-          {
-            "name": "b"
-          }
-        ]
+        "value": 4
       }
     ]
   ],
   [
-    "return",
+    "ref",
     {
-      "value": -1
+      "name": "b"
     }
   ]
 ]

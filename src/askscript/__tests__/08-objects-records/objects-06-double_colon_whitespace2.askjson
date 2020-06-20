@@ -7,7 +7,7 @@
     ]
   },
   [
-    "set",
+    "let",
     {
       "name": "lastName",
       "type": [
@@ -20,7 +20,7 @@
     }
   ],
   [
-    "set",
+    "let",
     {
       "name": "hobby",
       "type": [
@@ -33,7 +33,7 @@
     }
   ],
   [
-    "set",
+    "let",
     {
       "name": "o",
       "type": [

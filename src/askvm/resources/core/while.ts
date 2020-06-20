@@ -6,7 +6,7 @@ export const whileRes = resource({
     const { params } = code;
     const [condition, block] = params!;
     const value = await runUntyped(options, condition);
-    if (!value) {
+    if (!value || 'result' in options) {
       return null;
     }
     await run(options, block, []);

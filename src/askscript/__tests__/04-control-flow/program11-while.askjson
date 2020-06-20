@@ -9,60 +9,6 @@
   [
     "let",
     {
-      "name": "f",
-      "type": [
-        "ref",
-        {
-          "name": "any"
-        }
-      ],
-      "value": [
-        "fun",
-        {
-          "args": [
-            "list",
-            null,
-            [
-              "list",
-              null,
-              "n",
-              [
-                "ref",
-                {
-                  "name": "any"
-                }
-              ]
-            ]
-          ],
-          "returns": [
-            "ref",
-            {
-              "name": "any"
-            }
-          ]
-        },
-        [
-          "call",
-          {
-            "name": "log",
-            "args": [
-              "list",
-              null,
-              [
-                "ref",
-                {
-                  "name": "n"
-                }
-              ]
-            ]
-          }
-        ]
-      ]
-    }
-  ],
-  [
-    "let",
-    {
       "name": "n",
       "type": [
         "ref",
@@ -113,23 +59,6 @@
       ]
     },
     [
-      "call",
-      {
-        "name": "log",
-        "args": [
-          "list",
-          null,
-          "before",
-          [
-            "ref",
-            {
-              "name": "n"
-            }
-          ]
-        ]
-      }
-    ],
-    [
       "assign",
       {
         "name": "n",
@@ -150,23 +79,6 @@
             ],
             "isOperator": true
           }
-        ]
-      }
-    ],
-    [
-      "call",
-      {
-        "name": "log",
-        "args": [
-          "list",
-          null,
-          "after",
-          [
-            "ref",
-            {
-              "name": "n"
-            }
-          ]
         ]
       }
     ]

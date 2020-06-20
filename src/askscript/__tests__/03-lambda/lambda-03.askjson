@@ -7,7 +7,7 @@
     ]
   },
   [
-    "set",
+    "let",
     {
       "name": "myFun",
       "type": [

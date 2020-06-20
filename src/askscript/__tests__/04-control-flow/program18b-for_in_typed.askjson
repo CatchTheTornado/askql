@@ -7,7 +7,7 @@
     ]
   },
   [
-    "set",
+    "let",
     {
       "name": "mySum",
       "type": [
@@ -23,7 +23,7 @@
     "forIn",
     {
       "key": [
-        "set",
+        "let",
         {
           "name": "index",
           "type": [

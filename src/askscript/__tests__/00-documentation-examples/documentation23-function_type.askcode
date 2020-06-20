@@ -1,1 +1,1 @@
-ask(let('f',fun(let('n',get('$0')),'')))
+ask(const('f',fun(let('n',get('$0')),'')))

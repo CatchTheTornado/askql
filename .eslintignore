@@ -1,2 +1,5 @@
 /dist
 *.ask
+*.askcode
+*.askjson
+*.askjsx

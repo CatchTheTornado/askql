@@ -1,1 +1,1 @@
-ask(let('func',fun(return(6))),call(get('func')))
+ask(const('func',fun(return(6))),call(get('func')))

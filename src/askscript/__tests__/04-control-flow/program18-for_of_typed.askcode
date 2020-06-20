@@ -1,1 +1,1 @@
-ask(let('mySum',0),forIn(let('itemPrice'),call(get('get'),'itemPrices'),block(let('mySum',call(get('plus'),call(get('get'),'mySum'),call(get('get'),'itemPrice'))))),call(get('get'),'mySum'))
+ask(let('mySum',0),forIn(let('itemPrice'),call(get('get'),'itemPrices'),block(assign('mySum',call(get('plus'),call(get('get'),'mySum'),call(get('get'),'itemPrice'))))),call(get('get'),'mySum'))

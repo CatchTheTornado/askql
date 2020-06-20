@@ -3,13 +3,18 @@ import * as askjsx from './jsx';
 import { AskCodeOrValue } from '../../askcode';
 askjsx;
 
-export function Set({
-  name,
-  value,
-}: {
+type Props = {
   name: string;
   type?: string;
   value: AskCodeOrValue;
+};
+
+function Set({
+  code,
+  name,
+  value,
+}: Props & {
+  code: 'let' | 'const' | 'assign';
 }) {
   if (typeof name !== 'string') {
     name = (name as any).params[0]; // fixme(me)
@@ -20,12 +25,13 @@ export function Set({
   );
 
   return (
-    <code let>
+    <code {...{ [code]: true }}>
       {name.split('.')}
       {value}
     </code>
   );
 }
 
-export const Const = Set;
-export const Assign = Set;
+export const Let = (props: Props) => <Set {...props} code="let" />;
+export const Const = (props: Props) => <Set {...props} code="const" />;
+export const Assign = (props: Props) => <Set {...props} code="assign" />;

@@ -1,0 +1,1 @@
+ask(let('b',2),if(call(get('true')),block(assign('b',4)),block()),call(get('get'),'b'))

@@ -7,47 +7,86 @@
     ]
   },
   [
+    "let",
+    {
+      "name": "n",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
+      "value": 1
+    }
+  ],
+  [
     "while",
     {
       "condition": [
         "call",
         {
-          "name": "lessThan",
+          "name": "<",
           "args": [
             "list",
             null,
             [
-              "ref",
+              "call",
               {
-                "name": "n"
+                "name": "*",
+                "args": [
+                  "list",
+                  null,
+                  [
+                    "ref",
+                    {
+                      "name": "n"
+                    }
+                  ],
+                  [
+                    "ref",
+                    {
+                      "name": "n"
+                    }
+                  ]
+                ],
+                "isOperator": true
               }
             ],
-            2
-          ]
+            10
+          ],
+          "isOperator": true
         }
       ]
     },
     [
-      "return",
+      "assign",
       {
+        "name": "n",
         "value": [
-          "ref",
+          "call",
           {
-            "name": "n"
+            "name": "+",
+            "args": [
+              "list",
+              null,
+              [
+                "ref",
+                {
+                  "name": "n"
+                }
+              ],
+              1
+            ],
+            "isOperator": true
           }
         ]
       }
     ]
   ],
   [
-    "return",
+    "ref",
     {
-      "value": [
-        "ref",
-        {
-          "name": "n"
-        }
-      ]
+      "name": "n"
     }
   ]
 ]

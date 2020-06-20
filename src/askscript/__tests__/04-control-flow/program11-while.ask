@@ -1,7 +1,7 @@
 ask {
-  while(n:lessThan(2)) {
-    return n
-  }
-  
-  return n
+  let n = 1
+  while ((n * n) < 10) {
+    n = n + 1
+  }  
+  n
 }

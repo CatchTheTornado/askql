@@ -4,7 +4,7 @@ askjsx;
 
 export function For({
   initialization,
-  condition,
+  condition = true,
   finalExpression,
   children,
 }: {
@@ -14,16 +14,13 @@ export function For({
   children: AskCodeOrValue[];
 }) {
   return (
-    <code for>
+    <fragment>
       {initialization}
-      {condition}
-      {finalExpression}
-      <code block>
-        {initialization}
+      <while condition={condition}>
         {children}
         {finalExpression}
-      </code>
-    </code>
+      </while>
+    </fragment>
   );
 }
 

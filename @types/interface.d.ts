@@ -43,6 +43,7 @@ declare namespace JSX {
     ref: FirstArg<typeof import('../src/askjsx').Ref>;
     return: FirstArg<typeof import('../src/askjsx').Return>;
     struct: FirstArg<typeof import('../src/askjsx').Struct>;
+    while: FirstArg<typeof import('../src/askjsx').While>;
     v: { children?: any | any[] };
   }
 }

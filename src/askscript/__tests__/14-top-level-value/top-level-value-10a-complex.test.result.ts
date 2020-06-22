@@ -1,4 +1,4 @@
-export const expectedResult = [
+export = [
   { country: 'USA', newInfected: 69128, newDeaths: 1047, newRecovered: 19342 },
   { country: 'Spain', newInfected: 13598, newDeaths: 217, newRecovered: 578 },
   { country: 'Russia', newInfected: 1551, newDeaths: 93, newRecovered: 178 },

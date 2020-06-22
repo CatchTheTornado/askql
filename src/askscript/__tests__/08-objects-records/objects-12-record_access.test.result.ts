@@ -1,1 +1,1 @@
-export const expectedResult = 'Madrid';
+export = 'Madrid';

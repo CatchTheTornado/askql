@@ -1,1 +1,1 @@
-export const expectedResult = 'It works!';
+export = 'It works!';

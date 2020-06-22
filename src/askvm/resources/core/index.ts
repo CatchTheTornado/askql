@@ -6,7 +6,6 @@ export { empty, empty as null } from './empty';
 export * from './equals';
 export * from './each';
 export { falseRes as false } from './false';
-export { forRes as for } from './for';
 export * from './forIn';
 export { fragment as block, fragment as f, fragment } from './fragment';
 export * from './fun';

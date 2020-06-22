@@ -1,4 +1,4 @@
-// Buble sort
+// Bubble sort
 ask {
   let arr = [342.34, 35767, 2, 117, 999, 3435]
   const len = arr:length

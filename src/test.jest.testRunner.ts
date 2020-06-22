@@ -172,9 +172,7 @@ async function askRunner(
     const code = parseAskCode(askCodeSource);
     const result = await runUntyped(environment, code, args);
 
-    const { expectedResult } = runtime.requireModule<{
-      expectedResult: any;
-    }>(resultPath);
+    const expectedResult = runtime.requireModule(resultPath);
     const isCorrect = compareAsJson(result, expectedResult);
     if ('ASK_PRINT_RESULT' in process.env && process.env.ASK_PRINT_RESULT) {
       console.log(`RESULT: ${JSON.stringify(result, null, 2)}`);
@@ -250,15 +248,10 @@ export = async function testFileRunner(
     reject: Function
   ) => {
     try {
-      // console.log('source', source);
-      const code = parseAskScript(source);
-      // console.log('code', code);
-      // console.log('args', args);
-      const result = await runUntyped(baseEnv, code, args);
-      // console.log('result', result);
+      const askScript = parseAskScript(source);
+      const result = await runUntyped(baseEnv, askScript, args);
       resolve(result);
     } catch (e) {
-      console.error(e);
       reject(String(e));
     }
   };

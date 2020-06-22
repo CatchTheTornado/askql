@@ -1,1 +1,1 @@
-export const expectedResult = "¯\\_(ツ)_/¯";
+export = "¯\\_(ツ)_/¯";

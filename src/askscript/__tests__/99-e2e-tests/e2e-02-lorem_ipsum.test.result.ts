@@ -1,2 +1,2 @@
-export const expectedResult =
+export =
   'Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing Elit';

@@ -25,6 +25,7 @@ declare namespace JSX {
       let?: true;
       list?: true;
       node?: true;
+      object?: true;
       query?: true;
       remote?: true;
       return?: true;
@@ -41,6 +42,7 @@ declare namespace JSX {
     query: FirstArg<typeof import('../src/askjsx').Query>;
     ref: FirstArg<typeof import('../src/askjsx').Ref>;
     return: FirstArg<typeof import('../src/askjsx').Return>;
+    struct: FirstArg<typeof import('../src/askjsx').Struct>;
     v: { children?: any | any[] };
   }
 }

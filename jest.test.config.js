@@ -12,6 +12,7 @@ module.exports = {
     '.*\\.ask\\.formatted\\.ask',
     '.*\\.test.args.ts',
     '.*\\.test.result.ts',
+    '.*\\.ask.snapshot.tsx',
     '<rootDir>/dist/',
     '<rootDir>/drafts/',
     '<rootDir>/src/__tests__/lib.ts',

@@ -13,7 +13,10 @@ export async function e2e(
   args?: any[]
 ): Promise<any> {
   const ast = parseToAst(askScriptCode);
-  const askCode = fromAskScriptAst(ast, createElement);
+  const askCode = fromAskScriptAst(ast, {
+    object: createElement,
+    literal: (value) => value,
+  });
 
   return runUntyped(environment, askCode, args);
 }

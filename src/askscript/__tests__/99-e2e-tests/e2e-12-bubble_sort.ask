@@ -4,7 +4,7 @@ ask {
   const len = arr:length
   for (let i = 0; i < len; i = i + 1) {
 	  for (let j = 0; (j + 1) < len; j = j + 1){
-		  if (arr:at(j) :> (arr:at(j + 1))){
+		  if (arr:at(j) > arr:at(j + 1)) {
 			  arr = arr:set(j, arr:at(j + 1)):set(j + 1, arr:at(j))
 			}
 		}

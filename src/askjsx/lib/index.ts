@@ -8,6 +8,7 @@ export * from './If';
 export * from './jsx';
 export * from './Let';
 export * from './List';
+export * from './Struct';
 export * from './Query';
 export * from './Ref';
 export * from './Remote';

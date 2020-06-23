@@ -1,4 +1,4 @@
-export const expectedResult = {
+export = {
   friends: [
     {
       firstName: 'Padmé',

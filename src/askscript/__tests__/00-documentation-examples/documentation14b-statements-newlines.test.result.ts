@@ -1,1 +1,1 @@
-export const expectedResult = false;
+export = false;

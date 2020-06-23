@@ -1,5 +1,5 @@
-/dist
 *.ask
+*.ask.snapshot.tsx
 *.askcode
-*.askjson
-*.askjsx
+/dist
+/drafts

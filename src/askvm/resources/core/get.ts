@@ -1,5 +1,5 @@
 import { toAskCode } from '../../../askcode';
-import { any, resource, run, runUntyped, typed } from '../../lib';
+import { any, resource, run, runUntyped } from '../../lib';
 
 export const get = resource({
   type: any,

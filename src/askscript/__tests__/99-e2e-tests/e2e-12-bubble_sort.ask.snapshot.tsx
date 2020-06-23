@@ -67,17 +67,26 @@ export = (
             name="<"
             args={
               <list>
+                <ref name="j" />
                 <call
-                  name="+"
+                  name="-"
                   args={
                     <list>
-                      <ref name="j" />
+                      <call
+                        name="-"
+                        args={
+                          <list>
+                            <ref name="len" />
+                            <ref name="i" />
+                          </list>
+                        }
+                        isOperator={true}
+                      />
                       {1}
                     </list>
                   }
                   isOperator={true}
                 />
-                <ref name="len" />
               </list>
             }
             isOperator={true}

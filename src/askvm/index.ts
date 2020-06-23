@@ -20,8 +20,6 @@ export async function run(
       steps: 10 ** 4,
     },
   });
-  // console.log('options', options);
-  // console.log('inputOptions', inputOptions);
   return libRun(options, code, args);
 }
 

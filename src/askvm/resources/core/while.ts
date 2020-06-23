@@ -2,10 +2,14 @@ import { any, resource, run, runUntyped } from '../../lib';
 
 export const whileRes = resource({
   type: any,
-  async compute(options, code, args) {
+  async compute(options, code) {
     const { params } = code;
-    const [condition, args2, block] = params!;
+    const [condition, block] = params!;
     const value = await runUntyped(options, condition);
-    return run(options, value ? block : null, []);
+    if (!value || 'result' in options) {
+      return null;
+    }
+    await run(options, block, []);
+    return run(options, code, []);
   },
 });

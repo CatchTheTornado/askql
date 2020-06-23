@@ -1,18 +1,20 @@
-import type { AskCodeOrValue } from '../../askcode';
 import type { AskScriptAst } from '../../askscript';
 
-type AstReducer = (
-  name: string | Function,
-  propsOrNull: Record<string, AskCodeOrValue> | null,
-  ...children: AskCodeOrValue[]
-) => AskCodeOrValue;
+type AstReducer<U> = {
+  object: (
+    name: string | Function,
+    propsOrNull: Record<string, U> | null,
+    ...children: U[]
+  ) => U;
+  literal: (s: null | boolean | string | number) => U;
+};
 
-export function fromAskScriptAst(
+export function fromAskScriptAst<U>(
   ast: AskScriptAst,
-  reducer: AstReducer
-): AskCodeOrValue {
+  reducer: AstReducer<U>
+): U {
   if (Array.isArray(ast)) {
-    return reducer(
+    return reducer.object(
       'list',
       null,
       ...ast.map((ast) => fromAskScriptAst(ast, reducer))
@@ -20,21 +22,24 @@ export function fromAskScriptAst(
   }
 
   if (ast == null || typeof ast !== 'object') {
-    return ast;
+    return reducer.literal(ast);
   }
 
   if ('jsxValue' in ast) {
     const value = ast.jsxValue;
     if (value == null || typeof value !== 'object') {
-      return value;
+      return reducer.literal(value);
     }
     const object = value;
     const objectArgs: any[] = [];
     for (const key in object) {
-      objectArgs.push(key, fromAskScriptAst(object[key], reducer));
+      objectArgs.push(
+        reducer.literal(key),
+        fromAskScriptAst(object[key], reducer)
+      );
     }
 
-    return reducer('code', { object: true }, ...objectArgs);
+    return reducer.object('struct', null, ...objectArgs);
   }
 
   const { name, props, children = [] } = ast;
@@ -50,5 +55,5 @@ export function fromAskScriptAst(
     fromAskScriptAst(child, reducer)
   );
 
-  return reducer(name, newProps, ...newChildren);
+  return reducer.object(name, newProps, ...newChildren);
 }

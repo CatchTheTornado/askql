@@ -5,9 +5,11 @@ import type { Config } from '@jest/types';
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs.promises';
 import type { RuntimeType } from 'jest-runtime';
+import * as micromatch from 'micromatch';
 import { basename, dirname, join } from 'path';
-import { askCodeToSource, parse as parseAskCode } from './askcode';
-import { fromAskScriptAst, createElement } from './askjsx';
+import * as prettier from 'prettier';
+import { AskCodeOrValue, askCodeToSource } from './askcode';
+import { createElement, fromAskScriptAst } from './askjsx';
 import { parse as parseAskScript, parseToAst } from './askscript';
 import {
   extendOptions,
@@ -18,10 +20,9 @@ import {
   runUntyped,
 } from './askvm';
 import { getTargetPath } from './node-utils';
+import * as prettierPluginAskScript from './prettier-plugin-askscript';
 import { fromEntries } from './utils';
 import jasmine2 = require('jest-jasmine2');
-import * as prettier from 'prettier';
-import * as prettierPluginAskScript from './prettier-plugin-askscript';
 
 function compareAsJson(a: any, b: any): boolean {
   return JSON.stringify(a) === JSON.stringify(b);
@@ -80,16 +81,48 @@ async function askRunner(
     }
   );
 
-  const askJson = fromAskScriptAst(askScriptAst, (name, props, ...children) => [
-    name,
-    props,
-    ...children,
-  ]);
-  const askJsonTargetPath = getTargetPath(testPath, 'askjson', '../src');
+  const askJsx: string = fromAskScriptAst(askScriptAst, {
+    object: (name, props, ...children) => {
+      const propsStr = Object.entries(props || {})
+        .map(([name, value]) => {
+          function wrapPropValue(value: string) {
+            if (value[0] === '"') {
+              return value;
+            }
+            return `{${value}}`;
+          }
+          return `${name}=${wrapPropValue(value)}`;
+        })
+        .join(' ');
+
+      const innerJSX = children
+        .map(function wrapChild(child: string) {
+          if (child[0] === '<') {
+            return child;
+          }
+          return `{${child}}`;
+        })
+        .join('');
+      return `<${name} ${propsStr}${
+        innerJSX ? `>${innerJSX}</${name}>` : '/>'
+      }`;
+    },
+    literal: (value) => JSON.stringify(value),
+  });
+  const askJsonTargetPath = getTargetPath(
+    testPath,
+    'ask.snapshot.tsx',
+    '../src'
+  );
   await mkdir(dirname(askJsonTargetPath), {
     recursive: true,
   });
-  await writeFile(askJsonTargetPath, JSON.stringify(askJson, null, 2), {
+
+  const askJsxFormatted = prettier.format(`export = ${askJsx};`, {
+    parser: 'typescript' as prettier.BuiltInParserName,
+  });
+
+  await writeFile(askJsonTargetPath, askJsxFormatted, {
     encoding: 'utf-8',
   });
 
@@ -114,21 +147,11 @@ async function askRunner(
   // TODO check that if we format again we get the same thing
 
   if (process.env.ASK_PRINT_SOURCE) {
-    console.log('\n[PRETTIER]:');
+    console.log('\n[PRETTIER]:\n', askFormatted);
   }
 
-  source = askFormatted; // use formatted source for testing
-
-  if (process.env.ASK_PRINT_SOURCE) {
-    console.log(source);
-  }
-
-  const askCode = parseAskScript(source);
+  const askCode = parseAskScript(askFormatted);
   const askCodeSource = askCodeToSource(askCode);
-  const askCodeSource2 = askCodeToSource(
-    fromAskScriptAst(askScriptAst, createElement)
-  );
-  // console.log({ askCodeSource1: askCodeSource, askCodeSource2 });
   const askCodeTargetPath = getTargetPath(testPath, 'askcode', '../src');
   await mkdir(dirname(askCodeTargetPath), {
     recursive: true,
@@ -159,7 +182,6 @@ async function askRunner(
       ] => [key, resource(val)])
     ),
   });
-  // console.log('environment', environment);
 
   const name = basename(testPath, '.ask');
   const argsPath = join(testPath, `../${name}.test.args.ts`);
@@ -167,17 +189,12 @@ async function askRunner(
     ? runtime.requireModule<any[]>(argsPath)
     : [];
 
-  // console.log({ resultPath, file: resultStat.isFile() });
   const resultPath = join(testPath, `../${name}.test.result.ts`);
   if (existsSync(resultPath)) {
-    // console.log('source for result', source);
-    // const code = askCode;
-    const code = parseAskCode(askCodeSource);
+    const code = runtime.requireModule<AskCodeOrValue>(askJsonTargetPath);
     const result = await runUntyped(environment, code, args);
 
-    const { expectedResult } = runtime.requireModule<{
-      expectedResult: any;
-    }>(resultPath);
+    const expectedResult = runtime.requireModule(resultPath);
     const isCorrect = compareAsJson(result, expectedResult);
     if ('ASK_PRINT_RESULT' in process.env && process.env.ASK_PRINT_RESULT) {
       console.log(`RESULT: ${JSON.stringify(result, null, 2)}`);
@@ -253,20 +270,23 @@ export = async function testFileRunner(
     reject: Function
   ) => {
     try {
-      // console.log('source', source);
-      const code = parseAskScript(source);
-      // console.log('code', code);
-      // console.log('args', args);
-      const result = await runUntyped(baseEnv, code, args);
-      // console.log('result', result);
+      const askScript = parseAskScript(source);
+      const result = await runUntyped(baseEnv, askScript, args);
       resolve(result);
     } catch (e) {
-      console.error(e);
       reject(String(e));
     }
   };
 
-  if (/.*\.(spec|test)\.ts(x)?/.test(testPath)) {
+  environment.global.askjsx = { createElement };
+
+  // the list below should correspond to the config in /jest.test.config.js
+  if (
+    micromatch.isMatch(testPath, [
+      '**/__tests__/**/*.[jt]s?(x)',
+      '**/?(*.)+(spec|test).[jt]s?(x)',
+    ])
+  ) {
     const askFile = join(
       dirname(testPath),
       `${basename(testPath, '.test.ts')}.ask`
@@ -274,16 +294,12 @@ export = async function testFileRunner(
     const source = existsSync(askFile)
       ? await readFile(askFile, { encoding: 'utf-8' })
       : '';
-    // console.log({ testPath, askFile, source });
     return jasmine2(
       globalConfig,
       config,
       Object.assign(environment, {
         global: Object.assign(environment.global, {
           runUntyped: (envValue: any, source: string, args?: any[]) => {
-            // console.log(1, envValue);
-            // console.log(2, source);
-
             const env: Options = extendOptions(
               {
                 resources,
@@ -309,9 +325,12 @@ export = async function testFileRunner(
   }
   const testResults: AssertionResult[] = Object.entries<
     undefined | null | AssertionResult
-  >(
-    await askRunner(globalConfig, config, environment, runtime, testPath)
-  ).map(([name, testResult]) => ({ ...(testResult || todo()), title: name }));
+  >(await askRunner(globalConfig, config, environment, runtime, testPath)).map(
+    ([name, testResult]) => ({
+      ...(testResult || todo()),
+      title: name,
+    })
+  );
   return Object.assign(createEmptyTestResult(), {
     testResults,
     failureMessage: testResults

@@ -1,1 +1,1 @@
-export const expectedResult = [[], [1, 2, 3]];
+export = [[], [1, 2, 3]];

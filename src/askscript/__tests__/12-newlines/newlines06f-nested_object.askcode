@@ -1,1 +1,1 @@
-ask(let('o',object('name','Arizona','someFacts',object('areaInSqMi',113998,'westernState',true,'capital','Phoenix'))))
+ask(let('o',object('name','Arizona','someFacts',object('areaInSqMi',113998,'westernState',call(get('true')),'capital','Phoenix'))))

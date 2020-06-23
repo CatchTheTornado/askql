@@ -1,5 +1,6 @@
+import { isAskCode } from '../../../askcode';
 import { asyncFind } from '../../../utils';
-import { any, resource, runUntyped, typed } from '../../lib';
+import { any, resource, runUntyped } from '../../lib';
 
 export const find = resource<any, any[]>({
   type: any,
@@ -11,19 +12,17 @@ export const find = resource<any, any[]>({
     if (!Array.isArray(list)) {
       throw new Error('Expecting an array in find');
     }
-
-    const result = await asyncFind(list, predicate);
-    return result;
+    return asyncFind(list, predicate);
   },
   async compute(options, { params }) {
-    const list = await runUntyped(options, params![0]);
-    const predicate = async (...args: any[]) => {
-      return await runUntyped(
-        options,
-        params![1],
-        args.map((arg) => typed(arg))
-      );
-    };
+    const [listChild, predChild] = params!;
+    const list = await runUntyped(options, listChild);
+    const pred = await runUntyped(options, predChild);
+    if (!isAskCode(pred)) {
+      throw new Error(`Cannot call ${String(pred)}`);
+    }
+
+    const predicate = (...args: any[]) => runUntyped(options, pred, args);
     return this.resolver!(list, predicate);
   },
 });

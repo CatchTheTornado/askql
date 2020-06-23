@@ -401,32 +401,20 @@ export class ForIn {
 }
 
 export class For3 {
-  sL1: Statement[];
-  sL2: Statement[];
-  sL3: Statement[];
-
-  body: Statement[];
-
   constructor(
-    s1: Statement | null,
-    s2: Statement | null,
-    s3: Statement | null,
-    body: Statement[]
-  ) {
-    this.sL1 = s1 !== null ? [s1] : [];
-    this.sL2 = s2 !== null ? [s2] : [];
-    this.sL3 = s3 !== null ? [s3] : [];
-
-    this.body = body;
-  }
+    private s1: Statement | null,
+    private s2: Statement | null,
+    private s3: Statement | null,
+    private body: Statement[]
+  ) {}
 
   print(): LooseObject {
     let output = {
       name: 'for',
       props: {
-        initialization: this.sL1.map((stmt) => stmt.print()),
-        condition: this.sL2.map((stmt) => stmt.print()),
-        finalExpression: this.sL3.map((stmt) => stmt.print()),
+        initialization: this.s1?.print(),
+        condition: this.s2?.print(),
+        finalExpression: this.s3?.print(),
       },
       children: this.body.map((stmt) => stmt.print()),
     };
@@ -663,7 +651,7 @@ export class Const {
 
 export class Let {
   print(): string {
-    return 'set';
+    return 'let';
   }
 }
 
@@ -688,22 +676,22 @@ export class Identifier {
 }
 
 export class Null {
-  print(): null {
-    let output = null;
+  print(): LooseObject {
+    let output = new FunctionCall(new Identifier('null'), []).print();
     return output;
   }
 }
 
 export class True {
-  print(): boolean {
-    let output = true;
+  print(): LooseObject {
+    let output = new FunctionCall(new Identifier('true'), []).print();
     return output;
   }
 }
 
 export class False {
-  print(): boolean {
-    let output = false;
+  print(): LooseObject {
+    let output = new FunctionCall(new Identifier('false'), []).print();
     return output;
   }
 }

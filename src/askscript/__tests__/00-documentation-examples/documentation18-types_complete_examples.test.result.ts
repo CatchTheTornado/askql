@@ -1,1 +1,1 @@
-export const expectedResult = 'asdf';
+export = 'asdf';

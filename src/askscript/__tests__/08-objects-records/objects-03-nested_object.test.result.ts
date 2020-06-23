@@ -1,4 +1,4 @@
-export const expectedResult = {
+export = {
   name: 'Arizona',
   someFacts: {
     areaInSqMi: 113998,

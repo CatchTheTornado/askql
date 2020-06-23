@@ -1,7 +1,8 @@
-<a href="https://askql.org" align="right">
-  <img src="https://xfaang-assets.s3.eu-west-3.amazonaws.com/logo/askql-logo-OW-cut.png" align="right"
-     title="AskQL Logo" width="200">
-</a>
+<p align="center">
+  <a href="https://askql.org">
+    <img src="https://xfaang-assets.s3.eu-west-3.amazonaws.com/logo/askql-logo-OW-cut.png" title="AskQL Logo" width="200">
+  </a>
+</p>
 
 # [AskQL](https://askql.org/)
 
@@ -221,9 +222,25 @@ any ask(query(node('philosophers',f(get('philosophers')))))
 }
 ```
 
-5. Exit the console!
+5. You want to know now which philosopher had the greatest contribuition to IT, here's a one liner:
+
+```
+🦄 find(philosophers, fun(name) { scorePerPhilosopher:at(name):is(max(scorePerPhilosopher)) })
+
+string ask(call(get('find'),get('philosophers'),fun(let('name',get('$0')),call(get('is'),call(get('at'),get('scorePerPhilosopher'),get('name')),call(get('max'),get('scorePerPhilosopher'))))))
+
+'Turing'
+```
+
+6. Exit the console!
 
 `ctrl + d`
+
+7. You finished the AskScript tutorial, congratulations! 🎉
+
+### Playground
+
+Here is the link to our [AskQL playground](http://cli.askql.org:3000/)!
 
 ## FAQ
 
@@ -241,10 +258,10 @@ If you didn't find answers to your questions here, write on ourour [Discord comm
 
 The code in this project is licensed under MIT license.
 
-## Core Team
+## Core Developers
 
-- Marcin Hagmajer (ex-Facebook)
-- Łukasz Czerwiński (ex-Google)
+- [Marcin Hagmajer](https://github.com/mhagmajer/) (ex-Facebook)
+- [Łukasz Czerwiński](https://github.com/czerwinskilukasz1/) (ex-Google)
 
 <a href="https://xfaang.com" align="left">
   <img 

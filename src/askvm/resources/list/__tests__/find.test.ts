@@ -28,7 +28,7 @@ function ask(code: string) {
 }
 
 test('find', async () => {
-  await expect(ask('call(f(1),)')).resolves.toBe(1);
+  await expect(ask('call(fun(1),)')).resolves.toBe(1);
   await expect(ask('[1, 2, 3, 4]')).resolves.toStrictEqual([1, 2, 3, 4]);
   await expect(ask(`find([1, 2, 3, 4], fun(is(get('$0'), 3)))`)).resolves.toBe(
     3
@@ -39,5 +39,16 @@ test('find', async () => {
   await expect(ask(`find(clientNames, fun(is(get('$0'), 'A')))`)).resolves.toBe(
     'A'
   );
-  await expect(ask(`call(f(revPerClient))`)).resolves.toBe(values.revPerClient);
+  await expect(ask(`call(fun(revPerClient))`)).resolves.toBe(
+    values.revPerClient
+  );
+
+  expect(await ask(`call(find, clientNames, fun(is(get('$0'), 'A')))`)).toBe(
+    'A'
+  );
+  expect(
+    await ask(
+      `call(get('find'), call(get('get'), 'clientNames'), fun(is(get('$0'), 'A')))`
+    )
+  ).toBe('A');
 });

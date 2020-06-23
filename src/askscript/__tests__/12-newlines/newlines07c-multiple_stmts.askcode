@@ -1,1 +1,1 @@
-ask(let('a',1),let('b',1.5),let('c',false),let('d','asdf'),let('e',null),let('f',2.3),let('g',2.3),let('h',2.3))
+ask(let('a',1),let('b',1.5),let('c',call(get('false'))),let('d','asdf'),let('e',call(get('null'))),let('f',2.3),let('g',2.3),let('h',2.3))

@@ -1,1 +1,1 @@
-export const expectedResult = 5.1;
+export = 5.1;

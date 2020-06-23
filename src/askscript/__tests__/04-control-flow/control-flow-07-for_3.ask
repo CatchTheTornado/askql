@@ -1,0 +1,8 @@
+ask {
+  const nums = [1,2,3,5,7]
+  let sum = 0
+  for(let i = 0; i < nums:length; i = i + 1) {
+    sum = sum + nums:at(i)
+  }
+  sum
+}

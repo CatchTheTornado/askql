@@ -1,1 +1,1 @@
-ask(let('three',fun(return(3))),call(get('three')))
+ask(const('three',fun(return(3))),call(get('three')))

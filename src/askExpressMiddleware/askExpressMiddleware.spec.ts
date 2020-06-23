@@ -29,7 +29,6 @@ describe(`askExpressMiddleware`, () => {
   });
 
   it('should respond with the queried resource', async (done) => {
-    // const askScript = `ask(query(node('hello',f(call(get('toUpperCase'),call(get('get'),'hello'))))))`;
     const askScript = `ask(f(call(get('toUpperCase'), call(get('get'),'hello'))))`;
     const expectedValue = values.hello.toUpperCase();
 

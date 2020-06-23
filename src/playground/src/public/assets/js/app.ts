@@ -1,7 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function registerAskScriptEditor(
-  editorElementId,
-  runElementId,
-  askScriptServerUrl
+  editorElementId: string,
+  runElementId: string,
+  askScriptServerUrl: string
 ) {
   const editor = ace.edit(editorElementId);
   editor.setTheme('ace/theme/twilight');
@@ -16,7 +17,7 @@ function registerAskScriptEditor(
     },
   });
 
-  document.getElementById(runElementId).onclick = (ev) => {
+  document.getElementById(runElementId)!.onclick = (ev) => {
     ev.preventDefault();
     executeAskScriptFromEditor(editor, askScriptServerUrl);
   };
@@ -24,12 +25,18 @@ function registerAskScriptEditor(
   return editor;
 }
 
-async function executeAskScriptFromEditor(editor, askScriptServerUrl) {
+async function executeAskScriptFromEditor(
+  editor: AceAjax.Editor,
+  askScriptServerUrl: string
+) {
   const askScriptCode = editor.getValue();
   executeAskScript(askScriptCode, askScriptServerUrl);
 }
 
-async function executeAskScript(askScriptCode, askScriptServerUrl) {
+async function executeAskScript(
+  askScriptCode: string,
+  askScriptServerUrl: string
+) {
   const request = new Request(askScriptServerUrl, {
     method: 'POST',
     mode: 'cors',
@@ -53,14 +60,14 @@ async function executeAskScript(askScriptCode, askScriptServerUrl) {
   }
 }
 
-function showSuccessfulResponse(result) {
-  const resultElem = document.getElementById('result');
+function showSuccessfulResponse(result: any) {
+  const resultElem = document.getElementById('result')!;
   resultElem.innerText = JSON.stringify(result, null, 2);
   resultElem.classList.remove('error');
 }
 
-function showErrorResponse(errorMessage) {
-  const resultElem = document.getElementById('result');
+function showErrorResponse(errorMessage: string) {
+  const resultElem = document.getElementById('result')!;
   resultElem.innerText = errorMessage;
   resultElem.classList.add('error');
 }

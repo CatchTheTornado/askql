@@ -1,1 +1,1 @@
-export const expectedResult = "Hello! This is your local Ask server.";
+export = "Hello! This is your local Ask server.";

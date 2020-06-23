@@ -1,1 +1,1 @@
-export const expectedResult = {}; //fixme(mh)
+export = {}; //fixme(mh)

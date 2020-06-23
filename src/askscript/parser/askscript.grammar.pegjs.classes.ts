@@ -663,7 +663,7 @@ export class Const {
 
 export class Let {
   print(): string {
-    return 'set';
+    return 'let';
   }
 }
 

@@ -1,1 +1,1 @@
-export const expectedResult = 81;
+export = 81;

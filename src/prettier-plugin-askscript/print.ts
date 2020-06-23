@@ -91,8 +91,7 @@ export function print(
       ]);
     }
 
-    case 'set': {
-      // FIXME rename to let for consistency
+    case 'let': {
       if (typeof props.name !== 'string') {
         throw new Error('call:props.name expected string');
       }

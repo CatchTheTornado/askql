@@ -1,1 +1,1 @@
-export const expectedResult = 'any town';
+export = 'any town';

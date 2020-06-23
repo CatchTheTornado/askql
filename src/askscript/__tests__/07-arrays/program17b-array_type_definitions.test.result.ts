@@ -1,1 +1,1 @@
-export const expectedResult = ['asdf', 'qwer', 'tyui'];
+export = ['asdf', 'qwer', 'tyui'];

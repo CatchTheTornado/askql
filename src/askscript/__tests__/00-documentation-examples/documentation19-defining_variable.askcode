@@ -1,1 +1,1 @@
-ask(let('i',12),let('s','hello'),let('f',1.2),let('b','sdf'),let('a','asdf'))
+ask(let('i',12),let('s','hello'),const('f',1.2),let('b','sdf'),const('a','asdf'))

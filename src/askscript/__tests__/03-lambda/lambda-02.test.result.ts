@@ -1,15 +1,9 @@
-export const expectedResult = {
+export = {
   "name": "fun",
   "params": [
     {
-      "name": "call",
+      "name": "get",
       "params": [
-        {
-          "name": "get",
-          "params": [
-            "get"
-          ]
-        },
         "$0"
       ]
     }

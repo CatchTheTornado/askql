@@ -13,7 +13,7 @@ export * from './fun';
 export * from './get';
 export { ifRes as if } from './if';
 export * from './is';
-export { letRes as let } from './let';
+export { letRes as let, letRes as const, letRes as assign } from './let';
 export * from './list';
 export * from './map';
 export * from './not';

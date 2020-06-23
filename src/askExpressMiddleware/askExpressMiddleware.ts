@@ -16,8 +16,8 @@ export function askExpressMiddleware(
     next: NextFunction
   ) {
     try {
-      const askScriptCode = request.body.code;
-      const queryResponse = await runUntyped(environment, parse(askScriptCode));
+      const askCode = request.body.code;
+      const queryResponse = await runUntyped(environment, parse(askCode));
       response.json(queryResponse);
     } catch (err) {
       if (config.passError) {

@@ -1,1 +1,1 @@
-ask(let('result',query(node('firstName',f(call(get('get'),'firstName'))),node('lastName',f(call(get('get'),'lastName'))),node('friends',f(call(get('get'),'friends')),node('id',f(call(get('get'),'id')))))),call(get('get'),'result'))
+ask(const('result',query(node('firstName',f(call(get('get'),'firstName'))),node('lastName',f(call(get('get'),'lastName'))),node('friends',f(call(get('get'),'friends')),node('id',f(call(get('get'),'id')))))),call(get('get'),'result'))

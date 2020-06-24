@@ -1,1 +1,5 @@
+*.ask
+*.ask.snapshot.tsx
+*.askcode
 /dist
+/drafts

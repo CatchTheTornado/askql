@@ -1,7 +1,16 @@
 import { NextFunction } from 'express';
 import { runUntyped, Resources, Values } from '../askvm';
-import { parse } from '../askcode';
+import { parse as parseCode } from '../askcode';
+import { parse as parseScript } from '../askscript';
 import { Request, Response } from 'express';
+
+function parse(code: string, parser: Function) {
+  try {
+    return parser(code);
+  } catch (e) {
+    return false;
+  }
+}
 
 export function askExpressMiddleware(
   environment: AskEnvironment,
@@ -16,8 +25,12 @@ export function askExpressMiddleware(
     next: NextFunction
   ) {
     try {
-      const askScriptCode = request.body.code;
-      const queryResponse = await runUntyped(environment, parse(askScriptCode));
+      const code = request.body.code;
+      let parsedCode = parse(code, parseCode);
+      if (!parsedCode) {
+        parsedCode = parse(code, parseScript);
+      }
+      const queryResponse = await runUntyped(environment, parsedCode);
       response.json(queryResponse);
     } catch (err) {
       if (config.passError) {

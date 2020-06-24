@@ -1,1 +1,1 @@
-ask(forIn(let('price'),call(get('get'),'priceList'),block()))
+ask(forIn(const('price'),call(get('get'),'priceList'),block()))

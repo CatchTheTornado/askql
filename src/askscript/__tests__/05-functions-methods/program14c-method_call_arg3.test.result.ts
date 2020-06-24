@@ -1,1 +1,1 @@
-export const expectedResult = '2.3a';
+export = '2.3a';

@@ -37,10 +37,10 @@ test('closure', async () => {
     ask(
       <call>
         <fun>
-          <set name="myvar" value="a" />
+          <let name="myvar" value="a" />
           <call>
             <fun>
-              <set name="myvar" value="b" />
+              <let name="myvar" value="b" />
             </fun>
           </call>
           <ref name="myvar" />

@@ -1,1 +1,1 @@
-export const expectedResult = 0.0000248015873015873;
+export = 0.0000248015873015873;

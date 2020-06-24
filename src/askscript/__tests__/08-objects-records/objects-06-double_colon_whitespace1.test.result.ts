@@ -1,4 +1,4 @@
-export const expectedResult = {
+export = {
   firstName: 'lukasz',
   lastName: 'CZERWINSKI',
 };

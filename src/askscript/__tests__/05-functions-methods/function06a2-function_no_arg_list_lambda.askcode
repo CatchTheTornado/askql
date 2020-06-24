@@ -1,1 +1,1 @@
-ask(let('arr',list(1,2,3,4)),call(get('map'),call(get('get'),'arr'),fun(return(7))))
+ask(const('arr',list(1,2,3,4)),call(get('map'),call(get('get'),'arr'),fun(return(7))))

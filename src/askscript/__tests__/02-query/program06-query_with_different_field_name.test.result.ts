@@ -1,4 +1,4 @@
-export const expectedResult = {
+export = {
   firstField: 'otherFieldValue',
   secondField: ':adfs:',
   thirdField: '(-:adfs:-)',

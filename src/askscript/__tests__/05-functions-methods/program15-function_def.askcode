@@ -1,1 +1,1 @@
-ask(let('square',fun(let('a',get('$0')),call(get('times'),call(get('get'),'a'),call(get('get'),'a')))),call(get('plus'),call(get('square'),call(get('get'),'a')),call(get('square'),call(get('get'),'a'))))
+ask(const('square',fun(let('a',get('$0')),call(get('times'),call(get('get'),'a'),call(get('get'),'a')))),call(get('plus'),call(get('square'),call(get('get'),'a')),call(get('square'),call(get('get'),'a'))))

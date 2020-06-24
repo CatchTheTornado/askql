@@ -14,6 +14,8 @@ import { parse as parseAskScript, AskScriptCode } from './askscript';
 import chalk = require('chalk');
 import { customAlphabet } from 'nanoid';
 
+import packageInfo from './package.json';
+
 const nanoid = customAlphabet('1234567890abcdef', 8);
 
 const values = {
@@ -86,6 +88,10 @@ app.get('/', async (req, res) => {
   res.send(
     '<html><head><title>AskQL</title></head><body><p><b>Ask</b> me anything!</p><p><a href="http://askql.org/">AskQL website</a></p></body></html>'
   );
+});
+
+app.get('/version', async (req, res) => {
+  res.json({ version: packageInfo.version });
 });
 
 app.post('/askscript', async (req, res) => {

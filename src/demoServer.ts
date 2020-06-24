@@ -64,7 +64,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/ask', [logRequestMiddleware, askMiddleware, logResultsMiddleware]);
 
-const port = 1234;
+const port = 80;
 app.listen(port, () => {
   console.log(chalk.grey(`AskQL listening at http://localhost:${port}`));
 });

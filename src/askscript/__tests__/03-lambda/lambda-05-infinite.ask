@@ -1,0 +1,6 @@
+ask() {
+  const f = fun():any {
+    call(f)
+  }
+  call(f)
+}

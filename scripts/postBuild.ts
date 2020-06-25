@@ -1,4 +1,5 @@
 import { promises as fs } from 'fs';
+import { pick } from 'lodash';
 
 import packageJson from '../package.json';
 
@@ -31,16 +32,13 @@ async function copyReadme() {
 }
 
 async function copyPackageJson() {
-  const releasePackageJson: any = {};
-  Object.keys(packageJson).forEach((key) => {
-    if (propertiesToPreserveFromPackageJSON.indexOf(key) > -1) {
-      // @ts-ignore
-      releasePackageJson[key] = packageJson[key];
-    }
-  });
   await fs.writeFile(
     'dist/package.json',
-    JSON.stringify(releasePackageJson, null, 2)
+    JSON.stringify(
+      pick(packageJson, propertiesToPreserveFromPackageJSON),
+      null,
+      2
+    )
   );
   console.log('Package.json was written to dist');
 }

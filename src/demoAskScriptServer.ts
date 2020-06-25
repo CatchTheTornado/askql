@@ -14,8 +14,15 @@ import { parse as parseAskScript, AskScriptCode } from './askscript';
 import chalk = require('chalk');
 import { customAlphabet } from 'nanoid';
 
-import packageInfo from './package.json';
+let packageInfo = {
+  version: 'dummy',
+};
 
+try {
+  packageInfo = require('../package.json');
+} catch (e) {
+  packageInfo = require('./package.json');
+}
 const nanoid = customAlphabet('1234567890abcdef', 8);
 
 const values = {

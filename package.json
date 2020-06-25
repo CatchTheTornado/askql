@@ -48,9 +48,7 @@
   "engines": {
     "node": ">=12.14.0"
   },
-  "dependencies": {
-    "lodash": "^4.17.15"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "7.10.3",
     "@babel/preset-env": "7.10.3",
@@ -83,6 +81,7 @@
     "jest": "26.0.1",
     "jsesc": "3.0.1",
     "lint-staged": "10.2.11",
+    "lodash": "^4.17.15",
     "micromatch": "^4.0.2",
     "nanoid": "^3.1.10",
     "node-fetch": "2.6.0",

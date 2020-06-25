@@ -13,13 +13,24 @@
     "tsc:test": "tsc && npm run test --no-cache",
     "build:test": "npm run build && npm run test --no-cache",
     "prebuild": "ts-node scripts/preBuild.ts && tsc",
-    "build": "jest --config jest.build.config.js --no-cache",
+    "build": "jest --config jest.build.config.js --no-cache && npm run playground:build",
     "postbuild": "ts-node scripts/postBuild.ts",
     "prettier": "prettier --write --config prettier.config.js .",
     "prettier:check": "prettier --config prettier.config.js --check '**/*.{js,jsx,ts,tsx}'",
     "prettier:scripts": "prettier --write ./scripts",
     "lint:js": "eslint . --ext .js,.tsx,.ts",
-    "lint:js:fix": "npm run lint:js --fix"
+    "lint:js:fix": "npm run lint:js --fix",
+    "playground:build": "rm -rf dist/playground && mkdir -p dist/playground/public && npm run playground:build-assets && npm run playground:build-ts && npm run playground:copy-static-assets",
+    "playground:build-assets": "npm run playground:build-assets:img",
+    "playground:build-assets:img": "imagemin src/playground/public/assets/img/* --out-dir=dist/playground/public/img",
+    "playground:build-ts": "tsc && mv dist/playground/public/assets/js dist/playground/public/js",
+    "playground:copy-static-assets": "ts-node src/playground/copyStaticAssets.ts",
+    "playground:start": "node dist/playground/app.js",
+    "playground:watch-dev": "npm-watch playground:start-dev",
+    "playground:start-dev": "node dist/playground/app.js"
+  },
+  "watch": {
+    "playground:start-dev": "dist/public/css/*.css"
   },
   "husky": {
     "hooks": {
@@ -48,8 +59,24 @@
   "engines": {
     "node": ">=12.14.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.4",
+    "handlebars": "^4.7.6",
+    "shelljs": "^0.8.4"
+  },
   "devDependencies": {
+    "@babel/polyfill": "^7.10.1",
+    "@types/ace": "0.0.43",
+    "babel-loader": "^8.1.0",
+    "cz-conventional-changelog": "^3.2.0",
+    "golden-layout": "^1.5.9",
+    "imagemin-cli": "^6.0.0",
+    "node-sass": "^4.14.1",
+    "npm-watch": "^0.6.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
     "@babel/core": "7.10.3",
     "@babel/preset-env": "7.10.3",
     "@babel/preset-react": "7.10.1",
@@ -90,5 +117,10 @@
     "shelljs": "^0.8.4",
     "ts-node": "8.10.2",
     "typescript": "3.9.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

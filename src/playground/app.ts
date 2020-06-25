@@ -33,17 +33,18 @@ app.set('view engine', 'handlebars');
 app.get('/', (req, res, next) => {
   res.render('main', {
     title: 'AskScript Playground',
-    askscriptServerUrl: process.env.ASKSCRIPT_SERVER_URL,
+    askscriptServerUrl: process.env.PLAYGROUND_ASK_SERVER_URL,
+    askscriptServerVersionUrl: process.env.PLAYGROUND_ASK_SERVER_VERSION_URL,
   });
 });
 
 /**
  * Start Express server.
  */
-const server = app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PLAYGROUND_PORT, () => {
   console.log(
     '  App is running at http://localhost:%d in %s mode',
-    process.env.PORT,
+    process.env.PLAYGROUND_PORT,
     process.env.NODE_ENV
   );
   console.log('  Press CTRL-C to stop\n');

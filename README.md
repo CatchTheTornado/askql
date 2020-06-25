@@ -75,18 +75,22 @@ Please find all important information here:
 
 1. Clone the repository
 
-`git clone git@github.com:xFAANG/askql.git`
+   `git clone git@github.com:xFAANG/askql.git`
 
-2. Install dependencies:
+2. It is advised to install autoreconf as it is used by one of the Node packages used by AskScript Playground.
+
+   For Ubuntu/Debian run: `sudo apt-get install autoconf`
+
+3. Install dependencies:
    `npm i`
 
-3. Build the project:
+4. Build the project:
    `npm run build`
 
-4. Link the project to askql command:
+5. Link the project to askql command:
    `npm link`
 
-5. Now you should be able to launch the interpreter (we use REPL for that):
+6. Now you should be able to launch the interpreter (we use REPL for that):
    `askql`
 
 ## Code examples
@@ -111,7 +115,7 @@ Do not hesitate to try it out yourself! You can also find fellow AskQL devs in o
 
 ## Tools
 
-#### CLI (AskScript interpreter)
+### CLI (AskScript interpreter)
 
 Similar to `python` or `node`, AskScript CLI allows the user to type AskScript programs and get immediate result.
 
@@ -148,7 +152,7 @@ Result:
 
 As the output CLI always prints AskCode (which would be sent to an AskVM machine if the code was executed over the network) and the result of the AskScript program.
 
-### Usage
+#### Usage
 
 1. Write a hello world!
 
@@ -241,6 +245,43 @@ string ask(call(get('find'),get('philosophers'),fun(let('name',get('$0')),call(g
 ### Playground
 
 Here is the link to our [AskQL playground](http://cli.askql.org:3000/)!
+
+#### Developer info - how to run
+
+1. Copy .env.example to .env and set `PLAYGROUND_PORT`, `PLAYGROUND_ASK_SERVER_URL` and `PLAYGROUND_ASK_SERVER_VERSION_URL` appropriately.
+
+   or
+
+   You can also specify the variables in command line when running the Playground.
+
+2. Compile Playground:
+
+   ```
+   npm run playground:build
+   ```
+
+   or
+
+   ```
+   npm run build
+   ```
+
+3. Run it:
+
+   ```
+   npm run playground:start
+   ```
+
+
+    You can specify port and server URL in command line:
+
+    ```
+    PLAYGROUND_PORT=1234 npm run playground:start
+    ```
+
+#### Additional notes
+
+Some files in the Playground come or are inspired by https://github.com/microsoft/TypeScript-Node-Starter (MIT) and https://github.com/Coffeekraken/code-playground (MIT).
 
 ## FAQ
 

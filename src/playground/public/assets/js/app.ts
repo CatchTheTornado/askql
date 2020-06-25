@@ -1,4 +1,34 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function printAskVersion(
+  elemId: string,
+  askScriptServerVersionUrl: string
+) {
+  const request = new Request(askScriptServerVersionUrl, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
+  });
+  const response = await fetch(request);
+  try {
+    if (response.status == 200) {
+      const json = await response.json();
+      document.getElementById(elemId)!.innerText = `AskVM v. ${json.version}`;
+    } else {
+      // fail silently
+      console.error(
+        `Couldn't fetch AskVM version. response.status: ${response.status}`
+      );
+    }
+  } catch (e) {
+    console.error(`Couldn't fetch AskVM version. Error: ${e.toString()}`);
+    // fail silently
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function registerAskScriptEditor(
   editorElementId: string,
   runElementId: string,

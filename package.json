@@ -27,7 +27,7 @@
     }
   },
   "lint-staged": {
-    "*": [
+    "*.{js,jsx,ts,tsx}": [
       "prettier --write",
       "eslint --fix"
     ]
@@ -54,6 +54,7 @@
     "@babel/preset-env": "7.10.3",
     "@babel/preset-react": "7.10.1",
     "@babel/preset-typescript": "7.10.1",
+    "@types/cors": "^2.8.6",
     "@types/express": "4.17.6",
     "@types/glob": "7.1.2",
     "@types/jest": "26.0.0",
@@ -68,6 +69,7 @@
     "babel-jest": "26.0.1",
     "babel-plugin-inline-import": "3.0.0",
     "chalk": "4.1.0",
+    "cors": "^2.8.5",
     "eslint": "7.3.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-prettier": "3.1.4",
@@ -79,6 +81,7 @@
     "jsesc": "3.0.1",
     "lint-staged": "10.2.11",
     "micromatch": "^4.0.2",
+    "nanoid": "^3.1.10",
     "node-fetch": "2.6.0",
     "pegjs": "0.10.0",
     "prettier": "2.0.5",

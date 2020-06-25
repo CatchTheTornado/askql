@@ -91,8 +91,7 @@ export function print(
       ]);
     }
 
-    case 'set': {
-      // FIXME rename to let for consistency
+    case 'let': {
       if (typeof props.name !== 'string') {
         throw new Error('call:props.name expected string');
       }
@@ -165,6 +164,20 @@ export function print(
       return concat([
         'while (',
         path.call(print, 'props', 'condition'),
+        ') {',
+        indentChildren('children'),
+        '}',
+      ]);
+    }
+
+    case 'for': {
+      return concat([
+        'for (',
+        path.call(print, 'props', 'initialization'),
+        ';',
+        path.call(print, 'props', 'condition'),
+        ';',
+        path.call(print, 'props', 'finalExpression'),
         ') {',
         indentChildren('children'),
         '}',

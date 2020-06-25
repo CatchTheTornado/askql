@@ -1,8 +1,8 @@
 import { AskCodeOrValue } from '../../askcode';
-import { assert, isString, isStringArray } from '../../utils';
+import { assert, isString } from '../../utils';
 import * as askjsx from './';
+import { Let } from './Let';
 import { Ref } from './Ref';
-import { Set } from './Set';
 askjsx;
 
 export function Fun({
@@ -28,9 +28,9 @@ export function Fun({
   const f = (
     <code ask={ask || undefined} fun={!ask || undefined}>
       {args.map(({ params: [arg, type] }: any, index: any) => (
-        <Set name={arg} value={<Ref name={`$${index}`} />} />
+        <Let name={arg} value={<Ref name={`$${index}`} />} />
       ))}
-      {expressions.length > 0 ? expressions : null}
+      {expressions.length > 0 ? expressions : <call name="null" />}
     </code>
   );
 
@@ -38,5 +38,5 @@ export function Fun({
     return f;
   }
 
-  return <Set name={name} value={f} />;
+  return <Let name={name} value={f} />;
 }

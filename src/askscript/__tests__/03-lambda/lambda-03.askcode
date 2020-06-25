@@ -1,0 +1,1 @@
+ask(let('myFun',fun(call(get('get'),'$0'))),call(get('myFun'),5))

@@ -1,0 +1,3 @@
+ask() {
+  call(get('toString'), 2)
+}

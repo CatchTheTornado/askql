@@ -1,3 +1,3 @@
-export const expectedResult = {
+export = {
   fullName: 'LUKE SKYWALKER',
 };

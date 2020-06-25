@@ -1,4 +1,4 @@
-export const expectedResult = {
+export = {
   "totalNewDeaths": 0,
   "totalNewInfected": 0,
   "totalnewRecovered": 0,

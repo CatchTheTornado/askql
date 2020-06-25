@@ -1,1 +1,1 @@
-export const expectedResult = "factorial is cool";
+export = "factorial is cool";

@@ -3,6 +3,8 @@ import { fromAskScriptAst, createElement } from '../askjsx';
 
 export type AskScriptAstSimpleValue = null | boolean | number | string;
 
+export type AskScriptCode = string;
+
 export type AskScriptAstValue =
   | AskScriptAstSimpleValue
   | { jsxValue: Record<string, AskScriptAstValue> | AskScriptAstSimpleValue }
@@ -29,11 +31,6 @@ export function parseToAst(
       console.log(`AST: \n${JSON.stringify(ast, null, 2)}`);
     }
     const jsx = ast.print();
-    // if (Array.isArray(jsx)) {
-    //   jsx = {
-    //     jsxValue: jsx,
-    //   };
-    // }
     if (debugPrint) {
       console.log(`JSX: \n${JSON.stringify(jsx, null, 2)}`);
     }
@@ -60,5 +57,8 @@ export function parse(
   options?: any,
   debugPrint?: boolean
 ): AskCodeOrValue {
-  return fromAskScriptAst(parseToAst(code, options, debugPrint), createElement);
+  return fromAskScriptAst(parseToAst(code, options, debugPrint), {
+    object: createElement,
+    literal: (value) => value,
+  });
 }

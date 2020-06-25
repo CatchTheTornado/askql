@@ -1,4 +1,4 @@
-export const expectedResult = {
+export = {
   France: 'Paris',
   france: 'paris',
 };

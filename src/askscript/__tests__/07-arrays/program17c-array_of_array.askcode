@@ -1,1 +1,1 @@
-ask(let('arr1',list(list(),list(1,2,3))))
+ask(const('arr1',list(list(),list(1,2,3))))

@@ -40,7 +40,7 @@ export async function asyncFind<T>(
   callback: (item: T, index: number) => Promise<boolean>
 ): Promise<T | undefined> {
   const results = await Promise.all(array.map(callback));
-  return array.find(({}, index) => results[index]);
+  return array.find(({}, index) => results[index] === true);
 }
 
 export async function asyncFilter<T>(
@@ -48,7 +48,7 @@ export async function asyncFilter<T>(
   callback: (item: T) => Promise<boolean>
 ): Promise<T[]> {
   const results = await Promise.all(array.map(callback));
-  return array.filter(({}, index) => results[index]);
+  return array.filter(({}, index) => results[index] === true);
 }
 
 export async function asyncEvery<T>(
@@ -56,7 +56,7 @@ export async function asyncEvery<T>(
   callback: (item: T) => Promise<boolean>
 ) {
   const results = await Promise.all(array.map(callback));
-  return results.every((result) => result);
+  return results.every((result) => result === true);
 }
 
 export async function asyncSome<T>(

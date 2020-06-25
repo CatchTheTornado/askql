@@ -1,10 +1,8 @@
-import { any, resource, run, runUntyped } from '../../lib';
+import { any, resource, run, runUntyped, Options } from '../../lib';
 
 export const letRes = resource({
   type: any,
   async compute(options, code, args) {
-    // console.log(code.name, code.params, 'args:', args);
-
     const { params: children = [] } = code;
 
     const key: any = await runUntyped(options, children[0]); // FIXME any
@@ -16,6 +14,21 @@ export const letRes = resource({
 
     if (key === 'resources') {
       throw new Error(`Key "resources" cannot be redeclared`);
+    }
+
+    if (code.name === 'assign') {
+      for (
+        let prototype: Options | undefined = options;
+        prototype;
+        prototype = prototype?.prototype
+      ) {
+        const { values = {} } = prototype;
+        if (Object.prototype.hasOwnProperty.call(values, key)) {
+          values[key] = value;
+          return value;
+        }
+      }
+      throw new Error(`Cannot assign to an unknown variable "${key}"`);
     }
 
     options.values![key] = value;

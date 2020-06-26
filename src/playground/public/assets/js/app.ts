@@ -1,9 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function printAskVersion(
-  elemId: string,
-  askScriptServerVersionUrl: string
-) {
-  const request = new Request(askScriptServerVersionUrl, {
+async function printAskVersion(elemId: string, askScriptServerUrl: string) {
+  const request = new Request(`${askScriptServerUrl}/version`, {
     method: 'GET',
     mode: 'cors',
     headers: {
@@ -67,7 +64,7 @@ async function executeAskScript(
   askScriptCode: string,
   askScriptServerUrl: string
 ) {
-  const request = new Request(askScriptServerUrl, {
+  const request = new Request(`${askScriptServerUrl}/askscript`, {
     method: 'POST',
     mode: 'cors',
     headers: {

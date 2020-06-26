@@ -248,7 +248,7 @@ Here is the link to our [AskQL playground](http://cli.askql.org:3000/)!
 
 #### Developer info - how to run
 
-1. Copy .env.example to .env and set `PLAYGROUND_PORT`, `PLAYGROUND_ASK_SERVER_URL` and `PLAYGROUND_ASK_SERVER_VERSION_URL` appropriately.
+1. Copy .env.example to .env and set `PLAYGROUND_PORT` and `PLAYGROUND_ASK_SERVER_URL` appropriately.
 
    or
 

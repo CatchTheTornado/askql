@@ -34,7 +34,6 @@ app.get('/', (req, res, next) => {
   res.render('main', {
     title: 'AskScript Playground',
     askscriptServerUrl: process.env.PLAYGROUND_ASK_SERVER_URL,
-    askscriptServerVersionUrl: process.env.PLAYGROUND_ASK_SERVER_VERSION_URL,
   });
 });
 

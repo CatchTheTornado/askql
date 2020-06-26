@@ -1,5 +1,6 @@
-import { promises as fs } from 'fs';
+import { promises as pfs } from 'fs';
 import { pick } from 'lodash';
+import fs from 'fs';
 
 import packageJson from '../package.json';
 
@@ -24,7 +25,7 @@ async function main() {
 
 async function copyReadme() {
   try {
-    await fs.copyFile('README.md', 'dist/README.md');
+    await pfs.copyFile('README.md', 'dist/README.md');
     console.log('README.md was copied to dist');
   } catch (e) {
     console.error(e);
@@ -32,7 +33,7 @@ async function copyReadme() {
 }
 
 async function copyPackageJson() {
-  await fs.writeFile(
+  await pfs.writeFile(
     'dist/package.json',
     JSON.stringify(
       pick(packageJson, propertiesToPreserveFromPackageJSON),

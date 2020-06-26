@@ -20,11 +20,10 @@
     "prettier:scripts": "prettier --write ./scripts",
     "lint:js": "eslint . --ext .js,.tsx,.ts",
     "lint:js:fix": "npm run lint:js --fix",
-    "playground:build": "rm -rf dist/playground && mkdir -p dist/playground/public && npm run playground:build-assets && npm run playground:build-ts && npm run playground:copy-static-assets && ts-node scripts/playgroundPostBuild.ts",
+    "playground:build": "rm -rf dist/playground && mkdir -p dist/playground/public && npm run playground:build-assets && npm run playground:build-ts && ts-node scripts/playgroundPostBuild.ts",
     "playground:build-assets": "npm run playground:build-assets:img",
     "playground:build-assets:img": "imagemin src/playground/public/assets/img/* --out-dir=dist/playground/public/img",
     "playground:build-ts": "tsc && mv dist/playground/public/assets/js dist/playground/public/js",
-    "playground:copy-static-assets": "ts-node src/playground/copyStaticAssets.ts",
     "playground:start": "dotenv -e dist/.env node dist/playground/app.js"
   },
   "husky": {

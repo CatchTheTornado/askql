@@ -10,6 +10,10 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - uses: amannn/action-semantic-pull-request@v1.2.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+
+      - name: Checkout and install dependencies
+        run: npm install @actions/github @commitlint/config-conventional @commitlint/lint @commitlint/load
+
+      - name: Checks the PR title
+        run: node ./scripts/verify-pr-conventions

@@ -1,3 +1,4 @@
+const core = require('@actions/core');
 const github = require('@actions/github');
 const load = require('@commitlint/load').default;
 const lint = require('@commitlint/lint').default;
@@ -14,10 +15,6 @@ function getTitle() {
   return github.context.payload.pull_request.title;
 }
 
-async function run() {
-  await testTitle(getTitle());
-}
-
 async function testTitle(title) {
   const lintOptions = await load(CONFIG);
   const lintResult = await lint(
@@ -30,7 +27,10 @@ async function testTitle(title) {
   }
 }
 
+async function run() {
+  await testTitle(getTitle());
+}
+
 run().catch((e) => {
-  console.error(e);
-  process.exit(1);
+  core.setFailed(e);
 });

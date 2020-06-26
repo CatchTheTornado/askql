@@ -25,12 +25,7 @@
     "playground:build-assets:img": "imagemin src/playground/public/assets/img/* --out-dir=dist/playground/public/img",
     "playground:build-ts": "tsc && mv dist/playground/public/assets/js dist/playground/public/js",
     "playground:copy-static-assets": "ts-node src/playground/copyStaticAssets.ts",
-    "playground:start": "node dist/playground/app.js",
-    "playground:watch-dev": "npm-watch playground:start-dev",
-    "playground:start-dev": "node dist/playground/app.js"
-  },
-  "watch": {
-    "playground:start-dev": "dist/public/css/*.css"
+    "playground:start": "node dist/playground/app.js"
   },
   "husky": {
     "hooks": {

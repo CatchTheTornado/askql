@@ -1,5 +1,10 @@
-import { AskCodeOrValue } from '../../askcode';
+import { AskCodeOrValue, isAskCode } from '../../askcode';
 import * as askjsx from './jsx';
+import { Let, Assign } from './Let';
+import { assert } from 'console';
+import { AssertionError } from 'assert';
+import { While } from './While';
+import { Call } from './Call';
 askjsx;
 
 export function For({
@@ -51,11 +56,37 @@ export function ForOf({
   of?: AskCodeOrValue;
   children: AskCodeOrValue[];
 }) {
+  if (!isAskCode(key)) {
+    throw new AssertionError({
+      message: 'forOf expects key to be a statement',
+    });
+  }
+  if (typeof ofProp === 'undefined') {
+    // Would have use assert, but then compiler complains that ofProp in <Let/> could be undefined.
+    throw new AssertionError({ message: 'ofProp is undefined' });
+  }
+
   return (
-    <code forIn>
-      {key}
-      {ofProp}
-      <code block>{children}</code>
-    </code>
+    <fragment>
+      <Let name="$ofValue" value={Object.values({ ofProp })} />
+      <Let name="$index" value={0} />
+      <While
+        condition={
+          <Call
+            name="<"
+            args={[
+              <ref name="$index" />,
+              <call name="length" args={[<ref name="$ofValue" />]} />,
+            ]}
+          />
+        }
+      >
+        {children}
+        <Assign
+          name="$index"
+          value={<Call name="+" args={[<ref name="$index" />, 1]} />}
+        />
+      </While>
+    </fragment>
   );
 }

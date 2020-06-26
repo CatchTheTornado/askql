@@ -9,5 +9,3 @@ export const forIn = resource({
     return run(options, value ? block : null, []);
   },
 });
-
-export const forOf = forIn;

@@ -6,17 +6,6 @@
 	<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
 
-	{{#if gtm}}
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id={{gtm}}"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag() { dataLayer.push(arguments); }
-		gtag('js', new Date());
-		gtag('config', '{{gtm}}');
-	</script>
-	{{/if}}
-
 	<title>{{title}}</title>
 	{{#if packageJson.description}}
 	<meta name="description" content="{{packageJson.description}}" />

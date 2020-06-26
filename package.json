@@ -60,7 +60,6 @@
     "@babel/polyfill": "^7.10.1",
     "@types/ace": "0.0.43",
     "babel-loader": "^8.1.0",
-    "cz-conventional-changelog": "^3.2.0",
     "golden-layout": "^1.5.9",
     "imagemin-cli": "^6.0.0",
     "node-sass": "^4.14.1",
@@ -112,10 +111,5 @@
     "shelljs": "^0.8.4",
     "ts-node": "8.10.2",
     "typescript": "3.9.5"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }

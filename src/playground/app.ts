@@ -2,17 +2,6 @@ import express from 'express';
 import path from 'path';
 import expressHandlebars from 'express-handlebars';
 
-import dotenv from 'dotenv';
-import fs from 'fs';
-
-if (fs.existsSync('.env')) {
-  console.log('Using .env file to supply config environment variables');
-  dotenv.config({ path: '.env' });
-} else {
-  console.log('Using .env.example file to supply config environment variables');
-  dotenv.config({ path: '.env.example' }); // you can delete this after you create your own .env file!
-}
-
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 0 }));

@@ -222,7 +222,8 @@ assignment = i:identifier ws* '=' ws* v:value { return new ask.Assignment(i, v) 
 functionCall = i:identifier ws* '(' cAL:callArgList ')' {                       return new ask.FunctionCall(i, cAL) }
 methodCallApplied   = 
     ws* ':' ws* iop:(identifier/operator) cAL:methodCallAppliedArgList?  { return new ask.MethodCallApplied(iop, cAL === null ? [] : cAL)}
-  / ws* '.' ws* i:identifier  {                                            return new ask.KeyAccessApplied(i) }
+  / ws* '.' ws* i:identifier  {                                            return new ask.KeyIdentifierApplied(i) }
+  / ws* '[' ws* v:value ']' {                                              return new ask.KeyExpressionApplied(v) }
 methodCallAppliedArgList = ws* '(' cAL:callArgList ')' { return cAL }
 
 

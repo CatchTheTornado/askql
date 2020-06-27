@@ -27,6 +27,21 @@ const demos: { [key: string]: Demo } = {
 }`,
   },
 
+  demo21: {
+    title: 'Factorial (nicer operators)',
+    code: `ask {
+  const factorial: int(int) = fun(n:int):int {
+    if (n < 2) {
+      return n
+    }
+
+    n * factorial(n - 1))
+  }
+
+  5:factorial
+}`,
+  },
+
   demo30: {
     title: 'Query',
     code: `ask {

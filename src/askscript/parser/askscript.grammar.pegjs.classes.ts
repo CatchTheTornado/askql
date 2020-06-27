@@ -169,7 +169,7 @@ export class NonArithmValue {
     | ValueLiteral
     | Identifier
     | FunctionObject;
-  methodCallAppliedList: (MethodCallApplied | KeyAccessApplied)[];
+  methodCallAppliedList: (MethodCallApplied | KeyExpressionApplied)[];
 
   constructor(
     expression:
@@ -179,7 +179,7 @@ export class NonArithmValue {
       | ValueLiteral
       | Identifier
       | FunctionObject,
-    methodCallAppliedList: (MethodCallApplied | KeyAccessApplied)[] = []
+    methodCallAppliedList: (MethodCallApplied | KeyExpressionApplied)[] = []
   ) {
     this.expression = expression;
     this.methodCallAppliedList = methodCallAppliedList;
@@ -203,13 +203,9 @@ export class NonArithmValue {
         // Key access is a syntactic sugar for :at() method, e.g.:
         // obj.key equals to:
         // obj:at('key')
-        if (methodCall instanceof KeyAccessApplied) {
+        if (methodCall instanceof KeyExpressionApplied) {
           methodCall = new MethodCallApplied(new Identifier('at'), [
-            new Value(
-              new NonArithmValue(
-                new ValueLiteral(new StringLiteral(methodCall.identifier.text))
-              )
-            ),
+            methodCall.value,
           ]);
         }
 
@@ -499,11 +495,20 @@ export class MethodCallApplied {
   // no print(), because method calls are rewritten to function calls
 }
 
-export class KeyAccessApplied {
-  identifier: Identifier;
+export class KeyExpressionApplied {
+  value: Value;
 
+  constructor(value: Value) {
+    this.value = value;
+  }
+}
+
+export class KeyIdentifierApplied extends KeyExpressionApplied {
   constructor(identifier: Identifier) {
-    this.identifier = identifier;
+    const value = new Value(
+      new NonArithmValue(new ValueLiteral(new StringLiteral(identifier.text)))
+    );
+    super(value);
   }
 }
 

@@ -20,6 +20,8 @@
     "prettier:scripts": "prettier --write ./scripts",
     "lint:js": "eslint . --ext .js,.tsx,.ts",
     "lint:js:fix": "npm run lint:js --fix",
+    "cli": "node dist/cli.js",
+    "cli:dev": "npx pegjs src/askscript/parser/askscript.grammar.pegjs && ts-node --files src/cli.ts",
     "playground:build": "rm -rf dist/playground && mkdir -p dist/playground/public && npm run playground:build-assets && npm run playground:build-ts && ts-node scripts/playgroundPostBuild.ts",
     "playground:build-assets": "npm run playground:build-assets:img",
     "playground:build-assets:img": "imagemin src/playground/public/assets/img/* --out-dir=dist/playground/public/img",

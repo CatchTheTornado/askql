@@ -1,0 +1,19 @@
+name: "Lint PR"
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Checkout and install dependencies
+        run: npm install @actions/core @actions/github @commitlint/config-conventional @commitlint/lint @commitlint/load
+
+      - name: Checks the PR title
+        run: node ./scripts/verify-pr-conventions

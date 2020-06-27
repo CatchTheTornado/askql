@@ -1,0 +1,9 @@
+ask {
+    const f = fun(arg) {
+        arg+3
+    }
+    let numbers = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
+    let two = numbers[2]
+    let three = numbers[12/4]
+    numbers[numbers:length-1]+numbers[f(numbers[2])]
+}

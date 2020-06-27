@@ -77,7 +77,7 @@ Please find all important information here:
 
    `git clone git@github.com:xFAANG/askql.git`
 
-2. It is advised to install autoreconf as it is used by one of the Node packages used by AskScript Playground.
+2. For Linux it is advised to install autoreconf as it is used by one of the Node packages used by AskScript Playground.
 
    For Ubuntu/Debian run: `sudo apt-get install autoconf`
 

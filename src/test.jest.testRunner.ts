@@ -18,11 +18,13 @@ import {
   resource,
   resources,
   runUntyped,
+  any,
 } from './askvm';
 import { getTargetPath } from './node-utils';
 import * as prettierPluginAskScript from './prettier-plugin-askscript';
 import { fromEntries } from './utils';
 import jasmine2 = require('jest-jasmine2');
+import e from 'expect';
 
 function compareAsJson(a: any, b: any): boolean {
   return JSON.stringify(a) === JSON.stringify(b);
@@ -164,8 +166,26 @@ async function askRunner(
     title: 'compiles',
   });
 
+  // Adding Jest functions to the environment, so that we can run Jest expect():toBe() in .ask files.
+  // See a sample in src/askscript/__tests__/00-documentation-examples/documentation01-complete_example.test.ask
+  const testResources = {
+    expect: resource({
+      type: any,
+      async resolver(actual: any): Promise<e.Matchers<any>> {
+        return e(actual);
+      },
+    }),
+
+    toBe: resource({
+      type: any,
+      async resolver(matcher: e.Matchers<any>, actual: any): Promise<void> {
+        return matcher.toBe(actual);
+      },
+    }),
+  };
+
   const baseEnvironment = {
-    resources,
+    resources: { ...resources, ...testResources },
   };
 
   const localEnvPath = join(testPath, '../_environment');

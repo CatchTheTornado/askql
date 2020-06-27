@@ -1,1 +1,1 @@
-ask(call(get('test'),'hello',fun(call(get('log'),'Hello!'),call(get('toBe'),call(get('expect'),call(get('+'),2,2)),4),call(get('toBe'),call(get('expect'),call(get('+'),2,2)),4),call(get('toBe'),call(get('expect'),call(get('+'),3,8)),11))))
+ask(call(get('log'),'Hello!'),call(get('toBe'),call(get('expect'),call(get('+'),2,2)),4),call(get('toBe'),call(get('expect'),call(get('+'),2,2)),4),call(get('toBe'),call(get('expect'),call(get('+'),3,8)),11))

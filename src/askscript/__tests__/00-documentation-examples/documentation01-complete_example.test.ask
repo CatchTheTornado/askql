@@ -1,7 +1,8 @@
 ask {
   log('Hello!')
-  
-  expect(2 + 2):toBe(4)
-  expect(2 :+ (2)):toBe(4)
-  expect(3 + 8):toBe(11)
+  test('test 1', fun() {
+    expect(2 + 2):toBe(4)
+    expect(2 :+ (2)):toBe(4)
+    expect(3 + 8):toBe(11)
+  })
 }

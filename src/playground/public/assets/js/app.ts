@@ -38,7 +38,7 @@ function registerAskScriptEditor(
 
   editor.commands.addCommand({
     name: 'alertalert',
-    bindKey: { win: 'Ctrl-s', mac: 'Command-s' },
+    bindKey: { win: 'Ctrl-s', mac: 'Ctrl-s' },
     exec: () => {
       executeAskScriptFromEditor(editor, askScriptServerUrl);
     },

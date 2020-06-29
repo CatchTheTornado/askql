@@ -72,12 +72,27 @@
 
 #editor_menu {
   text-align: right;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #editor {
-  height: 100%;
+  height: calc(100% - 42px);
 }
 
 #result {
   white-space: pre-wrap;
+  font-size: .9rem;
+}
+
+.ace_gutter {
+  background: #22252a !important;
+}
+
+pre#editor  {
+  margin-bottom: 0;
+}
+
+#run {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .85rem;
 }

@@ -24,7 +24,7 @@ import { getTargetPath } from './node-utils';
 import * as prettierPluginAskScript from './prettier-plugin-askscript';
 import { fromEntries } from './utils';
 import jasmine2 = require('jest-jasmine2');
-import e from 'expect';
+import e from 'expect'; // ideally we would reuse test and expect from the Jest environment instead of a separate package
 
 function compareAsJson(a: any, b: any): boolean {
   return JSON.stringify(a) === JSON.stringify(b);
@@ -172,12 +172,14 @@ async function askRunner(
     expect: resource({
       type: any,
       async resolver(actual: any): Promise<e.Matchers<any>> {
+        // ideally we would reuse test and expect from the Jest environment instead of a separate package
         return e(actual);
       },
     }),
 
     toBe: resource({
       type: any,
+      // ideally we would reuse test and expect from the Jest environment instead of a separate package
       async resolver(matcher: e.Matchers<any>, actual: any): Promise<void> {
         return matcher.toBe(actual);
       },

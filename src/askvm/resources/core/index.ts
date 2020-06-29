@@ -1,3 +1,9 @@
+import { logicalOr } from './logicalOr';
+
+Object.assign(exports, {
+  '||': logicalOr,
+});
+
 export * from './ask';
 export * from './at';
 export * from './call';
@@ -14,6 +20,7 @@ export { ifRes as if } from './if';
 export * from './is';
 export { letRes as let, letRes as const, letRes as assign } from './let';
 export * from './list';
+export * from './logicalOr';
 export * from './map';
 export * from './not';
 export * from './object';

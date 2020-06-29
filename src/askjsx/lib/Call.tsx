@@ -15,6 +15,21 @@ export function Call({
 }) {
   assert(isString(name), 'name');
   // assert(isStringArray(args), 'args');
+  if (name === 'useFor') {
+    assert('params' in args, 'No params found in arguments');
+    const params = (args as any).params;
+    assert(Array.isArray(params), 'params should be an array');
+    assert(params.length == 2, `expecting exactly 2 params for ${name}`);
+
+    if ((args as any).params)
+      return (
+        <code call>
+          <Ref name={'call'} />
+          {[(args as any).params[1], (args as any).params[0]]}
+        </code>
+      );
+  }
+
   return (
     <code call>
       {name ? <Ref name={name} /> : fun}

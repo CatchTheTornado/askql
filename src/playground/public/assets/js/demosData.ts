@@ -35,7 +35,7 @@ const demos: { [key: string]: Demo } = {
       return n
     }
 
-    n * factorial(n - 1))
+    n * factorial(n - 1)
   }
 
   5:factorial

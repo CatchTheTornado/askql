@@ -14,7 +14,7 @@ export = (
     />
     <let name="mySum" type={<ref name="float" />} value={0} />
     <forOf
-      key={<let name="itemPrice" type={<ref name="any" />} />}
+      key={<let name="itemPrice" type={<ref name="float" />} />}
       of={<ref name="itemPrices" />}
     >
       <assign

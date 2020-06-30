@@ -12,12 +12,7 @@
     "strict": true,
     "target": "es2016"
   },
-  "include": [
-    "./src/**.ts",
-    "./src/**/*.ts",
-    "./src/package.json",
-    "@types/interface.d.ts"
-  ],
+  "include": ["./src/**.ts", "./src/**/*.ts", "@types/interface.d.ts"],
   "exclude": [
     "**/drafts/**",
     "**/node_modules/**",

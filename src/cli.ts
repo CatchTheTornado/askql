@@ -26,7 +26,6 @@ const values = {
     Turing: 65536,
     Wittgenstein: 420,
   },
-  test: 5,
 };
 
 const options: Options = {

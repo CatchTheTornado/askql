@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import express = require('express');
 import bodyParser = require('body-parser');
 import { parse } from './askcode';
@@ -21,7 +19,6 @@ const values = {
     f: 136,
     g: 53,
   },
-  test: 15,
 };
 
 const app = express();

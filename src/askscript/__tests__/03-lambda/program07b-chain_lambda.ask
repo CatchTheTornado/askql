@@ -1,5 +1,4 @@
 ask {
-  let useFor = fun(x, f) { f(x) }
   5 :times(2) :plus(1) :toString :useFor(fun(s:string): string {
 	  const double = fun(s:string):string {
 		  s:concat(s)

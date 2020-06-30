@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+
+	<title>{{title}}</title>
+	{{#if packageJson.description}}
+	<meta name="description" content="{{packageJson.description}}" />
+	{{/if}}
+	{{#if packageJson.keywords}}
+	<meta name="keywords" content="{{packageJson.keywords}}" />
+	{{/if}}
+	{{#if packageJson.repository}}
+	<link rel="canonical" href="{{packageJson.repository.url}}" />
+	{{/if}}
+	<link href="https://fonts.googleapis.com/css?family=Catamaran:800,900|Montserrat:300,400,700&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="https://askql.org/css/styles.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/demosData.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/demos.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="clear-transmations bg-800">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-900 index-1000">
+
+		<div class="container-fluid px-md-0">
+			<a class="navbar-brand" href="https://askql.org/"><img src="img/askQL.svg"></a>
+			<button class="navbar-toggler border-0 px-0" type="button" data-toggle="collapse" data-target="#navbar"
+				aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="py-2 collapse navbar-collapse justify-content-md-center justify-content-lg-end" id="navbar">
+				<ul class="navbar-nav text-right text-md-left pr-md-0">
+					<li class="nav-item">
+						<a class="nav-link" target="_blank" rel="noopener"
+							href="https://www.notion.so/AskQL-Documentation-cd065c579d0c44d381ddddc4682f5736">Docs (v.1.12)</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="https://askql.org//press-release">Media</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Playground</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link pr-0" href="https://discord.gg/pYdzypH" target="_blank" rel="noopener">Community</a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</nav>
+
+
+	<div class="container-fluid index-1000">
+		<section class="row align-items-center py-3">
+			<div class="col-sm-auto">
+				<!-- Title -->
+				<h1 class="text-white mb-0 h3">
+					AskScript Playground
+					{{#if packageJson.version}}
+					<span class="text-dark">{{packageJson.version}}</span>
+					{{/if}}
+				</h1>
+			</div>
+
+			<div class="col-sm-auto mt-3 mt-sm-0 text-sm-right text-lg-left">
+				<!-- dropdown -->
+				<div class="dropdown">
+					<a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+						Demos
+					</a>
+					<div class="dropdown-menu border-0 rounded-0 animate slideIn" aria-labelledby="dropdownMenuLink"
+						id="demos-menu">
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm mt-3 mt-sm-0 text-sm-left text-lg-left text-white" id="askvm-version"></div>
+			<script>printAskVersion("askvm-version", "{{askscriptServerUrl}}");</script>
+
+			<div class="col-lg-auto ml-lg-auto mt-3 mt-lg-0">
+				<p class="text-white small mb-0"><strong>Available resources</strong>: See 'Values and Resources' <a
+						href="https://github.com/xFAANG/askql/blob/master/src/demoAskScriptServer.ts#L21" target="_blank"
+						rel="noopener">here</a>
+				</p>
+			</div>
+		</section>
+	</div>
+
+	<main class="bg-800 pt-0">
+		<div class="container-fluid">
+			<!-- playground editor -->
+			<section class="row pb-4 pb-lg-3 bg-800 playground-editor">
+				<div class="col">
+					<div class="row no-gutters h-100 playground-container">
+						<div class="col-md-6 bg-900">
+							{{!-- <div id="editor" class="text-white p-4"> --}}
+							<div id="editor_wrapper">
+								<div id="editor_menu"><a href="#" id="run">Run! (Ctrl+S)</a></div>
+								<pre id="editor">ask { hi() } </pre>
+							</div>
+							<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/ace.js" type="text/javascript"
+								charset="utf-8"></script>
+							<script>
+								const editor = registerAskScriptEditor("editor", "run", "{{askscriptServerUrl}}");
+								generateDemoMenuEntries(editor);
+							</script>
+						</div>
+						<div class="col-md-6 bg-100">
+							<div id="result" class="text-blue p-4 font-weight-bold">Hi! Welcome to the AskScript Playground.</div>
+							<script>document.getElementById('result').innerHTML =
+									'Hi! Welcome to the AskScript Playground.\n\n' +
+
+									'1. Type AskScript code in the left panel.\n' +
+									'2. Hit Ctrl-S or press \'Run\' to send it to server.\n' +
+									'3. The result will show up in the right panel.';
+							</script>
+
+						</div>
+
+					</div>
+				</div>
+			</section>
+
+		</div>
+
+	</main>
+
+	<footer>
+		<article class="py-4 py-lg-5 bg-white panel-section">
+			<div class="container">
+				<div class="row py-xl-3">
+					<div class="col-lg-6 relative">
+						<div class="row justify-content-center align-items-center text-left">
+							<div class="col-12">
+								<h3 class="h2">You're invited!</h3>
+								<p class=" mt-lg-3">Feel cordially invited to contribute to the AskQL project! If you see a bug, please
+									submit it on AskQL Github :)</p>
+								<p class="mb-0 mt-4"><a href="https://github.com/xFAANG/askql/issues"
+										class="btn btn-outline-primary btn-md btn-sm-block mr-2 mt-2 hvr-sweep-to-right" target="_blank"
+										rel="noopener"><strong>Submit a bug</strong></a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 pt-4 pt-lg-0 relative">
+						<div class="row justify-content-center align-items-center text-left">
+							<div class="col-12">
+								<h3 class="h2">Join us on Discord</h3>
+								<p class="mt-lg-3">You can always reach out to us and <em>ask</em> questions or discuss topics related
+									to AskQL on our IRC-like chat on Discord</p>
+								<p class="mb-0 mt-4"><a href="https://discord.gg/pYdzypH"
+										class="btn btn-outline-primary btn-md btn-sm-block mr-2 mt-2 hvr-sweep-to-right" target="_blank"
+										rel="noopener"><strong>Let's connect</strong></a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</article>
+		<div class="bg-black relative">
+			<div class="container py-3">
+				<div class="row justify-content-center justify-content-md-between align-items-center">
+					<div class="col-xl-auto col-lg-12 col-sm-auto text-center text-lg-left mb-lg-1 mb-xl-0 pr-xl-0">
+						<img src="https://askql.org/images/askQL-white.svg" class="hpx-20 footer-logo">
+					</div>
+					<div class="col-md-auto text-center mt-1 mt-md-0 px-xl-0">
+						<p class="mb-0 text-muted small">Write flexible distributed software easier and faster than ever.</p>
+					</div>
+					<div class="col-lg-auto col-md-6 mt-1 mt-md-0 text-center text-md-left px-xl-0">
+						<p class="mb-0 text-muted small"><span class="font-weight-bold">Brought to you by <a
+									href="https://xfaang.com" rel="noopener" target="_blank" rel="noopener">xFAANG</a></span>
+						</p>
+					</div>
+					<div class="col-lg-auto col-md-6 mt-1 mt-md-0 text-center text-md-right text-lg-left pl-xl-0">
+						<p class="mb-0 text-muted small">Recognize our work by <a href=" https://www.facebook.com/xFAANG/"
+								rel="noopener" target="_blank" rel="noopener">liking us on Facebook</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+		integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>

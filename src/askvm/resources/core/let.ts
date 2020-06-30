@@ -1,8 +1,16 @@
-import { any, resource, run, runUntyped, Options } from '../../lib';
+import {
+  any,
+  resource,
+  run,
+  runUntyped,
+  Options,
+  TypedValue,
+  JSONable,
+} from '../../lib';
 
 export const letRes = resource({
   type: any,
-  async compute(options, code, args) {
+  async compute(options, code, args): Promise<TypedValue<JSONable>> {
     const { params: children = [] } = code;
 
     const key: any = await runUntyped(options, children[0]); // FIXME any

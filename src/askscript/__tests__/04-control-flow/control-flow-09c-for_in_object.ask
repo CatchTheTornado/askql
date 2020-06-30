@@ -1,0 +1,8 @@
+ask {
+    const itemPrices = {a: 10, b: 40, c: 32, d: 99};
+    let mySum:float = 0
+    for(let index in itemPrices) {
+        mySum = mySum + itemPrices[index]
+    }
+    mySum
+}

@@ -14,7 +14,7 @@ const values = {
     F: 446,
     G: 53,
   },
-  test: 5,
+  value: 5,
 };
 
 function ask(code: string) {
@@ -33,7 +33,7 @@ test('find', async () => {
   await expect(ask(`find([1, 2, 3, 4], fun(is(get('$0'), 3)))`)).resolves.toBe(
     3
   );
-  await expect(ask(`test`)).resolves.toBe(5);
+  await expect(ask(`value`)).resolves.toBe(5);
   await expect(ask(`clientNames`)).resolves.toStrictEqual(values.clientNames);
   await expect(ask(`revPerClient`)).resolves.toStrictEqual(values.revPerClient);
   await expect(ask(`find(clientNames, fun(is(get('$0'), 'A')))`)).resolves.toBe(

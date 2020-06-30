@@ -13,3 +13,5 @@ askql-*.tgz
 /drafts
 /src/drafts
 /src/askscript/drafts
+
+.env

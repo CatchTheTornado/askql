@@ -20,7 +20,9 @@ export async function run(
       steps: 10 ** 4,
     },
   });
-  return libRun(options, code, args);
+  const result = await libRun(options, code, args);
+  // console.log('stats after run', options.stats);
+  return result;
 }
 
 export async function runUntyped(

@@ -2,16 +2,16 @@ import type { JestEnvironment } from '@jest/environment';
 import { createEmptyTestResult } from '@jest/test-result';
 import type { AssertionResult, TestResult } from '@jest/test-result';
 import type { Config } from '@jest/types';
+import e from 'expect'; // ideally we would reuse test and expect from the Jest environment instead of a separate package
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs.promises';
 import type { RuntimeType } from 'jest-runtime';
 import * as micromatch from 'micromatch';
 import { basename, dirname, join } from 'path';
 import * as prettier from 'prettier';
-import { AskCodeOrValue, askCodeToSource } from './askcode';
+import { AskCodeOrValue, askCodeToSource, toAskCode } from './askcode';
 import { createElement, fromAskScriptAst } from './askjsx';
 import { parse as parseAskScript, parseToAst } from './askscript';
-import { toAskCode } from './askcode';
 import {
   extendOptions,
   Options,
@@ -19,14 +19,12 @@ import {
   resource,
   resources,
   runUntyped,
-  any,
+  types,
 } from './askvm';
 import { getTargetPath } from './node-utils';
 import * as prettierPluginAskScript from './prettier-plugin-askscript';
-import { fromEntries, assert } from './utils';
+import { assert, fromEntries } from './utils';
 import jasmine2 = require('jest-jasmine2');
-import e from 'expect'; // ideally we would reuse test and expect from the Jest environment instead of a separate package
-import { call } from './askvm/resources';
 
 function compareAsJson(a: any, b: any): boolean {
   return JSON.stringify(a) === JSON.stringify(b);
@@ -173,7 +171,7 @@ async function askRunner(
   const testResources = {
     // This is a mock test() resource. Ideally we would reuse test from the Jest environment.
     test: resource({
-      type: any,
+      type: types.any,
       async compute(options, code, args) {
         assert(
           typeof args !== 'undefined' && args.length == 2,
@@ -190,7 +188,7 @@ async function askRunner(
     }),
 
     expect: resource({
-      type: any,
+      type: types.any,
       async resolver(actual: any): Promise<e.Matchers<any>> {
         // ideally we would reuse test and expect from the Jest environment instead of a separate package
         return e(actual);
@@ -198,7 +196,7 @@ async function askRunner(
     }),
 
     toBe: resource({
-      type: any,
+      type: types.any,
       // ideally we would reuse test and expect from the Jest environment instead of a separate package
       async resolver(matcher: e.Matchers<any>, actual: any): Promise<void> {
         return matcher.toBe(actual);

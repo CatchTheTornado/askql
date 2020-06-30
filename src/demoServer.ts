@@ -19,7 +19,6 @@ const values = {
     f: 136,
     g: 53,
   },
-  test: 15,
 };
 
 const app = express();

@@ -13,6 +13,7 @@ export * from './equals';
 export * from './each';
 export { falseRes as false } from './false';
 export * from './forIn';
+export * from './forOf';
 export { fragment as block, fragment as f, fragment } from './fragment';
 export * from './fun';
 export * from './get';

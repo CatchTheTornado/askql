@@ -24,14 +24,14 @@ export const forOf = resource({
 
     const valueOf = await runUntyped(options, of);
 
-    if (
-      valueOf === null ||
-      ['boolean', 'number', 'string'].includes(typeof valueOf)
-    ) {
-      throw new Error('forOf expects "of" to be an array or an object');
+    if (valueOf === null || ['boolean', 'number'].includes(typeof valueOf)) {
+      throw new Error(
+        'forOf expects "of" to be an array, an object or a string'
+      );
     }
 
-    const values: any[] = Object.values(valueOf);
+    const values: any[] =
+      typeof valueOf === 'string' ? valueOf.split('') : Object.values(valueOf);
 
     for (const value of values) {
       key.params[1] = value;

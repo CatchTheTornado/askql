@@ -1,0 +1,12 @@
+ask {
+    const hello = 'Hello world!';
+    let newStr = ''
+    for(let letter of hello) {
+        if (letter:equals('l')) {
+            newStr = concat(newStr, 'x');
+        } else {
+            newStr = concat(newStr, letter:toUpperCase);
+        }
+    }
+    newStr
+}

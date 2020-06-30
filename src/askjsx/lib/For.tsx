@@ -56,37 +56,11 @@ export function ForOf({
   of?: AskCodeOrValue;
   children: AskCodeOrValue[];
 }) {
-  if (!isAskCode(key)) {
-    throw new AssertionError({
-      message: 'forOf expects key to be a statement',
-    });
-  }
-  if (typeof ofProp === 'undefined') {
-    // Would have use assert, but then compiler complains that ofProp in <Let/> could be undefined.
-    throw new AssertionError({ message: 'ofProp is undefined' });
-  }
-
   return (
-    <fragment>
-      <Let name="$ofValue" value={Object.values({ ofProp })} />
-      <Let name="$index" value={0} />
-      <While
-        condition={
-          <Call
-            name="<"
-            args={[
-              <ref name="$index" />,
-              <call name="length" args={[<ref name="$ofValue" />]} />,
-            ]}
-          />
-        }
-      >
-        {children}
-        <Assign
-          name="$index"
-          value={<Call name="+" args={[<ref name="$index" />, 1]} />}
-        />
-      </While>
-    </fragment>
+    <code forOf>
+      {key}
+      {ofProp}
+      <code block>{children}</code>
+    </code>
   );
 }

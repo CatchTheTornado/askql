@@ -1,5 +1,4 @@
 ask {
-  log('Hello!')
   test('test 1', fun() {
     expect(2 + 2):toBe(4)
     expect(2 :+ (2)):toBe(4)

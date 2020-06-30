@@ -1,6 +1,5 @@
 export = (
   <ask args={<list />}>
-    <call name="log" args={<list>{"Hello!"}</list>} />
     <call
       name="test"
       args={

@@ -8,9 +8,10 @@ import type { RuntimeType } from 'jest-runtime';
 import * as micromatch from 'micromatch';
 import { basename, dirname, join } from 'path';
 import * as prettier from 'prettier';
-import { AskCodeOrValue, askCodeToSource, AskCode } from './askcode';
+import { AskCodeOrValue, askCodeToSource } from './askcode';
 import { createElement, fromAskScriptAst } from './askjsx';
 import { parse as parseAskScript, parseToAst } from './askscript';
+import { toAskCode } from './askcode';
 import {
   extendOptions,
   Options,
@@ -19,7 +20,6 @@ import {
   resources,
   runUntyped,
   any,
-  TypedValue,
 } from './askvm';
 import { getTargetPath } from './node-utils';
 import * as prettierPluginAskScript from './prettier-plugin-askscript';
@@ -179,8 +179,13 @@ async function askRunner(
           typeof args !== 'undefined' && args.length == 2,
           'test() expects exactly two arguments'
         );
-        const fun = args[1] as TypedValue<AskCode>;
-        return call.compute(options, fun.value);
+        const { params } = code;
+        const [, fun] = params!;
+        return await runUntyped(
+          options,
+          toAskCode({ name: 'call', params: [fun] }),
+          []
+        );
       },
     }),
 
@@ -231,7 +236,10 @@ async function askRunner(
   if (isAskScriptTest) {
     const code = runtime.requireModule<AskCodeOrValue>(askJsonTargetPath);
     try {
-      await runUntyped(environment, code, args);
+      const result = await runUntyped(environment, code, args);
+      if ('ASK_PRINT_RESULT' in process.env && process.env.ASK_PRINT_RESULT) {
+        console.log(`RESULT: ${JSON.stringify(result, null, 2)}`);
+      }
       testResults.computes = assertionResult({
         status: 'passed',
         title: 'runs successfully',

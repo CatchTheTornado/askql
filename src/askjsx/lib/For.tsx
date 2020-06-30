@@ -1,10 +1,15 @@
-import { AskCodeOrValue } from '../../askcode';
+import { AskCodeOrValue, isAskCode } from '../../askcode';
 import * as askjsx from './jsx';
+import { Let, Assign } from './Let';
+import { assert } from 'console';
+import { AssertionError } from 'assert';
+import { While } from './While';
+import { Call } from './Call';
 askjsx;
 
 export function For({
   initialization,
-  condition,
+  condition = true,
   finalExpression,
   children,
 }: {
@@ -14,16 +19,13 @@ export function For({
   children: AskCodeOrValue[];
 }) {
   return (
-    <code for>
+    <fragment>
       {initialization}
-      {condition}
-      {finalExpression}
-      <code block>
-        {initialization}
+      <while condition={condition}>
         {children}
         {finalExpression}
-      </code>
-    </code>
+      </while>
+    </fragment>
   );
 }
 
@@ -55,7 +57,7 @@ export function ForOf({
   children: AskCodeOrValue[];
 }) {
   return (
-    <code forIn>
+    <code forOf>
       {key}
       {ofProp}
       <code block>{children}</code>

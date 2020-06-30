@@ -1,7 +1,0 @@
-ask {
-    let mySum:float = 0
-    for(let itemPrice of itemPrices) {
-        mySum = mySum:plus(itemPrice)
-    }
-    mySum
-}

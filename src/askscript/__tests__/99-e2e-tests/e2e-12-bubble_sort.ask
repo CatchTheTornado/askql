@@ -1,0 +1,13 @@
+// Bubble sort
+ask {
+  let arr = [342.34, 35767, 2, 117, 999, 3435]
+  const len = arr:length
+  for (let i = 0; i < len; i = i + 1) {
+	  for (let j = 0; j < (len - i - 1); j = j + 1){
+		  if (arr:at(j) > arr:at(j + 1)){
+			  arr = arr:set(j, arr:at(j + 1)):set(j + 1, arr:at(j))
+			}
+		}
+	}
+  arr
+}

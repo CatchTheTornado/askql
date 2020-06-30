@@ -7,7 +7,7 @@ export function While({
   children,
 }: {
   condition: AskCodeOrValue;
-  children: AskCodeOrValue[];
+  children?: AskCodeOrValue[];
 }) {
   return (
     <code while>

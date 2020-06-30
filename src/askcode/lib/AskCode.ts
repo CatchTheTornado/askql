@@ -37,8 +37,15 @@ export class AskCode {
 
   parent?: AskCode;
 
-  toString(): string {
-    return askCodeToSource(this);
+  toString({
+    pretty = false,
+    indent = '    ',
+  }: { pretty?: boolean; indent?: string } = {}): string {
+    if (pretty) {
+      return askCodeToPretty(this, indent);
+    } else {
+      return askCodeToSource(this);
+    }
   }
 }
 
@@ -77,6 +84,41 @@ export function askCodeToSource(value: AskCodeOrValue): string {
   return `${resourceAliasMap[name] ?? name}${
     params ? `(${params.map(askCodeToSource).join(',')})` : ''
   }`;
+}
+
+export function askCodeToPretty(
+  value: AskCodeOrValue,
+  indent: string = '  ',
+  totalIndent: string = ''
+): string {
+  if (typeof value === 'string') {
+    return `'${value.replace(/\'/g, "\\'")}'`;
+  }
+  if (!isAskCode(value)) {
+    return String(value);
+  }
+  const { name, params } = askCode(value);
+
+  const displayName = resourceAliasMap[name] ?? name;
+
+  // If there are no params, the output is simple.
+  if (!params) {
+    return displayName;
+  }
+
+  // If there are params, pretty print if asked for it, otherwise just print.
+  if (indent !== '') {
+    return (
+      `${displayName}(\n` +
+      `${totalIndent}${indent}` +
+      `${params
+        .map((el) => askCodeToPretty(el, indent, totalIndent + indent))
+        .join(`,\n${totalIndent}${indent}`)}\n` +
+      `${totalIndent})`
+    );
+  }
+
+  return `${displayName}(${params.map((el) => askCodeToPretty(el)).join(',')})`;
 }
 
 export function askCode(code: AskCodeOrValue): AskCode {

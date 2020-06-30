@@ -3,15 +3,20 @@ import { Resource, Resources } from './resource';
 import { JSONable, typed, TypedValue, untyped } from './typed';
 
 export type Values = Record<string, any>;
+
+export type Stats = {
+  steps: number;
+};
+
 export interface Options {
   code?: AskCode;
   result?: any;
   prototype?: Options;
   resources?: Resources;
   values?: Values;
+  stats?: Stats;
+  limits?: Stats;
 }
-
-let ops = 0;
 
 function logValue<T>(message: string, value: T): T {
   console.log(message, value);
@@ -34,9 +39,9 @@ export async function run(
     return typed(code);
   }
 
-  ops += 1;
-  if (ops > 1000) {
-    // throw new Error('Over ops limit!');
+  options.stats!.steps += 1;
+  if (options.stats!.steps >= options.limits!.steps) {
+    throw new Error('Over steps limit!');
   }
 
   const { resources = {}, values = {} } = options;

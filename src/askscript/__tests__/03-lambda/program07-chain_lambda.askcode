@@ -1,1 +1,1 @@
-ask(call(get('call'),fun(5)))
+ask(const('double',fun(let('s',get('$0')),call(get('concat'),call(get('get'),'s'),call(get('get'),'s')))),call(get('call'),fun(let('s',get('$0')),call(get('double'),call(get('get'),'s'))),call(get('get'),'text')))

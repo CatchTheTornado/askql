@@ -170,6 +170,20 @@ export function print(
       ]);
     }
 
+    case 'for': {
+      return concat([
+        'for (',
+        path.call(print, 'props', 'initialization'),
+        ';',
+        path.call(print, 'props', 'condition'),
+        ';',
+        path.call(print, 'props', 'finalExpression'),
+        ') {',
+        indentChildren('children'),
+        '}',
+      ]);
+    }
+
     case 'forOf': {
       return concat([
         'for (',

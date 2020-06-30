@@ -1,0 +1,4 @@
+ask {
+  while (true) {
+  }  
+}

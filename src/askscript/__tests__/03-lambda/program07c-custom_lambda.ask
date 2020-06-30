@@ -1,0 +1,9 @@
+ask {
+	let customUseFor = fun(x, f) { f(x) }
+  5 :times(2) :plus(1) :toString :customUseFor(fun(s:string): string {
+	  const double = fun(s:string):string {
+		  s:concat(s)
+		}
+	  s:double // same as s:double()
+	}) :toInt :divideBy(6) :ceil
+}

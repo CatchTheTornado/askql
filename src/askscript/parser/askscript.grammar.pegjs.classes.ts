@@ -169,7 +169,7 @@ export class NonArithmValue {
     | ValueLiteral
     | Identifier
     | FunctionObject;
-  methodCallAppliedList: (MethodCallApplied | KeyAccessApplied)[];
+  methodCallAppliedList: (MethodCallApplied | KeyExpressionApplied)[];
 
   constructor(
     expression:
@@ -179,7 +179,7 @@ export class NonArithmValue {
       | ValueLiteral
       | Identifier
       | FunctionObject,
-    methodCallAppliedList: (MethodCallApplied | KeyAccessApplied)[] = []
+    methodCallAppliedList: (MethodCallApplied | KeyExpressionApplied)[] = []
   ) {
     this.expression = expression;
     this.methodCallAppliedList = methodCallAppliedList;
@@ -203,13 +203,9 @@ export class NonArithmValue {
         // Key access is a syntactic sugar for :at() method, e.g.:
         // obj.key equals to:
         // obj:at('key')
-        if (methodCall instanceof KeyAccessApplied) {
+        if (methodCall instanceof KeyExpressionApplied) {
           methodCall = new MethodCallApplied(new Identifier('at'), [
-            new Value(
-              new NonArithmValue(
-                new ValueLiteral(new StringLiteral(methodCall.identifier.text))
-              )
-            ),
+            methodCall.value,
           ]);
         }
 
@@ -401,32 +397,20 @@ export class ForIn {
 }
 
 export class For3 {
-  sL1: Statement[];
-  sL2: Statement[];
-  sL3: Statement[];
-
-  body: Statement[];
-
   constructor(
-    s1: Statement | null,
-    s2: Statement | null,
-    s3: Statement | null,
-    body: Statement[]
-  ) {
-    this.sL1 = s1 !== null ? [s1] : [];
-    this.sL2 = s2 !== null ? [s2] : [];
-    this.sL3 = s3 !== null ? [s3] : [];
-
-    this.body = body;
-  }
+    private s1: Statement | null,
+    private s2: Statement | null,
+    private s3: Statement | null,
+    private body: Statement[]
+  ) {}
 
   print(): LooseObject {
     let output = {
       name: 'for',
       props: {
-        initialization: this.sL1.map((stmt) => stmt.print()),
-        condition: this.sL2.map((stmt) => stmt.print()),
-        finalExpression: this.sL3.map((stmt) => stmt.print()),
+        initialization: this.s1?.print(),
+        condition: this.s2?.print(),
+        finalExpression: this.s3?.print(),
       },
       children: this.body.map((stmt) => stmt.print()),
     };
@@ -511,11 +495,20 @@ export class MethodCallApplied {
   // no print(), because method calls are rewritten to function calls
 }
 
-export class KeyAccessApplied {
-  identifier: Identifier;
+export class KeyExpressionApplied {
+  value: Value;
 
+  constructor(value: Value) {
+    this.value = value;
+  }
+}
+
+export class KeyIdentifierApplied extends KeyExpressionApplied {
   constructor(identifier: Identifier) {
-    this.identifier = identifier;
+    const value = new Value(
+      new NonArithmValue(new ValueLiteral(new StringLiteral(identifier.text)))
+    );
+    super(value);
   }
 }
 

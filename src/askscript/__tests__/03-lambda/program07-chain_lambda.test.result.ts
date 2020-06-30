@@ -1,1 +1,1 @@
-export = 5;
+export = 'Hello, this is meHello, this is me';

@@ -20,6 +20,7 @@
 		rel="stylesheet">
 	<link rel="stylesheet" href="https://askql.org/css/styles.css">
 	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 	<script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/demosData.js" type="text/javascript" charset="utf-8"></script>
@@ -70,7 +71,7 @@
 				</h1>
 			</div>
 
-			<div class="col-sm-auto mt-3 mt-sm-0 text-sm-right text-lg-left">
+			<div class="col-auto mt-3 mt-sm-0 text-sm-right text-lg-left">
 				<!-- dropdown -->
 				<div class="dropdown">
 					<a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
@@ -83,7 +84,7 @@
 				</div>
 			</div>
 
-			<div class="col-sm mt-3 mt-sm-0 text-sm-left text-lg-left text-white" id="askvm-version"></div>
+			<div class="col-auto col-sm mt-3 mt-sm-0 text-sm-left text-lg-left text-white" id="askvm-version"></div>
 			<script>printAskVersion("askvm-version", "{{askscriptServerUrl}}");</script>
 
 			<div class="col-lg-auto ml-lg-auto mt-3 mt-lg-0">
@@ -104,7 +105,12 @@
 						<div class="col-md-6 bg-900">
 							{{!-- <div id="editor" class="text-white p-4"> --}}
 							<div id="editor_wrapper">
-								<div id="editor_menu"><a href="#" id="run">Run! (Ctrl+S)</a></div>
+								<div id="editor_menu" class="p-2 d-flex justify-content-between align-items-center">
+									<!-- title -->
+									<div class="text-muted small" id="demos-title"></div>
+									<!-- run button -->
+									<div><span class="text-300 small mr-1">(Ctrl+S)</span><a href="#" id="run" class="btn btn-outline-primary btn-sm hvr-sweep-to-right">Run <i class="fas fa-play fa-sm" aria-hidden="true"></i></a></div>
+								</div>
 								<pre id="editor">ask { hi() } </pre>
 							</div>
 							<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/ace.js" type="text/javascript"

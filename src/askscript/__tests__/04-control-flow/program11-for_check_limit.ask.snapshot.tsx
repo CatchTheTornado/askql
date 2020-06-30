@@ -42,13 +42,6 @@ export = (
         />
       }
     />
-    <call
-      name="log"
-      args={
-        <list>
-          <ref name="i" />
-        </list>
-      }
-    />
+    <ref name="i" />
   </ask>
 );

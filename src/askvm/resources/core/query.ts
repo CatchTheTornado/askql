@@ -1,4 +1,4 @@
-import { askCode, toAskCode, isValue } from '../../../askcode';
+import { askCode, toAskCode } from '../../../askcode';
 import { fromEntries } from '../../../utils';
 import { any, extendOptions, JSONable, resource, runUntyped } from '../../lib';
 

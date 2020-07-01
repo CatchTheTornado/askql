@@ -151,6 +151,20 @@ export class Value {
   }
 }
 
+export class UnaryOperator {
+  unaryOperator: Identifier;
+  value: Value;
+
+  constructor(unaryOperator: Identifier, value: Value) {
+    this.unaryOperator = unaryOperator;
+    this.value = value;
+  }
+
+  print(): LooseObject {
+    return new FunctionCall(this.unaryOperator, [this.value]).print();
+  }
+}
+
 export class OperNAValue {
   operator: Identifier;
   nAV: NonArithmValue;

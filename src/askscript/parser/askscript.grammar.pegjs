@@ -104,7 +104,9 @@ variableDefinition_type = ws* ':' ws* t:type { return t }
 
 // === value ===
 
-value = e:nonArithmExpression opVals:operValue* {  assertAllOperatorsMatch(opVals); return new ask.Value(e, opVals) }
+value = 
+    op:operator v:value {                      return new ask.UnaryOperator(op, v) }
+  / e:nonArithmExpression opVals:operValue* {  assertAllOperatorsMatch(opVals); return new ask.Value(e, opVals) }
 
 // We don't allow newline before an operator because:
 //   123

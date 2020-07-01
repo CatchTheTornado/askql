@@ -25,6 +25,7 @@
 	<script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/demosData.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/demos.js" type="text/javascript" charset="utf-8"></script>
+
 </head>
 
 <body class="clear-transmations bg-800">
@@ -120,7 +121,8 @@
 								generateDemoMenuEntries(editor);
 							</script>
 						</div>
-						<div class="col-md-6 bg-100">
+						<div class="col-md-6 bg-100 relative">
+							<a href="#" id="font_control" class="btn btn-outline-primary btn-sm m-1"><small>A</small>A</a>
 							<div id="result" class="text-blue p-4 font-weight-bold">Hi! Welcome to the AskScript Playground.</div>
 							<script>document.getElementById('result').innerHTML =
 									'Hi! Welcome to the AskScript Playground.\n\n' +
@@ -203,6 +205,18 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 		crossorigin="anonymous"></script>
+	<script>
+		$('#font_control').click(function(){
+    		$('#result').toggleClass('larger-font');
+    		$('#editor').toggleClass('large-font');
+    		$(this).toggleClass('change-to-small');
+    		
+    		if( $(this).hasClass('change-to-small') )
+			  $(this).html('A<small>A</small>');
+			else
+			  $(this).html('<small>A</small>A');
+		});
+	</script>
 
 
 </body>

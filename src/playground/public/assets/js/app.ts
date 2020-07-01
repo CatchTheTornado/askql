@@ -91,6 +91,7 @@ function showSuccessfulResponse(result: any) {
   const resultElem = document.getElementById('result')!;
   resultElem.innerText = JSON.stringify(result, null, 2);
   resultElem.classList.remove('error');
+  resultElem.classList.add('fadeIn');
 }
 
 function showErrorResponse(errorMessage: string) {

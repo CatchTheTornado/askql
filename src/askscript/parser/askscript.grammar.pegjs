@@ -104,9 +104,7 @@ variableDefinition_type = ws* ':' ws* t:type { return t }
 
 // === value ===
 
-value = 
-    op:operator v:value {                      return new ask.UnaryOperator(op, v) }
-  / e:nonArithmExpression opVals:operValue* {  assertAllOperatorsMatch(opVals); return new ask.Value(e, opVals) }
+value = e:nonArithmExpression opVals:operValue* {  assertAllOperatorsMatch(opVals); return new ask.Value(e, opVals) }
 
 // We don't allow newline before an operator because:
 //   123
@@ -117,15 +115,20 @@ operValue = wsnonl* op:operator ws* v:nonArithmExpression { return new ask.OperN
 
 // === non-arithm expressions ===
 nonArithmExpression = 
-  e:( brackets
-    / functionObject
-    / remote
-    / functionCall
-    / query
-    / valueLiteral
-    / identifier) 
-  mCAs:methodCallApplied* { return new ask.NonArithmValue(e, mCAs) }
+  e:nonArithmNoMethodsExpression mCAs:methodCallApplied* { return new ask.NonArithmValue(e, mCAs) }
 
+nonArithmNoMethodsExpression = 
+  unaryOperator
+  / brackets
+  / functionObject
+  / remote
+  / functionCall
+  / query
+  / valueLiteral
+  / identifier
+
+// === unary operator ===
+unaryOperator = op:operator v:nonArithmNoMethodsExpression { return new ask.UnaryOperator(op, v) }
 
 // === brackets ===
 

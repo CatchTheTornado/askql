@@ -5,6 +5,8 @@ export = (
       <let name="b" type={<ref name="string" />} value="text" />
       <return value={<ref name="b" />} />
     </if>
-    <return value={-1} />
+    <return
+      value={<call name="-" args={<list>{1}</list>} isOperator={true} />}
+    />
   </ask>
 );

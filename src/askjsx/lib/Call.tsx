@@ -15,6 +15,23 @@ export function Call({
 }) {
   assert(isString(name), 'name');
   // assert(isStringArray(args), 'args');
+
+  // This is a temporary way of linking some AskScript code.
+  // We'll have to make typing work before introducing a better way
+  if (name === 'useFor') {
+    assert('params' in args, 'No params found in arguments');
+    const params = (args as any).params;
+    assert(Array.isArray(params), 'params should be an array');
+    assert(params.length == 2, `expecting exactly 2 params for ${name}`);
+
+    return (
+      <code call>
+        <Ref name={'call'} />
+        {params.reverse()}
+      </code>
+    );
+  }
+
   return (
     <code call>
       {name ? <Ref name={name} /> : fun}

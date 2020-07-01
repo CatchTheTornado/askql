@@ -1,0 +1,1 @@
+ask(const('f',fun(call(get('call'),call(get('get'),'f')))),call(get('call'),call(get('get'),'f')))

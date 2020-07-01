@@ -1,0 +1,127 @@
+[
+  "ask",
+  {
+    "args": [
+      "list",
+      null
+    ]
+  },
+  [
+    "const",
+    {
+      "name": "double",
+      "type": [
+        "ref",
+        {
+          "name": "any"
+        }
+      ],
+      "value": [
+        "fun",
+        {
+          "args": [
+            "list",
+            null,
+            [
+              "list",
+              null,
+              "s",
+              [
+                "ref",
+                {
+                  "name": "string"
+                }
+              ]
+            ]
+          ],
+          "returns": [
+            "ref",
+            {
+              "name": "string"
+            }
+          ]
+        },
+        [
+          "call",
+          {
+            "name": "concat",
+            "args": [
+              "list",
+              null,
+              [
+                "ref",
+                {
+                  "name": "s"
+                }
+              ],
+              [
+                "ref",
+                {
+                  "name": "s"
+                }
+              ]
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  [
+    "call",
+    {
+      "name": "useFor",
+      "args": [
+        "list",
+        null,
+        [
+          "ref",
+          {
+            "name": "text"
+          }
+        ],
+        [
+          "fun",
+          {
+            "args": [
+              "list",
+              null,
+              [
+                "list",
+                null,
+                "s",
+                [
+                  "ref",
+                  {
+                    "name": "string"
+                  }
+                ]
+              ]
+            ],
+            "returns": [
+              "ref",
+              {
+                "name": "string"
+              }
+            ]
+          },
+          [
+            "call",
+            {
+              "name": "double",
+              "args": [
+                "list",
+                null,
+                [
+                  "ref",
+                  {
+                    "name": "s"
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      ]
+    }
+  ]
+]

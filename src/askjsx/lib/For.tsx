@@ -1,5 +1,10 @@
-import { AskCodeOrValue } from '../../askcode';
+import { AskCodeOrValue, isAskCode } from '../../askcode';
 import * as askjsx from './jsx';
+import { Let, Assign } from './Let';
+import { assert } from 'console';
+import { AssertionError } from 'assert';
+import { While } from './While';
+import { Call } from './Call';
 askjsx;
 
 export function For({
@@ -52,7 +57,7 @@ export function ForOf({
   children: AskCodeOrValue[];
 }) {
   return (
-    <code forIn>
+    <code forOf>
       {key}
       {ofProp}
       <code block>{children}</code>

@@ -1,5 +1,17 @@
 export = (
   <ask args={<list />}>
+    <const
+      name="itemPrices"
+      type={<ref name="any" />}
+      value={
+        <list>
+          {10}
+          {40}
+          {32}
+          {99}
+        </list>
+      }
+    />
     <let name="mySum" type={<ref name="float" />} value={0} />
     <forIn
       key={<let name="index" type={<ref name="int" />} />}
@@ -9,7 +21,7 @@ export = (
         name="mySum"
         value={
           <call
-            name="plus"
+            name="+"
             args={
               <list>
                 <ref name="mySum" />
@@ -24,6 +36,7 @@ export = (
                 />
               </list>
             }
+            isOperator={true}
           />
         }
       />

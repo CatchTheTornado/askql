@@ -4,9 +4,8 @@ export = (
       name="test"
       args={
         <list>
-          {"hello"}
+          {"test 1"}
           <fun args={<list />} returns={<ref name="any" />}>
-            <call name="log" args={<list>{"Hello!"}</list>} />
             <call
               name="toBe"
               args={

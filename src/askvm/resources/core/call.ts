@@ -1,6 +1,6 @@
+import { isAskCode } from '../../../askcode';
 import { asyncMap } from '../../../utils';
 import { any, resource, run, runUntyped } from '../../lib';
-import { toAskCode, isAskCode } from '../../../askcode';
 
 export const call = resource({
   type: any,

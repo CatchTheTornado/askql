@@ -2,13 +2,14 @@ import type { JestEnvironment } from '@jest/environment';
 import { createEmptyTestResult } from '@jest/test-result';
 import type { AssertionResult, TestResult } from '@jest/test-result';
 import type { Config } from '@jest/types';
+import e from 'expect'; // ideally we would reuse test and expect from the Jest environment instead of a separate package
 import { existsSync } from 'fs';
 import { mkdir, readFile, writeFile } from 'fs.promises';
 import type { RuntimeType } from 'jest-runtime';
 import * as micromatch from 'micromatch';
 import { basename, dirname, join } from 'path';
 import * as prettier from 'prettier';
-import { AskCodeOrValue, askCodeToSource } from './askcode';
+import { AskCodeOrValue, askCodeToSource, toAskCode } from './askcode';
 import { createElement, fromAskScriptAst } from './askjsx';
 import { parse as parseAskScript, parseToAst } from './askscript';
 import {
@@ -18,10 +19,11 @@ import {
   resource,
   resources,
   runUntyped,
+  types,
 } from './askvm';
 import { getTargetPath } from './node-utils';
 import * as prettierPluginAskScript from './prettier-plugin-askscript';
-import { fromEntries } from './utils';
+import { assert, fromEntries } from './utils';
 import jasmine2 = require('jest-jasmine2');
 
 function compareAsJson(a: any, b: any): boolean {
@@ -164,8 +166,46 @@ async function askRunner(
     title: 'compiles',
   });
 
+  // Adding Jest functions to the environment, so that we can run Jest expect():toBe() in .ask files.
+  // See a sample in src/askscript/__tests__/00-documentation-examples/documentation01-complete_example.test.ask
+  const testResources = {
+    // This is a mock test() resource. Ideally we would reuse test from the Jest environment.
+    test: resource({
+      type: types.any,
+      async compute(options, code, args) {
+        assert(
+          typeof args !== 'undefined' && args.length == 2,
+          'test() expects exactly two arguments'
+        );
+        const { params } = code;
+        const [, fun] = params!;
+        return await runUntyped(
+          options,
+          toAskCode({ name: 'call', params: [fun] }),
+          []
+        );
+      },
+    }),
+
+    expect: resource({
+      type: types.any,
+      async resolver(actual: any): Promise<e.Matchers<any>> {
+        // ideally we would reuse test and expect from the Jest environment instead of a separate package
+        return e(actual);
+      },
+    }),
+
+    toBe: resource({
+      type: types.any,
+      // ideally we would reuse test and expect from the Jest environment instead of a separate package
+      async resolver(matcher: e.Matchers<any>, actual: any): Promise<void> {
+        return matcher.toBe(actual);
+      },
+    }),
+  };
+
   const baseEnvironment = {
-    resources,
+    resources: { ...resources, ...testResources },
   };
 
   const localEnvPath = join(testPath, '../_environment');
@@ -189,26 +229,47 @@ async function askRunner(
     ? runtime.requireModule<any[]>(argsPath)
     : [];
 
-  const resultPath = join(testPath, `../${name}.test.result.ts`);
-  if (existsSync(resultPath)) {
+  // *.test.ask should be just run, no comparing with expected return value
+  const isAskScriptTest = basename(testPath).match(/.*\.test\.ask/);
+  if (isAskScriptTest) {
     const code = runtime.requireModule<AskCodeOrValue>(askJsonTargetPath);
-    const result = await runUntyped(environment, code, args);
-
-    const expectedResult = runtime.requireModule(resultPath);
-    const isCorrect = compareAsJson(result, expectedResult);
-    if ('ASK_PRINT_RESULT' in process.env && process.env.ASK_PRINT_RESULT) {
-      console.log(`RESULT: ${JSON.stringify(result, null, 2)}`);
+    try {
+      const result = await runUntyped(environment, code, args);
+      if ('ASK_PRINT_RESULT' in process.env && process.env.ASK_PRINT_RESULT) {
+        console.log(`RESULT: ${JSON.stringify(result, null, 2)}`);
+      }
+      testResults.computes = assertionResult({
+        status: 'passed',
+        title: 'runs successfully',
+      });
+    } catch (e) {
+      testResults.computes = assertionResult({
+        status: 'failed',
+        title: 'runs successfully',
+        failureMessages: [e.message],
+      });
     }
-    testResults.computes = assertionResult({
-      status: isCorrect ? 'passed' : 'failed',
-      title: 'produces the expected result',
-      failureMessages: isCorrect
-        ? []
-        : [
-            `EXPECTED: ${JSON.stringify(expectedResult, null, 2)}
-  GOT: ${JSON.stringify(result, null, 2)}`,
-          ],
-    });
+  } else {
+    const resultPath = join(testPath, `../${name}.test.result.ts`);
+    if (existsSync(resultPath)) {
+      const code = runtime.requireModule<AskCodeOrValue>(askJsonTargetPath);
+      const result = await runUntyped(environment, code, args);
+      const expectedResult = runtime.requireModule(resultPath);
+      const isCorrect = compareAsJson(result, expectedResult);
+      if ('ASK_PRINT_RESULT' in process.env && process.env.ASK_PRINT_RESULT) {
+        console.log(`RESULT: ${JSON.stringify(result, null, 2)}`);
+      }
+      testResults.computes = assertionResult({
+        status: isCorrect ? 'passed' : 'failed',
+        title: 'produces the expected result',
+        failureMessages: isCorrect
+          ? []
+          : [
+              `EXPECTED: ${JSON.stringify(expectedResult, null, 2)}
+    GOT: ${JSON.stringify(result, null, 2)}`,
+            ],
+      });
+    }
   }
   return testResults;
 }

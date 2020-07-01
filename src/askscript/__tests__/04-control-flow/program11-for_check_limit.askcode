@@ -1,0 +1,1 @@
+ask(let('limit',get('$0')),let('i',0),f(assign('i',0),while(call(get('<'),call(get('get'),'i'),call(get('get'),'limit')),block(assign('i',call(get('+'),call(get('get'),'i'),1))))),call(get('get'),'i'))

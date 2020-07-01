@@ -46,6 +46,7 @@ function registerAskScriptEditor(
 
   document.getElementById(runElementId)!.onclick = (ev) => {
     ev.preventDefault();
+    removeFadeInClass();
     executeAskScriptFromEditor(editor, askScriptServerUrl);
   };
 
@@ -98,4 +99,10 @@ function showErrorResponse(errorMessage: string) {
   const resultElem = document.getElementById('result')!;
   resultElem.innerText = errorMessage;
   resultElem.classList.add('error');
+  resultElem.classList.add('fadeIn');
+}
+
+function removeFadeInClass() {
+  const resultElem = document.getElementById('result')!;
+  resultElem.classList.remove('fadeIn');
 }

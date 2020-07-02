@@ -138,11 +138,16 @@ export function print(
       }
       if (props.isOperator) {
         // TODO add spaces around once https://github.com/xFAANG/askql/issues/30 is resolved
-        return concat([
-          '(',
-          join(`${props.name}`, path.map(print, 'props', 'args')),
-          ')',
-        ]);
+        if (props.isUnaryOperator) {
+          const operand = join(',', path.map(print, 'props', 'args')); // this should actually be just one value
+          return concat(['(', `${props.name}`, operand, ')']);
+        } else {
+          const expression = join(
+            `${props.name}`,
+            path.map(print, 'props', 'args')
+          );
+          return concat(['(', expression, ')']);
+        }
       }
 
       return concat([

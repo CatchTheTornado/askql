@@ -6,7 +6,14 @@ export = (
       <return value={<ref name="b" />} />
     </if>
     <return
-      value={<call name="-" args={<list>{1}</list>} isOperator={true} />}
+      value={
+        <call
+          name="-"
+          args={<list>{1}</list>}
+          isOperator={true}
+          isUnaryOperator={true}
+        />
+      }
     />
   </ask>
 );

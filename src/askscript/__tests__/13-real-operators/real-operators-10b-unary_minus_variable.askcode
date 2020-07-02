@@ -1,1 +1,1 @@
-ask(let('n',4),call(get('get'),'n'))
+ask(let('n',4),call(get('-'),call(get('get'),'n')))

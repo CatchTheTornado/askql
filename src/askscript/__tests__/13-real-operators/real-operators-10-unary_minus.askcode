@@ -1,1 +1,1 @@
-ask(3)
+ask(call(get('-'),3))

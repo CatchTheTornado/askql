@@ -9,6 +9,7 @@ export = (
         </list>
       }
       isOperator={true}
+      isUnaryOperator={true}
     />
   </ask>
 );

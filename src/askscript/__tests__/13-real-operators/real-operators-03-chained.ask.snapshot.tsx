@@ -4,7 +4,14 @@ export = (
     <let
       name="y"
       type={<ref name="any" />}
-      value={<call name="-" args={<list>{0.4}</list>} isOperator={true} />}
+      value={
+        <call
+          name="-"
+          args={<list>{0.4}</list>}
+          isOperator={true}
+          isUnaryOperator={true}
+        />
+      }
     />
     <call
       name="*"

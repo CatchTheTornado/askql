@@ -2,7 +2,7 @@
 [build]
   command = "npm run netlify:playground:build"
   functions = "dist/playground-backend/lambda" # netlify dev uses this directory to scaffold and serve your functions
-  publish = "dist"
+  publish = "dist/playground/public"
 
 # note: each of these fields are OPTIONAL, with an exception that when you're specifying "command" and "port", you must specify framework = "#custom"
 [dev]

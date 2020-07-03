@@ -15,3 +15,6 @@ askql-*.tgz
 /src/askscript/drafts
 
 .env
+
+# Local Netlify folder
+.netlify

@@ -2,80 +2,22 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
 
-import { askCodeToSource } from './askcode';
-import {
-  resources as builtInResources,
-  runUntyped,
-  resource,
-  Resources,
-} from './askvm';
-import { parse as parseAskScript, AskScriptCode } from './askscript';
+import { askCodeToSource } from '../../askcode';
+import { resources as builtInResources, runUntyped } from '../../askvm';
+import { parse as parseAskScript, AskScriptCode } from '../../askscript';
 
 import chalk = require('chalk');
 import { customAlphabet } from 'nanoid';
+import { customResources } from '../lib/resources';
+import { customValues } from '../lib/values';
 
 const packageInfo = require('../package.json');
 
 const nanoid = customAlphabet('1234567890abcdef', 8);
 
-const values = {
-  clientNames: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
-  hello: 'Hi! This is a AskVM server running on localhost',
-  revPerClient: {
-    a: 426,
-    b: 35,
-    c: 446,
-    d: 246,
-    e: 133,
-    f: 136,
-    g: 53,
-  },
-
-  firstName: 'Luke',
-  middleName: 'LukeLuke',
-  lastName: 'Skywalker',
-  fullName: 'Luke Skywalker',
-  parents: [
-    {
-      firstName: 'Padmé',
-      lastName: 'Amidala',
-    },
-    {
-      firstName: 'Anakin',
-      lastName: 'Skywalker',
-    },
-  ],
-  friends: [
-    {
-      id: 0,
-      firstName: 'Padmé',
-      lastName: 'Amidala',
-    },
-    {
-      id: 1,
-      firstName: 'Anakin',
-      lastName: 'Skywalker',
-    },
-  ],
-};
-
-export const customResources: Resources = {
-  withSmile: resource<string, [string]>({
-    resolver: async (s: string): Promise<string> => {
-      return ':) ' + s + ' :)';
-    },
-  }),
-
-  hi: resource<string, []>({
-    resolver: async (): Promise<string> => {
-      return "Hi, this is AskQL server! It's " + new Date().toString();
-    },
-  }),
-};
-
 const baseEnvironment = {
   resources: { ...builtInResources, ...customResources },
-  values,
+  customValues,
 };
 
 const app = express();

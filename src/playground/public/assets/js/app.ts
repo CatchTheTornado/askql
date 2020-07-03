@@ -46,6 +46,7 @@ function registerAskScriptEditor(
 
   document.getElementById(runElementId)!.onclick = (ev) => {
     ev.preventDefault();
+    removeFadeInClass();
     executeAskScriptFromEditor(editor, askScriptServerUrl);
   };
 
@@ -91,10 +92,17 @@ function showSuccessfulResponse(result: any) {
   const resultElem = document.getElementById('result')!;
   resultElem.innerText = JSON.stringify(result, null, 2);
   resultElem.classList.remove('error');
+  resultElem.classList.add('fadeIn');
 }
 
 function showErrorResponse(errorMessage: string) {
   const resultElem = document.getElementById('result')!;
   resultElem.innerText = errorMessage;
   resultElem.classList.add('error');
+  resultElem.classList.add('fadeIn');
+}
+
+function removeFadeInClass() {
+  const resultElem = document.getElementById('result')!;
+  resultElem.classList.remove('fadeIn');
 }

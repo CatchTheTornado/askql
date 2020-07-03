@@ -66,13 +66,29 @@
   animation-name: slideIn;
 }
 
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.25s;
+}
 #editor_wrapper {
   height: 100%;
 }
 
 #editor_menu {
   text-align: right;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 #editor {
@@ -81,18 +97,32 @@
 
 #result {
   white-space: pre-wrap;
-  font-size: .9rem;
+  font-size: 0.95rem;
+}
+
+#result.error {
+  color: #e62e2e !important;
 }
 
 .ace_gutter {
   background: #22252a !important;
 }
 
-pre#editor  {
+pre#editor {
   margin-bottom: 0;
 }
 
 #run {
-  font-family: 'Montserrat', sans-serif;
-  font-size: .85rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.85rem;
+}
+#font_control {
+  right: 0;
+  position: absolute;
+}
+.large-font {
+  font-size: 1rem !important;
+}
+.larger-font {
+  font-size: 1.3rem !important;
 }

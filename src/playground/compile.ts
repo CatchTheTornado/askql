@@ -1,11 +1,9 @@
 // This file compiles .handlebars file to a static HTML.
-// It is useful when deploying Playground frontend to a static hosting, such as Netlify.
+// It is useful for deploying Playground frontend to a static hosting, such as Netlify.
 
 import * as handlebars from 'handlebars';
 import fs from 'fs';
 import path from 'path';
-
-console.log(process.argv);
 
 if (process.argv.length != 4) {
   console.error(

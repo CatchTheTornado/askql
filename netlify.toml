@@ -1,6 +1,6 @@
 # sample netlify.toml
 [build]
-  command = "npm run build"
+  command = "npm run netlify:playground:build"
   functions = "dist/playground-backend/lambda" # netlify dev uses this directory to scaffold and serve your functions
   publish = "dist"
 

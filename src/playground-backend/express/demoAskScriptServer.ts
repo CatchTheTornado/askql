@@ -11,7 +11,7 @@ import { customAlphabet } from 'nanoid';
 import { customResources } from '../lib/resources';
 import { customValues } from '../lib/values';
 
-const packageInfo = require('../package.json');
+const packageInfo = require('../../../package.json');
 
 const nanoid = customAlphabet('1234567890abcdef', 8);
 

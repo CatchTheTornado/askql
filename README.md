@@ -244,9 +244,9 @@ string ask(call(get('find'),get('philosophers'),fun(let('name',get('$0')),call(g
 
 ### Playground
 
-Here is the link to our [AskQL playground](http://cli.askql.org:3000/)!
+Here is the link to our [AskQL playground](http://cli.askql.org/)!
 
-#### Developer info - how to run
+#### Developer info - how to run Playground frontend
 
 1. Copy .env.example to .env and set `PLAYGROUND_PORT` and `PLAYGROUND_ASK_SERVER_URL` appropriately.
 
@@ -283,9 +283,31 @@ Here is the link to our [AskQL playground](http://cli.askql.org:3000/)!
 
 Some files in the Playground come or are inspired by https://github.com/microsoft/TypeScript-Node-Starter (MIT) and https://github.com/Coffeekraken/code-playground (MIT).
 
+#### Developer info - how to run Playground backend
+
+1. Run:
+
+   ```
+   npm run build
+   ```
+
+2. Run:
+
+   ```
+   node dist/playground-backend/express/demoAskScriptServer.js
+   ```
+
+   If you want to specify custom port, run:
+
+   ```
+   PORT=1234 node dist/playground-backend/express/demoAskScriptServer.js
+   ```
+
+   instead.
+
 ## FAQ
 
-### What's the difference between `ask { <askcode> }` and `eval( <javascript> )`?
+### What's the difference between `ask { <askscript> }` and `eval( <javascript> )`?
 
 JavaScript's `eval( <javascript> )` is terrible at ensuring security. One can execute there _any_ code on _any_ resources available in Javascript. Moreover there is no control over time of execution or stack size limit.
 

@@ -12,7 +12,7 @@ exports.handler = async function (event: any, context: any, callback: any) {
 
   const baseEnvironment = {
     resources: { ...builtInResources, ...customResources },
-    customValues,
+    values: customValues,
   };
 
   if (event.httpMethod !== 'POST') {

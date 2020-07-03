@@ -6,8 +6,8 @@
 
 # note: each of these fields are OPTIONAL, with an exception that when you're specifying "command" and "port", you must specify framework = "#custom"
 [dev]
-  command = "npm run playground:start" # Command to start your dev server
-  targetPort = 3000
+  command = "" # npm run playground:start" # Command to start your dev server
+  #targetPort = 3000
   port = 8888
-  framework = "#custom"
+  #framework = "#custom"
 

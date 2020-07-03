@@ -5,20 +5,7 @@ import { parse as parseAskScript, AskScriptCode } from '../../askscript';
 import { resources as builtInResources, runUntyped } from '../../askvm';
 import { customResources } from '../lib/resources';
 import { customValues } from '../lib/values';
-
-const json = (obj: any): string => {
-  return JSON.stringify(obj, null, 2);
-};
-
-const sendJson = (callback: any, statusCode: number, jsonData?: object) => {
-  callback(null, {
-    statusCode,
-    body: typeof jsonData === 'undefined' ? undefined : json(jsonData),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-};
+import { sendJson } from '../lib/utils';
 
 exports.handler = async function (event: any, context: any, callback: any) {
   const nanoid = customAlphabet('1234567890abcdef', 8);

@@ -20,7 +20,8 @@
 		rel="stylesheet">
 	<link rel="stylesheet" href="https://askql.org/css/styles.css">
 	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 	<script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/demosData.js" type="text/javascript" charset="utf-8"></script>
@@ -110,7 +111,9 @@
 									<!-- title -->
 									<div class="text-muted small" id="demos-title"></div>
 									<!-- run button -->
-									<div><span class="text-300 small mr-1">(Ctrl+S)</span><a href="#" id="run" class="btn btn-outline-primary btn-sm hvr-sweep-to-right">Run <i class="fas fa-play fa-sm" aria-hidden="true"></i></a></div>
+									<div><span class="text-300 small mr-1">(Ctrl+S)</span><a href="#" id="run"
+											class="btn btn-outline-primary btn-sm hvr-sweep-to-right">Run <i class="fas fa-play fa-sm"
+												aria-hidden="true"></i></a></div>
 								</div>
 								<pre id="editor">ask { hi() } </pre>
 							</div>
@@ -206,15 +209,15 @@
 		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 		crossorigin="anonymous"></script>
 	<script>
-		$('#font_control').click(function(){
-    		$('#result').toggleClass('larger-font');
-    		$('#editor').toggleClass('large-font');
-    		$(this).toggleClass('change-to-small');
-    		
-    		if( $(this).hasClass('change-to-small') )
-			  $(this).html('A<small>A</small>');
+		$('#font_control').click(function () {
+			$('#result').toggleClass('larger-font');
+			$('#editor').toggleClass('large-font');
+			$(this).toggleClass('change-to-small');
+
+			if ($(this).hasClass('change-to-small'))
+				$(this).html('A<small>A</small>');
 			else
-			  $(this).html('<small>A</small>A');
+				$(this).html('<small>A</small>A');
 		});
 	</script>
 

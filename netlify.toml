@@ -1,0 +1,13 @@
+# sample netlify.toml
+[build]
+  command = "npm run netlify:playground:build"
+  functions = "dist/playground-backend/lambda" # netlify dev uses this directory to scaffold and serve your functions
+  publish = "dist/playground/public"
+
+# note: each of these fields are OPTIONAL, with an exception that when you're specifying "command" and "port", you must specify framework = "#custom"
+[dev]
+  command = "" # npm run playground:start" # Command to start your dev server
+  #targetPort = 3000
+  port = 8888
+  #framework = "#custom"
+

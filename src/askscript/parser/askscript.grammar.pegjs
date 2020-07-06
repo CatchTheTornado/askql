@@ -284,7 +284,7 @@ emptyLine = wsnonl* nl
 identifier = [_$a-zA-Z][_$a-zA-Z0-9]* { return new ask.Identifier(text()) } // TODO(lc): add Unicode here one day
 
 // operators consist of chars: -<>+*/^%=&|, but they cannot contain // sequence
-operator = ([-<>+*^%=&|] / ([/] &[^/]))+   { return new ask.Identifier(text(), true) }
+operator = ([-!<>+*^%=&|] / ([/] &[^/]))+   { return new ask.Identifier(text(), true) }
 
 null = 'null' { return new ask.Null() }
 boolean = true / false

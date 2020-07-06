@@ -21,6 +21,7 @@ app.get('/', (req, res, next) => {
   res.render('main', {
     title: 'AskScript Playground',
     askscriptServerUrl: process.env.PLAYGROUND_ASK_SERVER_URL,
+    gtm: process.env.GTM, // Google Tag Manager code
   });
 });
 

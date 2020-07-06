@@ -8,4 +8,5 @@ test('lessThanOrEqual', async () => {
   expect(await e2e('5.01:greaterThan(5)', environment)).toBe(true);
   expect(await e2e('4:greaterThan(5)', environment)).toBe(false);
   expect(await e2e('-2:greaterThan(-3)', environment)).toBe(true);
+  expect(await e2e('(-2):greaterThan(-3)', environment)).toBe(true);
 });

@@ -115,15 +115,20 @@ operValue = wsnonl* op:operator ws* v:nonArithmExpression { return new ask.OperN
 
 // === non-arithm expressions ===
 nonArithmExpression = 
-  e:( brackets
-    / functionObject
-    / remote
-    / functionCall
-    / query
-    / valueLiteral
-    / identifier) 
-  mCAs:methodCallApplied* { return new ask.NonArithmValue(e, mCAs) }
+  e:nonArithmNoMethodsExpression mCAs:methodCallApplied* { return new ask.NonArithmValue(e, mCAs) }
 
+nonArithmNoMethodsExpression = 
+  unaryOperator
+  / brackets
+  / functionObject
+  / remote
+  / functionCall
+  / query
+  / valueLiteral
+  / identifier
+
+// === unary operator ===
+unaryOperator = op:operator v:nonArithmNoMethodsExpression { return new ask.UnaryOperator(op, v) }
 
 // === brackets ===
 

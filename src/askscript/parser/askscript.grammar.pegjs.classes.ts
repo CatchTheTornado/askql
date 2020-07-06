@@ -151,6 +151,20 @@ export class Value {
   }
 }
 
+export class UnaryOperator {
+  unaryOperator: Identifier;
+  value: Value;
+
+  constructor(unaryOperator: Identifier, value: Value) {
+    this.unaryOperator = unaryOperator;
+    this.value = value;
+  }
+
+  print(): LooseObject {
+    return new FunctionCall(this.unaryOperator, [this.value], true).print();
+  }
+}
+
 export class OperNAValue {
   operator: Identifier;
   nAV: NonArithmValue;
@@ -460,10 +474,16 @@ export class Assignment {
 export class FunctionCall {
   identifier: Identifier;
   callArgList: Value[];
+  isUnaryOperator: boolean;
 
-  constructor(identifier: Identifier, callArgList: Value[]) {
+  constructor(
+    identifier: Identifier,
+    callArgList: Value[],
+    isUnaryOperator: boolean = false
+  ) {
     this.identifier = identifier;
     this.callArgList = callArgList;
+    this.isUnaryOperator = isUnaryOperator;
   }
 
   print(): LooseObject {
@@ -477,6 +497,10 @@ export class FunctionCall {
 
     if (this.identifier.isOperator) {
       (output.props as any).isOperator = true;
+    }
+
+    if (this.isUnaryOperator) {
+      (output.props as any).isUnaryOperator = true;
     }
 
     return output;
@@ -665,9 +689,11 @@ export class Let {
  * (which should be treated in JSX exactly like an identifier).
  */
 export class Identifier {
-  constructor(public text: string, public isOperator: boolean = false) {
-    this.text = text;
-  }
+  constructor(
+    public text: string,
+    public isOperator: boolean = false,
+    public isBinaryOperator: boolean = false
+  ) {}
 
   print(): LooseObject {
     let output = {

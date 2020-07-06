@@ -6,6 +6,7 @@ import { lessThan } from './lessThan';
 import { lessThanOrEqual } from './lessThanOrEqual';
 import { greaterThan } from './greaterThan';
 import { greaterThanOrEqual } from './greaterThanOrEqual';
+import { equals } from '../core';
 
 Object.assign(exports, {
   '+': sum,
@@ -16,6 +17,7 @@ Object.assign(exports, {
   '<=': lessThanOrEqual,
   '>': greaterThan,
   '>=': greaterThanOrEqual,
+  '==': equals,
 });
 
 export * from './ceil';

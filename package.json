@@ -100,7 +100,7 @@
     "handlebars": "^4.7.6",
     "husky": "4.2.5",
     "imagemin-cli": "^6.0.0",
-    "jest": "26.0.1",
+    "jest": "26.1.0",
     "jsesc": "3.0.1",
     "lint-staged": "10.2.11",
     "lodash": "^4.17.15",

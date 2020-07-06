@@ -21,7 +21,7 @@ AskQL is a new query and programming language that can express any data request.
     title="Rest"
     height=50%
     width=50%><img 
-    src="https://xfaang-assets.s3.eu-west-3.amazonaws.com/diagrams/AskQL_approach.png" 
+    src="https://xfaang-assets.s3.eu-west-3.amazonaws.com/diagrams/AskQL_approach-update-july2020.jpg" 
     align="center"
     title="AskQL"
     height=50%

@@ -1,0 +1,18 @@
+ask {
+  test('equals', fun() {
+    expect(2!=2):toBe(false)
+    expect(2!=3):toBe(true)
+
+    expect(1.3!=1.3):toBe(false)
+    expect(1.3!=2.3):toBe(true)
+
+    expect('a'!='a'):toBe(false)
+    expect('a'!='b'):toBe(true)
+
+    expect(false!=''):toBe(true)
+    expect(false!='[]'):toBe(true)
+    expect(false!=0):toBe(true)
+
+    expect(1!='1'):toBe(true)
+  })
+}

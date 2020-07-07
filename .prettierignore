@@ -3,7 +3,7 @@
 .prettierignore
 *.ask
 *.ask.ast.json
-*.ask.snapshot.tsx
+*.ast.tsx
 *.askcode
 *.test.result.ts
 /.idea

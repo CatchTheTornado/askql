@@ -20,6 +20,7 @@ const template = handlebars.compile(fs.readFileSync(handlebarsPath).toString());
 const html = template({
   title: 'AskScript Playground',
   askscriptServerUrl: process.env.PLAYGROUND_ASK_SERVER_URL,
+  gtm: process.env.GTM, // Google Tag Manager code
 });
 fs.mkdirSync(path.dirname(destinationPath), { recursive: true });
 fs.writeFileSync(destinationPath, html);

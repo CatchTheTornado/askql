@@ -1,0 +1,1 @@
+ask(if(call(get('!='),2,2),block(return(call(get('true')))),block()))

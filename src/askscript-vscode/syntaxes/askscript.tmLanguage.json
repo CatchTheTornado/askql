@@ -1,0 +1,97 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "AskScript",
+  "patterns": [
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#types"
+    },
+    {
+      "include": "#built-in"
+    },
+    {
+      "include": "#comment"
+    },
+    {
+      "include": "#strings"
+    }
+  ],
+  "repository": {
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.askscript",
+          "match": "\\b(if|while|for|return|query|remote|of|in)\\b"
+        },
+        {
+          "name": "keyword.other.askscript",
+          "match": "\\b(ask)\\b"
+        },
+        {
+          "name": "storage.modifier.const.askscript",
+          "match": "\\b(const)\\b"
+        },
+        {
+          "name": "storage.modifier.let.askscript",
+          "match": "\\b(let)\\b"
+        },
+        {
+          "name": "storage.type.fun.askscript",
+          "match": "\\b(fun)\\b"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "support.type.askscript",
+          "match": "\\b(int|float|string|bool|null|array|map)\\b"
+        }
+      ]
+    },
+    "numeric-literal": {
+      "patterns": [
+        {
+          "name": "constant.numeric.decimal.int.askscript",
+          "match": "\\b[-]?[0-9]+\\b"
+        },
+        {
+          "name": "constant.numeric.decimal.float.askscript",
+          "match": "\\b[-]?[0-9]+ '.' [0-9]+\\b"
+        }
+      ]
+    },
+    "built-in": {
+      "patterns": [
+        {
+          "name": "support.function",
+          "match": "\\b(toString|log)\\b"
+        }
+      ]
+    },
+    "comment": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.askscript",
+          "begin": "//",
+          "end": "(?=$)",
+          "contentName": "comment.line.double-slash.askscript"
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.single.askscript",
+      "begin": "'",
+      "end": "'",
+      "patterns": [
+        {
+          "name": "constant.character.escape.askscript",
+          "match": "\\\\."
+        }
+      ]
+    }
+  },
+  "scopeName": "source.askscript"
+}

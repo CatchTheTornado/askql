@@ -111,11 +111,7 @@ async function askRunner(
     },
     literal: (value) => JSON.stringify(value),
   });
-  const askJsonTargetPath = getTargetPath(
-    testPath,
-    'ask.snapshot.tsx',
-    '../src'
-  );
+  const askJsonTargetPath = getTargetPath(testPath, 'ast.tsx', '../src');
   await mkdir(dirname(askJsonTargetPath), {
     recursive: true,
   });

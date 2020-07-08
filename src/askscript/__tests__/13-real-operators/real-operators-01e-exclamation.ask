@@ -1,0 +1,3 @@
+ask { // Implemented in https://github.com/xFAANG/askql/issues/295
+    if (2!=2) { return true}
+}

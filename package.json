@@ -63,7 +63,7 @@
     "@babel/polyfill": "^7.10.4",
     "@babel/preset-env": "7.10.4",
     "@babel/preset-react": "7.10.4",
-    "@babel/preset-typescript": "7.10.1",
+    "@babel/preset-typescript": "7.10.4",
     "@jest/environment": "^26.1.0",
     "@jest/types": "^26.1.0",
     "@types/ace": "0.0.43",

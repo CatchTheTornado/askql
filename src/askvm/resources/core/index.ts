@@ -1,9 +1,11 @@
 import { logicalOr } from './logicalOr';
 import { notEquals } from './notEquals';
+import { not } from './not';
 
 Object.assign(exports, {
   '||': logicalOr,
   '!=': notEquals,
+  '!': not,
 });
 
 export * from './ask';

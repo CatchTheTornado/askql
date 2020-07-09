@@ -1,0 +1,10 @@
+ask {
+  test('equals', fun() {
+    expect(!true):toBe(false)
+    expect(!false):toBe(true)
+
+    expect(!false:logicalOr(true)):toBe(true)
+
+    expect(!false || true):toBe(true)
+  })
+}

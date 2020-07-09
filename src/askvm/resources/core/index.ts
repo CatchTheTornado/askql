@@ -1,7 +1,9 @@
 import { logicalOr } from './logicalOr';
+import { notEquals } from './notEquals';
 
 Object.assign(exports, {
   '||': logicalOr,
+  '!=': notEquals,
 });
 
 export * from './ask';
@@ -24,6 +26,7 @@ export * from './list';
 export * from './logicalOr';
 export * from './map';
 export * from './not';
+export * from './notEquals';
 export * from './object';
 export { node, query } from './query';
 export { returnRes as return } from './return';

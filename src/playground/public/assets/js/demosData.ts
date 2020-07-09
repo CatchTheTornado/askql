@@ -42,6 +42,40 @@ const demos: { [key: string]: Demo } = {
 }`,
   },
 
+  demo26: {
+    title: 'Facebook likes',
+    code: `// Below is a complete solution for a 6kyu Codewars task: 
+// https://www.codewars.com/kata/5266876b8f4bf2da9b000362
+ask {
+  const likes = fun(names: array(string)): string {
+    const len = names:length
+    if (len == 0) {
+      return 'no one likes it';
+    }
+    if (len == 1) {
+      return concat(names[0], ' likes it');
+    }
+    if (len == 2) {
+      return concat(names[0], ' and ', names[1], ' like it');
+    }
+    if (len == 3) {
+      return concat(names[0], ', ', names[1], ' and ', names[2], ' like it');
+    }
+    return concat(names[0], ', ', names[1], ' and ', len-2, ' others like it');
+    
+  }
+
+  [
+    likes([]), 
+    likes(['Peter']), 
+    likes(['Jacob', 'Alex']), 
+    likes(['Max', 'John', 'Mark']), 
+    likes(['Alex', 'Jacob', 'Mark', 'Max'])
+  ]
+}
+`,
+  },
+
   demo30: {
     title: 'Query',
     code: `ask {

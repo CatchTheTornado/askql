@@ -1,11 +1,11 @@
 import { any, resource } from '../../lib';
 
-const globalFetch = (global as any).fetch;
+const fetchFun = (global as any).fetch;
 
 export const fetch = resource({
   type: any,
   async resolver(url: string) {
-    const response = await globalFetch(url);
+    const response = await fetchFun(url);
     const json = await response.json();
     return json;
   },

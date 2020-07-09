@@ -1,0 +1,1 @@
+ask(call(get('fetch'),'https://jsonplaceholder.typicode.com/posts/1'))

@@ -1,41 +1,43 @@
-jest.mock('node-fetch');
-import fetch from 'node-fetch';
-import { resources } from '../../../askvm';
-import { e2e } from '../../../utils/tools';
+import program from './fetch.ask';
 
 describe('fetch.ask', () => {
-  let result: any;
-
-  beforeAll(async () => {
-    fetch.mockReturnValue(mockedResponse());
-    const environment = { resources };
-    result = await e2e(
-      "ask { fetch('https://jsonplaceholder.typicode.com/posts/1') }",
-      environment
-    );
+  beforeEach(() => {
+    fetch.resetMocks();
   });
 
-  it('should return expected data', () => {
-    expect(result).toEqual({ id: 1 });
+  it('should return expected data', async () => {
+    fetch.mockResponse(Promise.resolve(response()));
+
+    const result = await program();
+
+    expect(result.id).toEqual(2);
   });
 
-  it('should call node fetch the correct number of times', () => {
-    expect(fetch).toHaveBeenCalledTimes(1);
+  it('should be called the correct number of times', async () => {
+    fetch.mockResponse(Promise.resolve(response()));
+
+    await program();
+
+    expect(fetch.mock.calls.length).toEqual(1);
   });
 
-  it('should call node fetch with the correct url', () => {
-    expect(fetch).toHaveBeenCalledWith(
+  it('should call the correct url', async () => {
+    fetch.mockResponse(Promise.resolve(response()));
+
+    await program();
+
+    expect(fetch.mock.calls[0][0]).toEqual(
       'https://jsonplaceholder.typicode.com/posts/1'
     );
   });
 });
 
-function mockedResponse() {
-  return Promise.resolve({
+function response() {
+  return {
     json: () => {
       return {
-        id: 1,
+        id: 2,
       };
     },
-  });
+  };
 }

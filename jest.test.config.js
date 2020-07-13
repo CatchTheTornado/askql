@@ -23,4 +23,5 @@ module.exports = {
     '^.+\\.(ask|pegjs|[jt]sx?)$': './dist/javascript.jest.transformer',
   },
   watchPathIgnorePatterns: ['<rootDir>/dist'],
+  setupFiles: ['./setupJest.js'],
 };

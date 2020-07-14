@@ -1,7 +1,7 @@
-import { any, resource } from '../../lib';
+import { resource, number } from '../../lib';
 
 export const bitwiseAnd = resource({
-  type: any,
+  type: number,
   async resolver(a: number, b: number): Promise<number> {
     return a & b;
   },

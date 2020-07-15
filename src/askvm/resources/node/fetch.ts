@@ -1,12 +1,11 @@
 import { any, resource } from '../../lib';
 
-const fetchFun = (global as any).fetch;
+import nodeFetch from 'node-fetch';
 
 export const fetch = resource({
   type: any,
-  async resolver() {
-    const url = 'https://jsonplaceholder.typicode.com/posts/1';
-    const response = await fetchFun(url);
+  async resolver(url: string) {
+    const response = await nodeFetch(url);
     const json = await response.json();
     return json;
   },

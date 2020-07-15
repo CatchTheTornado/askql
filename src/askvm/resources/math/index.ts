@@ -28,6 +28,7 @@ export * from './lessThanOrEqual';
 export * from './greaterThan';
 export * from './greaterThanOrEqual';
 export * from './max';
+export * from './min';
 export * from './minus';
 export { sum as plus, sum } from './sum';
 export { times as multiply, times } from './times';

@@ -1,0 +1,1 @@
+ask(if(call(get('lessThan'),call(get('get'),'n'),2),block(return(call(get('get'),'a'))),block()),return(call(get('get'),'b')))

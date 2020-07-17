@@ -1,0 +1,7 @@
+ask {
+  let n = 1
+  while ( ( n * n ) < 10 ) {
+    n = n + 1
+  }  
+  n
+}

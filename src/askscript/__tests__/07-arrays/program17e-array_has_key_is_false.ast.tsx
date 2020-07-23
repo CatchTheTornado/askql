@@ -1,0 +1,66 @@
+export = (
+  <ask args={<list />}>
+    <const
+      name="covid"
+      type={<ref name="any" />}
+      value={
+        <struct>
+          {"USA"}
+          <struct>
+            {"newInfected"}
+            {69128}
+            {"newDeaths"}
+            {1047}
+            {"newRecovered"}
+            {19342}
+          </struct>
+          {"Spain"}
+          <struct>
+            {"newInfected"}
+            {13598}
+            {"newDeaths"}
+            {217}
+            {"newRecovered"}
+            {578}
+          </struct>
+          {"Russia"}
+          <struct>
+            {"newInfected"}
+            {1551}
+            {"newDeaths"}
+            {93}
+            {"newRecovered"}
+            {178}
+          </struct>
+          {"Italy"}
+          <struct>
+            {"newInfected"}
+            {992}
+            {"newDeaths"}
+            {262}
+            {"newRecovered"}
+            {688}
+          </struct>
+          {"UK"}
+          <struct>
+            {"newInfected"}
+            {3687}
+            {"newDeaths"}
+            {428}
+            {"newRecovered"}
+            {555}
+          </struct>
+        </struct>
+      }
+    />
+    <call
+      name="hasKey"
+      args={
+        <list>
+          <ref name="covid" />
+          {"spain"}
+        </list>
+      }
+    />
+  </ask>
+);

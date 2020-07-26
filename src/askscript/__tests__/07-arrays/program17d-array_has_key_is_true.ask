@@ -1,11 +1,5 @@
 ask {
-  const covid = {
-		USA: { newInfected: 69128, newDeaths: 1047, newRecovered: 19342  },
-		Spain: { newInfected: 13598, newDeaths: 217, newRecovered: 578  },
-		Russia: { newInfected: 1551, newDeaths: 93, newRecovered: 178  },
-		Italy: { newInfected: 992, newDeaths: 262, newRecovered: 688  },
-		UK: { newInfected: 3687, newDeaths: 428, newRecovered: 555  }		
-  }
-	
-  covid:hasKey('USA')	
+  const countries = ['USA', 'Spain', 'Russia']
+
+  countries:hasKey(0)	
 }

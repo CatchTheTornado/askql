@@ -30,9 +30,13 @@ test('hasKey', async () => {
   await expect(ask(`clientNames`)).resolves.toStrictEqual(values.clientNames);
   await expect(ask(`hasKey(clientNames, 'A')`)).resolves.toBe(false);
   await expect(ask(`hasKey(clientNames, 0)`)).resolves.toBe(true);
+  await expect(ask(`hasKey(clientNames, '0')`)).resolves.toBe(true);
   await expect(ask(`hasKey(clientNames, 20)`)).resolves.toBe(false);
   await expect(ask(`revPerClient`)).resolves.toStrictEqual(values.revPerClient);
   await expect(ask(`hasKey(revPerClient, 'A')`)).resolves.toBe(true);
   await expect(ask(`hasKey(revPerClient, 136)`)).resolves.toBe(false);
   await expect(ask(`hasKey(revPerClient, 1)`)).resolves.toBe(false);
+  await expect(ask(`hasKey(12, 1)`)).rejects.toThrow(
+    'Expecting a list or an object in hasKey'
+  );
 });

@@ -95,7 +95,7 @@
     "eslint-plugin-prettier": "3.1.4",
     "expect": "^26.1.0",
     "express": "4.17.1",
-    "express-handlebars": "^4.0.5",
+    "express-handlebars": "^5.1.0",
     "fs.promises": "0.1.2",
     "glob": "7.1.6",
     "golden-layout": "^1.5.9",

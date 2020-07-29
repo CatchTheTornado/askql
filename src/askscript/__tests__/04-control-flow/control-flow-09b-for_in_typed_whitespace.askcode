@@ -1,0 +1,1 @@
+ask(const('itemPrices',list(10,40,32,99)),let('mySum',0),forIn(let('index'),call(get('get'),'itemPrices'),block(assign('mySum',call(get('+'),call(get('get'),'mySum'),call(get('at'),call(get('get'),'itemPrices'),call(get('get'),'index')))))),call(get('get'),'mySum'))

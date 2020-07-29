@@ -1,0 +1,6 @@
+ask {
+    if ( n : lessThan ( 2 ) ){
+        return a
+    }
+    return b
+}

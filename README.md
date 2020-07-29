@@ -5,13 +5,8 @@
 </p>
 
 # [AskQL](https://askql.org/)
-
-AskQL is a new query and programming language that can express any data request.
-<br>Send executable code instead of JSONs.
-
-- Asynchronous by default
-- Processes only immutable data
-- Based entirely on the functional programming paradigm
+AskQL is a new Turing-complete query and programming language, which allows faster and easier communication with servers. <br/>
+Instead of mere _data queries_ or _simple REST_ questions, AskQL allows to query a server with _fully functional_ programs which use all the data and services the server shares in a secure way.
 
 ## Why and what for?
 
@@ -27,10 +22,16 @@ AskQL is a new query and programming language that can express any data request.
     height=50%
     width=50%>
 
+Benefits for development process:
 - Next milestone after GraphQL and REST API
-- Send code to servers without the need to deploy
 - New safe query language
-- Compiled to clean functional code
+- Send code to servers without the need to deploy
+- Send executable code instead of JSONs
+
+Benefits for programmers:
+- Asynchronous by default, no more `await` keyword - cleaner code
+- Processes only immutable data - fewer errors
+- Compiled to a clean functional code - clear logic
 
 ### Prerequisites
 

@@ -1,0 +1,5 @@
+ask {
+  const countries = ['USA', 'Spain', 'Russia']
+
+  countries:hasKey(0)	
+}

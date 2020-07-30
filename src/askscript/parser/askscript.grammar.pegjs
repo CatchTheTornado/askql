@@ -79,7 +79,7 @@ statement =     lineWithoutCode* wsnonl* s:statement_NoWs wsnonl* (';'? (lineCom
 lastStatement = lineWithoutCode* wsnonl* s:statement_NoWs wsnonl* (';'? (lineComment / wsnonl* nl) / ';'?) { return s }
 statement_NoWs = 
     s:(
-      variableDefinition
+        variableDefinition
       / if
       / while
       / forOf
@@ -90,6 +90,7 @@ statement_NoWs =
       / value
     ) { return new ask.Statement(s) }
 
+statementKeyword = 'const' / 'let' / 'if' / 'while' / 'for' / 'return'
 
 // === variables ===
 
@@ -104,7 +105,7 @@ variableDefinition_type = ws* ':' ws* t:type { return t }
 
 // === value ===
 
-value = e:nonArithmExpression opVals:operValue* {  assertAllOperatorsMatch(opVals); return new ask.Value(e, opVals) }
+value = !(statementKeyword (ws / eof)) e:nonArithmExpression opVals:operValue* {  assertAllOperatorsMatch(opVals); return new ask.Value(e, opVals) }
 
 // We don't allow newline before an operator because:
 //   123

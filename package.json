@@ -65,7 +65,7 @@
     "@babel/preset-react": "7.10.4",
     "@babel/preset-typescript": "7.10.4",
     "@jest/environment": "^26.2.0",
-    "@jest/types": "^26.1.0",
+    "@jest/types": "^26.2.0",
     "@types/ace": "0.0.43",
     "@types/cors": "^2.8.7",
     "@types/expect": "^24.3.0",

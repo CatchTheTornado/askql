@@ -72,21 +72,47 @@ describe('math - toInt', () => {
     expect(result).toBe(0);
   });
 
-  it('should throw when given non-number string', async () => {
+  it('should throw when given "4a"', async () => {
     await expect(e2e(`toInt('4a')`, environment)).rejects.toEqual(
       new Error(`toInt is unable to convert given value to Integer.`)
     );
   });
 
-  it('should throw when given array', async () => {
+  it('should throw when given "abc"', async () => {
+    await expect(e2e(`toInt('abc')`, environment)).rejects.toEqual(
+      new Error(`toInt is unable to convert given value to Integer.`)
+    );
+  });
+
+  it('should throw when given []', async () => {
     await expect(e2e(`toInt([])`, environment)).rejects.toStrictEqual(
       new Error(`toInt is unable to convert given value to Integer.`)
     );
   });
 
-  it('should throw when given object', async () => {
+  it('should throw when given [1]', async () => {
+    await expect(e2e(`toInt([1])`, environment)).rejects.toStrictEqual(
+      new Error(`toInt is unable to convert given value to Integer.`)
+    );
+  });
+
+  it('should throw when given [1,2]', async () => {
+    await expect(e2e(`toInt([1,2])`, environment)).rejects.toStrictEqual(
+      new Error(`toInt is unable to convert given value to Integer.`)
+    );
+  });
+
+  it('should throw when given {a:1}', async () => {
     await expect(
       e2e(`toInt(object('a', 1))`, environment)
+    ).rejects.toStrictEqual(
+      new Error(`toInt is unable to convert given value to Integer.`)
+    );
+  });
+
+  it('should throw when given {a:1, b:2}', async () => {
+    await expect(
+      e2e(`toInt(object('a', 1, 'b', 2))`, environment)
     ).rejects.toStrictEqual(
       new Error(`toInt is unable to convert given value to Integer.`)
     );

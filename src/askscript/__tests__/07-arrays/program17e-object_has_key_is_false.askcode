@@ -1,0 +1,1 @@
+ask(const('countries',object('usa','USA','spain','Spain','russia','Russia')),const('sweden','Sweden'),if(call(get('!'),call(get('hasKey'),call(get('get'),'countries'),call(get('toLowerCase'),call(get('get'),'sweden')))),block(return('I would add sweden')),block()),'No I would not')

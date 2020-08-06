@@ -40,6 +40,7 @@ function registerAskScriptEditor(
     name: 'alertalert',
     bindKey: { win: 'Ctrl-s', mac: 'Ctrl-s' },
     exec: () => {
+      removeFadeInClass();
       executeAskScriptFromEditor(editor, askScriptServerUrl);
     },
   });

@@ -1,0 +1,1 @@
+ask(const('countries',list('USA','Spain','Russia')),call(get('hasKey'),call(get('get'),'countries'),0))

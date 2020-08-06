@@ -79,7 +79,7 @@ statement =     lineWithoutCode* wsnonl* s:statement_NoWs wsnonl* (';'? (lineCom
 lastStatement = lineWithoutCode* wsnonl* s:statement_NoWs wsnonl* (';'? (lineComment / wsnonl* nl) / ';'?) { return s }
 statement_NoWs = 
     s:(
-      variableDefinition
+        variableDefinition
       / if
       / while
       / forOf
@@ -90,6 +90,7 @@ statement_NoWs =
       / value
     ) { return new ask.Statement(s) }
 
+statementKeyword = 'const' / 'let' / 'if' / 'while' / 'for' / 'return'
 
 // === variables ===
 
@@ -104,7 +105,7 @@ variableDefinition_type = ws* ':' ws* t:type { return t }
 
 // === value ===
 
-value = e:nonArithmExpression opVals:operValue* {  assertAllOperatorsMatch(opVals); return new ask.Value(e, opVals) }
+value = !(statementKeyword (ws / eof)) e:nonArithmExpression opVals:operValue* {  assertAllOperatorsMatch(opVals); return new ask.Value(e, opVals) }
 
 // We don't allow newline before an operator because:
 //   123
@@ -207,10 +208,10 @@ nonEmptyValueList =
 
 // === control flow ===
 
-if     = 'if' ws* '(' v:value ')' ws* cB:codeBlockWithBraces eB:elseBlock? {     return new ask.If(v, cB, eB) }
-while  = 'while' ws* '(' v:value ')' ws* cB:codeBlockWithBraces {                return new ask.While(v, cB) }
-forOf  = 'for'   ws* '(' vD:variableDeclaration ws+ 'of' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForOf(vD, v, cB)}
-forIn  = 'for'   ws* '(' vD:variableDeclaration ws+ 'in' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForIn(vD, v, cB)}
+if     = 'if' ws* '(' ws* v:value ws* ')' ws* cB:codeBlockWithBraces eB:elseBlock? {     return new ask.If(v, cB, eB) }
+while  = 'while' ws* '(' ws* v:value ws* ')' ws* cB:codeBlockWithBraces {                return new ask.While(v, cB) }
+forOf  = 'for'   ws* '(' ws* vD:variableDeclaration ws+ 'of' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForOf(vD, v, cB)}
+forIn  = 'for'   ws* '(' ws* vD:variableDeclaration ws+ 'in' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForIn(vD, v, cB)}
 for3   = 'for'   ws* '(' ws* s1:statement_NoWs? ws* ';' ws* s2:statement_NoWs ws* ';' ws* s3:statement_NoWs ws* ')' ws* cB:codeBlockWithBraces { return new ask.For3(s1, s2, s3, cB)}
 elseBlock = ws* 'else' ws* cB:codeBlockWithBraces { return new ask.Else(cB) }
 return = 
@@ -228,7 +229,7 @@ functionCall = i:identifier ws* '(' cAL:callArgList ')' {                       
 methodCallApplied   = 
     ws* ':' ws* iop:(identifier/operator) cAL:methodCallAppliedArgList?  { return new ask.MethodCallApplied(iop, cAL === null ? [] : cAL)}
   / ws* '.' ws* i:identifier  {                                            return new ask.KeyIdentifierApplied(i) }
-  / ws* '[' ws* v:value ']' {                                              return new ask.KeyExpressionApplied(v) }
+  / wsnonl* '[' ws* v:value ']' {                                          return new ask.KeyExpressionApplied(v) }
 methodCallAppliedArgList = ws* '(' cAL:callArgList ')' { return cAL }
 
 

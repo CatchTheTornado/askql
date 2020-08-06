@@ -1,0 +1,9 @@
+ask {
+  const countries = {usa: 'USA', spain: 'Spain', russia: 'Russia'};
+  const sweden = 'Sweden';
+  if(!(countries:hasKey(sweden:toLowerCase))) {
+	  return 'I would add sweden';
+  }
+
+  'No I would not';
+}

@@ -37,5 +37,6 @@ export * from './minus';
 export { sum as plus, sum } from './sum';
 export { times as multiply, times } from './times';
 export * from './toInt';
+export * from './toFloat';
 export * from './bitwiseAnd';
 export * from './bitwiseOr';

@@ -110,7 +110,6 @@
     "nanoid": "^3.1.12",
     "node-fetch": "2.6.0",
     "node-sass": "^4.14.1",
-    "npm-watch": "^0.6.0",
     "pegjs": "0.10.0",
     "prettier": "2.0.5",
     "rimraf": "3.0.2",

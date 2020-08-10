@@ -7,6 +7,7 @@ import { lessThanOrEqual } from './lessThanOrEqual';
 import { greaterThan } from './greaterThan';
 import { greaterThanOrEqual } from './greaterThanOrEqual';
 import { equals } from '../core';
+import { mod } from './mod';
 import { bitwiseAnd } from './bitwiseAnd';
 import { bitwiseOr } from './bitwiseOr';
 
@@ -20,6 +21,7 @@ Object.assign(exports, {
   '>': greaterThan,
   '>=': greaterThanOrEqual,
   '==': equals,
+  '%': mod,
   '&': bitwiseAnd,
   '|': bitwiseOr,
 });
@@ -37,5 +39,6 @@ export * from './minus';
 export { sum as plus, sum } from './sum';
 export { times as multiply, times } from './times';
 export * from './toInt';
+export * from './mod';
 export * from './bitwiseAnd';
 export * from './bitwiseOr';

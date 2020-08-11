@@ -71,4 +71,8 @@ export const replOptions: ReplOptions = {
   },
 };
 
+console.log('Welcome to AskQL CLI!');
+console.log('');
+console.log('For multi-line mode please type:');
+console.log('     .editor');
 start(replOptions);

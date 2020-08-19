@@ -56,6 +56,7 @@ export class Statement {
   statement:
     | VariableDefinition
     | If
+    | ElseIf
     | While
     | ForOf
     | ForIn
@@ -68,6 +69,7 @@ export class Statement {
     statement:
       | VariableDefinition
       | If
+      | ElseIf
       | While
       | ForOf
       | ForIn
@@ -296,9 +298,44 @@ export class Arg {
 export class If {
   value: Value;
   statementList: Statement[];
-  elseBlockOrNull: Else;
+  elseBlockOrNull: Else | ElseIf;
 
-  constructor(value: Value, statementList: Statement[], elseBlockOrNull: Else) {
+  constructor(
+    value: Value,
+    statementList: Statement[],
+    elseBlockOrNull: Else | ElseIf
+  ) {
+    this.value = value;
+    this.statementList = statementList;
+    this.elseBlockOrNull = elseBlockOrNull;
+  }
+
+  print(): LooseObject {
+    let output: LooseObject = {
+      name: 'if',
+      props: {
+        condition: this.value.print(),
+      },
+      children: this.statementList.map((statement) => statement.print()),
+    };
+
+    if (this.elseBlockOrNull !== null)
+      output.props.else = this.elseBlockOrNull.print();
+
+    return output;
+  }
+}
+
+export class ElseIf {
+  value: Value;
+  statementList: Statement[];
+  elseBlockOrNull: Else | ElseIf;
+
+  constructor(
+    value: Value,
+    statementList: Statement[],
+    elseBlockOrNull: Else | ElseIf
+  ) {
     this.value = value;
     this.statementList = statementList;
     this.elseBlockOrNull = elseBlockOrNull;

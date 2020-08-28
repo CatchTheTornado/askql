@@ -6,6 +6,11 @@ export const whileRes = resource({
     const { params } = code;
     const [condition, block] = params!;
     const value = await runUntyped(options, condition);
+
+    if (!value || 'break' in options) {
+      return null;
+    }
+
     if (!value || 'result' in options) {
       return null;
     }

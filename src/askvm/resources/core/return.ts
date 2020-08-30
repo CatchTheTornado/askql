@@ -3,11 +3,6 @@ import { any, resource, runUntyped, Options } from '../../lib';
 export const returnRes = resource({
   type: any,
   async compute(options, code) {
-    const blockName = options.code?.name,
-      isLoop = !(blockName === 'fun' || blockName === 'ask');
-    if ('break' in options && isLoop) {
-      return;
-    }
     const result = await runUntyped(options, code.params![0]);
 
     for (

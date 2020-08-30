@@ -20,6 +20,9 @@ export const fun = resource({
     const { params: statements = [] } = code;
     for (let i = 0; i < statements.length; i += 1) {
       const statement = statements[i];
+      if ('break' in options) {
+        break;
+      }
       lastResult = await run(options, statement);
       if ('result' in options) {
         return options.result;

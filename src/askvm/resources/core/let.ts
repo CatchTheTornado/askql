@@ -14,10 +14,7 @@ export const letRes = resource({
     const { params: children = [] } = code;
 
     const key: any = await runUntyped(options, children[0]); // FIXME any
-    const value =
-      'break' in options
-        ? options.values![key]
-        : await run(options, children[1]);
+    const value = await run(options, children[1]);
 
     if (typeof key !== 'string') {
       throw new Error(`Expected set key to be string, got: ${typeof key}`);

@@ -15,3 +15,4 @@ export * from './Remote';
 export * from './Return';
 export * from './Value';
 export * from './While';
+export * from './Break';

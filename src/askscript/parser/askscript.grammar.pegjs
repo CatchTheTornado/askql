@@ -86,6 +86,7 @@ statement_NoWs =
       / forIn
       / for3
       / return
+      / break
       / assignment
       / value
     ) { return new ask.Statement(s) }
@@ -214,6 +215,7 @@ forOf  = 'for'   ws* '(' ws* vD:variableDeclaration ws+ 'of' ws+ v:value ws* ')'
 forIn  = 'for'   ws* '(' ws* vD:variableDeclaration ws+ 'in' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForIn(vD, v, cB)}
 for3   = 'for'   ws* '(' ws* s1:statement_NoWs? ws* ';' ws* s2:statement_NoWs ws* ';' ws* s3:statement_NoWs ws* ')' ws* cB:codeBlockWithBraces { return new ask.For3(s1, s2, s3, cB)}
 elseBlock = ws* 'else' ws* cB:codeBlockWithBraces { return new ask.Else(cB) }
+break = 'break' wsnonl* { return new ask.Break() }
 return = 
     'return' wsnonl+ v:value {  return new ask.Return(v) }
   / 'return' wsnonl* {          return new ask.Return(ask.nullValue) }

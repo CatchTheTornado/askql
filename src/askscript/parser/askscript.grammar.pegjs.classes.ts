@@ -61,6 +61,7 @@ export class Statement {
     | ForIn
     | For3
     | Return
+    | Break
     | Assignment
     | Value;
 
@@ -73,6 +74,7 @@ export class Statement {
       | ForIn
       | For3
       | Return
+      | Break
       | Assignment
       | Value
   ) {
@@ -445,6 +447,15 @@ export class Return {
       props: {
         value: this.value.print(),
       },
+    };
+    return output;
+  }
+}
+
+export class Break {
+  print(): LooseObject {
+    let output = {
+      name: 'break',
     };
     return output;
   }

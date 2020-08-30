@@ -16,6 +16,11 @@ export const breakRes = resource({
       if (prototype?.code?.parent?.name === 'while') {
         isWhileBlock = true;
       }
+
+      const name = prototype.code?.name;
+      if (name === 'fun' || name === 'ask') {
+        throw new Error('Invalid Break use');
+      }
     }
   },
 });

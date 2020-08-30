@@ -35,3 +35,4 @@ export { returnRes as return } from './return';
 export { trueRes as true } from './true';
 export { typedRes as typed } from './typed';
 export { whileRes as while } from './while';
+export { breakRes as break } from './break';

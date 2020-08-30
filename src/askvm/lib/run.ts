@@ -11,6 +11,7 @@ export type Stats = {
 export interface Options {
   code?: AskCode;
   result?: any;
+  break?: boolean;
   prototype?: Options;
   resources?: Resources;
   values?: Values;

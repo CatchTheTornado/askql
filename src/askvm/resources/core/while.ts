@@ -8,6 +8,7 @@ export const whileRes = resource({
     const value = await runUntyped(options, condition);
 
     if (!value || 'break' in options) {
+      delete options.break;
       return null;
     }
 

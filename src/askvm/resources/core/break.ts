@@ -19,7 +19,7 @@ export const breakRes = resource({
 
       const name = prototype.code?.name;
       if (name === 'fun' || name === 'ask') {
-        throw new Error('Invalid Break use');
+        break;
       }
     }
   },

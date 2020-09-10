@@ -42,3 +42,4 @@ export * from './toInt';
 export * from './mod';
 export * from './bitwiseAnd';
 export * from './bitwiseOr';
+export * from './div';

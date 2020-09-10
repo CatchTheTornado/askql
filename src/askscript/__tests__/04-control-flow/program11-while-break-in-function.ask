@@ -1,0 +1,13 @@
+ask {
+  const exampleFunction = fun (): int {
+	  let n = 1
+    while ( n < 10 ) {
+      if (n == 3) {
+        break;
+      }
+      n = n + 1
+    }  
+    return n;
+	}
+  exampleFunction();
+}

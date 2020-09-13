@@ -10,17 +10,6 @@ import { minus } from './minus';
 import { mod } from './mod';
 import { sum } from './sum';
 import { times } from './times';
-<<<<<<< HEAD
-import { lessThan } from './lessThan';
-import { lessThanOrEqual } from './lessThanOrEqual';
-import { greaterThan } from './greaterThan';
-import { greaterThanOrEqual } from './greaterThanOrEqual';
-import { equals } from '../core';
-import { mod } from './mod';
-import { bitwiseAnd } from './bitwiseAnd';
-import { bitwiseOr } from './bitwiseOr';
-=======
->>>>>>> bb8f91cd2f01faad01d5feffd9c170ee2d0d6224
 
 Object.assign(exports, {
   '+': sum,
@@ -55,10 +44,3 @@ export { sum as plus, sum } from './sum';
 export { times as multiply, times } from './times';
 export * from './toFloat';
 export * from './toInt';
-<<<<<<< HEAD
-export * from './mod';
-export * from './bitwiseAnd';
-export * from './bitwiseOr';
-=======
-
->>>>>>> bb8f91cd2f01faad01d5feffd9c170ee2d0d6224

@@ -81,7 +81,11 @@
     "@types/pegjs": "0.10.2",
     "@types/rimraf": "3.0.0",
     "@types/shelljs": "^0.8.8",
+<<<<<<< HEAD
     "@typescript-eslint/eslint-plugin": "3.8.0",
+=======
+    "@typescript-eslint/eslint-plugin": "4.0.0",
+>>>>>>> bb8f91cd2f01faad01d5feffd9c170ee2d0d6224
     "@typescript-eslint/parser": "3.8.0",
     "babel-jest": "26.2.2",
     "babel-loader": "^8.1.0",
@@ -108,7 +112,11 @@
     "lodash": "^4.17.19",
     "micromatch": "^4.0.2",
     "nanoid": "^3.1.12",
+<<<<<<< HEAD
     "node-fetch": "2.6.0",
+=======
+    "node-fetch": "2.6.1",
+>>>>>>> bb8f91cd2f01faad01d5feffd9c170ee2d0d6224
     "node-sass": "^4.14.1",
     "pegjs": "0.10.0",
     "prettier": "2.0.5",

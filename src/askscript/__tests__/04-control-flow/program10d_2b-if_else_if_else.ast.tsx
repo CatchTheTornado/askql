@@ -8,7 +8,7 @@ export = (
           args={
             <list>
               <ref name="len" />
-              {2}
+              {12}
             </list>
           }
           isOperator={true}
@@ -30,15 +30,17 @@ export = (
           }
           else={
             <list>
-              <return value="1A FAILED" />
+              <return value="2BF" />
             </list>
           }
+          elseType={true}
         >
-          <return value="1A PASSED" />
+          <return value="2BP" />
         </if>
       }
+      elseType={false}
     >
-      <return value="1A FAILED" />
+      <return value="2BF" />
     </if>
   </ask>
 );

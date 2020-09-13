@@ -1,0 +1,10 @@
+ask {
+    let len = 10
+    if (len == 12) {
+        return '2CF';
+    } else if (len == 14) {
+        return '2CF';
+    } else {
+        return '2CP';
+    }
+}

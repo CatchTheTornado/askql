@@ -1,0 +1,12 @@
+ask {
+    let len = 10
+    if (len == 12) {
+        return '3CF';
+    } else if (len == 14) {
+        return '3CF';
+    } else if (len == 10) {
+        return '3CP';
+    } else {
+        return '3CF';
+    }
+}

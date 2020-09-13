@@ -1,0 +1,10 @@
+ask {
+    let len = 10
+    if (len == 12) {
+        return '2BF';
+    } else if (len == 10) {
+        return '2BP';
+    } else {
+        return '2BF';
+    }
+}

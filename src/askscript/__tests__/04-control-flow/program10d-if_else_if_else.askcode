@@ -1,1 +1,0 @@
-ask(let('len',10),if(call(get('=='),get('len'),2),block(return('1A FAILED')),block(if(call(get('=='),get('len'),10),block(return('1A PASSED')),block(list(return('1A FAILED')))))))

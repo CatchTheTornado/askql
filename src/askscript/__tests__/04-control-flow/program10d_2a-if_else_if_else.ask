@@ -1,0 +1,10 @@
+ask {
+    let len = 10
+    if (len == 10) {
+        return '2AP';
+    } else if (len == 12) {
+        return '2AF';
+    } else {
+        return '2AF';
+    }
+}

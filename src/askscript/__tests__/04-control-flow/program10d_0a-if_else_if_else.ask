@@ -1,0 +1,6 @@
+ask {
+    let len = 10
+    if (len == 10) {
+        return '0AP';
+    } 
+}

@@ -121,7 +121,7 @@ export function print(
         '}',
         'else' in props && props.elseType !== 'undefined' && props.elseType
           ? concat(['else {', indentChildren('props', 'else'), '}'])
-          : ''
+          : '',
       ]);
     }
 

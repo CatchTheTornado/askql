@@ -321,11 +321,10 @@ export class If {
 
     if (this.elseBlockOrNull !== null)
       output.props.else = this.elseBlockOrNull.print();
-      output.props.elseType = false
-      if (this.elseBlockOrNull instanceof Else ) {
-        output.props.elseType = true
-        
-      }
+    output.props.elseType = false;
+    if (this.elseBlockOrNull instanceof Else) {
+      output.props.elseType = true;
+    }
 
     return output;
   }
@@ -357,11 +356,10 @@ export class ElseIf {
 
     if (this.elseBlockOrNull !== null)
       output.props.else = this.elseBlockOrNull.print();
-      output.props.elseType = false
-      if (this.elseBlockOrNull instanceof Else ) {
-        output.props.elseType = true
-        
-      }
+    output.props.elseType = false;
+    if (this.elseBlockOrNull instanceof Else) {
+      output.props.elseType = true;
+    }
 
     return output;
   }

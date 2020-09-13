@@ -119,9 +119,9 @@ export function print(
         ') {',
         indentChildren('children'),
         '}',
-        'else' in props
+        'else' in props && props.elseType !== 'undefined' && props.elseType
           ? concat(['else {', indentChildren('props', 'else'), '}'])
-          : '',
+          : ''
       ]);
     }
 

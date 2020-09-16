@@ -1,0 +1,1 @@
+ask(let('len',10),if(call(get('=='),call(get('get'),'len'),10),block(return('2AP')),block(if(call(get('=='),call(get('get'),'len'),12),block(return('2AF')),block(list(return('2AF')))))))

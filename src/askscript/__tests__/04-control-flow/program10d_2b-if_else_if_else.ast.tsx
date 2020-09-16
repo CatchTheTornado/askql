@@ -33,12 +33,12 @@ export = (
               <return value="2BF" />
             </list>
           }
-          elseType={true}
+          elseBlock={true}
         >
           <return value="2BP" />
         </if>
       }
-      elseType={false}
+      elseBlock={false}
     >
       <return value="2BF" />
     </if>

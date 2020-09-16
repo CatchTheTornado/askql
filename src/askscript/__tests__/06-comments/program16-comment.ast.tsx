@@ -35,6 +35,7 @@ export = (
                 }
               />
             }
+            elseBlock={false}
           >
             <return value={2} />
           </if>

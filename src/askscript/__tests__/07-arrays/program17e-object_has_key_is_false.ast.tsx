@@ -43,6 +43,7 @@ export = (
           isUnaryOperator={true}
         />
       }
+      elseBlock={false}
     >
       <return value="I would add sweden" />
     </if>

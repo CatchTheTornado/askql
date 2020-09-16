@@ -1,7 +1,7 @@
 export = (
   <ask args={<list />}>
     <let name="b" type={<ref name="int" />} value={2} />
-    <if condition={<call name="true" args={<list />} />}>
+    <if condition={<call name="true" args={<list />} />} elseBlock={false}>
       <assign name="b" value={4} />
     </if>
     <ref name="b" />

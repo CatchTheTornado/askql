@@ -13,6 +13,7 @@ export = (
           isOperator={true}
         />
       }
+      elseBlock={false}
     >
       <return value={<call name="true" args={<list />} />} />
     </if>

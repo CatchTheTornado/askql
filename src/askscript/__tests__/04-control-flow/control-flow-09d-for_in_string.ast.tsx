@@ -58,6 +58,7 @@ export = (
             />
           </list>
         }
+        elseBlock={true}
       >
         <assign
           name="newStr"

@@ -27,6 +27,7 @@ export = (
                 }
               />
             }
+            elseBlock={false}
           >
             <return value={<ref name="n" />} />
           </if>

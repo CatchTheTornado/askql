@@ -148,6 +148,7 @@ export = (
               isOperator={true}
             />
           }
+          elseBlock={false}
         >
           <assign
             name="arr"

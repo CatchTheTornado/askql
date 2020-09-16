@@ -5,7 +5,6 @@
 </p>
 
 # [AskQL](https://askql.org/)
-
 AskQL is a new Turing-complete query and programming language, which allows faster and easier communication with servers. <br/>
 Instead of mere _data queries_ or _simple REST_ questions, AskQL allows to query a server with _fully functional_ programs which use all the data and services the server shares in a secure way.
 
@@ -24,14 +23,12 @@ Instead of mere _data queries_ or _simple REST_ questions, AskQL allows to query
     width=50%>
 
 Benefits for development process:
-
 - Next milestone after GraphQL and REST API
 - New safe query language
 - Send code to servers without the need to deploy
 - Send executable code instead of JSONs
 
 Benefits for programmers:
-
 - Asynchronous by default, no more `await` keyword - cleaner code
 - Processes only immutable data - fewer errors
 - Compiled to a clean functional code - clear logic

@@ -321,9 +321,9 @@ export class If {
 
     if (this.elseBlockOrNull !== null)
       output.props.else = this.elseBlockOrNull.print();
-    output.props.elseType = false;
+    output.props.elseBlock = false;
     if (this.elseBlockOrNull instanceof Else) {
-      output.props.elseType = true;
+      output.props.elseBlock = true;
     }
 
     return output;
@@ -356,9 +356,9 @@ export class ElseIf {
 
     if (this.elseBlockOrNull !== null)
       output.props.else = this.elseBlockOrNull.print();
-    output.props.elseType = false;
+    output.props.elseBlock = false;
     if (this.elseBlockOrNull instanceof Else) {
-      output.props.elseType = true;
+      output.props.elseBlock = true;
     }
 
     return output;

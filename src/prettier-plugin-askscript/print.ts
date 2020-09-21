@@ -113,7 +113,7 @@ export function print(
     }
 
     case 'if': {
-      var ladder = concat([
+      let ladder = concat([
         'if (',
         path.call(print, 'props', 'condition'),
         ') {',

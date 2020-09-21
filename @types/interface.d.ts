@@ -29,6 +29,7 @@ declare namespace JSX {
       query?: true;
       remote?: true;
       return?: true;
+      break?: true;
       set?: true;
       while?: true;
     };
@@ -42,6 +43,7 @@ declare namespace JSX {
     query: FirstArg<typeof import('../src/askjsx').Query>;
     ref: FirstArg<typeof import('../src/askjsx').Ref>;
     return: FirstArg<typeof import('../src/askjsx').Return>;
+    break: FirstArg<typeof import('../src/askjsx').Break>;
     struct: FirstArg<typeof import('../src/askjsx').Struct>;
     while: FirstArg<typeof import('../src/askjsx').While>;
     v: { children?: any | any[] };

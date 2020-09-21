@@ -1,0 +1,14 @@
+ask {
+  let result = '';
+  for (let i = 0; i < 2; i = i + 1) {
+    result = result:concat('i');
+    for (let j = 0; j < 4; j = j + 1) {
+      result = result:concat('j');
+      if (j == 2) {
+        break;
+      }
+      result = result:concat('d');
+    }
+  }
+  result
+}

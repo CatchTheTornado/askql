@@ -129,6 +129,9 @@ export function print(
       return concat(['return ', path.call(print, 'props', 'value')]);
     }
 
+    case 'break':
+      return 'break';
+
     case 'call': {
       if (typeof props.name !== 'string') {
         throw new Error('call:props.name expected string');

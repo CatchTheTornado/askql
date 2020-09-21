@@ -21,6 +21,10 @@ export const fun = resource({
     for (let i = 0; i < statements.length; i += 1) {
       const statement = statements[i];
       lastResult = await run(options, statement);
+      if ('break' in options) {
+        break;
+      }
+
       if ('result' in options) {
         return options.result;
       }

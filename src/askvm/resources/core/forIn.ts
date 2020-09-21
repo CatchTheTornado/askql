@@ -44,6 +44,10 @@ export const forIn = resource({
       await runUntyped(options, key);
 
       await runUntyped(options, block, []);
+      if ('break' in options) {
+        delete options.break;
+        return null;
+      }
       if ('result' in options) {
         return null;
       }

@@ -316,7 +316,7 @@ On contrary, Ask's `ask { <askscript> }` runs by default on a secure, sandboxed 
 
 ## Troubleshooting
 
-If you didn't find answers to your questions here, write on ourour [Discord community](https://discord.gg/pYdzypH). We will both help you with the first steps and discuss more advanced topics.
+If you didn't find answers to your questions here, write on our [Discord community](https://discord.gg/pYdzypH). We will both help you with the first steps and discuss more advanced topics.
 
 ## License
 

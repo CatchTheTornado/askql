@@ -52,6 +52,7 @@ export = (
           isOperator={true}
         />
       }
+      elseBlock={false}
     >
       <return value="It works!" />
     </if>

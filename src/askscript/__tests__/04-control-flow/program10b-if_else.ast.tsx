@@ -7,6 +7,7 @@ export = (
           <return value={<ref name="no" />} />
         </list>
       }
+      elseBlock={true}
     >
       <return value={<ref name="yes" />} />
     </if>

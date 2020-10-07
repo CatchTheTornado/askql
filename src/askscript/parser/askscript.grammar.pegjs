@@ -81,6 +81,7 @@ statement_NoWs =
     s:(
         variableDefinition
       / if
+      / elseif
       / while
       / forOf
       / forIn
@@ -91,7 +92,7 @@ statement_NoWs =
       / value
     ) { return new ask.Statement(s) }
 
-statementKeyword = 'const' / 'let' / 'if' / 'while' / 'for' / 'return'
+statementKeyword = 'const' / 'let' / 'if' / 'else if' / 'while' / 'for' / 'return'
 
 // === variables ===
 
@@ -209,7 +210,10 @@ nonEmptyValueList =
 
 // === control flow ===
 
-if     = 'if' ws* '(' ws* v:value ws* ')' ws* cB:codeBlockWithBraces eB:elseBlock? {     return new ask.If(v, cB, eB) }
+if     = 'if' ws* '(' ws* v:value ws* ')' ws* cB:codeBlockWithBraces eB:elseif {     return new ask.If(v, cB, eB) }
+       / 'if' ws* '(' ws* v:value ws* ')' ws* cB:codeBlockWithBraces eB:elseBlock? {     return new ask.If(v, cB, eB) }
+elseif = ws* 'else if' ws* '(' ws* v:value ws* ')' ws* cB:codeBlockWithBraces eB:elseif {     return new ask.ElseIf(v, cB, eB) }
+       / ws* 'else if' ws* '(' ws* v:value ws* ')' ws* cB:codeBlockWithBraces eB:elseBlock? {     return new ask.ElseIf(v, cB, eB) }
 while  = 'while' ws* '(' ws* v:value ws* ')' ws* cB:codeBlockWithBraces {                return new ask.While(v, cB) }
 forOf  = 'for'   ws* '(' ws* vD:variableDeclaration ws+ 'of' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForOf(vD, v, cB)}
 forIn  = 'for'   ws* '(' ws* vD:variableDeclaration ws+ 'in' ws+ v:value ws* ')' ws* cB:codeBlockWithBraces { return new ask.ForIn(vD, v, cB)}

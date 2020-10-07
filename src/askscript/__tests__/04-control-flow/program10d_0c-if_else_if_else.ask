@@ -1,0 +1,8 @@
+ask {
+    let len = 10
+    if (len == 12) {
+        return '0CF';
+    } else if (len == 10) {
+        return '0CP';
+    }
+}

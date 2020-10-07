@@ -113,16 +113,49 @@ export function print(
     }
 
     case 'if': {
-      return concat([
+      let ladder = concat([
         'if (',
         path.call(print, 'props', 'condition'),
         ') {',
         indentChildren('children'),
         '}',
-        'else' in props
-          ? concat(['else {', indentChildren('props', 'else'), '}'])
-          : '',
       ]);
+
+      while (
+        node.props !== undefined &&
+        'else' in node.props &&
+        'elseBlock' in node.props
+      ) {
+        if (
+          'else' in node.props &&
+          node.props.elseBlock !== 'undefined' &&
+          node.props.elseBlock
+        ) {
+          ladder = concat([
+            ladder,
+            ' else {',
+            indentChildren('props', 'else'),
+            '}',
+          ]);
+          node.props = JSON.parse(JSON.stringify(node.props['else']))['props'];
+        } else {
+          node.name = JSON.parse(JSON.stringify(node.props['else']))['name'];
+          node.children = JSON.parse(JSON.stringify(node.props['else']))[
+            'children'
+          ];
+          node.props = JSON.parse(JSON.stringify(node.props['else']))['props'];
+          ladder = concat([
+            ladder,
+            ' else if (',
+            path.call(print, 'props', 'condition'),
+            ') {',
+            indentChildren('children'),
+            '}',
+          ]);
+        }
+      }
+
+      return concat([ladder]);
     }
 
     case 'return': {

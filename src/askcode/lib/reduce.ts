@@ -88,7 +88,7 @@ export function reduce<T = any>(
       index += 1
     );
     if (index === start) {
-      throw new Error('Expeciting an identifier');
+      throw new Error('Expecting an identifier');
     }
     return code.slice(start, index);
   }

@@ -16,7 +16,7 @@
     "build": "jest --config jest.build.config.js --no-cache && npm run playground:build",
     "postbuild": "ts-node scripts/postBuild.ts",
     "prettier": "prettier --write --config prettier.config.js .",
-    "prettier:check": "prettier --config prettier.config.js --check '**/*.{js,jsx,ts,tsx}'",
+    "prettier:check": "prettier --config prettier.config.js --check \"**/*.{js,jsx,ts,tsx}\"",
     "prettier:scripts": "prettier --write ./scripts",
     "lint:js": "eslint . --ext .js,.tsx,.ts",
     "lint:js:fix": "npm run lint:js --fix",

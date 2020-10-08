@@ -28,6 +28,7 @@ export = (
             isOperator={true}
           />
         }
+        elseBlock={false}
       >
         <break />
       </if>

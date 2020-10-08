@@ -1,25 +1,34 @@
 {
-    "name": "askscript-language",
-    "displayName": "AskScript Language",
-    "description": "AskScript is a language used by AskQL query solution. AskQL allows you to ask your service any complex question about the data.",
-    "version": "0.0.1",
-    "engines": {
-        "vscode": "^1.46.0"
-    },
-    "categories": [
-        "Programming Languages"
+  "name": "askscript-language",
+  "displayName": "AskScript Language",
+  "description": "AskScript is a language used by AskQL query solution. AskQL allows you to ask your service any complex question about the data.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.46.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "askscript",
+        "aliases": [
+          "AskScript",
+          "askscript"
+        ],
+        "extensions": [
+          ".ask"
+        ],
+        "configuration": "./language-configuration.json"
+      }
     ],
-    "contributes": {
-        "languages": [{
-            "id": "askscript",
-            "aliases": ["AskScript", "askscript"],
-            "extensions": [".ask"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "askscript",
-            "scopeName": "source.askscript",
-            "path": "./syntaxes/askscript.tmLanguage.json"
-        }]
-    }
+    "grammars": [
+      {
+        "language": "askscript",
+        "scopeName": "source.askscript",
+        "path": "./syntaxes/askscript.tmLanguage.json"
+      }
+    ]
+  }
 }

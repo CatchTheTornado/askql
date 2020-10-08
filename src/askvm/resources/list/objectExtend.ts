@@ -6,7 +6,7 @@ const typesError = () => {
 
 export const objectExtend = resource<any, any[]>({
   type: any,
-  async resolver(list: any[] | {}, listExtension: any[] | {}): Promise<any> {
+  async resolver(list: {}, listExtension: any[] | {}): Promise<any> {
     if (
       typeof list !== 'object' ||
       typeof listExtension !== 'object' ||

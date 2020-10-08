@@ -66,14 +66,13 @@ export async function asyncSome<T>(
   const results = await Promise.all(array.map(callback));
   return results.some((result) => result);
 }
-
 export async function asyncMap<T, U>(
   array: T[],
-  callback: (item: T) => Promise<U>
+  callback: (item: T, index?: number, array?: T[]) => Promise<U>
 ): Promise<U[]> {
   let result: U[] = [];
-  for (let item of array) {
-    result.push(await callback(item));
+  for (let i = 0; i < array.length; i++) {
+    result.push(await callback(array[i], i, array));
   }
   return result;
 }

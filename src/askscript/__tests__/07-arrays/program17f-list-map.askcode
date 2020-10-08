@@ -1,0 +1,1 @@
+ask(call(get('map'),list(1,2,3,4),fun(let('c',get('$0')),call(get('+'),call(get('get'),'c'),5))))

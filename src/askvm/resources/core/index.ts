@@ -26,7 +26,6 @@ export * from './is';
 export { letRes as let, letRes as const, letRes as assign } from './let';
 export * from './list';
 export * from './logicalOr';
-export * from './map';
 export * from './not';
 export * from './notEquals';
 export * from './object';

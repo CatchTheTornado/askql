@@ -103,7 +103,7 @@
     "handlebars": "^4.7.6",
     "husky": "4.3.0",
     "imagemin-cli": "^6.0.0",
-    "jest": "^26.2.2",
+    "jest": "^26.5.2",
     "jsesc": "3.0.1",
     "lint-staged": "10.4.0",
     "lodash": "^4.17.19",

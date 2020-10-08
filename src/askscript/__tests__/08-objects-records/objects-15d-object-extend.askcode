@@ -1,0 +1,1 @@
+ask(call(get('objectExtend'),object('one',1),object('two',2)))

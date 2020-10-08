@@ -83,8 +83,6 @@ export async function run(
     return typed(await resources[name].compute(options, codeWithArgs, args));
   }
 
-  // console.log('resources', resources);
-  // console.log('values', values);
   throw new Error(`Unknown identifier '${name}'!`);
 }
 

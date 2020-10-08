@@ -1,0 +1,3 @@
+ask {
+    { one: 1 }:objectExtend({ two: 2 })
+}

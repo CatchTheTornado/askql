@@ -274,6 +274,7 @@ function createEmptyAssertionResult(): AssertionResult {
   return {
     ancestorTitles: [],
     failureMessages: [],
+    failureDetails: [],
     fullName: '',
     numPassingAsserts: 0,
     status: 'pending',

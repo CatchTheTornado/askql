@@ -67,15 +67,11 @@ export async function asyncSome<T>(
   return results.some((result) => result);
 }
 
-export async function asyncMap<T, U>(
-  array: T[],
-  callback: (item: T) => Promise<U>
-): Promise<U[]> {
-  let result: U[] = [];
-  for (let item of array) {
-    result.push(await callback(item));
-  }
-  return result;
+export async function asyncMap(
+  list: any[],
+  predicate: (value: any, key?: number, list?: any[]) => Promise<boolean>
+) {
+  return await Promise.all(list.map(predicate));
 }
 
 export function fromEntries<T>(

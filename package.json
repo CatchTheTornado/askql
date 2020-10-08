@@ -11,11 +11,10 @@
     "check": "tsc --noEmit",
     "tsc": "tsc",
     "tsc:test": "tsc && npm run test --no-cache",
-    "build:test": "npm run build:base && npm run test --no-cache",
     "prebuild": "ts-node scripts/preBuild.ts && tsc",
-    "build:base": "jest --config jest.build.config.js --no-cache",
-    "build": "npm run build:base && npm run playground:build",
+    "build": "jest --config jest.build.config.js --no-cache && npm run playground:build",
     "postbuild": "ts-node scripts/postBuild.ts",
+    "build:test": "npm run build && npm run test --no-cache",
     "prettier": "prettier --write --config prettier.config.js .",
     "prettier:check": "prettier --config prettier.config.js --check \"**/*.{js,jsx,ts,tsx}\"",
     "prettier:scripts": "prettier --write ./scripts",
@@ -29,7 +28,8 @@
     "playground:build-assets": "npm run playground:build-assets:img",
     "playground:build-assets:img": "imagemin src/playground/public/assets/img/* --out-dir=dist/playground/public/img",
     "playground:build-ts": "tsc && mv dist/playground/public/assets/js dist/playground/public/js",
-    "playground:start": "dotenv -e dist/.env node dist/playground/app.js"
+    "playground:start": "dotenv -e dist/.env node dist/playground/app.js",
+    "build:all": "npm run build && npm run playground:build"
   },
   "husky": {
     "hooks": {

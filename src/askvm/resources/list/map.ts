@@ -2,6 +2,9 @@ import { isAskCode } from '../../../askcode';
 import { any, resource, runUntyped } from '../../lib';
 import { asyncMap } from '../../../utils';
 
+/**
+ * This implements mapping over list of data - similar to Array.prototype.map in JavaScript
+ */
 export const map = resource<any, any[]>({
   type: any,
   async resolver(

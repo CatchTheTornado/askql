@@ -101,7 +101,7 @@
     "glob": "7.1.6",
     "golden-layout": "^1.5.9",
     "handlebars": "^4.7.6",
-    "husky": "4.2.5",
+    "husky": "4.3.0",
     "imagemin-cli": "^6.0.0",
     "jest": "^26.2.2",
     "jsesc": "3.0.1",

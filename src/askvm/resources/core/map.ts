@@ -1,6 +1,9 @@
 import { asyncMap } from '../../../utils';
 import { any, resource, runUntyped } from '../../lib';
 
+/**
+ * Creates a new map using JavaScript Map
+ */
 export const map = resource<any, any[]>({
   type: any,
   resolver(...values: any[]): any {

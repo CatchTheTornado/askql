@@ -1,3 +1,5 @@
+import { JSONable } from '../askvm/lib';
+
 export function assert(condition: boolean, message: string): asserts condition {
   if (!condition) {
     throw new Error(`Assertion error: ${message}`);
@@ -66,12 +68,15 @@ export async function asyncSome<T>(
   const results = await Promise.all(array.map(callback));
   return results.some((result) => result);
 }
-
-export async function asyncMap(
-  list: any[],
-  predicate: (value: any, key?: number, list?: any[]) => Promise<boolean>
-) {
-  return await Promise.all(list.map(predicate));
+export async function asyncMap<T, U>(
+  array: T[],
+  callback: (item: T, index?: number, array?: T[]) => Promise<U>
+): Promise<U[]> {
+  let result: U[] = [];
+  for (let i = 0; i < array.length; i++) {
+    result.push(await callback(array[i], i, array));
+  }
+  return result;
 }
 
 export function fromEntries<T>(

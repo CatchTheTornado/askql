@@ -1,5 +1,3 @@
-import { JSONable } from '../askvm/lib';
-
 export function assert(condition: boolean, message: string): asserts condition {
   if (!condition) {
     throw new Error(`Assertion error: ${message}`);

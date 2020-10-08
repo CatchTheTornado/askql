@@ -1,1 +1,1 @@
-export = {}; //fixme(mh)
+export = [7, 7, 7, 7];

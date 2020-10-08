@@ -1,6 +1,6 @@
 export = {
-  "totalNewDeaths": 0,
-  "totalNewInfected": 0,
-  "totalnewRecovered": 0,
-  "total": 0
+  "totalNewDeaths": 2047,
+  "totalNewInfected": 88956,
+  "totalnewRecovered": 40128,
+  "total": 131131
 };

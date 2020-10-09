@@ -20,6 +20,13 @@ export const sendJson = (
   });
 };
 
+export function logError(id: string, code: string, e: Error) {
+  console.error(id + ' -- ' + new Date().toString());
+  console.error(id + ' -- ' + code);
+  console.error(id + ' -- ' + e);
+  console.error('\n\n');
+}
+
 export async function compileAskCode(
   baseEnvironment: {
     values?: { [p: string]: any };

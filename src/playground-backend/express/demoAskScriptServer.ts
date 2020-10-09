@@ -10,7 +10,7 @@ import chalk = require('chalk');
 import { customAlphabet } from 'nanoid';
 import { customResources } from '../lib/resources';
 import { customValues } from '../lib/values';
-import { compileAskCode } from '../lib/utils';
+import { compileAskCode, logError } from '../lib/utils';
 
 const packageInfo = require('../../../package.json');
 
@@ -36,13 +36,6 @@ app.get('/', async (req, res) => {
 app.get('/version', async (req, res) => {
   res.json({ version: packageInfo.version });
 });
-
-function logError(id: string, code: string, e: Error) {
-  console.error(id + ' -- ' + new Date().toString());
-  console.error(id + ' -- ' + code);
-  console.error(id + ' -- ' + e);
-  console.error('\n\n');
-}
 
 app.post('/askscript', async (req, res) => {
   function reportError(e: Error, message: string) {

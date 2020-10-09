@@ -10,6 +10,7 @@ import chalk = require('chalk');
 import { customAlphabet } from 'nanoid';
 import { customResources } from '../lib/resources';
 import { customValues } from '../lib/values';
+import { compileAskCode } from '../lib/utils';
 
 const packageInfo = require('../../../package.json');
 
@@ -80,14 +81,7 @@ app.post('/askscript', async (req, res) => {
   }
 
   try {
-    let result = await runUntyped(baseEnvironment, askCode, []);
-    if (
-      result === Infinity ||
-      result === -Infinity ||
-      (typeof result === 'number' && isNaN(result))
-    ) {
-      result = result.toString();
-    }
+    const result = await compileAskCode(baseEnvironment, askCode);
 
     console.log(id + ' -- ' + chalk.grey(`⬅️ ${JSON.stringify(result)}`));
     console.log('\n\n');

@@ -59,6 +59,15 @@ export async function asyncEvery<T>(
   return results.every((result) => result === true);
 }
 
+export async function asyncEach<T>(
+  array: T[],
+  callback: (item: T, index: number, array: T[]) => Promise<boolean>
+) {
+  for (const [index, item] of array.entries()) {
+    await callback(item, index, array);
+  }
+}
+
 export async function asyncSome<T>(
   array: T[],
   callback: (item: T) => Promise<boolean>

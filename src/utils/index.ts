@@ -45,7 +45,7 @@ export async function asyncFind<T>(
 
 export async function asyncFilter<T>(
   array: T[],
-  callback: (item: T) => Promise<boolean>
+  callback: (item: T, index: number, array: T[]) => Promise<boolean>
 ): Promise<T[]> {
   const results = await Promise.all(array.map(callback));
   return array.filter(({}, index) => results[index] === true);
@@ -79,11 +79,7 @@ export async function asyncMap<T, U>(
   array: T[],
   callback: (item: T, index?: number, array?: T[]) => Promise<U>
 ): Promise<U[]> {
-  let result: U[] = [];
-  for (let i = 0; i < array.length; i++) {
-    result.push(await callback(array[i], i, array));
-  }
-  return result;
+  return Promise.all(array.map(callback));
 }
 
 export function fromEntries<T>(

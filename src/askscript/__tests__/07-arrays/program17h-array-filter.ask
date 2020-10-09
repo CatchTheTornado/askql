@@ -1,0 +1,5 @@
+ask {
+  ['Oak', 'Willow', 'Acacia', 'Adair', 'Alder', 'Apple', 'Basswood']:filter(fun(c,i,arr){
+    c:length:greaterThan(5)
+  })
+}

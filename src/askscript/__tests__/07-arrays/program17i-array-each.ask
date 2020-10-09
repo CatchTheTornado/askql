@@ -1,0 +1,7 @@
+ask {
+    let sum = 0;
+    [1, 2, 3, 4]:each(fun(c, i) {
+        sum = sum:plus(c);
+    });
+    sum
+}

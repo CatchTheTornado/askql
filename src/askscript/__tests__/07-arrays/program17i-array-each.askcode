@@ -1,0 +1,1 @@
+ask(let('sum',0),call(get('each'),list(1,2,3,4),fun(let('c',get('$0')),let('i',get('$1')),assign('sum',call(get('plus'),call(get('get'),'sum'),call(get('get'),'c'))))),call(get('get'),'sum'))

@@ -1,0 +1,1 @@
+ask(call(get('filter'),list('Oak','Willow','Acacia','Adair','Alder','Apple','Basswood'),fun(let('c',get('$0')),let('i',get('$1')),let('arr',get('$2')),call(get('greaterThan'),call(get('length'),call(get('get'),'c')),5))))

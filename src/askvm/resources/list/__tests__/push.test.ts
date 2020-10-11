@@ -32,4 +32,13 @@ test('push', async () => {
     'c',
     'd',
   ]);
+
+});
+
+test('push should not mutate the array', async () => {
+  const array = [1, 2, 3, 4];
+
+  const anotherArray = await push.resolver(array, 6);
+
+  expect(array !== anotherArray).toEqual(true);
 });

@@ -3,6 +3,7 @@ import { parse } from '../../../../askcode';
 import * as core from '../../core';
 import { map } from '../map';
 import { concat } from '../../string';
+import { each } from '../each';
 
 const values = {
   clientNames: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
@@ -43,4 +44,12 @@ test('map', async () => {
       `map(clientNames, fun(let('c',get('$0')),let('i',get('$1')),call(get('concat'),'client ',call(get('get'),'c'))))`
     )
   ).resolves.toStrictEqual(namesWithPrefix);
+});
+
+test('map should not mutate the array', async () => {
+  const array = [1, 2, 3, 4];
+
+  const anotherArray = await map.resolver(array, (item: number) => item + 1);
+
+  expect(array !== anotherArray).toEqual(true);
 });

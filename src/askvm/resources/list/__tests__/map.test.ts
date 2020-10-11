@@ -3,7 +3,6 @@ import { parse } from '../../../../askcode';
 import * as core from '../../core';
 import { map } from '../map';
 import { concat } from '../../string';
-import { each } from '../each';
 
 const values = {
   clientNames: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],

@@ -270,6 +270,7 @@ mapEntryList =
 
 mapEntry = 
     i:identifier ws* ':' ws* v:value {                 return new ask.MapEntry(i, v) }
+    / ws* i:string ws* ':' ws* v:value {                 return new ask.MapEntry(i, v) }
 
   // This is double quote in fact (the second ':' is leading the methodCallApplied rule)
   / i:identifier ws* ':' ws* mCAs:methodCallApplied* { return new ask.MapEntry(i, new ask.NonArithmValue(i, mCAs)) }

@@ -32,7 +32,6 @@ test('push', async () => {
     'c',
     'd',
   ]);
-
 });
 
 test('push should not mutate the array', async () => {

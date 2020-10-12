@@ -1,1 +1,1 @@
-ask(object('a',call(get('true'))))
+ask(object('a text with some spaces',call(get('true'))))

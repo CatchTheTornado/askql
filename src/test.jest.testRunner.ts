@@ -33,6 +33,76 @@ function compareAsJson(a: any, b: any): boolean {
 type TestName = 'starts' | 'compiles' | 'computes';
 type TestResults = Partial<Record<TestName, null | AssertionResult>>;
 
+interface AskScriptTestConfig {
+  runtime: RuntimeType;
+  askJsonTargetPath: string;
+  environment: Options;
+  args: any[];
+  testResults: TestResults;
+}
+
+interface AskScriptTestWithResultFileConfig extends AskScriptTestConfig {
+  testPath: string;
+  name: string;
+}
+
+async function runAskScriptTest({
+  runtime,
+  askJsonTargetPath,
+  environment,
+  args,
+  testResults,
+}: AskScriptTestConfig) {
+  try {
+    const code = runtime.requireModule<AskCodeOrValue>(askJsonTargetPath);
+    const result = await runUntyped(environment, code, args);
+    if ('ASK_PRINT_RESULT' in process.env && process.env.ASK_PRINT_RESULT) {
+      console.log(`RESULT: ${JSON.stringify(result, null, 2)}`);
+    }
+    testResults.computes = assertionResult({
+      status: 'passed',
+      title: 'runs successfully',
+    });
+  } catch (e) {
+    testResults.computes = assertionResult({
+      status: 'failed',
+      title: 'runs successfully',
+      failureMessages: [e.message],
+    });
+  }
+}
+
+async function runAgainstTestResultFile({
+  testPath,
+  name,
+  runtime,
+  askJsonTargetPath,
+  environment,
+  args,
+  testResults,
+}: AskScriptTestWithResultFileConfig) {
+  const resultPath = join(testPath, `../${name}.test.result.ts`);
+  if (existsSync(resultPath)) {
+    const code = runtime.requireModule<AskCodeOrValue>(askJsonTargetPath);
+    const result = await runUntyped(environment, code, args);
+    const expectedResult = runtime.requireModule(resultPath);
+    const isCorrect = compareAsJson(result, expectedResult);
+    if ('ASK_PRINT_RESULT' in process.env && process.env.ASK_PRINT_RESULT) {
+      console.log(`RESULT: ${JSON.stringify(result, null, 2)}`);
+    }
+    testResults.computes = assertionResult({
+      status: isCorrect ? 'passed' : 'failed',
+      title: 'produces the expected result',
+      failureMessages: isCorrect
+        ? []
+        : [
+            `EXPECTED: ${JSON.stringify(expectedResult, null, 2)}
+    GOT: ${JSON.stringify(result, null, 2)}`,
+          ],
+    });
+  }
+}
+
 async function askRunner(
   globalConfig: Config.GlobalConfig,
   config: Config.ProjectConfig,
@@ -93,6 +163,7 @@ async function askRunner(
             }
             return `{${value}}`;
           }
+
           return `${name}=${wrapPropValue(value)}`;
         })
         .join(' ');
@@ -228,44 +299,23 @@ async function askRunner(
   // *.test.ask should be just run, no comparing with expected return value
   const isAskScriptTest = basename(testPath).match(/.*\.test\.ask/);
   if (isAskScriptTest) {
-    const code = runtime.requireModule<AskCodeOrValue>(askJsonTargetPath);
-    try {
-      const result = await runUntyped(environment, code, args);
-      if ('ASK_PRINT_RESULT' in process.env && process.env.ASK_PRINT_RESULT) {
-        console.log(`RESULT: ${JSON.stringify(result, null, 2)}`);
-      }
-      testResults.computes = assertionResult({
-        status: 'passed',
-        title: 'runs successfully',
-      });
-    } catch (e) {
-      testResults.computes = assertionResult({
-        status: 'failed',
-        title: 'runs successfully',
-        failureMessages: [e.message],
-      });
-    }
+    await runAskScriptTest({
+      runtime,
+      askJsonTargetPath,
+      environment,
+      args,
+      testResults,
+    });
   } else {
-    const resultPath = join(testPath, `../${name}.test.result.ts`);
-    if (existsSync(resultPath)) {
-      const code = runtime.requireModule<AskCodeOrValue>(askJsonTargetPath);
-      const result = await runUntyped(environment, code, args);
-      const expectedResult = runtime.requireModule(resultPath);
-      const isCorrect = compareAsJson(result, expectedResult);
-      if ('ASK_PRINT_RESULT' in process.env && process.env.ASK_PRINT_RESULT) {
-        console.log(`RESULT: ${JSON.stringify(result, null, 2)}`);
-      }
-      testResults.computes = assertionResult({
-        status: isCorrect ? 'passed' : 'failed',
-        title: 'produces the expected result',
-        failureMessages: isCorrect
-          ? []
-          : [
-              `EXPECTED: ${JSON.stringify(expectedResult, null, 2)}
-    GOT: ${JSON.stringify(result, null, 2)}`,
-            ],
-      });
-    }
+    await runAgainstTestResultFile({
+      testPath,
+      name,
+      runtime,
+      askJsonTargetPath,
+      environment,
+      args,
+      testResults,
+    });
   }
   return testResults;
 }

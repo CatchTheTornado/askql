@@ -24,4 +24,16 @@ describe(`object`, function () {
     };
     await expect(object.resolver(...input)).toStrictEqual(expectedOutput);
   });
+
+  it(`should allow for string properties`, async function () {
+    const expectedResult = {
+      'string property': 1,
+      'another funky string': true,
+    };
+    await expect(
+      ask(
+        `ask(object('string property',1,'another funky string',call(get('true'))))`
+      )
+    ).resolves.toStrictEqual(expectedResult);
+  });
 });

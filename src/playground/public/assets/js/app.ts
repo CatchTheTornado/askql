@@ -107,12 +107,11 @@ function removeFadeInClass() {
   const resultElem = document.getElementById('result')!;
   resultElem.classList.remove('fadeIn');
 }
-function exitEditor(editor: AceAjax.Editor) {
-  console.log(editor);
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function confirmExitFromPlayground(editor: AceAjax.Editor): void {
   window.addEventListener('beforeunload', function (e) {
-    // Cancel the event
-    e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
-    // Chrome requires returnValue to be set
+    e.preventDefault();
     e.returnValue = '';
   });
 }

@@ -29,7 +29,8 @@
     "playground:build-assets:img": "imagemin src/playground/public/assets/img/* --out-dir=dist/playground/public/img",
     "playground:build-ts": "tsc && mv dist/playground/public/assets/js dist/playground/public/js",
     "playground:start": "dotenv -e dist/.env node dist/playground/app.js",
-    "build:all": "npm run build && npm run playground:build"
+    "build:all": "npm run build && npm run playground:build",
+    "playground:server": "node dist/playground-backend/express/demoAskScriptServer.js"
   },
   "husky": {
     "hooks": {

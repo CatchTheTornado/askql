@@ -70,7 +70,7 @@ describe(`askExpressMiddleware`, () => {
     expect(mockNext).not.toHaveBeenCalled();
   });
 
-  it('should run next with error when passed the error argument', () => {
+  it('should run next with error when passed the error argument', async () => {
     const errorProneMiddleware = askExpressMiddleware(
       {},
       { callNext: true, passError: true }
@@ -79,7 +79,37 @@ describe(`askExpressMiddleware`, () => {
     const expectedError = new TypeError(
       `Cannot read property 'code' of undefined`
     );
-    errorProneMiddleware(mockRequest, mockResponse, mockNext);
-    expect(mockNext).toHaveBeenCalledWith(expectedError);
+    await errorProneMiddleware(mockRequest, mockResponse, mockNext);
+    expect(mockNext).lastCalledWith(expectedError);
+  });
+
+  it(`should call next with error when code doesn't exist in body`, async function () {
+    const errorProneMiddleware = askExpressMiddleware(
+      {},
+      { callNext: true, passError: true }
+    );
+
+    const errorMessage = new Error('Missing code in request body!');
+
+    mockRequest.body.code = {};
+
+    await errorProneMiddleware(mockRequest, mockResponse, mockNext);
+    expect(mockNext).lastCalledWith(errorMessage);
+  });
+
+  it(`should call next with error when bad code is sent`, async function () {
+    const errorProneMiddleware = askExpressMiddleware(
+      {},
+      { callNext: true, passError: true }
+    );
+
+    mockRequest.body.code = `ask {
+      5 + 5 * 10
+    }`;
+
+    await errorProneMiddleware(mockRequest, mockResponse, mockNext);
+    expect(
+      mockNext.mock.calls[mockNext.mock.calls.length - 1][0]
+    ).toMatchSnapshot();
   });
 });

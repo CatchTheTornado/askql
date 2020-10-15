@@ -44,3 +44,11 @@ test('map', async () => {
     )
   ).resolves.toStrictEqual(namesWithPrefix);
 });
+
+test('map should not mutate the array', async () => {
+  const array = [1, 2, 3, 4];
+
+  const anotherArray = await map.resolver(array, (item: number) => item + 1);
+
+  expect(array !== anotherArray).toEqual(true);
+});

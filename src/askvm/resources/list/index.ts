@@ -6,3 +6,4 @@ export { length } from './length';
 export { set } from './set';
 export { arrayExtend } from './arrayExtend';
 export { each } from './each';
+export { push } from './push';

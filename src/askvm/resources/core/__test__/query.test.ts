@@ -1,5 +1,5 @@
 import { runUntyped } from '../../..';
-import { parse } from '../../../../askcode';
+import { AskCode, parse } from '../../../../askcode';
 import * as core from '../../core';
 import { query } from '../../core';
 
@@ -23,7 +23,7 @@ function ask(code: string) {
   );
 }
 
-describe('hasKey', () => {
+describe('query', () => {
   it(`should return an array value`, async function () {
     const expectedValueForArray = {
       objectReturned: values.arrayVal,
@@ -77,17 +77,4 @@ describe('hasKey', () => {
 
     await expect(ask(queryForABoolean)).resolves.toStrictEqual(expectedValue);
   });
-
-  // TODO :: should we make this work?
-  // it(`should return an object`, async function () {
-  //   const expectedObjectValue = {
-  //     objectReturned: values.objectValue,
-  //   };
-  //
-  //   const queryForAnObjectValue = `query(node('objectReturned',f(object('a',call(get('get'),'objectValue')))))`;
-  //
-  //   await expect(ask(queryForAnObjectValue)).resolves.toStrictEqual(
-  //     expectedObjectValue
-  //   );
-  // });
 });

@@ -29,12 +29,18 @@ async function printAskVersion(elemId: string, askScriptServerUrl: string) {
 function registerAskScriptEditor(
   editorElementId: string,
   runElementId: string,
-  askScriptServerUrl: string
+  askScriptServerUrl: string,
+  dirty: boolean
 ) {
   const editor = ace.edit(editorElementId);
   editor.setTheme('ace/theme/twilight');
   editor.session.setMode('ace/mode/javascript');
   editor.session.setOption('useWorker', false);
+  editor.session.on('change', function () {
+    if (dirty) return;
+    confirmExitFromPlayground();
+    dirty = true;
+  });
 
   editor.commands.addCommand({
     name: 'alertalert',
@@ -109,7 +115,7 @@ function removeFadeInClass() {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function confirmExitFromPlayground(editor: AceAjax.Editor): void {
+function confirmExitFromPlayground(): void {
   window.addEventListener('beforeunload', function (e) {
     e.preventDefault();
     e.returnValue = '';

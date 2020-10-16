@@ -147,9 +147,8 @@
 							<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/ace.js" type="text/javascript"
 								charset="utf-8"></script>
 							<script>
-								const editor = registerAskScriptEditor("editor", "run", "{{askscriptServerUrl}}");
+								const editor = registerAskScriptEditor("editor", "run", "{{askscriptServerUrl}}", false);
 								generateDemoMenuEntries(editor);
-								confirmExitFromPlayground(editor);
 							</script>
 						</div>
 						<div class="col-md-6 bg-100 relative">

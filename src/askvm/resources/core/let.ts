@@ -8,6 +8,16 @@ import {
   JSONable,
 } from '../../lib';
 
+function assignValue(
+  valueObject: { [key: string]: any },
+  key: string,
+  assignedValue: any
+) {
+  if (Object.isFrozen(valueObject[key]))
+    throw new Error(`Cannot assign to a constant variable "${key}"`);
+  valueObject[key] = assignedValue;
+}
+
 export const letRes = resource({
   type: any,
   async compute(options, code, args): Promise<TypedValue<JSONable>> {
@@ -15,10 +25,6 @@ export const letRes = resource({
 
     const key: any = await runUntyped(options, children[0]); // FIXME any
     const value = await run(options, children[1]);
-
-    if (typeof key !== 'string') {
-      throw new Error(`Expected set key to be string, got: ${typeof key}`);
-    }
 
     if (key === 'resources') {
       throw new Error(`Key "resources" cannot be redeclared`);
@@ -32,7 +38,7 @@ export const letRes = resource({
       ) {
         const { values = {} } = prototype;
         if (Object.prototype.hasOwnProperty.call(values, key)) {
-          values[key] = value;
+          assignValue(values, key, value);
           return value;
         }
       }
@@ -40,6 +46,10 @@ export const letRes = resource({
     }
 
     options.values![key] = value;
+
+    if (code.name === 'const') {
+      Object.freeze(options.values![key]);
+    }
     return value;
   },
 });

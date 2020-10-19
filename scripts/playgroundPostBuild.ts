@@ -30,6 +30,11 @@ async function copyStaticAssets() {
       'src/playground/public/assets/css',
       'dist/playground/public/'
     );
+    shell.cp(
+      '-R',
+      'dist/playground/public/assets/js',
+      'dist/playground/public/js'
+    );
     shell.cp('-R', 'src/playground/views', 'dist/playground');
   } catch (e) {
     console.error(e);

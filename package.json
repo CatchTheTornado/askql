@@ -27,7 +27,7 @@
     "playground:build": "ts-node scripts/playgroundBuild.ts && npm run playground:build-assets && npm run playground:build-ts && ts-node scripts/playgroundPostBuild.ts",
     "playground:build-assets": "npm run playground:build-assets:img",
     "playground:build-assets:img": "imagemin src/playground/public/assets/img/* --out-dir=dist/playground/public/img",
-    "playground:build-ts": "tsc && mv dist/playground/public/assets/js dist/playground/public/js",
+    "playground:build-ts": "tsc",
     "playground:start": "dotenv -e dist/.env node dist/playground/app.js",
     "build:all": "npm run build && npm run playground:build",
     "playground:server": "node dist/playground-backend/express/demoAskScriptServer.js"

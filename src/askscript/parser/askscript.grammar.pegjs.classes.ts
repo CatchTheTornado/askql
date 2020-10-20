@@ -611,6 +611,10 @@ export class ValueLiteral {
 export class StringLiteral {
   escapedText: string;
 
+  public get text() {
+    return this.escapedText;
+  }
+
   constructor(escapedText: string) {
     this.escapedText = escapedText;
   }

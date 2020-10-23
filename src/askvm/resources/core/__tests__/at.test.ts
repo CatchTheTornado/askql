@@ -25,4 +25,10 @@ describe(`at`, function () {
       `Requested property key was not defined so it is not possible to get its value.`
     );
   });
+
+  it(`should throw when accessing index which is out of lists bounds.`, async function () {
+    await expect(
+      ask(`ask(const('myarray',array(1,2,3)),call(get('at'),get('myarray'),3))`)
+    ).rejects.toThrow(`Index out of bounds mate.`);
+  });
 });

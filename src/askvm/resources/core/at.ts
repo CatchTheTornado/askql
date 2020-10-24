@@ -6,7 +6,7 @@ export const at = resource({
     if (
       Array.isArray(listOrObject) &&
       Number.isInteger(key) &&
-      listOrObject.length <= key
+      (listOrObject.length <= key || key < 0)
     )
       throw Error(
         'Sorry, but index ' +

@@ -42,13 +42,23 @@ describe(`at`, function () {
     ).resolves.toStrictEqual(`Coco`);
   });
 
-  it(`Should throw when accessing index which is out of lists bounds.`, async function () {
+  it(`Should throw when accessing a nonnegative index which is out of lists bounds.`, async function () {
     await expect(
       ask(
         `ask(const('yummyList',list('coco','papaya','mango')),call(get('at'),get('yummyList'),3))`
       )
     ).rejects.toThrow(
       `Sorry, but index 3 is out of bounds for a list with 3 elements.`
+    );
+  });
+
+  it(`Should throw when accessing a nonnegative index which is out of lists bounds.`, async function () {
+    await expect(
+      ask(
+        `ask(const('yummyList',list('coco','papaya','mango')),call(get('at'),get('yummyList'),-1))`
+      )
+    ).rejects.toThrow(
+      `Sorry, but index -1 is out of bounds for a list with 3 elements.`
     );
   });
 });

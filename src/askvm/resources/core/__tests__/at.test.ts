@@ -16,7 +16,15 @@ function ask(code: string) {
 }
 
 describe(`at`, function () {
-  it(`should throw when trying to access undefined property`, async function () {
+  it(`Should retrieve a defined property from an object.`, async function () {
+    await expect(
+      ask(
+        `ask(const('cocoObject',object('title','Coco')),call(get('at'),get('cocoObject'),'title'))`
+      )
+    ).resolves.toStrictEqual(`Coco`);
+  });
+
+  it(`Should throw when trying to access an undefined property of an object.`, async function () {
     await expect(
       ask(
         `ask(const('myobject',object('title','Coco')),call(get('at'),get('myobject'),'description'))`
@@ -26,9 +34,21 @@ describe(`at`, function () {
     );
   });
 
-  it(`should throw when accessing index which is out of lists bounds.`, async function () {
+  it(`Should retrieve an element from a list.`, async function () {
     await expect(
-      ask(`ask(const('myarray',array(1,2,3)),call(get('at'),get('myarray'),3))`)
-    ).rejects.toThrow(`Index out of bounds mate.`);
+      ask(
+        `ask(const('yummyList',list('Coco','Papaya','Mango')),call(get('at'),get('yummyList'),0))`
+      )
+    ).resolves.toStrictEqual(`Coco`);
+  });
+
+  it(`Should throw when accessing index which is out of lists bounds.`, async function () {
+    await expect(
+      ask(
+        `ask(const('yummyList',list('coco','papaya','mango')),call(get('at'),get('yummyList'),3))`
+      )
+    ).rejects.toThrow(
+      `Sorry, but index 3 is out of bounds for a list with 3 elements.`
+    );
   });
 });

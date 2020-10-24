@@ -3,11 +3,19 @@ import { any, resource, typed } from '../../lib';
 export const at = resource({
   type: any,
   async resolver(listOrObject: any, key: any): Promise<any> {
-    // TODO what is list comes as listOrObject
-    // if the requested index is out of bounds, then 'out of bounds' error should be thrown
+    if (
+      Array.isArray(listOrObject) &&
+      Number.isInteger(key) &&
+      listOrObject.length <= key
+    )
+      throw Error(
+        'Sorry, but index ' +
+          key +
+          ' is out of bounds for a list with ' +
+          listOrObject.length +
+          ' elements.'
+      );
 
-    if (Array.isArray(listOrObject) && listOrObject.length < 0 + key)
-      throw Error('Index out of bounds.');
     if (
       listOrObject !== null &&
       typeof listOrObject === 'object' &&

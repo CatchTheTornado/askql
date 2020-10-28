@@ -18,7 +18,7 @@ function assignValue(
   valueObject[key] = assignedValue;
 }
 
-export const letRes = resource({
+export const assignRes = resource({
   type: any,
   async compute(options, code, args): Promise<TypedValue<JSONable>> {
     const { params: children = [] } = code;

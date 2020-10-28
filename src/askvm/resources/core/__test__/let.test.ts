@@ -18,7 +18,9 @@ function ask(code: string) {
 describe(`let`, function () {
   it(`should assign value to a let variable on initialization`, async function () {
     const value = 6;
-    await expect(ask(`ask(let('a',${value}))`)).resolves.toEqual(value);
+    await expect(
+      ask(`ask(let('cocoCount',${value}),get('cocoCount'))`)
+    ).resolves.toEqual(value);
   });
 
   const reservedWords = ['resources'];

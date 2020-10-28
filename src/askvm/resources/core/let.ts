@@ -30,21 +30,6 @@ export const letRes = resource({
       throw new Error(`Key "resources" cannot be redeclared`);
     }
 
-    if (code.name === 'assign') {
-      for (
-        let prototype: Options | undefined = options;
-        prototype;
-        prototype = prototype?.prototype
-      ) {
-        const { values = {} } = prototype;
-        if (Object.prototype.hasOwnProperty.call(values, key)) {
-          assignValue(values, key, value);
-          return value;
-        }
-      }
-      throw new Error(`Cannot assign to an unknown variable "${key}"`);
-    }
-
     options.values![key] = value;
 
     return value;

@@ -9,11 +9,7 @@ export const at = resource({
       (listOrObject.length <= key || key < 0)
     )
       throw Error(
-        'Sorry, but index ' +
-          key +
-          ' is out of bounds for a list with ' +
-          listOrObject.length +
-          ' elements.'
+        `Sorry, but index ${key} is out of bounds for a list with ${listOrObject.length} elements.`
       );
 
     if (

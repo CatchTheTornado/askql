@@ -29,7 +29,9 @@ export const assignRes = resource({
     const value = await run(options, children[1]);
 
     if (key === 'resources') {
-      throw new Error(`Key "resources" cannot be redeclared`);
+      throw new Error(
+        `Key "resources" is a reserved keyword and cannot be assigned to.`
+      );
     }
 
     let keyFound = false;

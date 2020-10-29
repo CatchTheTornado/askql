@@ -41,4 +41,13 @@ describe(`assign`, function () {
       `Cannot assign to an unknown variable "unrealisticCoco"`
     );
   });
+
+  it(`Should throw when assigning a value to a reserved keyword variable.`, async function () {
+    const reservedWord = 'resources';
+    await expect(
+      ask(`ask(assign('${reservedWord}','CocoResource'))`)
+    ).rejects.toThrow(
+      `Key "resources" is a reserved keyword and cannot be assigned to.`
+    );
+  });
 });

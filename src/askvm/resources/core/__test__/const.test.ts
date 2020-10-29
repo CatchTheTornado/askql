@@ -23,11 +23,13 @@ describe(`const`, function () {
     ).resolves.toEqual(value);
   });
 
-  it(`should throw when trying to assign to const`, async function () {
+  it(`Creating a const should create a Javascript variable object which is Object.isFrozen()`, async function () {
     const value = 6;
-    await expect(
-      ask(`ask(const('a',${value}),call(get('get'),assign('a',4),'a'))`)
-    ).rejects.toThrow(`Cannot assign to a constant variable "a"`);
+    let constantVariable = await expect(
+      ask(`ask(const('a',${value}),call(get('get'), 'a'))`)
+    ).resolves.toEqual(value);
+    if (!Object.isFrozen(constantVariable))
+      throw Error(`Constant variable is not frozen!`);
   });
 
   const reservedWords = ['resources'];

@@ -31,7 +31,6 @@ export const assignRes = resource({
     }
 
     let keyFound = false;
-    // if (code.name === 'assign') {
     for (
       let prototype: Options | undefined = options;
       prototype;
@@ -46,7 +45,6 @@ export const assignRes = resource({
     }
     if (keyFound === false)
       throw new Error(`Cannot assign to an unknown variable "${key}"`);
-    // }
 
     options.values![key] = value;
 

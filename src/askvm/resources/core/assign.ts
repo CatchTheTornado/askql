@@ -14,7 +14,9 @@ function assignValue(
   assignedValue: any
 ) {
   if (Object.isFrozen(valueObject[key]))
-    throw new Error(`Cannot assign to a constant variable "${key}"`);
+    throw new Error(
+      `Cannot assign to a constant variable "${key}" because it is a constant.`
+    );
   valueObject[key] = assignedValue;
 }
 

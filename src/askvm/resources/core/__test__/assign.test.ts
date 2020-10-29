@@ -24,4 +24,15 @@ describe(`assign`, function () {
     );
     expect(resolvedValue).toEqual(assignedValue);
   });
+
+  it(`Should throw when assigning a value to a constant variable.`, async function () {
+    const constantName = 'favoriteConst';
+    await expect(
+      ask(
+        `ask(const('${constantName}','Coconut'),assign('${constantName}','Wallnut'))`
+      )
+    ).rejects.toThrow(
+      `Cannot assign to a constant variable "${constantName}" because it is a constant.`
+    );
+  });
 });

@@ -16,7 +16,7 @@ function ask(code: string) {
 }
 
 describe(`assign`, function () {
-  it(`should assign value with the assign resource`, async function () {
+  it(`Should assign a value to a 'let' variable with the assign resource.`, async function () {
     const initialValue = 6;
     const assignedValue = 4;
     const resolvedValue = await ask(

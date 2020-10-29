@@ -35,4 +35,10 @@ describe(`assign`, function () {
       `Cannot assign to a constant variable "${constantName}" because it is a constant.`
     );
   });
+
+  it(`Should throw when assigning a value to a non-declared variable.`, async function () {
+    await expect(ask(`ask(assign('unrealisticCoco','Nut'))`)).rejects.toThrow(
+      `Cannot assign to an unknown variable "unrealisticCoco"`
+    );
+  });
 });

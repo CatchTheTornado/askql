@@ -3,22 +3,11 @@ import {
   resource,
   run,
   runUntyped,
-  Options,
   TypedValue,
   JSONable,
 } from '../../lib';
 
-function assignValue(
-  valueObject: { [key: string]: any },
-  key: string,
-  assignedValue: any
-) {
-  if (Object.isFrozen(valueObject[key]))
-    throw new Error(`Cannot assign to a constant variable "${key}"`);
-  valueObject[key] = assignedValue;
-}
-
-export const letRes = resource({
+export const constRes = resource({
   type: any,
   async compute(options, code, args): Promise<TypedValue<JSONable>> {
     const { params: children = [] } = code;
@@ -29,9 +18,8 @@ export const letRes = resource({
     if (key === 'resources') {
       throw new Error(`Key "resources" cannot be redeclared`);
     }
-
     options.values![key] = value;
-
+    Object.freeze(options.values![key]);
     return value;
   },
 });

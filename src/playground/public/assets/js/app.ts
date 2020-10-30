@@ -29,16 +29,16 @@ async function printAskVersion(elemId: string, askScriptServerUrl: string) {
 function registerAskScriptEditor(
   editorElementId: string,
   runElementId: string,
-  askScriptServerUrl: string,
-  dirty: boolean
+  askScriptServerUrl: string
 ) {
   const editor = ace.edit(editorElementId);
+  let dirty = false;
   editor.setTheme('ace/theme/twilight');
   editor.session.setMode('ace/mode/javascript');
   editor.session.setOption('useWorker', false);
-  editor.session.on('change', function () {
+  editor.session.on('change', () => {
     if (dirty) return;
-    confirmExitFromPlayground();
+    playgroundIsDirty(!dirty);
     dirty = true;
   });
 
@@ -87,6 +87,7 @@ async function executeAskScript(
     const json = await response.json();
     if (response.status == 200) {
       showSuccessfulResponse(json.result);
+      playgroundIsDirty(false);
     } else {
       showErrorResponse(json.error);
     }
@@ -114,10 +115,11 @@ function removeFadeInClass() {
   resultElem.classList.remove('fadeIn');
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function confirmExitFromPlayground(): void {
-  window.addEventListener('beforeunload', function (e) {
-    e.preventDefault();
-    e.returnValue = '';
-  });
+function playgroundIsDirty(isDirty: boolean): void {
+  window.onbeforeunload = function (e: any) {
+    if (isDirty) {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  };
 }

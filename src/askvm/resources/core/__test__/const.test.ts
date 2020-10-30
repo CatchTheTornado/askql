@@ -25,11 +25,10 @@ describe(`const`, function () {
 
   it(`Creating a const should create a Javascript variable object which is Object.isFrozen()`, async function () {
     const value = 6;
-    let constantVariable = await expect(
+    const constantVariable = await expect(
       ask(`ask(const('a',${value}),call(get('get'), 'a'))`)
     ).resolves.toEqual(value);
-    if (!Object.isFrozen(constantVariable))
-      throw Error(`Constant variable is not frozen!`);
+    expect(Object.isFrozen(constantVariable)).toBe(true);
   });
 
   const reservedWords = ['resources'];

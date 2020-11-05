@@ -37,7 +37,7 @@ describe(`const`, function () {
     for (let i = 0; i < reservedWords.length; i++) {
       const reservedWord = reservedWords[i];
       await expect(ask(`ask(const('resources',6))`)).rejects.toThrow(
-        `Key "${reservedWord}" cannot be redeclared`
+        `Key "${reservedWord}" is a reserved keyword and cannot be used.`
       );
     }
   });

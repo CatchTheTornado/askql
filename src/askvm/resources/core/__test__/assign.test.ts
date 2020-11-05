@@ -47,7 +47,7 @@ describe(`assign`, function () {
     await expect(
       ask(`ask(assign('${reservedWord}','CocoResource'))`)
     ).rejects.toThrow(
-      `Key "resources" is a reserved keyword and cannot be assigned to.`
+      `Key "${reservedWord}" is a reserved keyword and cannot be used.`
     );
   });
 });

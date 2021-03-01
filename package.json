@@ -78,7 +78,7 @@
     "@types/jsesc": "2.5.1",
     "@types/lodash": "^4.14.161",
     "@types/micromatch": "^4.0.1",
-    "@types/node": "14.11.5",
+    "@types/node": "14.14.31",
     "@types/node-fetch": "2.5.7",
     "@types/pegjs": "0.10.2",
     "@types/rimraf": "3.0.0",

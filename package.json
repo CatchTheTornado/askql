@@ -99,7 +99,7 @@
     "express-handlebars": "^5.1.0",
     "fs.promises": "0.1.2",
     "glob": "7.1.6",
-    "golden-layout": "^1.5.9",
+    "golden-layout": "^2.1.1",
     "handlebars": "^4.7.6",
     "husky": "^4.3.0",
     "imagemin-cli": "^6.0.0",
@@ -110,14 +110,14 @@
     "micromatch": "^4.0.2",
     "nanoid": "^3.1.12",
     "node-fetch": "2.6.1",
-    "node-sass": "^4.14.1",
+    "node-sass": "^5.0.0",
     "pegjs": "0.10.0",
     "prettier": "^2.1.2",
     "rimraf": "3.0.2",
     "shelljs": "^0.8.4",
     "ts-node": "^9.1.1",
     "typescript": "^4.0.3",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+    "webpack": "^5.34.0",
+    "webpack-cli": "^4.6.0"
   }
 }

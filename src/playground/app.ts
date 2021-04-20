@@ -32,7 +32,7 @@ const server = app.listen(process.env.PLAYGROUND_PORT, () => {
   console.log(
     '  App is running at http://localhost:%d in %s mode',
     process.env.PLAYGROUND_PORT,
-    process.env.NODE_ENV
+    process.env.NODE_ENV ?? 'default'
   );
   console.log('  Press CTRL-C to stop\n');
 });

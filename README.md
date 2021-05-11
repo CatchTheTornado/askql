@@ -280,7 +280,7 @@ Here is the link to our [AskQL playground](http://cli.askql.org/)!
     You can specify port and server URL in command line:
 
     ```
-    PLAYGROUND_PORT=1234 npm run playground:start
+    PLAYGROUND_PORT=8080 PLAYGROUND_ASK_SERVER_URL="http://localhost:1234" npm run playground:start
     ```
 
 #### Additional notes

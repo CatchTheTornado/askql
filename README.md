@@ -6,8 +6,25 @@
 
 # [AskQL](https://askql.org/)
 
-AskQL is a new Turing-complete query and programming language, which allows faster and easier communication with servers. <br/>
-Instead of mere _data queries_ or _simple REST_ questions, AskQL allows to query a server with _fully functional_ programs which use all the data and services the server shares in a secure way.
+**AskQL is the next step after GraphQL and Serverless**. 
+
+With AskQL developers can attach scripts to queries that are executed serverside. The AskQL parser accepts the GraphQL query format so there's **no learning curve**. Because the scripts are executed serverside and the results [can be cached](#584) it's great for Web Vitals and app performance.
+
+Read a great articly on [AskQL as a GraphQL alternative](https://yonatankra.com/on-covid-19-graphql-and-askql/)
+
+**Deploy your dynamic JAMStack, Mobile, CMS apps with no backend development required.**
+
+By doing so frontend developers needing additional API endpoints are no longer bound by the backend development release cycles. They can send the middleware/endpoint code along with the query. No deployments, no custom resolvers, lambdas required.
+
+**It's safe**
+
+AskQL uses the isolated Virtual Machine to execute the scripts and the resources concept that let you fully controll what integrations, collections and other data sources are accessible to the scripts.
+
+By the way, it's a Turning-complete query and programming language :-)
+
+## Getting started
+
+AskQL comes with whole variety of default resources (resource is equivalent of GraphQL resolver). You should definitely read the **[Introduction to AskQL](https://yonatankra.com/introduction-to-askql/)** by @YonatanKra and **[AskQL Quickstart](https://yonatankra.com/askql-nodejs-quickstart/)**
 
 ## Why and what for?
 
@@ -26,9 +43,10 @@ Instead of mere _data queries_ or _simple REST_ questions, AskQL allows to query
 Benefits for development process:
 
 - Next milestone after GraphQL and REST API
-- New safe query language
+- New safe query language extedning the GraphQL syntax
 - Send code to servers without the need to deploy
 - Send executable code instead of JSONs
+- Give the frontend developers more freedom, simplifying the dev process to single layer
 
 Benefits for programmers:
 
@@ -39,6 +57,7 @@ Benefits for programmers:
 ### Prerequisites
 
 `node >=12.14`
+
 
 ## Quick Start
 
@@ -51,6 +70,42 @@ npm install askql
 ```
 
 ### Usage
+
+You can use AskQL interpreter for variety of use cases:
+
+- **Ultimate endpoint** accpeting the extended GraphQL queries
+
+Sample server. [Checkout full demo](https://github.com/YonatanKra/askql-demo) from @YonatanKra repo.
+
+```js
+import askql from "askql";
+import express from 'express';
+import bodyParser from 'body-parser';
+
+const { askExpressMiddleware } = middlewareFactory;
+const { resources } = askql; // resources available to AskQL Scripts
+const values = { }; // values available to AskQL scripts
+
+export const askMiddleware = askExpressMiddleware(
+    { resources, values },
+    { callNext: true, passError: true }
+);
+
+const port = 8080;
+const app = express();
+
+app.use(express.static('public'));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.post('/ask', [askMiddleware]);
+
+app.listen(port, () => {
+    console.log(`AskQL listening at http://localhost:${port}`);
+});
+```
+
+- **CLI appps** acting a query language
 
 Sample index.js file:
 
@@ -68,6 +123,25 @@ const askql = require("askql");
 ```
 
 [👉 More examples](https://github.com/xFAANG/askql/tree/master/src/askscript/__tests__)
+
+
+## Examples
+
+AskQL comes with whole variety of default resources (resource is equivalent of GraphQL resolver). You should definitely read the [Introduction to AskQL](https://yonatankra.com/introduction-to-askql/) by @YonatanKra and [AskQL Quickstart](https://yonatankra.com/askql-nodejs-quickstart/)
+
+Query the Star Wars characters with AskQL and the [`fetch` builtin resource](https://github.com/CatchTheTornado/askql/blob/master/src/askvm/resources/node/fetch.ts):
+
+```js
+ask {
+	fetch('https://swapi.dev/api/people'):at('results'):map(fun(swCharacter) {
+    {
+      Name: swCharacter.name,
+      Gender: swCharacter.gender,
+      'Hair Color': swCharacter.hair_color
+    }
+  })
+}
+```
 
 ## Development & Contributing
 
@@ -158,7 +232,7 @@ As the output CLI always prints AskCode (which would be sent to an AskVM machine
 
 #### Usage
 
-1. Write a hello world!
+1. Write a hello world and test it out with the CLI interpreter! If you'd like to use the GraphQL like endpoint [read this article](https://yonatankra.com/on-covid-19-graphql-and-askql/).
 
 In AskQL we only use single quotes:
 
@@ -184,67 +258,27 @@ float ask(4.2)
 4.2
 ```
 
-3. Let's say we have a table of philosophers and their contribution to computer science as a score:
+3. Let's say we've got more sophisticated example using the REST api and the `fetch` resource to get the current India's COVID19 stats:
 
 ```
-🦄 scorePerPhilosopher
-any ask(get('scorePerPhilosopher'))
-{
-  Aristotle: 385,
-  Kant: 42,
-  Plato: 1,
-  Russel: 7331,
-  Turing: 65536,
-  Wittgenstein: 420
+ask {
+  fetch('https://api.covid19india.org/data.json')['cases_time_series']
+  :map(fun(dataSet) {
+                         return {
+                            data: dataSet['date'],
+                            dailyconfirmed: dataSet['dailyconfirmed'],
+                            dailydeceased: dataSet['dailydeceased'],
+                            dailyrecovered: dataSet['dailyrecovered']
+                          }
+                        })
 }
 ```
 
-Now let's find out the max score with a simple query:
-
-```
-🦄 max(scorePerPhilosopher)
-int ask(call(get('max'),get('scorePerPhilosopher')))
-65536
-```
-
-Nice!
-
-4. Write a first query, it can be a multi-liner. First step:
-
-`.editor`
-
-second step, we write the query:
-
-```
-query {
-  philosophers
-}
-```
-
-and here we have the answer:
-
-```
-any ask(query(node('philosophers',f(get('philosophers')))))
-{
-  philosophers: [ 'Aristotle', 'Kant', 'Plato', 'Russel', 'Turing', 'Wittgenstein' ]
-}
-```
-
-5. You want to know now which philosopher had the greatest contribuition to IT, here's a one liner:
-
-```
-🦄 find(philosophers, fun(name) { scorePerPhilosopher:at(name):is(max(scorePerPhilosopher)) })
-
-string ask(call(get('find'),get('philosophers'),fun(let('name',get('$0')),call(get('is'),call(get('at'),get('scorePerPhilosopher'),get('name')),call(get('max'),get('scorePerPhilosopher'))))))
-
-'Turing'
-```
-
-6. Exit the console!
+4. Exit the console!
 
 `ctrl + d`
 
-7. You finished the AskScript tutorial, congratulations! 🎉
+5. You finished the AskScript tutorial, congratulations! 🎉
 
 ### Playground
 

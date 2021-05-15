@@ -203,10 +203,9 @@ Find AskQL documentation [here](https://www.notion.so/AskQL-Documentation-cd065c
 
 The Documentation is divided into 4 parts:<br>
 
-- [AskQL Overview](https://www.notion.so/AskQL-Overview-c95f3370be104466bfb3e3bca3ce7db4)
-- [AskQL Quick Guide](https://www.notion.so/AskQL-Quick-Guide-0c5f8659957d47978d63f6afb85170ab)
-- [AskScript - Human Friendly Language for AskScript](https://www.notion.so/AskScript-Human-Friendly-Language-for-AskQL-7c5e382df87a4015b44985391861f6a2)
-- [AskVM - Runtime Environment for AskQL](https://www.notion.so/AskVM-Runtime-Environment-for-AskQL-cf4c34bfc7df4e0c8d35ae6213e6f344)
+- [AskQL Overview](https://www.notion.so/AskQL-Overview-198fc4dd0b084cfa94eb4147bee71fb0)
+- [AskQL Quick Guide](https://www.notion.so/AskQL-Quick-Guide-576232203717426d84731fe76b33818f)
+- [AskScript - Human Friendly Language for AskScript](https://www.notion.so/AskScript-Human-Friendly-Language-for-AskQL-7363b28b745d499384230420eea667bc)
 
 ### Try It Yourself
 

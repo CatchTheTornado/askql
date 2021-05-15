@@ -18,11 +18,11 @@ By doing so frontend developers needing additional API endpoints are no longer b
 
 **It's safe**
 
-AskQL uses the isolated Virtual Machine to execute the scripts and the resources concept that let you fully controll what integrations, collections and other data sources are accessible to the scripts.
+AskQL uses the isolated Virtual Machine to execute the scripts and the resources concept that let you fully controll what integrations, collections and other data sources are accessible to the scripts. Moreover features like [Access management](#583) and [Secrets management](#581) are on their way.
 
 **Business loves it**
 
-We're working on a set of built in resources integrating AskQL with [MACH data sources](https://machalliance.org/) like eCommerce platforms (SFCC, Commercetools), databases (MongoDB, MySQL) etc. It' shortening the integration time a lot,
+We're working on a set of built in resources integrating AskQL with [MACH data sources](https://machalliance.org/) like eCommerce platforms **(SFCC, Commercetools)**, databases **(MongoDB, MySQL)** etc. By having it all in - frontend devs can directly access the data sources, processing the data server-side, with no additional API endpoints, middlewares required. It' shortening the integration time a lot,
 
 By the way, it's a Turning-complete query and programming language :-)
 
@@ -69,6 +69,17 @@ Benefits for business:
 
 `node >=12.14`
 
+## Roadmap
+
+You can use AskQL right away - both as the CLI scripting for extending your Node's app or as a GraphQL endpoint alternative. Howeve'r were working an some cool features making it even easier for business use-cases and You're invited to contribute :)
+
+- Namespacing support - #579
+- Add Secrets management feature - #581
+- Access control and session management - #583
+- Add stored procedures/persited/hash queries - #584
+- Add HTTP GET variables access to AskScript - #585
+- TypeScript SDK - #586
+- Add React Context and/or hooks for querying AskQL endpoints - #587
 
 ## Quick Start
 

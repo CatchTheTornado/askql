@@ -16,6 +16,10 @@ Read a great articly on [AskQL as a GraphQL alternative](https://yonatankra.com/
 
 By doing so frontend developers needing additional API endpoints are no longer bound by the backend development release cycles. They can send the middleware/endpoint code along with the query. No deployments, no custom resolvers, lambdas required.
 
+<div style="text-align:center;">
+[![](http://img.youtube.com/vi/DZg9Ux2gzsA/0.jpg)](http://www.youtube.com/watch?v=DZg9Ux2gzsA "")
+</div>
+
 **It's safe**
 
 AskQL uses the isolated Virtual Machine to execute the scripts and the resources concept that let you fully controll what integrations, collections and other data sources are accessible to the scripts.

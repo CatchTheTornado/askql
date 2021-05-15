@@ -73,13 +73,13 @@ Benefits for business:
 
 You can use AskQL right away - both as the CLI scripting for extending your Node's app or as a GraphQL endpoint alternative. Howeve'r were working an some cool features making it even easier for business use-cases and You're invited to contribute :)
 
-- Namespacing support - #579
-- Add Secrets management feature - #581
-- Access control and session management - #583
-- Add stored procedures/persited/hash queries - #584
-- Add HTTP GET variables access to AskScript - #585
-- TypeScript SDK - #586
-- Add React Context and/or hooks for querying AskQL endpoints - #587
+- [Namespacing support - #579](https://github.com/CatchTheTornado/askql/issues/579)
+- [Add Secrets management feature - #581](https://github.com/CatchTheTornado/askql/issues/581)
+- [Access control and session management - #583](https://github.com/CatchTheTornado/askql/issues/583)
+- [Add stored procedures/persited/hash queries - #584](https://github.com/CatchTheTornado/askql/issues/584)
+- [Add HTTP GET variables access to AskScript - #585](https://github.com/CatchTheTornado/askql/issues/585)
+- [TypeScript SDK - #586](https://github.com/CatchTheTornado/askql/issues/586)
+- [Add React Context and/or hooks for querying AskQL endpoints - #587](https://github.com/CatchTheTornado/askql/issues/587)
 
 ## Quick Start
 

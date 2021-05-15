@@ -8,7 +8,7 @@
 
 **AskQL is the next step after GraphQL and Serverless**. 
 
-With AskQL developers can attach scripts to queries that are executed serverside. The AskQL parser accepts the GraphQL query format so there's **no learning curve**. Because the scripts are executed serverside and the results [can be cached](#584) it's great for Web Vitals and app performance.
+With AskQL developers can attach scripts to queries that are executed serverside. The AskQL parser accepts the GraphQL query format so there's **no learning curve**. Because the scripts are executed serverside and the results [can be cached](#584) it's great for Web Vitals and app performance. Think of it as a **programmable GraphQL**.
 
 Read a great articly on [AskQL as a GraphQL alternative](https://yonatankra.com/on-covid-19-graphql-and-askql/)
 
@@ -19,6 +19,10 @@ By doing so frontend developers needing additional API endpoints are no longer b
 **It's safe**
 
 AskQL uses the isolated Virtual Machine to execute the scripts and the resources concept that let you fully controll what integrations, collections and other data sources are accessible to the scripts.
+
+**Business loves it**
+
+We're working on a set of built in resources integrating AskQL with [MACH data sources](https://machalliance.org/) like eCommerce platforms (SFCC, Commercetools), databases (MongoDB, MySQL) etc. It' shortening the integration time a lot,
 
 By the way, it's a Turning-complete query and programming language :-)
 
@@ -55,6 +59,11 @@ Benefits for programmers:
 - Asynchronous by default, no more `await` keyword - cleaner code
 - Processes only immutable data - fewer errors
 - Compiled to a clean functional code - clear logic
+
+Benefits for business:
+
+- We're working on a set of built in resources integrating AskQL with MACH data sources like eCommerce platforms (SFCC, Commercetools), databases (MongoDB, MySQL) etc. It' shortening the integration time a lot,
+- Leaner, straightforward app development process and low maintenance cost - you built just the frontend app, no backend app is required.
 
 ### Prerequisites
 

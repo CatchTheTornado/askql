@@ -17,7 +17,7 @@ const nanoid = customAlphabet('1234567890abcdef', 8);
 
 const baseEnvironment = {
   resources: { ...builtInResources, ...customResources },
-  customValues,
+  values: customValues,
 };
 
 const app = express();

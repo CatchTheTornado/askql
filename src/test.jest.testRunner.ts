@@ -158,7 +158,7 @@ async function askRunner(
       const propsStr = Object.entries(props || {})
         .map(([name, value]) => {
           function wrapPropValue(value: string) {
-            if (value[0] === '"') {
+            if (typeof value === 'string' && value[0] === '"') {
               return value;
             }
             return `{${value}}`;
@@ -170,7 +170,7 @@ async function askRunner(
 
       const innerJSX = children
         .map(function wrapChild(child: string) {
-          if (child[0] === '<') {
+          if (typeof child === 'string' && child[0] === '<') {
             return child;
           }
           return `{${child}}`;

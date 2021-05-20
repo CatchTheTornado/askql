@@ -22,14 +22,66 @@ export = (
         </struct>
       }
     />
-    <call
-      name="jsonPath"
-      args={
-        <list>
-          <ref name="revPerClient" />
-          {"$.A"}
-        </list>
+    <let
+      name="complexObject"
+      type={<ref name="any" />}
+      value={
+        <struct>
+          {"countries"}
+          <list>
+            <struct>
+              {"name"}
+              {"Poland"}
+              {"population"}
+              {"38M"}
+            </struct>
+            <struct>
+              {"name"}
+              {"Germany"}
+              {"population"}
+              {"80M"}
+            </struct>
+            <struct>
+              {"name"}
+              {"Greece"}
+              {"population"}
+              {"10M"}
+            </struct>
+          </list>
+        </struct>
       }
     />
+    <struct>
+      {"elementByExactPath"}
+      <call
+        name="jsonPath"
+        args={
+          <list>
+            <ref name="revPerClient" />
+            {"$.A"}
+          </list>
+        }
+      />
+      {"countryNames"}
+      <call
+        name="jsonPath"
+        args={
+          <list>
+            <ref name="complexObject" />
+            {"$.countries[*].name"}
+          </list>
+        }
+      />
+      {"populationOfGermany"}
+      <call
+        name="jsonPath"
+        args={
+          <list>
+            <ref name="complexObject" />
+            {'$.countries[?(@.name=="Germany")].population'}
+          </list>
+        }
+      />
+    </struct>
   </ask>
 );

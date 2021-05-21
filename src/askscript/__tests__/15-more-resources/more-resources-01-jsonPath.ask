@@ -1,0 +1,32 @@
+ask {
+    let revPerClient = {
+        A: 136,
+        B: 426,
+        C: 133,
+        D: 35,
+        E: 246,
+        F: 446,
+        G: 53,
+    }
+    let complexObject = { 
+        countries: [
+            {
+                name: 'Poland',
+                population: '38M'
+            },
+            {
+                name: 'Germany',
+                population: '80M'
+            },
+            {
+                name: 'Greece',
+                population: '10M'
+            }             
+        ]
+    }
+    {
+        elementByExactPath: revPerClient:jsonPath('$.A'),
+        countryNames: complexObject:jsonPath('$.countries[*].name'),
+        populationOfGermany: complexObject:jsonPath('$.countries[?(@.name=="Germany")].population')        
+    }
+}

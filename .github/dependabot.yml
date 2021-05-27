@@ -7,3 +7,11 @@ updates:
     open-pull-requests-limit: 10
     labels:
       - enhancement
+    ignore:
+      - dependency-name: "*"
+      # Note:
+      # As stated in https://github.blog/changelog/2021-05-21-dependabot-version-updates-can-now-ignore-major-minor-patch-releases/
+      # this feature only applies to version updates.
+      # If you have security updates enabled, you will still get
+      # pull requests updating you to the minimum patched version.
+        update-types: ["version-update:semver-patch"]

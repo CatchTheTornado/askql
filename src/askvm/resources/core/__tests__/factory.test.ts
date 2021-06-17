@@ -1,6 +1,6 @@
 import { runUntyped } from '../../../index';
 import { parse } from '../../../../askcode/lib';
-import { factory } from '../../../lib/resource';
+import { factory } from '../../../lib/factory';
 import * as core from '..';
 
 const values = {};
@@ -39,7 +39,7 @@ describe(`factory`, function () {
       expectedResult
     );
   });
-  it(`should wrap wrapMe2 js method nad return arg`, async function () {
+  it(`should wrap wrapMe2 js method and return arg`, async function () {
     const expectedResult = 'arg';
     await expect(
       ask(`ask(call(get('wrapMe2'), 'arg'))`)

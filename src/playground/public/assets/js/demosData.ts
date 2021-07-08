@@ -108,4 +108,44 @@ ask {
   }
 }`,
   },
+
+  demo51: {
+    title: 'Indian Covid API query with map',
+    code: `ask {
+      fetch('https://api.covid19india.org/data.json')['cases_time_series']
+      :map(fun(dataSet) {
+                             return {
+                                data: dataSet['date'],
+                                dailyconfirmed: dataSet['dailyconfirmed'],
+                                dailydeceased: dataSet['dailydeceased'],
+                                dailyrecovered: dataSet['dailyrecovered']
+                              }
+                            })
+      }`,
+  },
+  demo52: {
+    title: 'Indian Covid API combine two data sources',
+    code: `ask {
+        const statewiseData = statewise();
+        const districtData = fetch('https://api.covid19india.org/state_district_wise.json');
+        statewiseData:map(fun(stateData) {
+          {
+            stateData,
+            districtsData: districtData[stateData['state']]
+          }
+        });
+      }`,
+  },
+  demo53: {
+    title: 'Starwars API fetch with map and string property names',
+    code: `ask {
+      fetch('https://swapi.dev/api/people'):at('results'):map(fun(swCharacter) {
+          {
+            Name: swCharacter.name,
+            Gender: swCharacter.gender,
+            'Hair Color': swCharacter.hair_color
+          }
+        })
+      }`,
+  },
 };

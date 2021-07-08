@@ -10,6 +10,7 @@ import chalk = require('chalk');
 import { customAlphabet } from 'nanoid';
 import { customResources } from '../lib/resources';
 import { customValues } from '../lib/values';
+import { compileAskCode, logError } from '../lib/utils';
 
 const packageInfo = require('../../../package.json');
 
@@ -37,6 +38,13 @@ app.get('/version', async (req, res) => {
 });
 
 app.post('/askscript', async (req, res) => {
+  function reportError(e: Error, message: string) {
+    res.status(400).json({
+      message,
+      error: e.toString(),
+    });
+  }
+
   const code: AskScriptCode = req.body.code;
 
   if (typeof code !== 'string') {
@@ -59,20 +67,14 @@ app.post('/askscript', async (req, res) => {
 
     askCodeSource = askCodeToSource(askCode);
   } catch (e) {
-    console.error(id + ' -- ' + new Date().toString());
-    console.error(id + ' -- ' + code);
-    console.error(id + ' -- ' + e);
-    console.error('\n\n');
+    logError(id, code, e);
 
-    res.status(400).json({
-      message: 'Could not compile your AskScript code',
-      error: e.toString(),
-    });
+    reportError(e, 'Could not compile your AskScript code');
     return;
   }
 
   try {
-    const result = await runUntyped(baseEnvironment, askCode, []);
+    const result = await compileAskCode(baseEnvironment, askCode);
 
     console.log(id + ' -- ' + chalk.grey(`⬅️ ${JSON.stringify(result)}`));
     console.log('\n\n');
@@ -82,15 +84,9 @@ app.post('/askscript', async (req, res) => {
       result,
     });
   } catch (e) {
-    console.error(id + ' -- ' + new Date().toString());
-    console.error(id + ' -- ' + code);
-    console.error(id + ' -- ' + e);
-    console.error('\n\n');
+    logError(id, code, e);
 
-    res.status(400).json({
-      message: 'Could not run your code',
-      error: e.toString(),
-    });
+    reportError(e, 'Could not run your code');
   }
 });
 

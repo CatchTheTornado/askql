@@ -32,9 +32,15 @@ function registerAskScriptEditor(
   askScriptServerUrl: string
 ) {
   const editor = ace.edit(editorElementId);
+  let dirty = false;
   editor.setTheme('ace/theme/twilight');
   editor.session.setMode('ace/mode/javascript');
   editor.session.setOption('useWorker', false);
+  editor.session.on('change', () => {
+    if (dirty) return;
+    playgroundIsDirty(!dirty);
+    dirty = true;
+  });
 
   editor.commands.addCommand({
     name: 'alertalert',
@@ -81,6 +87,7 @@ async function executeAskScript(
     const json = await response.json();
     if (response.status == 200) {
       showSuccessfulResponse(json.result);
+      playgroundIsDirty(false);
     } else {
       showErrorResponse(json.error);
     }
@@ -106,4 +113,13 @@ function showErrorResponse(errorMessage: string) {
 function removeFadeInClass() {
   const resultElem = document.getElementById('result')!;
   resultElem.classList.remove('fadeIn');
+}
+
+function playgroundIsDirty(isDirty: boolean): void {
+  window.onbeforeunload = function (e: any) {
+    if (isDirty) {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  };
 }

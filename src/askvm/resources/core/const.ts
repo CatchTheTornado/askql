@@ -5,6 +5,7 @@ import {
   runUntyped,
   TypedValue,
   JSONable,
+  preventReservedKeywords,
 } from '../../lib';
 
 export const constRes = resource({
@@ -14,10 +15,7 @@ export const constRes = resource({
 
     const key: any = await runUntyped(options, children[0]); // FIXME any
     const value = await run(options, children[1]);
-
-    if (key === 'resources') {
-      throw new Error(`Key "resources" cannot be redeclared`);
-    }
+    preventReservedKeywords(key);
     options.values![key] = value;
     Object.freeze(options.values![key]);
     return value;

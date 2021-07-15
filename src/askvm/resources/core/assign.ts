@@ -6,6 +6,7 @@ import {
   Options,
   TypedValue,
   JSONable,
+  preventReservedKeywords,
 } from '../../lib';
 
 function assignValue(
@@ -28,11 +29,7 @@ export const assignRes = resource({
     const key: any = await runUntyped(options, children[0]); // FIXME any
     const value = await run(options, children[1]);
 
-    if (key === 'resources') {
-      throw new Error(
-        `Key "resources" is a reserved keyword and cannot be assigned to.`
-      );
-    }
+    preventReservedKeywords(key);
 
     let keyFound = false;
     for (

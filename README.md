@@ -8,7 +8,7 @@
 
 **AskQL is the next step after GraphQL and Serverless**. 
 
-With AskQL developers can attach scripts to queries that are executed serverside. The AskQL parser accepts the GraphQL query format so there's **no learning curve**. Because the scripts are executed serverside and the results [can be cached](#584) it's great for Web Vitals and app performance. Think of it as a **programmable GraphQL**.
+AskQL is a query language designed for asking questions from structured data, inspired by GraphQL. With AskQL, developers can attach scripts to queries that are executed serverside and various sources such as databases, APIs, and files, using a simple and intuitive syntax. The AskQL parser accepts the GraphQL query format so there's **no learning curve**. Because the scripts are executed serverside and the results [can be cached](#584) it's great for Web Vitals and app performance. Think of it as a **programmable GraphQL**.
 
 Read a great articly on [AskQL as a GraphQL alternative](https://yonatankra.com/on-covid-19-graphql-and-askql/)
 
